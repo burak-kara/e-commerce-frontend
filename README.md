@@ -69,58 +69,61 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
+# Clean coding & formatting
+Please see: [https://github.com/airbnb/javascript](https://github.com/airbnb/javascript)
 # Project Structure
+
 Please check these
 
 [https://www.freecodecamp.org/news/a-better-way-to-structure-react-projects](https://www.freecodecamp.org/news/a-better-way-to-structure-react-projects/)
 
 [https://reactjs.org/docs/faq-structure.html](https://reactjs.org/docs/faq-structure.html)
 
-* public
-* src
-    * _constants
-        * example.js
-        * example2.js
-        * index.js
-    * _utilities
-        * example.js
-        * example2.js
-        * index.js
-    * _styles
-        * components
-          * commonComponents
-              * common1.scss
-          * page1Components
-              * component1.scss
-              * component2.scss
-        * pages
-          * page1.scss
-          * page2.scss
-        * main.scss
-    * components
-        * commonComponents -> contains components that are used commonly among the app
-            * Common1.js
-            * Common2.js
-            * index.js
-        * page1Components 
-            * Component1.js
-            * Component2.js
-            * index.js 
-        * page2Component
-            * Component1 
-            * index.js 
-        * index.js
-    * pages
-        * appPages -> contains pages that are available for app status etc
-            * Unauthorized.js
-            * Notfound.js
-            * Login.js
-            * Signup.js
-        * page1
-          * Page1.js
-        * page2
-          * Page2.js
-          * Page2_helper.js
-        * app -> entry point for navigation etc
-            * App.js
-* index.js
+-   public
+-   src
+    -   \_constants
+        -   example.js
+        -   example2.js
+        -   index.js
+    -   \_utilities
+        -   example.js
+        -   example2.js
+        -   index.js
+    -   \_styles
+        -   components
+            -   commonComponents
+                -   common1.scss
+            -   page1Components
+                -   component1.scss
+                -   component2.scss
+        -   pages
+            -   page1.scss
+            -   page2.scss
+        -   main.scss
+    -   components
+        -   commonComponents -> contains components that are used commonly among the app
+            -   Common1.js
+            -   Common2.js
+            -   index.js
+        -   page1Components
+            -   Component1.js
+            -   Component2.js
+            -   index.js
+        -   page2Component
+            -   Component1
+            -   index.js
+        -   index.js
+    -   pages
+        -   appPages -> contains pages that are available for app status etc
+            -   Unauthorized.js
+            -   Notfound.js
+            -   Login.js
+            -   Signup.js
+        -   page1
+            -   Page1.js
+        -   page2
+            -   Page2.js
+            -   Page2_helper.js
+        -   app -> entry point for navigation etc
+            -   App.js
+-   index.js
