@@ -70,8 +70,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 # Project Structure
-Please check these <br/>
+Please check these
+
 [https://www.freecodecamp.org/news/a-better-way-to-structure-react-projects](https://www.freecodecamp.org/news/a-better-way-to-structure-react-projects/)
+
 [https://reactjs.org/docs/faq-structure.html](https://reactjs.org/docs/faq-structure.html)
 
 * public
