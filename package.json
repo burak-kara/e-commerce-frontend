@@ -58,8 +58,6 @@
             "eslint",
             "pretty-quick — staged",
             "git add"
-        ],
-        "*.js": "eslint --cache --fix",
-        "*.{js,css,md}": "prettier --write"
+        ]
     }
 }
