@@ -1,14 +1,18 @@
 import React from 'react';
-import { FaRegUser } from 'react-icons/all';
+import { FaRegUser, RiShoppingCartLine } from 'react-icons/all';
 import { IconContext } from 'react-icons';
 import logo from '../../_assets/logo2.png';
 
 const Header = () => {
     const Account = () => (
-        <IconContext.Provider value={{ color: 'white', size: '2em' }}>
-            <div>
-                <FaRegUser />
-            </div>
+        <IconContext.Provider value={{ color: 'white', size: '1em' }}>
+            <FaRegUser />
+        </IconContext.Provider>
+    );
+
+    const Basket = () => (
+        <IconContext.Provider value={{ color: 'white', size: '1em' }}>
+            <RiShoppingCartLine />
         </IconContext.Provider>
     );
 
@@ -25,9 +29,9 @@ const Header = () => {
     };
 
     return (
-        <div className="header">
+        <div className="header ">
             <div className="container h-100">
-                <nav className="navbar navbar-expand-lg h-100">
+                <nav className="navbar navbar-expand-lg h-100 ">
                     <a className="header-brand" href="http://localhost:3000/">
                         {/* TODO onClick */}
                         <img className="logo" src={logo} alt="logo" />
@@ -52,24 +56,24 @@ const Header = () => {
                                 </button>
                             </div>
                         </div>
-                        <form className="h-100">
+                        <div className="h-btn-container">
                             <button
-                                className="btn btn-dark h-100 mr-2 h-btn btn-block 
-                                    d-flex justify-content-around align-items-center"
+                                className="btn btn-dark h-btn mr-2"
                                 type="button"
                                 onClick={() => handleAccountClick()}
                             >
                                 <Account />
-                                <div>Account</div>
+                                <div className="ml-1">Account</div>
                             </button>
                             <button
-                                className="btn btn-dark h-100 h-btn "
+                                className="btn btn-dark h-btn"
                                 type="button"
                                 onClick={() => handleBasketClick()}
                             >
-                                Basket
+                                <Basket />
+                                <div className="ml-1">Basket</div>
                             </button>
-                        </form>
+                        </div>
                     </div>
                 </nav>
             </div>

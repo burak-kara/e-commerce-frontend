@@ -1,14 +1,11 @@
 .header {
     //width: 100% !important;
     height: 100px;
-
-    .header-container {
-    }
+    background-color: $header-bg;
 
     .logo {
         width: 150px;
         height: 50px;
-        //background-color: azure;
     }
 
     .input-group {
@@ -43,12 +40,23 @@
         }
     }
 
-    .h-btn {
-        width: 100px;
+    .h-btn-container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        align-content: space-around;
 
-        &:focus {
-            outline: none !important;
-            box-shadow: none !important;
+        .h-btn {
+            width: 100px;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
         }
     }
 }
