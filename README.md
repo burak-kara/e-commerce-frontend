@@ -70,7 +70,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 # Clean coding & formatting
+
 Please see: [https://github.com/airbnb/javascript](https://github.com/airbnb/javascript)
+
 # Project Structure
 
 Please check these
@@ -81,14 +83,12 @@ Please check these
 
 -   public
 -   src
+    -   \_assets
+        -   logo.svg
     -   \_constants
         -   example.js
         -   example2.js
-        -   index.js
-    -   \_utilities
-        -   example.js
-        -   example2.js
-        -   index.js
+        -   index.js -> export point for this folder
     -   \_styles
         -   components
             -   commonComponents
@@ -99,7 +99,11 @@ Please check these
         -   pages
             -   page1.scss
             -   page2.scss
-        -   main.scss
+        -   main.scss -> export point for this folder
+    -   \_utilities
+        -   example.js
+        -   example2.js
+        -   index.js -> export point for this folder
     -   components
         -   commonComponents -> contains components that are used commonly among the app
             -   Common1.js
@@ -112,7 +116,7 @@ Please check these
         -   page2Component
             -   Component1
             -   index.js
-        -   index.js
+        -   index.js -> export point for this folder
     -   pages
         -   appPages -> contains pages that are available for app status etc
             -   Unauthorized.js
@@ -126,4 +130,6 @@ Please check these
             -   Page2_helper.js
         -   app -> entry point for navigation etc
             -   App.js
+    -   tests
+        - page1
 -   index.js
