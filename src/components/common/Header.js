@@ -1,9 +1,15 @@
 import React from 'react';
-import { FaRegUser, RiShoppingCartLine } from 'react-icons/all';
+import { FaSearch, FaRegUser, RiShoppingCartLine } from 'react-icons/all';
 import { IconContext } from 'react-icons';
 import logo from '../../_assets/logo2.png';
 
 const Header = () => {
+    const Search = () => (
+        <IconContext.Provider value={{ color: 'white', size: '1em' }}>
+            <FaSearch />
+        </IconContext.Provider>
+    );
+
     const Account = () => (
         <IconContext.Provider value={{ color: 'white', size: '1em' }}>
             <FaRegUser />
@@ -44,7 +50,7 @@ const Header = () => {
                             <input
                                 type="text"
                                 className="form-control h-100 search-bar"
-                                placeholder="Search.."
+                                placeholder="Ürün, Kategori ya da Marka ara"
                             />
                             <div className="input-group-append">
                                 <button
@@ -52,7 +58,8 @@ const Header = () => {
                                     type="button"
                                     onClick={() => handleSearchClick()}
                                 >
-                                    Search
+                                    <Search />
+                                    <div className="ml-1">Search</div>
                                 </button>
                             </div>
                         </div>

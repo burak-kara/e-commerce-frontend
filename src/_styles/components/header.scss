@@ -10,7 +10,7 @@
 
     .input-group {
         width: 600px !important;
-        border: 2px solid $search-color;
+        border: 2px solid $search-bar;
         border-radius: 10px;
 
         &:focus {
@@ -30,8 +30,13 @@
         .search-btn {
             border-top-right-radius: 8px !important;
             border-bottom-right-radius: 8px !important;
-            background-color: rgb(92, 102, 112, 0.8) !important;
-            border-color: rgb(92, 102, 112, 0.8) !important;
+            background-color: $search-btn !important;
+            border-color: $search-btn !important;
+            width: 100px;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
 
             &:focus {
                 outline: none !important;

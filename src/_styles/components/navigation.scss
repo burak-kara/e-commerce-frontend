@@ -1,5 +1,31 @@
 .navigation {
     width: 100% !important;
     height: 56px;
-    background-color: $navigation-bg;
+    background-color: $nav-bg;
+
+    .category {
+        background-color: $nav-btn;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        &:hover {
+            background-color: $nav-btn-hover;
+            cursor: pointer;
+        }
+
+        &:before {
+            content: '';
+            left: 0;
+            width: 1px;
+            height: 28px;
+            display: block;
+            position: absolute;
+            background-color: $nav-btn-hover;
+        }
+
+        .cat {
+            margin-bottom: 0;
+        }
+    }
 }
