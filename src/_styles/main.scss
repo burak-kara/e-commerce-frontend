@@ -10,4 +10,13 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+.react-icons {
+    vertical-align: middle;
+}
+
+@import '../_utilities/colors';
+
 @import 'pages/app/app';
+
+@import 'components/navigation';
+@import 'components/header';

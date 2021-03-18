@@ -1,0 +1,54 @@
+.header {
+    //width: 100% !important;
+    height: 100px;
+
+    .header-container {
+    }
+
+    .logo {
+        width: 150px;
+        height: 50px;
+        //background-color: azure;
+    }
+
+    .input-group {
+        width: 600px !important;
+        border: 2px solid $search-color;
+        border-radius: 10px;
+
+        &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        .search-bar {
+            border-radius: 8px;
+
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        .search-btn {
+            border-top-right-radius: 8px !important;
+            border-bottom-right-radius: 8px !important;
+            background-color: rgb(92, 102, 112, 0.8) !important;
+            border-color: rgb(92, 102, 112, 0.8) !important;
+
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+        }
+    }
+
+    .h-btn {
+        width: 100px;
+
+        &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+    }
+}
