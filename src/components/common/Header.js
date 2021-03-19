@@ -1,7 +1,7 @@
 import React from 'react';
-import { FaSearch, FaRegUser, RiShoppingCartLine } from 'react-icons/all';
+import { FaSearch, FaRegUser, RiShoppingCartLine, RiArrowDropDownLine } from 'react-icons/all';
 import { IconContext } from 'react-icons';
-import logo from '../../_assets/logo2.png';
+import logo from '../../_assets';
 
 const Header = () => {
     const Search = () => (
@@ -11,27 +11,25 @@ const Header = () => {
     );
 
     const Account = () => (
-        <IconContext.Provider value={{ color: 'white', size: '1em' }}>
+        <IconContext.Provider value={{ color: 'white', size: '2em' }}>
             <FaRegUser />
         </IconContext.Provider>
     );
 
+    const DropDown = () => (
+        <IconContext.Provider value={{ color: 'white', size: '2em' }}>
+            <RiArrowDropDownLine />
+        </IconContext.Provider>
+    );
+
     const Basket = () => (
-        <IconContext.Provider value={{ color: 'white', size: '1em' }}>
+        <IconContext.Provider value={{ color: 'white', size: '2em' }}>
             <RiShoppingCartLine />
         </IconContext.Provider>
     );
 
     const handleSearchClick = () => {
         console.log('Search Click');
-    };
-
-    const handleAccountClick = () => {
-        console.log('Account Click');
-    };
-
-    const handleBasketClick = () => {
-        console.log('Basket Click');
     };
 
     return (
@@ -64,22 +62,54 @@ const Header = () => {
                             </div>
                         </div>
                         <div className="h-btn-container">
-                            <button
-                                className="btn btn-dark h-btn mr-2"
-                                type="button"
-                                onClick={() => handleAccountClick()}
-                            >
-                                <Account />
-                                <div className="ml-1">Account</div>
-                            </button>
-                            <button
-                                className="btn btn-dark h-btn"
-                                type="button"
-                                onClick={() => handleBasketClick()}
-                            >
-                                <Basket />
-                                <div className="ml-1">Basket</div>
-                            </button>
+                            <div className="btn-group">
+                                <button
+                                    className="btn btn-dark h-btn mr-2"
+                                    type="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                >
+                                    <Account />
+                                    <div className="ml-2">Account</div>
+                                    <DropDown />
+                                </button>
+                                <div className="dropdown-menu dropdown-menu-right">
+                                    <button className="dropdown-item" type="button">
+                                        Action
+                                    </button>
+                                    <button className="dropdown-item" type="button">
+                                        Another action
+                                    </button>
+                                    <button className="dropdown-item" type="button">
+                                        Something else here
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="btn-group">
+                                <button
+                                    className="btn btn-dark h-btn mr-2"
+                                    type="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                >
+                                    <Basket />
+                                    <div className="ml-2">Basket</div>
+                                    <DropDown />
+                                </button>
+                                <div className="dropdown-menu dropdown-menu-right">
+                                    <button className="dropdown-item" type="button">
+                                        Action
+                                    </button>
+                                    <button className="dropdown-item" type="button">
+                                        Another action
+                                    </button>
+                                    <button className="dropdown-item" type="button">
+                                        Something else here
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </nav>

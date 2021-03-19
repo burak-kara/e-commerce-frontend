@@ -1,5 +1,4 @@
 .header {
-    //width: 100% !important;
     height: 100px;
     background-color: $header-bg;
 
@@ -51,12 +50,17 @@
         align-items: center;
         align-content: space-around;
 
+        .btn-group {
+            height: 100%;
+        }
+
         .h-btn {
-            width: 100px;
+            width: 120px;
             height: 100%;
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
+            border-radius: 4px !important;
 
             &:focus {
                 outline: none !important;
