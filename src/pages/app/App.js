@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Header, Navigation } from '../../components';
 import { Dummy } from '../index';
+import { LANDING, BASKET } from '../../_constants';
 
 const App = () => (
     <Router>
@@ -11,6 +12,8 @@ const App = () => (
         <Navigation />
         <Switch>
             <Route exact path="/test" component={Dummy} />
+            <Route exact path={LANDING} />
+            <Route exact path={BASKET} component={Dummy} />
         </Switch>
     </Router>
 );

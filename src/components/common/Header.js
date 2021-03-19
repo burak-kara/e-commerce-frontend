@@ -1,36 +1,23 @@
 import React from 'react';
-import { FaSearch, FaRegUser, RiShoppingCartLine, RiArrowDropDownLine } from 'react-icons/all';
-import { IconContext } from 'react-icons';
+import { useHistory } from 'react-router-dom';
 import logo from '../../_assets';
+import { Search, Account, DropDown, Basket } from '../../_utilities/icons';
+import { BASKET } from '../../_constants';
 
 const Header = () => {
-    const Search = () => (
-        <IconContext.Provider value={{ color: 'white', size: '1em' }}>
-            <FaSearch />
-        </IconContext.Provider>
-    );
-
-    const Account = () => (
-        <IconContext.Provider value={{ color: 'white', size: '2em' }}>
-            <FaRegUser />
-        </IconContext.Provider>
-    );
-
-    const DropDown = () => (
-        <IconContext.Provider value={{ color: 'white', size: '2em' }}>
-            <RiArrowDropDownLine />
-        </IconContext.Provider>
-    );
-
-    const Basket = () => (
-        <IconContext.Provider value={{ color: 'white', size: '2em' }}>
-            <RiShoppingCartLine />
-        </IconContext.Provider>
-    );
+    const history = useHistory();
 
     const handleSearchClick = () => {
         console.log('Search Click');
     };
+
+    const handleBasketClick = () => {
+        history.push({
+            pathname: BASKET,
+        });
+    };
+
+    const DropdownIcon = () => <DropDown color="color" size="1em" />;
 
     return (
         <div className="header ">
@@ -64,17 +51,17 @@ const Header = () => {
                         <div className="h-btn-container">
                             <div className="btn-group">
                                 <button
-                                    className="btn btn-dark h-btn mr-2"
+                                    className="btn btn-dark a-btn mr-2"
                                     type="button"
                                     data-toggle="dropdown"
                                     aria-haspopup="true"
                                     aria-expanded="false"
                                 >
                                     <Account />
-                                    <div className="ml-2">Account</div>
-                                    <DropDown />
+                                    <span>Account</span>
+                                    <DropdownIcon />
                                 </button>
-                                <div className="dropdown-menu dropdown-menu-right">
+                                <div className="dropdown-menu dropdown-menu">
                                     <button className="dropdown-item" type="button">
                                         Action
                                     </button>
@@ -86,30 +73,14 @@ const Header = () => {
                                     </button>
                                 </div>
                             </div>
-                            <div className="btn-group">
-                                <button
-                                    className="btn btn-dark h-btn mr-2"
-                                    type="button"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                >
-                                    <Basket />
-                                    <div className="ml-2">Basket</div>
-                                    <DropDown />
-                                </button>
-                                <div className="dropdown-menu dropdown-menu-right">
-                                    <button className="dropdown-item" type="button">
-                                        Action
-                                    </button>
-                                    <button className="dropdown-item" type="button">
-                                        Another action
-                                    </button>
-                                    <button className="dropdown-item" type="button">
-                                        Something else here
-                                    </button>
-                                </div>
-                            </div>
+                            <button
+                                className="btn btn-dark b-btn"
+                                type="button"
+                                onClick={() => handleBasketClick()}
+                            >
+                                <Basket />
+                                <div className="ml-1">Basket</div>
+                            </button>
                         </div>
                     </div>
                 </nav>
