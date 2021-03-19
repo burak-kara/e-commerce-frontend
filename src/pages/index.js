@@ -1,4 +1,6 @@
 import Dummy from './dummy/Dummy';
-import Dummy2 from './dummy2/Dummy2';
+import Profile from './profile/Profile';
+import Orders from './profile/Orders';
+import Settings from './profile/Settings';
 
-export { Dummy, Dummy2 };
+export { Dummy, Profile, Orders, Settings };

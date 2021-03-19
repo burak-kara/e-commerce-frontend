@@ -1,3 +1,3 @@
-import { LANDING, BASKET } from './routes';
+import { LANDING, BASKET, PROFILE, SETTINGS, ORDERS } from './routes';
 
-export { LANDING, BASKET };
+export { LANDING, BASKET, PROFILE, SETTINGS, ORDERS };

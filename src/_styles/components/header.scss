@@ -1,20 +1,31 @@
 .header {
     height: 100px;
     background-color: $header-bg;
+    box-shadow: 0 0 5px 0 $header-bg-shadow;
 
-    .logo {
-        width: 150px;
-        height: 50px;
+    .header-brand {
+        border: none !important;
+        background-color: $transparent;
+
+        .logo {
+            max-width: 150px;
+            max-height: 50px;
+        }
     }
 
     .input-group {
         width: 600px !important;
         border: 2px solid $search-bar;
         border-radius: 10px;
+        box-shadow: 0 0 5px 0 $header-bg-shadow;
 
         &:focus {
             outline: none !important;
             box-shadow: none !important;
+        }
+
+        &:hover {
+            box-shadow: 0 0 7px 0 $header-bg-shadow;
         }
 
         .search-bar {
@@ -52,18 +63,63 @@
 
         .btn-group {
             height: 100%;
-        }
 
-        .a-btn {
-            width: 130px;
-            height: 100%;
-            display: flex;
-            justify-content: space-around;
-            border-radius: 4px !important;
+            .a-btn {
+                width: 130px;
+                height: 100%;
+                display: flex;
+                justify-content: space-around;
+                border-radius: 4px !important;
+                border: 3px solid $a-btn;
+                background-color: $header-bg;
+                color: $a-btn;
+                box-shadow: 0 0 3px 0 $header-bg-shadow;
+
+                &:focus {
+                    outline: none !important;
+                    box-shadow: none !important;
+                }
+
+                &:hover {
+                    box-shadow: 0 0 7px 0 $header-bg-shadow;
+                }
+
+                .name {
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    max-width: 60px;
+                }
+            }
+
+            .dropdown-menu {
+                margin-top: 0;
+                display: none;
+
+                &:hover {
+                    margin-top: 0;
+                    display: block;
+                }
+
+                .dropdown-divider {
+                    margin: 2px !important;
+                }
+
+                .md-b {
+                    margin-bottom: 10px !important;
+                }
+            }
+
+            &:hover {
+                .dropdown-menu {
+                    display: block;
+                }
+            }
 
             &:focus {
-                outline: none !important;
-                box-shadow: none !important;
+                .dropdown-menu {
+                    display: block;
+                }
             }
         }
 
@@ -74,10 +130,26 @@
             justify-content: space-around;
             align-items: center;
             border-radius: 4px !important;
+            background-color: $b-btn;
+            color: $header-bg;
+            box-shadow: 0 0 5px 0 $header-bg-shadow;
 
             &:focus {
                 outline: none !important;
                 box-shadow: none !important;
+            }
+
+            &:hover {
+                box-shadow: 0 0 10px 0 $header-bg-shadow;
+            }
+        }
+
+        .menu-btn {
+            margin-right: 10px;
+            height: 50%;
+
+            &:hover {
+                box-shadow: 0 0 5px 0 $header-bg-shadow;
             }
         }
     }
