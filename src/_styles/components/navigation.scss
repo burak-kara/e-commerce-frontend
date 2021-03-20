@@ -1,0 +1,39 @@
+.navigation {
+    width: 100% !important;
+    height: 56px;
+    background-color: $nav-bg;
+
+    .category {
+        background-color: $nav-bg;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        color: $nav-btn;
+
+        &:hover {
+            background-color: $nav-btn-hover;
+            cursor: pointer;
+            box-shadow: 0 0 7px 0 $header-bg-shadow;
+            z-index: 10;
+            border-radius: 5px;
+
+            &:before {
+                width: 0;
+            }
+        }
+
+        &:before {
+            content: '';
+            left: 0;
+            width: 1px;
+            height: 28px;
+            display: block;
+            position: absolute;
+            background-color: $nav-btn;
+        }
+
+        .cat {
+            margin-bottom: 0;
+        }
+    }
+}

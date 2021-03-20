@@ -131,5 +131,5 @@ Please check these
         -   app -> entry point for navigation etc
             -   App.js
     -   tests
-        - page1
+        -   page1
 -   index.js
