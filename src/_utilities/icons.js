@@ -1,6 +1,8 @@
 import React from 'react';
-import { FaSearch, FaRegUser, RiShoppingCartLine, IoIosArrowDropdownCircle } from 'react-icons/all';
-import { IconContext } from 'react-icons';
+import { IconContext } from 'react-icons/lib';
+import { FaSearch, FaRegUser } from 'react-icons/fa';
+import { IoIosArrowDropdownCircle } from 'react-icons/io';
+import { RiShoppingCartLine } from 'react-icons/ri';
 
 const Search = (props) => (
     <IconContext.Provider value={{ ...props }}>
