@@ -14,7 +14,9 @@ const Header = () => {
     };
 
     const handleSearchClick = () => {
-        console.log('Search Click');
+        history.push({
+            pathname: PROFILE,
+        });
     };
 
     const handleAccountClick = () => {
