@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Step1 from './Step1';
 import Step2 from './Step2';
+import { LANDING } from '../../../_constants';
+import logo from '../../../_assets';
 
 const Signup = () => {
     const [state, setState] = useState({
@@ -14,6 +17,7 @@ const Signup = () => {
         phone: '',
         birthday: '',
     });
+    const history = useHistory();
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -34,6 +38,18 @@ const Signup = () => {
             Surname: ${surname} \n
             Birthday: ${birthday} \n
             Phone: ${phone} \n`);
+
+        // TODO implement signup POST request
+
+        history.push({
+            pathname: LANDING,
+        });
+    };
+
+    const handleLogoClick = () => {
+        history.push({
+            pathname: LANDING,
+        });
     };
 
     const next = () => {
@@ -96,6 +112,18 @@ const Signup = () => {
     return (
         <div className="signup">
             <form className="form-container" onSubmit={handleSubmit}>
+                <div className="form-row input-field-container">
+                    <div className="form-group">
+                        <button
+                            className="header-brand"
+                            type="button"
+                            onClick={() => handleLogoClick()}
+                        >
+                            {/* TODO onClick */}
+                            <img className="logo" src={logo} alt="logo" />
+                        </button>
+                    </div>
+                </div>
                 <Step1
                     currentStep={state.currentStep}
                     handleChange={handleChange}

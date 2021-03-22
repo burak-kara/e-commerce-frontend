@@ -1,9 +1,25 @@
 .signup {
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 100vh;
 
     .form-container {
-        width: 20%;
+        width: 30%;
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 0 5px 0 $header-bg-shadow;
+
+        .header-brand {
+            border: none !important;
+            background-color: $transparent;
+            margin-bottom: 30px;
+
+            .logo {
+                max-width: 200px;
+                max-height: 100px;
+            }
+        }
 
         .input-field-container {
             display: flex;
@@ -23,6 +39,10 @@
         .btn-container {
             display: flex;
             justify-content: center;
+
+            .btn {
+                width: 100px;
+            }
         }
     }
 }
