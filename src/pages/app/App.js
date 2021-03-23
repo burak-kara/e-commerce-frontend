@@ -1,23 +1,25 @@
 import React from 'react';
-import logo from '../../_assets/logo.svg';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Header, Navigation } from '../../components';
+import { Dummy, Orders, Profile, Settings } from '../index';
+import { LANDING, BASKET, PROFILE, SETTINGS, ORDERS } from '../../_constants';
 
 const App = () => (
-    <div className="App">
-        <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>
-                Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <a
-                className="App-link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Learn React
-            </a>
-        </header>
-    </div>
+    <Router>
+        <div className="sticky-top">
+            <Header />
+        </div>
+        <Navigation />
+        <Switch>
+            <Route exact path="/test" component={Dummy} />
+            <Route exact path={LANDING} />
+            <Route exact path={BASKET} component={Dummy} />
+
+            <Route exact path={PROFILE} component={Profile} />
+            <Route exact path={SETTINGS} component={Settings} />
+            <Route exact path={ORDERS} component={Orders} />
+        </Switch>
+    </Router>
 );
 
 export default App;

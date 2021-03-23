@@ -1,0 +1,3 @@
+import { LANDING, BASKET, PROFILE, SETTINGS, ORDERS } from './routes';
+
+export { LANDING, BASKET, PROFILE, SETTINGS, ORDERS };

@@ -1,0 +1,58 @@
+.account-info-page {
+    text-align: center;
+    margin: 10px auto;
+    justify-content: center;
+    align-items: center;
+    -webkit-align-items: center;
+    background-color: $header-bg;
+    
+    .profile-picture {
+        width: 160px;
+        height: 200px;
+        border-radius: 20px;
+    }
+
+    .account-info-list {
+        width: 100%;
+        display: block;
+    }
+
+    .account-info-list-details {
+        display: flex;
+    }
+
+    .account-info-list-details-element {
+        display: flex; 
+        width: 20%;
+        justify-content: space-evenly;
+
+        .user-detail-label {
+            font-weight: bold;
+            width: 100px;
+        }
+
+        .user-detail-text-userspecific {
+            border-width: 1px; 
+            border-color: black;
+            border-style: solid;
+            width: 200px;
+        }   
+    }
+
+    .account-info-list-password-element {
+        display: flex;
+        width: 6%;
+        justify-content: space-evenly;
+
+        .account-info-detail-password {
+            font-weight: bold;
+            width: 10px;
+            align-self: center;
+        }
+    }
+
+    .account-info-filler{
+        width: 40%;
+        height: auto;
+    }
+}
