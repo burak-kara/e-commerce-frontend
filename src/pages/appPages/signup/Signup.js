@@ -29,17 +29,17 @@ const Signup = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const { email, username, password, name, surname, phone, birthday } = state;
-        alert(`Your registration detail: \n 
-            Email: ${email} \n 
-            Username: ${username} \n
-            Password: ${password} \n
-            Name: ${name} \n
-            Surname: ${surname} \n
-            Birthday: ${birthday} \n
-            Phone: ${phone} \n`);
-
-        // TODO implement signup POST request
+        // const { email, username, password, name, surname, phone, birthday } = state;
+        // alert(`Your registration detail: \n
+        //     Email: ${email} \n
+        //     Username: ${username} \n
+        //     Password: ${password} \n
+        //     Name: ${name} \n
+        //     Surname: ${surname} \n
+        //     Birthday: ${birthday} \n
+        //     Phone: ${phone} \n`);
+        //
+        // // TODO implement signup POST request
 
         history.push({
             pathname: LANDING,
@@ -89,7 +89,7 @@ const Signup = () => {
             <button
                 className="btn btn-secondary mr-5"
                 type="button"
-                disabled={isDisabled}
+                hidden={isDisabled}
                 onClick={prev}
             >
                 Previous
