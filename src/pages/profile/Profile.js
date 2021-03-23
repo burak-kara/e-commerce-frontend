@@ -4,12 +4,18 @@ import Visibility from "@material-ui/icons/Visibility";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Input from "@material-ui/core/Input";
-import '../../_styles/pages/profile.scss';
-import '../../_utilities/colors.scss';
 
 const Profile = () => {
+    const user = {
+        name: 'John',
+        surname: 'Doe',
+        email: 'john.doe@gmail.com',
+        phoneNumber: '+90 530 234 5678',
+        password: 12345,
+    };
+
     const [values, setValues] = React.useState({ 
-        password: "12345", //    This needs to change with the user's password.
+        password: user.password, //    This needs to change with the user's password.
         showPassword: false, 
     });
 
@@ -23,7 +29,9 @@ const Profile = () => {
       
     const handlePasswordChange = (prop) => (event) => { 
         setValues({ ...values, [prop]: event.target.value }); 
-    }; 
+    };
+
+    
 
     return (
         <div className="account-info-page">
@@ -43,7 +51,7 @@ const Profile = () => {
                         <text className="user-detail-label">Name:</text>
                         <text className="user-detail-text-userspecific"
                             id="userName" 
-                            name="userName">John</text>
+                            name="userName" text={user.name} value={user.name}>John</text>
                     </div>
                     <div className="account-info-filler">
                         <text/>
