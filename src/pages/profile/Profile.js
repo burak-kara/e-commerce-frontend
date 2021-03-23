@@ -32,7 +32,12 @@ const Profile = () => {
     }}>
         <h1>Account Info</h1>
         <div>
-            <img src="https://bestprofilepix.com/wp-content/uploads/2014/03/sad-and-alone-boys-facebook-profile-pictures.jpg" alt="PP" style={{width:"160px", height:"200px", borderRadius:"20px"}}/>
+            <img 
+            src="https://bestprofilepix.com/wp-content/uploads
+            /2014/03/sad-and-alone-boys-facebook-profile-pictures.jpg" 
+            alt="PP" 
+            style={
+                {width:"160px", height:"200px", borderRadius:"20px"}}/>
         </div>
         <br/>
         <div style={{width:"100%", display:'block'}}>
@@ -42,7 +47,13 @@ const Profile = () => {
                 </div>
                 <div style={{display:"flex", width:"20%", justifyContent:"space-evenly" }}>
                     <text style={{fontWeight:"bold", width:"100px"}}>Name:</text>
-                    <text style={{borderWidth:"1px", borderColor:"black", borderStyle:"solid", width:"200px"}} id="userNameLabel" name="userName">John</text>
+                    <text style={
+                        {borderWidth:"1px", 
+                         borderColor:"black", 
+                         borderStyle:"solid", 
+                         width:"200px"}} 
+                         id="userNameLabel" 
+                         name="userName">John</text>
                 </div>
                 <div style={{width:"40%"}}>
                     <text/>
@@ -54,7 +65,13 @@ const Profile = () => {
                 </div>
                 <div style={{display:"flex", width:"20%", justifyContent:"space-evenly" }}>
                     <text style={{fontWeight:"bold", width:"100px"}}>Surname:</text>
-                    <text style={{borderWidth:"1px", borderColor:"black", borderStyle:"solid", width:"200px"}} id="userSurnameLabel" name="userSurname">Doe</text>
+                    <text style={
+                        {borderWidth:"1px", 
+                         borderColor:"black", 
+                         borderStyle:"solid", 
+                         width:"200px"}} 
+                         id="userSurnameLabel" 
+                         name="userSurname">Doe</text>
                 </div>
                 <div style={{width:"40%"}}>
                     <text/>
@@ -65,8 +82,17 @@ const Profile = () => {
                     <text/>
                 </div>
                 <div style={{display:"flex", width:"20%", justifyContent:"space-evenly" }}>
-                    <text style={{fontWeight:"bold", width:"100px", alignSelf:"center"}}>Nickname:</text>
-                    <text style={{borderWidth:"1px", borderColor:"black", borderStyle:"solid", width:"200px"}} id="userSurnameLabel" name="userSurname">JohnDoe1234</text>
+                    <text style={
+                        {fontWeight:"bold", 
+                         width:"100px", 
+                         alignSelf:"center"}}>Nickname:</text>
+                    <text style={
+                        {borderWidth:"1px", 
+                         borderColor:"black", 
+                         borderStyle:"solid", 
+                         width:"200px"}} 
+                         id="userSurnameLabel" 
+                         name="userSurname">JohnDoe1234</text>
                 </div>
                 <div style={{width:"40%"}}>
                     <text/>
@@ -78,7 +104,13 @@ const Profile = () => {
                 </div>
                 <div style={{display:"flex", width:"20%", justifyContent:"space-evenly" }}>
                     <text style={{fontWeight:"bold", width:"100px"}}>Mail:</text>
-                    <text style={{borderWidth:"1px", borderColor:"black", borderStyle:"solid", width:"200px"}} id="userSurnameLabel" name="userSurname">john.doe@gmail.com</text>
+                    <text style={
+                        {borderWidth:"1px", 
+                         borderColor:"black", 
+                         borderStyle:"solid", 
+                         width:"200px"}} 
+                         id="userSurnameLabel" 
+                         name="userSurname">john.doe@gmail.com</text>
                 </div>
                 <div style={{width:"40%"}}>
                     <text/>
@@ -90,7 +122,13 @@ const Profile = () => {
                 </div>
                 <div style={{display:"flex", width:"20%", justifyContent:"space-evenly" }}>
                     <text style={{fontWeight:"bold", width:"100px"}}>Phone:</text>
-                    <text style={{borderWidth:"1px", borderColor:"black", borderStyle:"solid", width:"200px"}} id="userSurnameLabel" name="userSurname">+90 530 234 5678</text>
+                    <text style={
+                        {borderWidth:"1px", 
+                         borderColor:"black", 
+                         borderStyle:"solid", 
+                         width:"200px"}} 
+                         id="userSurnameLabel" 
+                         name="userSurname">+90 530 234 5678</text>
                 </div>
                 <div style={{width:"40%"}}>
                     <text/>
@@ -101,8 +139,17 @@ const Profile = () => {
                     <text/>
                 </div>
                 <div style={{display:"flex", width:"20%", justifyContent:"space-evenly" }}>
-                    <text style={{fontWeight:"bold", width:"100px", alignSelf:"center"}}>Previous Orders:</text>
-                    <text style={{borderWidth:"1px", borderColor:"black", borderStyle:"solid", width:"200px"}} id="userSurnameLabel" name="userSurname">20 ETH<br/>30 ETH<br/>USB Storage Device</text>
+                    <text style={
+                        {fontWeight:"bold", 
+                         width:"100px", 
+                         alignSelf:"center"}}>Previous Orders:</text>
+                    <text style={
+                        {borderWidth:"1px", 
+                         borderColor:"black", 
+                         borderStyle:"solid", 
+                         width:"200px"}} 
+                         id="userSurnameLabel" 
+                         name="userSurname">20 ETH<br/>30 ETH<br/>USB Storage Device</text>
                 </div>
                 <div style={{width:"40%"}}>
                     <text/>
@@ -113,7 +160,10 @@ const Profile = () => {
                     <text/>
                 </div>
                 <div style={{display:"flex", width:"6%", justifyContent:"space-evenly" }}>
-                    <text style={{fontWeight:"bold", width:"10px", alignSelf:"center"}}>Password:</text>
+                    <text style={
+                        {fontWeight:"bold", 
+                         width:"10px", 
+                         alignSelf:"center"}}>Password:</text>
                 </div>
                 <Input 
                     type={values.showPassword ? "text" : "password"} 
@@ -121,7 +171,11 @@ const Profile = () => {
                     value={values.password} 
                     endAdornment={
                         <InputAdornment position="end"> 
-                            <IconButton onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}> {values.showPassword ? <Visibility /> : <VisibilityOff />} </IconButton> 
+                            <IconButton 
+                             onClick={handleClickShowPassword} 
+                             onMouseDown={handleMouseDownPassword}> 
+                             {values.showPassword ? 
+                             <Visibility /> : <VisibilityOff />} </IconButton> 
                         </InputAdornment> 
                     }
                     style={{margin:"0px 60px"}}
