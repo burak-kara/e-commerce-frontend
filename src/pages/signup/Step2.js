@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Col } from 'react-bootstrap';
-import { nonError } from '../../_constants';
+import { noneError } from '../../_constants';
 
 const Step2 = (props) => {
     const { currentStep, setField, errors, form } = props;
@@ -22,8 +22,8 @@ const Step2 = (props) => {
                         placeholder="Name"
                         value={name}
                         onChange={(e) => setField('name', e.target.value)}
-                        isInvalid={!!errors.name && errors.name !== nonError}
-                        isValid={errors.name === nonError}
+                        isInvalid={!!errors.name && errors.name !== noneError}
+                        isValid={errors.name === noneError}
                     />
                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
@@ -39,8 +39,8 @@ const Step2 = (props) => {
                         placeholder="Surname"
                         value={surname}
                         onChange={(e) => setField('surname', e.target.value)}
-                        isInvalid={!!errors.surname && errors.surname !== nonError}
-                        isValid={errors.surname === nonError}
+                        isInvalid={!!errors.surname && errors.surname !== noneError}
+                        isValid={errors.surname === noneError}
                     />
                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid">{errors.surname}</Form.Control.Feedback>
@@ -48,16 +48,16 @@ const Step2 = (props) => {
             </Form.Row>
             <Form.Row>
                 <Form.Group as={Col} md="12" controlId="phone">
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label>Phone</Form.Label>
                     <Form.Control
                         required
                         name="phone"
-                        type="text"
-                        placeholder="Phone"
+                        type="tel"
+                        placeholder="500-555-00-11"
                         value={phone}
-                        onChange={(e) => setField('phone', e.target.value)}
-                        isInvalid={!!errors.phone && errors.phone !== nonError}
-                        isValid={errors.phone === nonError}
+                        onChange={(e) => setField('phone', e.target.value, e.nativeEvent.inputType)}
+                        isInvalid={!!errors.phone && errors.phone !== noneError}
+                        isValid={errors.phone === noneError}
                     />
                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid">{errors.phone}</Form.Control.Feedback>
@@ -69,12 +69,12 @@ const Step2 = (props) => {
                     <Form.Control
                         required
                         name="birthday"
-                        type="text"
+                        type="date"
                         placeholder="Birthday"
                         value={birthday}
                         onChange={(e) => setField('birthday', e.target.value)}
-                        isInvalid={!!errors.birthday && errors.birthday !== nonError}
-                        isValid={errors.birthday === nonError}
+                        isInvalid={!!errors.birthday && errors.birthday !== noneError}
+                        isValid={errors.birthday === noneError}
                     />
                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid">{errors.birthday}</Form.Control.Feedback>

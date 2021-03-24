@@ -1,4 +1,5 @@
-import Navigation from './common/Navigation';
-import Header from './common/Header';
+import Navigation from './Navigation';
+import Header from './Header';
+import Loading from './Loading';
 
-export { Navigation, Header };
+export { Navigation, Header, Loading };

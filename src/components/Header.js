@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import logo from '../../_assets';
-import { Search, Account, DropDown, Basket } from '../../_utilities/icons';
-import { BASKET, PROFILE, LANDING, SETTINGS, ORDERS } from '../../_constants';
+import { logo } from '../_assets';
+import { Search, Account, DropDown, Basket } from '../_utilities/icons';
+import { BASKET, PROFILE, LANDING, SETTINGS, ORDERS } from '../_constants';
 
 const Header = () => {
     const history = useHistory();

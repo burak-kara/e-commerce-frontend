@@ -3,13 +3,15 @@ import { useHistory } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import Step1 from './Step1';
 import Step2 from './Step2';
-import { LANDING, nonError } from '../../_constants';
-import logo from '../../_assets';
+import { LANDING, noneError, emailRegex, passwordRegex } from '../../_constants';
+import { logo } from '../../_assets';
+import { Loading } from '../../components';
 
 const Signup = () => {
     const history = useHistory();
-    const [currentStep, setCurrentStep] = useState(1);
+    const [isNext, setIsNext] = useState(false);
     const [form, setForm] = useState({});
+    const [currentStep, setCurrentStep] = useState(1);
     const [errors, setErrors] = useState({
         email: '',
         username: '',
@@ -21,43 +23,68 @@ const Signup = () => {
         birthday: '',
     });
 
-    const setField = (field, value) => {
-        setForm({
-            ...form,
-            [field]: value,
-        });
-        // // Check and see if errors exist, and remove them from the error object:
-        // if (errors[field])
-        //     setErrors({
-        //         ...errors,
-        //         [field]: '',
-        //     });
+    const setField = (field, value, type) => {
+        if (field === 'phone') {
+            if (value.startsWith('0') || value.startsWith('9')) {
+                setForm({
+                    ...form,
+                    phone: value.substring(1, value.length),
+                });
+            } else if (value.length === 3 || value.length === 7 || value.length === 10) {
+                const newValue = type === 'deleteContentBackward' ? value : `${value}-`;
+                setForm({
+                    ...form,
+                    phone: newValue,
+                });
+            } else if (value.length !== 14) {
+                setForm({
+                    ...form,
+                    [field]: value,
+                });
+            }
+        } else {
+            setForm({
+                ...form,
+                [field]: value,
+            });
+        }
     };
 
     const findStep1Errors = () => {
         const { email, username, password, repassword } = form;
         const newErrors = {
-            email: nonError,
-            username: nonError,
-            password: nonError,
-            repassword: nonError,
+            email: noneError,
+            username: noneError,
+            password: noneError,
+            repassword: noneError,
         };
 
         // email errors
-        if (!email || email === '') newErrors.email = 'cannot be blank!';
-        else if (email.length > 30) newErrors.email = 'email is too long!';
+        if (!email || email === '') newErrors.email = 'Please provide a valid email address!';
+        else if (email.length > 30) newErrors.email = 'Email is too long!';
+        else if (!emailRegex.test(email)) newErrors.email = 'Invalid email!';
 
         // username errors
-        if (!username || username === '') newErrors.username = 'select a username!';
-        else if (username.length > 30) newErrors.username = 'username is too long!';
+        if (!username) newErrors.username = 'Please provide a valid username!';
+        else if (username === '' || username.length < 5)
+            newErrors.username = 'Username should be at least 5 characters';
+        else if (username.length > 12)
+            newErrors.username = 'Username should be at max 12 characters!';
 
         // password errors
-        if (!password || password === '') newErrors.password = 'cannot be blank!';
-        else if (password.length > 30) newErrors.password = 'password is too long!';
+        if (!password || password === '') newErrors.password = 'Please provide a valid password!';
+        else if (!passwordRegex.test(password))
+            newErrors.password =
+                'Password should contain at least one number and one special character!';
 
         // repassword errors
-        if (!repassword || repassword === '') newErrors.repassword = 'cannot be blank!';
-        else if (repassword.length > 30) newErrors.repassword = 'repassword is too long!';
+        if (!repassword || repassword !== password)
+            newErrors.repassword = 'Please confirm your password!';
+        else if (!password || password === '')
+            newErrors.repassword = 'Please provide a valid password!';
+        else if (!passwordRegex.test(repassword))
+            newErrors.repassword =
+                'Password should contain at least one number and one special character!';
 
         return newErrors;
     };
@@ -65,23 +92,25 @@ const Signup = () => {
     const findStep2Errors = () => {
         const { name, surname, phone, birthday } = form;
         const newErrors = {
-            name: nonError,
-            surname: nonError,
-            phone: nonError,
-            birthday: nonError,
+            name: noneError,
+            surname: noneError,
+            phone: noneError,
+            birthday: noneError,
         };
 
         // name errors
-        if (!name || name === '') newErrors.name = 'cannot be blank!';
-        else if (name.length > 30) newErrors.name = 'name is too long!';
+        if (!name || name === '') newErrors.name = 'Please provide a valid name!';
+        else if (name.length < 2) newErrors.name = 'Name is too short!';
+        else if (name.length > 16) newErrors.name = 'Name is too long!';
 
         // surname errors
-        if (!surname || surname === '') newErrors.surname = 'cannot be blank!';
-        else if (surname.length > 30) newErrors.surname = 'surname is too long!';
+        if (!surname || surname === '') newErrors.surname = 'Please provide a valid surname!';
+        else if (surname.length < 2) newErrors.surname = 'Surname is too short!';
+        else if (surname.length > 16) newErrors.surname = 'Surname is too long!';
 
         // phone errors
-        if (!phone || phone === '') newErrors.phone = 'cannot be blank!';
-        else if (phone.length > 30) newErrors.phone = 'phone is too long!';
+        if (!phone || phone === '' || phone.length !== 13)
+            newErrors.phone = 'Please provide a valid phone number!';
 
         // birthday errors
         if (!birthday || birthday === '') newErrors.birthday = 'cannot be blank!';
@@ -90,14 +119,21 @@ const Signup = () => {
         return newErrors;
     };
 
+    const checkAnyError = (stepErrors) => {
+        let isError = false;
+        Object.values(stepErrors).forEach((value) => {
+            if (value !== noneError) {
+                isError = true;
+            }
+        });
+        return isError;
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        const newErrors = findStep2Errors();
-        if (Object.keys(newErrors).length > 0) {
-            // We got errors!
-            setErrors(newErrors);
-        } else {
-            // No errors! Put any logic here for the form submission!
+        const stepError = findStep2Errors();
+        setErrors(stepError);
+        if (!checkAnyError(stepError)) {
             const { email, username, password, name, surname, phone, birthday } = form;
             alert(`Your registration detail: \n
                 Email: ${email} \n
@@ -105,13 +141,13 @@ const Signup = () => {
                 Password: ${password} \n
                 Name: ${name} \n
                 Surname: ${surname} \n
-                Birthday: ${birthday} \n
-                Phone: ${phone} \n`);
+                Phone: ${phone} \n
+                Birthday: ${birthday} \n`);
+            //
+            // history.push({
+            //     pathname: LANDING,
+            // });
         }
-
-        history.push({
-            pathname: LANDING,
-        });
     };
 
     const handleLogoClick = () => {
@@ -122,30 +158,31 @@ const Signup = () => {
 
     const next = (event) => {
         event.preventDefault();
-        const step1Errors = findStep1Errors();
-        if (Object.keys(step1Errors).length > 0) {
-            // We got errors!
-            setErrors(step1Errors);
-        } else {
-            // No errors!
-            setCurrentStep(currentStep + 1);
+        const stepError = findStep1Errors();
+        setErrors(stepError);
+        if (!checkAnyError(stepError)) {
+            setIsNext(!isNext);
+            setTimeout(() => {
+                setCurrentStep(currentStep + 1);
+            }, 500);
         }
     };
 
     const back = () => {
+        setIsNext(!isNext);
         setCurrentStep(currentStep <= 1 ? 1 : currentStep - 1);
     };
 
     const renderNextButton = () =>
         currentStep < 2 ? (
-            <button className="btn btn-primary" type="button" onClick={next}>
-                Next
+            <button className="btn font-weight-bold next-signup-btn" type="button" onClick={next}>
+                {isNext ? <Loading /> : 'Next'}
             </button>
         ) : null;
 
     const renderBackButton = () => (
         <button
-            className="btn btn-secondary mr-5"
+            className="btn font-weight-bold back-btn"
             type="button"
             hidden={currentStep === 1}
             onClick={back}
@@ -156,7 +193,7 @@ const Signup = () => {
 
     const renderSubmitButton = () =>
         currentStep === 2 ? (
-            <button className="btn btn-success" type="submit">
+            <button className="btn font-weight-bold next-signup-btn" type="submit">
                 Sign up
             </button>
         ) : null;
@@ -168,7 +205,7 @@ const Signup = () => {
                 noValidate
                 onSubmit={handleSubmit}
             >
-                <div className="form-row input-field-container">
+                <div className="form-row logo-container">
                     <div className="form-group">
                         <button
                             className="header-brand"
