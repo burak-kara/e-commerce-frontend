@@ -1,7 +1,10 @@
 import React from 'react';
+import { Form, Col } from 'react-bootstrap';
+import { nonError } from '../../_constants';
 
 const Step1 = (props) => {
-    const { email, username, password, repassword, currentStep, handleChange } = props;
+    const { currentStep, setField, errors, form } = props;
+    const { email, username, password, repassword } = form;
 
     if (currentStep !== 1) {
         return null;
@@ -9,78 +12,76 @@ const Step1 = (props) => {
 
     return (
         <>
-            <div className="form-row input-field-container">
-                <div className="form-group">
-                    <label className="form-label" htmlFor="email">
-                        Email address
-                        <input
-                            className="form-control"
-                            id="email"
-                            name="email"
-                            type="text"
-                            placeholder="Email"
-                            value={email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <div className="valid-feedback">Looks good!</div>
-                    <div className="invalid-feedback">Please check the email</div>
-                </div>
-            </div>
-            <div className="form-row input-field-container">
-                <div className="form-group">
-                    <label className="form-label" htmlFor="username">
-                        Username
-                        <input
-                            className="form-control"
-                            id="username"
-                            name="username"
-                            type="text"
-                            placeholder="Username"
-                            value={username}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <div className="valid-feedback">Looks good!</div>
-                    <div className="invalid-feedback">Please check the username</div>
-                </div>
-            </div>
-            <div className="form-row input-field-container">
-                <div className="form-group">
-                    <label className="form-label" htmlFor="password">
-                        Password
-                        <input
-                            className="form-control"
-                            id="password"
-                            name="password"
-                            type="text"
-                            placeholder="Password"
-                            value={password}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                </div>
-            </div>
-            <div className="form-row input-field-container">
-                <div className="form-group">
-                    <label htmlFor="repassword">
-                        Password
-                        <input
-                            className="form-control"
-                            id="repassword"
-                            name="repassword"
-                            type="text"
-                            placeholder="Confirm password"
-                            value={repassword}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                </div>
-            </div>
+            <Form.Row>
+                <Form.Group as={Col} md="12" controlId="email">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                        required
+                        name="email"
+                        type="text"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setField('email', e.target.value)}
+                        isInvalid={!!errors.email && errors.email !== nonError}
+                        isValid={errors.email === nonError}
+                    />
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+                </Form.Group>
+            </Form.Row>
+            <Form.Row>
+                <Form.Group as={Col} md="12" controlId="username">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                        required
+                        name="username"
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setField('username', e.target.value)}
+                        isInvalid={!!errors.username && errors.username !== nonError}
+                        isValid={errors.username === nonError}
+                    />
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">{errors.username}</Form.Control.Feedback>
+                </Form.Group>
+            </Form.Row>
+            <Form.Row>
+                <Form.Group as={Col} md="12" controlId="password">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        required
+                        name="password"
+                        type="text"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setField('password', e.target.value)}
+                        isInvalid={!!errors.password && errors.password !== nonError}
+                        isValid={errors.password === nonError}
+                    />
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+                </Form.Group>
+            </Form.Row>
+            <Form.Row>
+                <Form.Group as={Col} md="12" controlId="repassword">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control
+                        required
+                        name="repassword"
+                        type="text"
+                        placeholder="Confirm password"
+                        value={repassword}
+                        onChange={(e) => setField('repassword', e.target.value)}
+                        isInvalid={!!errors.repassword && errors.repassword !== nonError}
+                        isValid={errors.repassword === nonError}
+                    />
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                        {errors.repassword}
+                    </Form.Control.Feedback>
+                </Form.Group>
+            </Form.Row>
         </>
     );
 };
