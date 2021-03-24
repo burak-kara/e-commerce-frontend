@@ -11,7 +11,7 @@ const Step1 = (props) => {
         <>
             <div className="form-row input-field-container">
                 <div className="form-group">
-                    <label htmlFor="email">
+                    <label className="form-label" htmlFor="email">
                         Email address
                         <input
                             className="form-control"
@@ -21,13 +21,16 @@ const Step1 = (props) => {
                             placeholder="Email"
                             value={email}
                             onChange={handleChange}
+                            required
                         />
                     </label>
+                    <div className="valid-feedback">Looks good!</div>
+                    <div className="invalid-feedback">Please check the email</div>
                 </div>
             </div>
             <div className="form-row input-field-container">
                 <div className="form-group">
-                    <label htmlFor="username">
+                    <label className="form-label" htmlFor="username">
                         Username
                         <input
                             className="form-control"
@@ -37,13 +40,16 @@ const Step1 = (props) => {
                             placeholder="Username"
                             value={username}
                             onChange={handleChange}
+                            required
                         />
                     </label>
+                    <div className="valid-feedback">Looks good!</div>
+                    <div className="invalid-feedback">Please check the username</div>
                 </div>
             </div>
             <div className="form-row input-field-container">
                 <div className="form-group">
-                    <label htmlFor="password">
+                    <label className="form-label" htmlFor="password">
                         Password
                         <input
                             className="form-control"
@@ -53,6 +59,7 @@ const Step1 = (props) => {
                             placeholder="Password"
                             value={password}
                             onChange={handleChange}
+                            required
                         />
                     </label>
                 </div>
@@ -69,6 +76,7 @@ const Step1 = (props) => {
                             placeholder="Confirm password"
                             value={repassword}
                             onChange={handleChange}
+                            required
                         />
                     </label>
                 </div>

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Step1 from './Step1';
 import Step2 from './Step2';
-import { LANDING } from '../../../_constants';
-import logo from '../../../_assets';
+import { LANDING } from '../../_constants';
+import logo from '../../_assets';
 
 const Signup = () => {
     const [state, setState] = useState({
@@ -17,14 +17,20 @@ const Signup = () => {
         phone: '',
         birthday: '',
     });
+    const [step1Valid, setStep1Valid] = useState(false);
     const history = useHistory();
+
+    const validateInput = () => {};
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setState({
-            ...state,
-            [name]: value,
-        });
+        setState(
+            {
+                ...state,
+                [name]: value,
+            },
+            () => validateInput(name, value),
+        );
     };
 
     const handleSubmit = (event) => {
@@ -52,13 +58,22 @@ const Signup = () => {
         });
     };
 
+    const validateStep1 = (event) => {
+        const form = event.currentTarget;
+        console.log(form);
+        setStep1Valid(true);
+    };
+
     const next = () => {
         let { currentStep } = state;
         currentStep += 1;
-        setState({
-            ...state,
-            currentStep,
-        });
+        console.log(step1Valid);
+        validateStep1();
+        console.log(currentStep);
+        // setState({
+        //     ...state,
+        //     currentStep,
+        // });
     };
 
     const prev = () => {
@@ -111,7 +126,7 @@ const Signup = () => {
 
     return (
         <div className="signup">
-            <form className="form-container" onSubmit={handleSubmit}>
+            <form className="form-container needs-validation" onSubmit={handleSubmit}>
                 <div className="form-row input-field-container">
                     <div className="form-group">
                         <button
