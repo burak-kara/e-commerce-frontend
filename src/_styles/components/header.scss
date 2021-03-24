@@ -2,6 +2,7 @@
     height: 100px;
     background-color: $header-bg;
     box-shadow: 0 0 5px 0 $header-bg-shadow;
+    border-bottom: 5px solid $header-border;
 
     .header-brand {
         border: none !important;
@@ -70,7 +71,7 @@
                 display: flex;
                 justify-content: space-around;
                 border-radius: 4px !important;
-                border: 3px solid $a-btn;
+                border: 1px solid $header-border2;
                 background-color: $header-bg;
                 color: $a-btn;
                 box-shadow: 0 0 3px 0 $header-bg-shadow;
@@ -130,7 +131,7 @@
             justify-content: space-around;
             align-items: center;
             border-radius: 4px !important;
-            background-color: $b-btn;
+            background-color: $header-border2;
             color: $header-bg;
             box-shadow: 0 0 5px 0 $header-bg-shadow;
 

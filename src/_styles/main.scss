@@ -14,11 +14,14 @@ code {
     vertical-align: middle;
 }
 
+@import '~bootstrap/scss/bootstrap';
+
 @import '../_utilities/colors';
 
 @import 'pages/app/app';
+@import 'pages/signup/signup';
 @import 'pages/profile';
 
 @import 'components/navigation';
 @import 'components/header';
-
+@import 'components/loading';
