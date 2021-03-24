@@ -18,9 +18,7 @@ const Home = () => {
             },
         })
             .then((response) => response)
-            .catch((error) => {
-                console.log(error);
-            });
+            .catch(() => {});
         history.push({
             pathname: SIGN_UP,
         });

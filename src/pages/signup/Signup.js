@@ -134,19 +134,9 @@ const Signup = () => {
         const stepError = findStep2Errors();
         setErrors(stepError);
         if (!checkAnyError(stepError)) {
-            const { email, username, password, name, surname, phone, birthday } = form;
-            alert(`Your registration detail: \n
-                Email: ${email} \n
-                Username: ${username} \n
-                Password: ${password} \n
-                Name: ${name} \n
-                Surname: ${surname} \n
-                Phone: ${phone} \n
-                Birthday: ${birthday} \n`);
-            //
-            // history.push({
-            //     pathname: LANDING,
-            // });
+            history.push({
+                pathname: LANDING,
+            });
         }
     };
 
