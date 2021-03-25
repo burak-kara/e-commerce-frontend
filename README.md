@@ -1,3 +1,7 @@
+# Find the deployed app
+
+[https://e-commerce-ozu.web.app/](https://e-commerce-ozu.web.app/)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
