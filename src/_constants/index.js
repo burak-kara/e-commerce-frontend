@@ -1,6 +1,6 @@
-import { LANDING, BASKET, PROFILE, SETTINGS, ORDERS, SIGN_UP, SIGN_IN } from './routes';
+import { LANDING, BASKET, PROFILE, SETTINGS, ORDERS, SIGN_UP, SIGN_IN, SIGN_OUT } from './routes';
 
-export { LANDING, BASKET, PROFILE, SETTINGS, ORDERS, SIGN_UP, SIGN_IN };
+export { LANDING, BASKET, PROFILE, SETTINGS, ORDERS, SIGN_UP, SIGN_IN, SIGN_OUT };
 
 export const noneError = 'N';
 export const emailRegex = new RegExp(

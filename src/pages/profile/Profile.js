@@ -44,9 +44,7 @@ const Profile = () => {
             <br />
             <div className="account-info-list">
                 <div className="account-info-list-details">
-                    <div className="account-info-filler">
-                        <text />
-                    </div>
+                    <div className="account-info-filler">{/* <text /> */}</div>
                     <div className="account-info-list-details-element">
                         <text className="user-detail-label">Name:</text>
                         <text
