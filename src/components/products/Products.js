@@ -4,16 +4,20 @@ import Product from './Product';
 
 //  products will need to be retrieved from the DB.
 const products = [
-    { id: 1,
-    name: 'Shoes',
-    description: 'Running shoes.',
-    price:'$5',
-    image:'https://bit.ly/3cjqBEG'},
-    { id: 1,
-    name:'Gaming Notebook',
-    description: 'Gaming notebook.',
-    price:'$10',
-    image: 'https://bit.ly/3crSHOh'},
+    {
+        id: 1,
+        name: 'Shoes',
+        description: 'Running shoes.',
+        price: '$5',
+        image: 'https://bit.ly/3cjqBEG',
+    },
+    {
+        id: 1,
+        name: 'Gaming Notebook',
+        description: 'Gaming notebook.',
+        price: '$10',
+        image: 'https://bit.ly/3crSHOh',
+    },
 ];
 
 const Products = () => (
@@ -21,11 +25,11 @@ const Products = () => (
         <Grid container justify="center" spacing={4}>
             {products.map((product) => (
                 <Grid item key={product.id} xs={12} sm={6} lg={3}>
-                    <Product product={product}/>
+                    <Product product={product} />
                 </Grid>
             ))}
         </Grid>
-    </main> 
+    </main>
 );
 
 export default Products;
