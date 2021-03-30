@@ -1,8 +1,33 @@
-import { LANDING, BASKET, PROFILE, SETTINGS, ORDERS, SIGN_UP, SIGN_IN, SIGN_OUT } from './routes';
+import {
+    LANDING,
+    BASKET,
+    PROFILE,
+    SETTINGS,
+    ORDERS,
+    SIGN_UP,
+    SIGN_IN,
+    SIGN_OUT,
+    P_M_ITEMS,
+    P_M_ITEM_DETAILS,
+} from './routes';
 
-export { LANDING, BASKET, PROFILE, SETTINGS, ORDERS, SIGN_UP, SIGN_IN, SIGN_OUT };
+export {
+    LANDING,
+    BASKET,
+    PROFILE,
+    SETTINGS,
+    ORDERS,
+    SIGN_UP,
+    SIGN_IN,
+    SIGN_OUT,
+    P_M_ITEMS,
+    P_M_ITEM_DETAILS,
+};
 
 export const noneError = 'N';
+export const STAR_COUNT = 5;
+
+// Regexes
 export const emailRegex = new RegExp(
     '^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}' +
         '\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$',
