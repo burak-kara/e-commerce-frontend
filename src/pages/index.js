@@ -7,5 +7,6 @@ import Signout from './signout/Signout';
 import Signin from './signin/Signin';
 import Home from './home/Home';
 import Basket from './basket/Basket';
+import Items from './product_manager/Items';
 
-export { Dummy, Profile, Orders, Settings, Signup, Signout, Signin, Home, Basket };
+export { Dummy, Profile, Orders, Settings, Signup, Signout, Signin, Home, Basket, Items };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { SIGN_IN, SIGN_OUT, SIGN_UP } from '../../_constants';
+import { P_M_ITEMS, SIGN_IN, SIGN_OUT, SIGN_UP } from '../../_constants';
 import Products from '../../components/products/Products';
 
 const Home = () => {
@@ -25,6 +25,12 @@ const Home = () => {
         });
     };
 
+    const handleProductManager = () => {
+        history.push({
+            pathname: P_M_ITEMS,
+        });
+    };
+
     return (
         <div>
             <button className="btn btn-success mr-2" type="submit" onClick={() => handleSignIn()}>
@@ -39,6 +45,9 @@ const Home = () => {
             </button>
             <button className="btn btn-primary" type="submit" onClick={() => handleSignUp()}>
                 Sign up
+            </button>
+            <button className="btn btn-danger" type="submit" onClick={() => handleProductManager()}>
+                Product manager
             </button>
             <Products />
         </div>
