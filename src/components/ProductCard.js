@@ -1,9 +1,21 @@
 import React from 'react';
-import { Basket, Favorite } from '../_utilities/icons';
+import { Basket, Delete, Edit, Favorite } from '../_utilities/icons';
 import StarMaker from './StarMaker';
+import { PM } from '../_constants';
 
 const ProductCard = (props) => {
-    const { image, rating, name, brand, details, handleFav, price, campaign, handleBasket } = props;
+    const {
+        image,
+        rating,
+        name,
+        brand,
+        details,
+        price,
+        campaign,
+        handleUpper,
+        handleBottom,
+        role,
+    } = props;
 
     return (
         <div className="product-card">
@@ -12,20 +24,20 @@ const ProductCard = (props) => {
             </div>
             <div className="details">
                 <div className="star-container">
-                    <StarMaker rating={rating} />
+                    <StarMaker rating={rating || 0} />
                 </div>
                 <div className="fav-container">
-                    <button className="btn" type="button" onClick={handleFav}>
-                        <Favorite size="2em" />
+                    <button className="btn" type="button" onClick={handleUpper}>
+                        {role === PM ? <Delete size="2em" /> : <Favorite size="2em" />}
                     </button>
                 </div>
-                <div className="name-container">{name}</div>
-                <div className="brand-container">{brand}</div>
-                <div className="desc-container">{details}</div>
-                <div className="price-container">{price} ₺</div>
+                <div className="name-container">{name || 'Not Found'}</div>
+                <div className="brand-container">{brand || 'Not Found'}</div>
+                <div className="desc-container">{details || 'Not Found'}</div>
+                <div className="price-container">{price || 'Not Found'} ₺</div>
                 <div className="basket-container">
-                    <button className="btn" type="button" onClick={handleBasket}>
-                        <Basket size="2em" />
+                    <button className="btn" type="button" onClick={handleBottom}>
+                        {role === PM ? <Edit size="2em" /> : <Basket size="2em" />}
                     </button>
                 </div>
                 <div className="campaign-container">{campaign}</div>

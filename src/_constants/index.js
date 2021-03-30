@@ -27,6 +27,11 @@ export {
 export const noneError = 'N';
 export const STAR_COUNT = 5;
 
+// roles
+export const COSTUMER = 'costumer';
+export const PM = 'product_manager';
+export const SM = 'sales_manager';
+
 // Regexes
 export const emailRegex = new RegExp(
     '^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}' +

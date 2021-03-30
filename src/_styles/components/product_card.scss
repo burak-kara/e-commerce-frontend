@@ -8,10 +8,12 @@
         position: relative;
         width: 370px;
         height: 370px;
+        border-radius: 20px 20px 0 0 !important;
 
         .image {
             max-height: 370px;
             max-width: 370px;
+            border-radius: 20px 20px 0 0 !important;
         }
     }
 
@@ -20,11 +22,13 @@
         width: 370px;
         height: 200px;
         box-shadow: 0 -1px 3px 0 $header-bg-shadow;
+        background-color: $header-bg;
+        border-radius: 0 0 20px 20px !important;
 
         .star-container {
             position: absolute;
             width: 150px;
-            height: 30px;
+            height: 20px;
             left: 4px;
             top: 5px;
         }
@@ -45,12 +49,17 @@
             width: 295px;
             height: 25px;
             left: 5px;
-            top: 40px;
+            top: 32px;
 
             font-family: Roboto, sans-serif;
             font-style: normal;
             font-weight: 700;
             font-size: 18px;
+
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            max-width: 295px;
         }
 
         .brand-container {
@@ -58,7 +67,7 @@
             width: 295px;
             height: 20px;
             left: 5px;
-            top: 62px;
+            top: 55px;
 
             font-family: Roboto, sans-serif;
             font-style: italic;
@@ -72,11 +81,11 @@
             width: 360px;
             height: 35px;
             left: 5px;
-            top: 85px;
+            top: 82px;
 
             font-family: Roboto, sans-serif;
-            font-style: normal;
-            font-weight: 300;
+            font-style: italic;
+            font-weight: 200;
             font-size: 13px;
             line-height: 14px;
         }
@@ -113,6 +122,12 @@
             left: 5px;
             top: 165px;
             color: $campaign;
+
+            font-family: Roboto, sans-serif;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 13px;
+            line-height: 14px;
         }
     }
 
@@ -127,7 +142,8 @@
     }
 
     &:hover {
-        box-shadow: 0 0 7px 0 $header-bg-shadow;
-        border-radius: 20px;
+        box-shadow: 0 0 7px 0 $header-bg-shadow !important;
+        border-radius: 20px !important;
+        cursor: pointer;
     }
 }
