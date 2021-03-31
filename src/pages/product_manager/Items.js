@@ -64,25 +64,15 @@ const Items = () => {
     const history = useHistory();
     const role = PM;
 
-    const handleDelete = () => {
-        console.log('handleDelete');
-    };
+    const handleDelete = () => {};
 
-    const handleFav = () => {
-        console.log('handleFav');
-    };
+    const handleFav = () => {};
 
-    const handleEdit = () => {
-        console.log('handleEdit');
-    };
+    const handleEdit = () => {};
 
-    const handleBasket = () => {
-        console.log('handleBasket');
-    };
+    const handleBasket = () => {};
 
-    const handleCard = () => {
-        console.log('handleCard');
-    };
+    const handleCard = () => {};
 
     const handleAdd = () => {
         history.push({
