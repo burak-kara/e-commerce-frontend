@@ -1,5 +1,5 @@
 .header {
-    height: 100px;
+    height: $header-size;
     background-color: $header-bg;
     box-shadow: 0 0 5px 0 $header-bg-shadow;
     border-bottom: 5px solid $header-border;
