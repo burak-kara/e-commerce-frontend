@@ -23,7 +23,7 @@
         width: 370px;
         height: 200px;
         box-shadow: 0 -1px 3px 0 $header-bg-shadow;
-        background-color: $header-bg;
+        background-color: $card-bg;
         border-radius: 0 0 20px 20px !important;
 
         .star-container {
@@ -34,7 +34,7 @@
             top: 5px;
         }
 
-        .fav-container {
+        .upper-container {
             position: absolute;
             width: 60px;
             height: 55px;
@@ -43,6 +43,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
+
+            .pm-delete {
+                color: $b-btn;
+                &:hover {
+                    color: $delete;
+                    font-size: 30px;
+                }
+            }
+
+            .fav {
+            }
         }
 
         .name-container {
@@ -54,13 +65,12 @@
 
             font-family: Roboto, sans-serif;
             font-style: normal;
-            font-weight: 700;
-            font-size: 18px;
+            font-weight: 600;
+            font-size: 16px;
 
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            max-width: 295px;
         }
 
         .brand-container {
@@ -98,14 +108,14 @@
             left: 5px;
             top: 130px;
 
-            font-family: Roboto, sans-serif;
+            font-family: 'Calibri Light', sans-serif;
             font-style: normal;
-            font-weight: 500;
+            font-weight: 200;
             font-size: 32px;
             line-height: 37px;
         }
 
-        .basket-container {
+        .bottom-container {
             position: absolute;
             width: 70px;
             height: 70px;
@@ -114,6 +124,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
+
+            .pm-edit {
+                color: $b-btn;
+                &:hover {
+                    color: $edit;
+                    font-size: 30px;
+                }
+            }
         }
 
         .campaign-container {
@@ -135,10 +153,6 @@
     button {
         &:focus {
             box-shadow: none !important;
-        }
-
-        &:hover {
-            box-shadow: 0 0 3px 0 $header-bg-shadow;
         }
     }
 

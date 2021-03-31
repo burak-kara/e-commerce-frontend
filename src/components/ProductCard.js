@@ -14,29 +14,46 @@ const ProductCard = (props) => {
         campaign,
         handleUpper,
         handleBottom,
+        handleCard,
         role,
     } = props;
 
     return (
         <div className="product-card">
-            <div className="image-container">
+            <div
+                className="image-container"
+                role="button"
+                tabIndex="0"
+                onClick={handleCard}
+                onKeyDown={handleCard}
+            >
                 <img src={image} alt="product" className="image" />
             </div>
             <div className="details">
                 <div className="star-container">
                     <StarMaker rating={rating || 0} />
                 </div>
-                <div className="fav-container">
-                    <button className="btn" type="button" onClick={handleUpper}>
+                <div className="upper-container">
+                    <button
+                        className={`btn ${role === PM ? 'pm-delete' : 'fav'}`}
+                        type="button"
+                        onClick={handleUpper}
+                    >
                         {role === PM ? <Delete size="2em" /> : <Favorite size="2em" />}
                     </button>
                 </div>
                 <div className="name-container">{name || 'Not Found'}</div>
                 <div className="brand-container">{brand || 'Not Found'}</div>
                 <div className="desc-container">{details || 'Not Found'}</div>
-                <div className="price-container">{price || 'Not Found'} ₺</div>
-                <div className="basket-container">
-                    <button className="btn" type="button" onClick={handleBottom}>
+                <div className="price-container">
+                    <span>{price || 'Not Found'} ₺</span>
+                </div>
+                <div className="bottom-container">
+                    <button
+                        className={`btn ${role === PM ? 'pm-edit' : 'basket'}`}
+                        type="button"
+                        onClick={handleBottom}
+                    >
                         {role === PM ? <Edit size="2em" /> : <Basket size="2em" />}
                     </button>
                 </div>

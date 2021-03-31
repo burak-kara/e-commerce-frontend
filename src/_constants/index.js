@@ -9,6 +9,7 @@ import {
     SIGN_OUT,
     P_M_ITEMS,
     P_M_ITEM_DETAILS,
+    P_M_NEW_ITEM,
 } from './routes';
 
 export {
@@ -22,6 +23,7 @@ export {
     SIGN_OUT,
     P_M_ITEMS,
     P_M_ITEM_DETAILS,
+    P_M_NEW_ITEM,
 };
 
 export const noneError = 'N';

@@ -74,3 +74,4 @@ yarn-error.log*
 .eslintcache
 .firebase
 TODO_list
+react-app-env.d.ts

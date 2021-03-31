@@ -8,5 +8,6 @@ import Signin from './signin/Signin';
 import Home from './home/Home';
 import Basket from './basket/Basket';
 import Items from './product_manager/Items';
+import NewItem from './product_manager/NewItem';
 
-export { Dummy, Profile, Orders, Settings, Signup, Signout, Signin, Home, Basket, Items };
+export { Dummy, Profile, Orders, Settings, Signup, Signout, Signin, Home, Basket, Items, NewItem };

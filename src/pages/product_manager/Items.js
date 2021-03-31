@@ -1,7 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { ProductCard } from '../../components';
-import { PM } from '../../_constants';
+import { P_M_NEW_ITEM, PM } from '../../_constants';
+import { Add } from '../../_utilities/icons';
 
 const products = [
     {
@@ -36,7 +38,6 @@ const products = [
         brand: 'Perwoll',
         campaign: "Süpermarket Alışverişine Solo Tuvalet Kağıdı 32'li %20 indirimli",
     },
-
     {
         id: 3,
         name: 'Prochoice Proderma Yetişkin Kuzu Etli Köpek Maması 18 kg',
@@ -47,7 +48,6 @@ const products = [
         brand: 'Pro Choice',
         campaign: '75,97 TL x 3 ay’a varan Taksit seçenekleri',
     },
-
     {
         id: 4,
         name: 'Head&Shoulders Şampuan Klasik Bakım 400 ml x 2',
@@ -61,6 +61,7 @@ const products = [
 ];
 
 const Items = () => {
+    const history = useHistory();
     const role = PM;
 
     const handleDelete = () => {
@@ -70,6 +71,7 @@ const Items = () => {
     const handleFav = () => {
         console.log('handleFav');
     };
+
     const handleEdit = () => {
         console.log('handleEdit');
     };
@@ -78,73 +80,104 @@ const Items = () => {
         console.log('handleBasket');
     };
 
+    const handleCard = () => {
+        console.log('handleCard');
+    };
+
+    const handleAdd = () => {
+        history.push({
+            pathname: P_M_NEW_ITEM,
+        });
+    };
+
     const handleUpper = role === PM ? handleDelete : handleFav;
     const handleBottom = role === PM ? handleEdit : handleBasket;
 
     return (
         <Container fluid="lg" className="pm-item-list">
+            <Row className="add-row">
+                <Col
+                    className="add-col"
+                    xs={{ span: 12, offset: 0 }}
+                    md={{ span: 6, offset: 6 }}
+                    xl={{ span: 4, offset: 8 }}
+                >
+                    <button className="btn" type="button" onClick={handleAdd}>
+                        <Add />
+                        <div className="ml-1">New Product</div>
+                    </button>
+                </Col>
+            </Row>
             <Row className="row">
-                <Col sm={12} md={6} lg={4} className="col">
+                <Col xs={12} md={6} xl={4} className="col">
                     <ProductCard
                         role={role}
                         handleUpper={handleUpper}
                         handleBottom={handleBottom}
+                        handleCard={handleCard}
                         {...products[0]}
                     />
                 </Col>
-                <Col sm={12} md={6} lg={4} className="col">
+                <Col xs={12} md={6} xl={4} className="col">
                     <ProductCard
                         role={role}
                         handleUpper={handleUpper}
                         handleBottom={handleBottom}
+                        handleCard={handleCard}
                         {...products[1]}
                     />
                 </Col>
-                <Col sm={12} md={6} lg={4} className="col">
+                <Col xs={12} md={6} xl={4} className="col">
                     <ProductCard
                         role={role}
                         handleUpper={handleUpper}
                         handleBottom={handleBottom}
+                        handleCard={handleCard}
                         {...products[2]}
                     />
                 </Col>
-                <Col sm={12} md={6} lg={4} className="col">
+                <Col xs={12} md={6} xl={4} className="col">
                     <ProductCard
                         role={role}
                         handleUpper={handleUpper}
                         handleBottom={handleBottom}
+                        handleCard={handleCard}
                         {...products[3]}
                     />
                 </Col>
-                <Col sm={12} md={6} lg={4} className="col">
+                <Col xs={12} md={6} xl={4} className="col">
                     <ProductCard
                         role={role}
                         handleUpper={handleUpper}
                         handleBottom={handleBottom}
+                        handleCard={handleCard}
                         {...products[4]}
                     />
                 </Col>
-                <Col sm={12} md={6} lg={4} className="col">
+                <Col xs={12} md={6} xl={4} className="col">
                     <ProductCard
                         role={role}
                         handleUpper={handleUpper}
                         handleBottom={handleBottom}
+                        handleCard={handleCard}
                         {...products[0]}
                     />
                 </Col>
-                <Col sm={12} md={6} lg={4} className="col">
+                <Col xs={12} md={6} xl={4} className="col">
                     <ProductCard
                         role={role}
                         handleUpper={handleUpper}
                         handleBottom={handleBottom}
+                        handleCard={handleCard}
                         {...products[0]}
                     />
                 </Col>
-                <Col sm={12} md={6} lg={4} className="col">
+                <Col xs={12} md={6} xl={4} className="col">
                     <ProductCard
                         role={role}
                         handleUpper={handleUpper}
                         handleBottom={handleBottom}
+                        handleCard={handleCard}
                         {...products[0]}
                     />
                 </Col>
