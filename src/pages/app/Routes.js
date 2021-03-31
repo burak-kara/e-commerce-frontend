@@ -1,11 +1,25 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { Header, Navigation } from '../../components';
-import { Basket, Dummy, Home, Orders, Profile, Settings, Signin, Signout, Signup } from '../index';
+import {
+    Basket,
+    Dummy,
+    Home,
+    Items,
+    NewItem,
+    Orders,
+    Profile,
+    Settings,
+    Signin,
+    Signout,
+    Signup,
+} from '../index';
 import {
     BASKET,
     LANDING,
     ORDERS,
+    P_M_ITEMS,
+    P_M_NEW_ITEM,
     PROFILE,
     SETTINGS,
     SIGN_IN,
@@ -52,6 +66,9 @@ const Routes = () => {
                 <Route exact path={SIGN_UP} component={Signup} />
                 <Route exact path={SIGN_OUT} component={Signout} />
                 <Route exact path={SIGN_IN} component={Signin} />
+
+                <Route exact path={P_M_ITEMS} component={Items} />
+                <Route exact path={P_M_NEW_ITEM} component={NewItem} />
                 {/* <Route path="*" component={ProtectedHandler} /> */}
             </Switch>
         </>

@@ -1,56 +1,63 @@
 import React from 'react';
 import { IconContext } from 'react-icons/lib';
 import { FaSearch, FaRegUser } from 'react-icons/fa';
-import { IoIosArrowDropdownCircle } from 'react-icons/io';
+import {
+    IoIosArrowDropdownCircle,
+    IoIosStarHalf,
+    IoIosStarOutline,
+    IoIosStar,
+} from 'react-icons/io';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { BiHide, BiShow } from 'react-icons/bi';
+import { MdFavoriteBorder, MdAdd, MdEdit, MdDelete } from 'react-icons/md';
 
-const Search = (props) => (
-    <IconContext.Provider value={{ ...props }}>
-        <div>
-            <FaSearch />
-        </div>
-    </IconContext.Provider>
-);
+const IconMaker = (props) => {
+    const { icon } = props;
+    return (
+        <IconContext.Provider value={{ ...props }}>
+            <div>{icon}</div>
+        </IconContext.Provider>
+    );
+};
 
-const Account = (props) => (
-    <IconContext.Provider value={{ ...props }}>
-        <div>
-            <FaRegUser />
-        </div>
-    </IconContext.Provider>
-);
+const Search = (props) => <IconMaker icon={<FaSearch />} {...props} />;
 
-const DropDown = (props) => (
-    <IconContext.Provider value={{ ...props }}>
-        <div>
-            <IoIosArrowDropdownCircle />
-        </div>
-    </IconContext.Provider>
-);
+const Account = (props) => <IconMaker icon={<FaRegUser />} {...props} />;
 
-const Basket = (props) => (
-    <IconContext.Provider value={{ ...props }}>
-        <div>
-            <RiShoppingCartLine />
-        </div>
-    </IconContext.Provider>
-);
+const DropDown = (props) => <IconMaker icon={<IoIosArrowDropdownCircle />} {...props} />;
 
-const Hide = (props) => (
-    <IconContext.Provider value={{ ...props }}>
-        <div>
-            <BiHide />
-        </div>
-    </IconContext.Provider>
-);
+const Basket = (props) => <IconMaker icon={<RiShoppingCartLine />} {...props} />;
 
-const Show = (props) => (
-    <IconContext.Provider value={{ ...props }}>
-        <div>
-            <BiShow />
-        </div>
-    </IconContext.Provider>
-);
+const Hide = (props) => <IconMaker icon={<BiHide />} {...props} />;
 
-export { Search, Account, DropDown, Basket, Hide, Show };
+const Show = (props) => <IconMaker icon={<BiShow />} {...props} />;
+
+const FilledStar = (props) => <IconMaker icon={<IoIosStar />} {...props} />;
+
+const HalfStar = (props) => <IconMaker icon={<IoIosStarHalf />} {...props} />;
+
+const EmptyStar = (props) => <IconMaker icon={<IoIosStarOutline />} {...props} />;
+
+const Favorite = (props) => <IconMaker icon={<MdFavoriteBorder />} {...props} />;
+
+const Add = (props) => <IconMaker icon={<MdAdd />} {...props} />;
+
+const Edit = (props) => <IconMaker icon={<MdEdit />} {...props} />;
+
+const Delete = (props) => <IconMaker icon={<MdDelete />} {...props} />;
+
+export {
+    Search,
+    Account,
+    DropDown,
+    Basket,
+    Hide,
+    Show,
+    FilledStar,
+    HalfStar,
+    EmptyStar,
+    Favorite,
+    Add,
+    Edit,
+    Delete,
+};
