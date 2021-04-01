@@ -20,6 +20,23 @@ const ProductCard = (props) => {
         isPreview,
     } = props;
 
+    const getImageContainer = () => {
+        const img = <img src={image || logo} alt="product" className={image ? 'image' : 'logo'} />;
+        return isPreview ? (
+            <div className="image-container">{img}</div>
+        ) : (
+            <div
+                className="image-container"
+                role="button"
+                tabIndex="0"
+                onClick={handleCard}
+                onKeyDown={handleCard}
+            >
+                {img}
+            </div>
+        );
+    };
+
     const getUpperIcon = () => {
         if (isPreview) {
             return null;
@@ -42,15 +59,7 @@ const ProductCard = (props) => {
 
     return (
         <div className="product-card">
-            <div
-                className="image-container"
-                role="button"
-                tabIndex="0"
-                onClick={handleCard}
-                onKeyDown={handleCard}
-            >
-                <img src={image || logo} alt="product" className={image ? 'image' : 'logo'} />
-            </div>
+            {getImageContainer()}
             <div className="details">
                 <div className="star-container">
                     <StarMaker rating={rating || 0} />
