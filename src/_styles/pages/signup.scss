@@ -1,4 +1,4 @@
-$bg-img: url('https://www.illicitwebdesign.co.uk/images/blog/ecommerce-exeter.png');
+$bg-img: url('../images/bg.png');
 
 .signup {
     display: flex;
@@ -9,6 +9,7 @@ $bg-img: url('https://www.illicitwebdesign.co.uk/images/blog/ecommerce-exeter.pn
     &:before {
         content: '';
         background-image: $bg-img;
+        background-color: #ed5f1f;
         opacity: 0.6;
         filter: blur(1px);
         background-position: center;

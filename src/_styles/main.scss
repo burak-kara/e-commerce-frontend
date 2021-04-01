@@ -17,6 +17,7 @@ code {
 @import '~bootstrap/scss/bootstrap';
 
 @import '../_utilities/colors';
+@import '../_utilities/sizes';
 
 @import 'pages/app';
 @import 'pages/signup';
@@ -29,3 +30,4 @@ code {
 @import 'components/loading';
 @import 'components/product_card';
 @import 'components/star_maker';
+@import 'components/discard_modal';
