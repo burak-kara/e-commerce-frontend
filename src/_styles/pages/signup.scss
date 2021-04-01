@@ -1,0 +1,87 @@
+$bg-img: url('https://www.illicitwebdesign.co.uk/images/blog/ecommerce-exeter.png');
+
+.signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    &:before {
+        content: '';
+        background-image: $bg-img;
+        opacity: 0.6;
+        filter: blur(1px);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    .form-container {
+        height: 710px;
+        padding: 50px;
+        border-radius: 20px;
+        background-color: $header-bg;
+        box-shadow: 0 0 5px 0 $header-bg-shadow;
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+
+            .header-brand {
+                border: none !important;
+                background-color: $transparent;
+                margin-bottom: 30px;
+
+                .logo {
+                    max-width: 200px;
+                    max-height: 100px;
+                }
+            }
+        }
+
+        .password_btn {
+            background-color: $a-btn;
+
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        .next-signup-btn {
+            color: $nav-btn-hover;
+            background-color: $common-btn;
+
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        .back-btn {
+            color: $a-btn;
+            border-color: $common-btn;
+            margin-right: 30px;
+
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+
+            .btn {
+                height: 38px;
+                width: 100px;
+            }
+        }
+    }
+}

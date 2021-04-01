@@ -1,0 +1,164 @@
+.product-card {
+    width: 370px;
+    height: 570px;
+    //background: rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+
+    .image-container {
+        position: relative;
+        width: 370px;
+        height: 370px;
+        border-radius: 20px 20px 0 0 !important;
+        box-shadow: 0 0 3px 0 $header-bg-shadow;
+
+        .image {
+            max-height: 370px;
+            max-width: 370px;
+            border-radius: 20px 20px 0 0 !important;
+        }
+    }
+
+    .details {
+        position: relative;
+        width: 370px;
+        height: 200px;
+        box-shadow: 0 -1px 3px 0 $header-bg-shadow;
+        background-color: $card-bg;
+        border-radius: 0 0 20px 20px !important;
+
+        .star-container {
+            position: absolute;
+            width: 150px;
+            height: 20px;
+            left: 4px;
+            top: 5px;
+        }
+
+        .upper-container {
+            position: absolute;
+            width: 60px;
+            height: 55px;
+            left: 305px;
+            top: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .pm-delete {
+                color: $b-btn;
+                &:hover {
+                    color: $delete;
+                    font-size: 30px;
+                }
+            }
+
+            .fav {
+            }
+        }
+
+        .name-container {
+            position: absolute;
+            width: 295px;
+            height: 25px;
+            left: 5px;
+            top: 32px;
+
+            font-family: Roboto, sans-serif;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .brand-container {
+            position: absolute;
+            width: 295px;
+            height: 20px;
+            left: 5px;
+            top: 55px;
+
+            font-family: Roboto, sans-serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 16px;
+        }
+
+        .desc-container {
+            position: absolute;
+            width: 360px;
+            height: 35px;
+            left: 5px;
+            top: 82px;
+
+            font-family: Roboto, sans-serif;
+            font-style: italic;
+            font-weight: 200;
+            font-size: 13px;
+            line-height: 14px;
+        }
+
+        .price-container {
+            position: absolute;
+            width: 240px;
+            height: 35px;
+            left: 5px;
+            top: 130px;
+
+            font-family: 'Calibri Light', sans-serif;
+            font-style: normal;
+            font-weight: 200;
+            font-size: 32px;
+            line-height: 37px;
+        }
+
+        .bottom-container {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            left: 295px;
+            top: 125px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .pm-edit {
+                color: $b-btn;
+                &:hover {
+                    color: $edit;
+                    font-size: 30px;
+                }
+            }
+        }
+
+        .campaign-container {
+            position: absolute;
+            width: 240px;
+            height: 30px;
+            left: 5px;
+            top: 165px;
+            color: $campaign;
+
+            font-family: Roboto, sans-serif;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 13px;
+            line-height: 14px;
+        }
+    }
+
+    button {
+        &:focus {
+            box-shadow: none !important;
+        }
+    }
+
+    &:hover {
+        box-shadow: 0 0 7px 0 $header-bg-shadow !important;
+        border-radius: 20px !important;
+        cursor: pointer;
+    }
+}

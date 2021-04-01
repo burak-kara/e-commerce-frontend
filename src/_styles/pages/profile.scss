@@ -5,7 +5,7 @@
     align-items: center;
     -webkit-align-items: center;
     background-color: $header-bg;
-    
+
     .profile-picture {
         width: 160px;
         height: 200px;
@@ -22,7 +22,7 @@
     }
 
     .account-info-list-details-element {
-        display: flex; 
+        display: flex;
         width: 20%;
         justify-content: space-evenly;
 
@@ -32,11 +32,11 @@
         }
 
         .user-detail-text-userspecific {
-            border-width: 1px; 
+            border-width: 1px;
             border-color: black;
             border-style: solid;
             width: 200px;
-        }   
+        }
     }
 
     .account-info-list-password-element {
@@ -51,7 +51,7 @@
         }
     }
 
-    .account-info-filler{
+    .account-info-filler {
         width: 40%;
         height: auto;
     }

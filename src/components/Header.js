@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import logo from '../../_assets';
-import { Search, Account, DropDown, Basket } from '../../_utilities/icons';
-import { BASKET, PROFILE, LANDING, SETTINGS, ORDERS } from '../../_constants';
+import { logo } from '../_assets';
+import { Search, Account, DropDown, Basket } from '../_utilities/icons';
+import { BASKET, PROFILE, LANDING, SETTINGS, ORDERS, SIGN_OUT } from '../_constants';
 
 const Header = () => {
     const history = useHistory();
@@ -34,6 +34,12 @@ const Header = () => {
     const handleSettingsClick = () => {
         history.push({
             pathname: SETTINGS,
+        });
+    };
+
+    const handleSignOut = () => {
+        history.push({
+            pathname: SIGN_OUT,
         });
     };
 
@@ -122,7 +128,11 @@ const Header = () => {
                                         Settings
                                     </button>
                                     <div className="dropdown-divider md-b" />
-                                    <button className="dropdown-item menu-btn" type="button">
+                                    <button
+                                        className="dropdown-item menu-btn"
+                                        type="button"
+                                        onClick={() => handleSignOut()}
+                                    >
                                         Logout
                                     </button>
                                 </div>
