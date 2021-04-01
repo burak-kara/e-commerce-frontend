@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 
 const DiscardModal = (props) => {
-    const { show, onHide, onDiscard, header, body } = props;
+    const { show, onHide, onDiscard, header, body, buttonText } = props;
 
     return (
         <Modal
@@ -25,7 +25,7 @@ const DiscardModal = (props) => {
                     Cancel
                 </button>
                 <button className="btn btn-danger mr-2" type="button" onClick={onDiscard}>
-                    Discard
+                    {buttonText || 'Discard'}
                 </button>
             </Modal.Footer>
         </Modal>

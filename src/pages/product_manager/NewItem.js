@@ -5,6 +5,7 @@ import PreviewModal from './PreviewModal';
 import { DiscardModal } from '../../components';
 import { noneError, P_M_ITEMS } from '../../_constants';
 
+// TODO delete after BE implementation
 const cats = ['Electronics', 'Fashion', 'Home', 'Books', 'Automotive', 'Sports', 'Games', 'Health'];
 const camps = [
     '24 saatte kargoda',
@@ -75,6 +76,10 @@ const NewItem = () => {
         // description errors
         if (!description || description === '')
             newErrors.description = 'Please provide a valid description!';
+        else if (description.length < 20)
+            newErrors.description = 'Product description should be minimum 20 characters!';
+        else if (description.length > 100)
+            newErrors.description = 'Product description should be at max 100 characters!';
 
         // specs errors
         if (!specs || specs === '') newErrors.specs = 'Please provide a valid specs!';
@@ -315,7 +320,6 @@ const NewItem = () => {
             />
             <DiscardModal
                 show={confirmModal}
-                form={form}
                 onHide={() => setConfirmModal(false)}
                 onDiscard={onDiscard}
                 header="Discard New Product?"

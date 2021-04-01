@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-import { ProductCard } from '../../components';
+import { DiscardModal, ProductCard } from '../../components';
 import { P_M_NEW_ITEM, PM } from '../../_constants';
 import { Add } from '../../_utilities/icons';
 
+// TODO delete after BE implementation
 const products = [
     {
         id: 0,
@@ -62,17 +63,25 @@ const products = [
 
 const Items = () => {
     const history = useHistory();
+    const [confirmModal, setConfirmModal] = useState(false);
     const role = PM;
 
-    const handleDelete = () => {};
+    const handleDelete = () => {
+        setConfirmModal(true);
+    };
 
-    const handleFav = () => {};
+    const onDiscard = () => {
+        // TODO delete product
+        setConfirmModal(false);
+    };
 
-    const handleEdit = () => {};
+    const handleEdit = () => {
+        // TODO Orkun
+    };
 
-    const handleBasket = () => {};
-
-    const handleCard = () => {};
+    const handleCard = () => {
+        // TODO open product details
+    };
 
     const handleAdd = () => {
         history.push({
@@ -80,99 +89,109 @@ const Items = () => {
         });
     };
 
-    const handleUpper = role === PM ? handleDelete : handleFav;
-    const handleBottom = role === PM ? handleEdit : handleBasket;
+    const handleUpper = role === PM ? handleDelete : null;
+    const handleBottom = role === PM ? handleEdit : null;
 
     return (
-        <Container fluid="lg" className="pm-item-list">
-            <Row className="add-row">
-                <Col
-                    className="add-col"
-                    xs={{ span: 12, offset: 0 }}
-                    md={{ span: 6, offset: 6 }}
-                    xl={{ span: 4, offset: 8 }}
-                >
-                    <button className="btn" type="button" onClick={handleAdd}>
-                        <Add />
-                        <div className="ml-1">New Product</div>
-                    </button>
-                </Col>
-            </Row>
-            <Row className="row">
-                <Col xs={12} md={6} xl={4} className="col">
-                    <ProductCard
-                        role={role}
-                        handleUpper={handleUpper}
-                        handleBottom={handleBottom}
-                        handleCard={handleCard}
-                        {...products[0]}
-                    />
-                </Col>
-                <Col xs={12} md={6} xl={4} className="col">
-                    <ProductCard
-                        role={role}
-                        handleUpper={handleUpper}
-                        handleBottom={handleBottom}
-                        handleCard={handleCard}
-                        {...products[1]}
-                    />
-                </Col>
-                <Col xs={12} md={6} xl={4} className="col">
-                    <ProductCard
-                        role={role}
-                        handleUpper={handleUpper}
-                        handleBottom={handleBottom}
-                        handleCard={handleCard}
-                        {...products[2]}
-                    />
-                </Col>
-                <Col xs={12} md={6} xl={4} className="col">
-                    <ProductCard
-                        role={role}
-                        handleUpper={handleUpper}
-                        handleBottom={handleBottom}
-                        handleCard={handleCard}
-                        {...products[3]}
-                    />
-                </Col>
-                <Col xs={12} md={6} xl={4} className="col">
-                    <ProductCard
-                        role={role}
-                        handleUpper={handleUpper}
-                        handleBottom={handleBottom}
-                        handleCard={handleCard}
-                        {...products[4]}
-                    />
-                </Col>
-                <Col xs={12} md={6} xl={4} className="col">
-                    <ProductCard
-                        role={role}
-                        handleUpper={handleUpper}
-                        handleBottom={handleBottom}
-                        handleCard={handleCard}
-                        {...products[0]}
-                    />
-                </Col>
-                <Col xs={12} md={6} xl={4} className="col">
-                    <ProductCard
-                        role={role}
-                        handleUpper={handleUpper}
-                        handleBottom={handleBottom}
-                        handleCard={handleCard}
-                        {...products[0]}
-                    />
-                </Col>
-                <Col xs={12} md={6} xl={4} className="col">
-                    <ProductCard
-                        role={role}
-                        handleUpper={handleUpper}
-                        handleBottom={handleBottom}
-                        handleCard={handleCard}
-                        {...products[0]}
-                    />
-                </Col>
-            </Row>
-        </Container>
+        <>
+            <Container fluid="lg" className="pm-item-list">
+                <Row className="add-row">
+                    <Col
+                        className="add-col"
+                        xs={{ span: 12, offset: 0 }}
+                        md={{ span: 6, offset: 6 }}
+                        xl={{ span: 4, offset: 8 }}
+                    >
+                        <button className="btn" type="button" onClick={handleAdd}>
+                            <Add />
+                            <div className="ml-1">New Product</div>
+                        </button>
+                    </Col>
+                </Row>
+                <Row className="row">
+                    <Col xs={12} md={6} xl={4} className="col">
+                        <ProductCard
+                            role={role}
+                            handleUpper={handleUpper}
+                            handleBottom={handleBottom}
+                            handleCard={handleCard}
+                            {...products[0]}
+                        />
+                    </Col>
+                    <Col xs={12} md={6} xl={4} className="col">
+                        <ProductCard
+                            role={role}
+                            handleUpper={handleUpper}
+                            handleBottom={handleBottom}
+                            handleCard={handleCard}
+                            {...products[1]}
+                        />
+                    </Col>
+                    <Col xs={12} md={6} xl={4} className="col">
+                        <ProductCard
+                            role={role}
+                            handleUpper={handleUpper}
+                            handleBottom={handleBottom}
+                            handleCard={handleCard}
+                            {...products[2]}
+                        />
+                    </Col>
+                    <Col xs={12} md={6} xl={4} className="col">
+                        <ProductCard
+                            role={role}
+                            handleUpper={handleUpper}
+                            handleBottom={handleBottom}
+                            handleCard={handleCard}
+                            {...products[3]}
+                        />
+                    </Col>
+                    <Col xs={12} md={6} xl={4} className="col">
+                        <ProductCard
+                            role={role}
+                            handleUpper={handleUpper}
+                            handleBottom={handleBottom}
+                            handleCard={handleCard}
+                            {...products[4]}
+                        />
+                    </Col>
+                    <Col xs={12} md={6} xl={4} className="col">
+                        <ProductCard
+                            role={role}
+                            handleUpper={handleUpper}
+                            handleBottom={handleBottom}
+                            handleCard={handleCard}
+                            {...products[0]}
+                        />
+                    </Col>
+                    <Col xs={12} md={6} xl={4} className="col">
+                        <ProductCard
+                            role={role}
+                            handleUpper={handleUpper}
+                            handleBottom={handleBottom}
+                            handleCard={handleCard}
+                            {...products[0]}
+                        />
+                    </Col>
+                    <Col xs={12} md={6} xl={4} className="col">
+                        <ProductCard
+                            role={role}
+                            handleUpper={handleUpper}
+                            handleBottom={handleBottom}
+                            handleCard={handleCard}
+                            {...products[0]}
+                        />
+                    </Col>
+                </Row>
+            </Container>
+            <DiscardModal
+                show={confirmModal}
+                onHide={() => setConfirmModal(false)}
+                onDiscard={onDiscard}
+                header="Delete the Product?"
+                body="If you delete this product now, you will lose it permanently."
+                buttonText="Delete"
+            />
+        </>
     );
 };
 
