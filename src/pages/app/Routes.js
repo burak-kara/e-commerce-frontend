@@ -6,7 +6,7 @@ import {
     Dummy,
     Home,
     Items,
-    NewItem,
+    ItemSingleView,
     Orders,
     Profile,
     Settings,
@@ -68,7 +68,7 @@ const Routes = () => {
                 <Route exact path={SIGN_IN} component={Signin} />
 
                 <Route exact path={P_M_ITEMS} component={Items} />
-                <Route exact path={P_M_NEW_ITEM} component={NewItem} />
+                <Route exact path={P_M_NEW_ITEM} component={ItemSingleView} />
                 {/* <Route path="*" component={ProtectedHandler} /> */}
             </Switch>
         </>
