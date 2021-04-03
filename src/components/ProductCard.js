@@ -6,6 +6,7 @@ import { logo } from '../_assets';
 
 const ProductCard = (props) => {
     const {
+        id,
         image,
         rating,
         name,
@@ -68,7 +69,7 @@ const ProductCard = (props) => {
                     <button
                         className={`btn ${role === PM ? 'pm-delete' : 'fav'}`}
                         type="button"
-                        onClick={handleUpper}
+                        onClick={() => handleUpper(id)}
                     >
                         {getUpperIcon()}
                     </button>

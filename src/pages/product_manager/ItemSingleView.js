@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Col, InputGroup } from 'react-bootstrap';
 import PreviewModal from './PreviewModal';
 import { DiscardModal } from '../../components';
 import { noneError, P_M_ITEMS } from '../../_constants';
+import { getCategories, postNewItem } from '../../_requests';
 
 // TODO delete after BE implementation
-const cats = ['Electronics', 'Fashion', 'Home', 'Books', 'Automotive', 'Sports', 'Games', 'Health'];
 const camps = [
     '24 saatte kargoda',
     "Süpermarket Alışverişine Solo Tuvalet Kağıdı 32'li %20 indirimli",
 ];
 
-const NewItem = () => {
+const ItemSingleView = () => {
     const history = useHistory();
     const [previewModal, setPreviewModal] = useState(false);
     const [confirmModal, setConfirmModal] = useState(false);
-    const [form, setForm] = useState({});
+    const [categories, setCategories] = useState();
+    const [loading, setLoading] = useState(false);
+    const [form, setForm] = useState({ seller: '2' });
     const [errors, setErrors] = useState({
         image: '',
         name: '',
@@ -28,6 +30,20 @@ const NewItem = () => {
         specs: '',
         campaign: '',
     });
+
+    useEffect(() => {
+        setLoading(true);
+        getCategories()
+            .then((response) => {
+                setCategories(response.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                // TODO handle error
+                setLoading(false);
+                setLoading(!loading); // TODO delete
+            });
+    }, []);
 
     const setField = (field, value) => {
         setForm({
@@ -114,14 +130,24 @@ const NewItem = () => {
 
     const onConfirm = () => {
         // TODO push to backend
+        postNewItem(form)
+            .then(() => {
+                // TODO successful message
+            })
+            .catch(() => {
+                // TODO error handler
+            });
+        history.push({
+            pathname: P_M_ITEMS,
+        });
     };
 
     const renderCategories = () => {
-        const categories = [<option key="default">Choose category</option>];
-        cats.forEach((cat) => {
-            categories.push(<option key={cat}>{cat}</option>);
+        const cats = [<option key="default">Choose category</option>];
+        categories.forEach((item) => {
+            cats.push(<option key={item.name}>{item.name}</option>);
         });
-        return categories;
+        return cats;
     };
 
     const renderCampaigns = () => {
@@ -198,7 +224,7 @@ const NewItem = () => {
                                 isInvalid={!!errors.category && errors.category !== noneError}
                                 isValid={errors.category === noneError}
                             >
-                                {renderCategories()}
+                                {categories ? renderCategories() : null}
                             </Form.Control>
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
@@ -328,4 +354,4 @@ const NewItem = () => {
     );
 };
 
-export default NewItem;
+export default ItemSingleView;

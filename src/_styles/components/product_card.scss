@@ -97,7 +97,7 @@
         .desc-container {
             position: absolute;
             width: 360px;
-            height: 35px;
+            height: 28px;
             left: 5px;
             top: 82px;
 
@@ -106,6 +106,11 @@
             font-weight: 200;
             font-size: 13px;
             line-height: 14px;
+
+            overflow: hidden;
+            word-wrap: break-word;
+            text-overflow: ellipsis;
+            display: block;
         }
 
         .price-container {
