@@ -10,4 +10,16 @@ import Basket from './basket/Basket';
 import Items from './product_manager/Items';
 import ItemSingleView from './product_manager/ItemSingleView';
 
-export { Dummy, Profile, Orders, Settings, Signup, Signout, Signin, Home, Basket, Items, ItemSingleView };
+export {
+    Dummy,
+    Profile,
+    Orders,
+    Settings,
+    Signup,
+    Signout,
+    Signin,
+    Home,
+    Basket,
+    Items,
+    ItemSingleView,
+};
