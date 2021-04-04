@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // TODO change to the deployed backend server
 // const API_URL = 'http://127.0.0.1:8000/api/';
-const API_URL = 'http://85.105.153.191:8000/api/';
+const API_URL = 'https://e-commerce-ozu.herokuapp.com/api/';
 
 axios.defaults.headers.common.Accept = '*/*';
 
