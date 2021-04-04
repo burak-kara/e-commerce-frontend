@@ -2,24 +2,30 @@ import React from 'react';
 import { Basket, Delete, Edit, Favorite } from '../_utilities/icons';
 import StarMaker from './StarMaker';
 import { PM } from '../_constants';
+import { logo } from '../_assets';
 
 const ProductCard = (props) => {
     const {
+        id,
         image,
         rating,
         name,
         brand,
-        details,
+        description,
         price,
         campaign,
         handleUpper,
         handleBottom,
         handleCard,
         role,
+        isPreview,
     } = props;
 
-    return (
-        <div className="product-card">
+    const getImageContainer = () => {
+        const img = <img src={image || logo} alt="product" className={image ? 'image' : 'logo'} />;
+        return isPreview ? (
+            <div className="image-container">{img}</div>
+        ) : (
             <div
                 className="image-container"
                 role="button"
@@ -27,8 +33,34 @@ const ProductCard = (props) => {
                 onClick={handleCard}
                 onKeyDown={handleCard}
             >
-                <img src={image} alt="product" className="image" />
+                {img}
             </div>
+        );
+    };
+
+    const getUpperIcon = () => {
+        if (isPreview) {
+            return null;
+        }
+        if (role === PM) {
+            return <Delete size="2em" />;
+        }
+        return <Favorite size="2em" />;
+    };
+
+    const getBottomIcon = () => {
+        if (isPreview) {
+            return null;
+        }
+        if (role === PM) {
+            return <Edit size="2em" />;
+        }
+        return <Basket size="2em" />;
+    };
+
+    return (
+        <div className="product-card">
+            {getImageContainer()}
             <div className="details">
                 <div className="star-container">
                     <StarMaker rating={rating || 0} />
@@ -37,14 +69,14 @@ const ProductCard = (props) => {
                     <button
                         className={`btn ${role === PM ? 'pm-delete' : 'fav'}`}
                         type="button"
-                        onClick={handleUpper}
+                        onClick={() => handleUpper(id)}
                     >
-                        {role === PM ? <Delete size="2em" /> : <Favorite size="2em" />}
+                        {getUpperIcon()}
                     </button>
                 </div>
                 <div className="name-container">{name || 'Not Found'}</div>
                 <div className="brand-container">{brand || 'Not Found'}</div>
-                <div className="desc-container">{details || 'Not Found'}</div>
+                <div className="desc-container">{description || 'Not Found'}</div>
                 <div className="price-container">
                     <span>{price || 'Not Found'} ₺</span>
                 </div>
@@ -54,7 +86,7 @@ const ProductCard = (props) => {
                         type="button"
                         onClick={handleBottom}
                     >
-                        {role === PM ? <Edit size="2em" /> : <Basket size="2em" />}
+                        {getBottomIcon()}
                     </button>
                 </div>
                 <div className="campaign-container">{campaign}</div>

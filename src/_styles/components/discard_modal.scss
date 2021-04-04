@@ -1,0 +1,13 @@
+.confirm-modal {
+    width: 404px !important;
+
+    @media only screen and (max-width: 576px) {
+        width: 375px !important;
+        padding: 0 !important;
+        margin: 0;
+
+        .body {
+            padding: 0 !important;
+        }
+    }
+}
