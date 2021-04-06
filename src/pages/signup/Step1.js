@@ -5,7 +5,7 @@ import { Show, Hide } from '../../_utilities/icons';
 
 const Step1 = (props) => {
     const { currentStep, setField, errors, form } = props;
-    const { email, username, password, repassword } = form;
+    const { email, username, password, password_validation } = form;
     const [showPassword, setPasswordShow] = useState(false);
     const [showRepassword, setRepasswordShow] = useState(false);
 
@@ -88,18 +88,21 @@ const Step1 = (props) => {
                 </Form.Group>
             </Form.Row>
             <Form.Row>
-                <Form.Group as={Col} md="12" controlId="repassword">
+                <Form.Group as={Col} md="12" controlId="password_validation">
                     <Form.Label>Confirm Password</Form.Label>
                     <InputGroup>
                         <Form.Control
                             required
-                            name="repassword"
+                            name="password_validation"
                             type={showRepassword ? 'text' : 'password'}
                             placeholder="Confirm password"
-                            value={repassword}
-                            onChange={(e) => setField('repassword', e.target.value)}
-                            isInvalid={!!errors.repassword && errors.repassword !== noneError}
-                            isValid={errors.repassword === noneError}
+                            value={password_validation}
+                            onChange={(e) => setField('password_validation', e.target.value)}
+                            isInvalid={
+                                !!errors.password_validation &&
+                                errors.password_validation !== noneError
+                            }
+                            isValid={errors.password_validation === noneError}
                         />
                         <InputGroup.Append>
                             <button
@@ -112,7 +115,7 @@ const Step1 = (props) => {
                         </InputGroup.Append>
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         <Form.Control.Feedback type="invalid">
-                            {errors.repassword}
+                            {errors.password_validation}
                         </Form.Control.Feedback>
                     </InputGroup>
                 </Form.Group>

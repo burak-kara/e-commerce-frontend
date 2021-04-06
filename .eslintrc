@@ -23,6 +23,7 @@
         "react/prop-types": ["off"],
         "no-return-assign": ["off"],
         "arrow-body-style": ["error", "as-needed"],
+        "camelcase": ["off"],
         "prefer-arrow/prefer-arrow-functions": [
             "warn",
             {

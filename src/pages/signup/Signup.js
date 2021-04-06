@@ -6,35 +6,36 @@ import Step2 from './Step2';
 import { LANDING, noneError, emailRegex, passwordRegex } from '../../_constants';
 import { logo } from '../../_assets';
 import { Loading } from '../../components';
+import { register } from '../../_requests';
 
 const Signup = () => {
     const history = useHistory();
     const [isNext, setIsNext] = useState(false);
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState({ is_sales_manager: false, is_product_manager: false });
     const [currentStep, setCurrentStep] = useState(1);
     const [errors, setErrors] = useState({
         email: '',
         username: '',
         password: '',
-        repassword: '',
-        name: '',
-        surname: '',
-        phone: '',
+        password_validation: '',
+        first_name: '',
+        last_name: '',
+        phone_number: '',
         birthday: '',
     });
 
     const setField = (field, value, type) => {
-        if (field === 'phone') {
+        if (field === 'phone_number') {
             if (value.startsWith('0') || value.startsWith('9')) {
                 setForm({
                     ...form,
-                    phone: value.substring(1, value.length),
+                    phone_number: value.substring(1, value.length),
                 });
             } else if (value.length === 3 || value.length === 7 || value.length === 10) {
                 const newValue = type === 'deleteContentBackward' ? value : `${value}-`;
                 setForm({
                     ...form,
-                    phone: newValue,
+                    phone_number: newValue,
                 });
             } else if (value.length !== 14) {
                 setForm({
@@ -51,12 +52,12 @@ const Signup = () => {
     };
 
     const findStep1Errors = () => {
-        const { email, username, password, repassword } = form;
+        const { email, username, password, password_validation } = form;
         const newErrors = {
             email: noneError,
             username: noneError,
             password: noneError,
-            repassword: noneError,
+            password_validation: noneError,
         };
 
         // email errors
@@ -77,43 +78,43 @@ const Signup = () => {
             newErrors.password =
                 'Password should contain at least one number and one special character!';
 
-        // repassword errors
-        if (!repassword || repassword !== password)
-            newErrors.repassword = 'Please confirm your password!';
+        // password_validation errors
+        if (!password_validation || password_validation !== password)
+            newErrors.password_validation = 'Please confirm your password!';
         else if (!password || password === '')
-            newErrors.repassword = 'Please provide a valid password!';
-        else if (!passwordRegex.test(repassword))
-            newErrors.repassword =
+            newErrors.password_validation = 'Please provide a valid password!';
+        else if (!passwordRegex.test(password_validation))
+            newErrors.password_validation =
                 'Password should contain at least one number and one special character!';
 
         return newErrors;
     };
 
     const findStep2Errors = () => {
-        const { name, surname, phone, birthday } = form;
+        const { first_name, last_name, phone_number, birthday } = form;
         const newErrors = {
-            name: noneError,
-            surname: noneError,
-            phone: noneError,
+            first_name: noneError,
+            last_name: noneError,
+            phone_number: noneError,
             birthday: noneError,
         };
 
-        // name errors
-        if (!name || name === '') newErrors.name = 'Please provide a valid name!';
-        else if (name.length < 2) newErrors.name = 'Name is too short!';
-        else if (name.length > 16) newErrors.name = 'Name is too long!';
+        // first_name errors
+        if (!first_name || first_name === '') newErrors.first_name = 'Please provide a valid name!';
+        else if (first_name.length < 2) newErrors.first_name = 'Name is too short!';
+        else if (first_name.length > 16) newErrors.first_name = 'Name is too long!';
 
-        // surname errors
-        if (!surname || surname === '') newErrors.surname = 'Please provide a valid surname!';
-        else if (surname.length < 2) newErrors.surname = 'Surname is too short!';
-        else if (surname.length > 16) newErrors.surname = 'Surname is too long!';
+        // last_name errors
+        if (!last_name || last_name === '') newErrors.last_name = 'Please provide a valid surname!';
+        else if (last_name.length < 2) newErrors.last_name = 'Surname is too short!';
+        else if (last_name.length > 16) newErrors.last_name = 'Surname is too long!';
 
-        // phone errors
-        if (!phone || phone === '' || phone.length !== 13)
-            newErrors.phone = 'Please provide a valid phone number!';
+        // phone_number errors
+        if (!phone_number || phone_number === '' || phone_number.length !== 13)
+            newErrors.phone_number = 'Please provide a valid phone number!';
 
         // birthday errors
-        if (!birthday || birthday === '') newErrors.birthday = 'cannot be blank!';
+        if (!birthday || birthday === '') newErrors.birthday = 'Please provide a valid birthday!';
         else if (birthday.length > 30) newErrors.birthday = 'birthday is too long!';
 
         return newErrors;
@@ -134,9 +135,19 @@ const Signup = () => {
         const stepError = findStep2Errors();
         setErrors(stepError);
         if (!checkAnyError(stepError)) {
-            history.push({
-                pathname: LANDING,
-            });
+            register(form)
+                .then(() => {
+                    // TODO add success message
+                    setTimeout(() => {
+                        history.push({
+                            pathname: LANDING,
+                        });
+                    }, 500);
+                })
+                .catch(() => {
+                    // TODO handle errors
+                    // e.g. user exist message
+                });
         }
     };
 

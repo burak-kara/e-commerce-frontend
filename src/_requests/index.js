@@ -1,11 +1,15 @@
 import axios from 'axios';
 
 // TODO change to the deployed backend server
-// const API_URL = 'http://127.0.0.1:8000/api/';
-const API_URL = 'https://e-commerce-ozu.herokuapp.com/api/';
+const API_URL = 'http://127.0.0.1:8000/';
+// const API_URL = 'https://e-commerce-ozu.herokuapp.com/api/';
+
+const API = 'api/';
+const AUTH = 'rest-auth/';
 
 axios.defaults.headers.common.Accept = '*/*';
 
+// Common Request Makers
 const getRequest = (params) => {
     const { path } = params;
     const url = API_URL + path;
@@ -24,41 +28,38 @@ const deleteRequest = (params) => {
     return axios.delete(url);
 };
 
-const register = (params) => {
-    const { path, data } = params;
-    return postRequest({
-        path,
+// Session Requests
+const register = (data) =>
+    postRequest({
+        path: `${AUTH}registration/`,
         data,
     });
-};
 
-const login = (params) => {
-    const { path, data } = params;
-    return postRequest({
-        path,
+const login = (data) =>
+    postRequest({
+        path: `${AUTH}login/`,
         data,
     });
-};
 
 const getProductManagerItems = () =>
     getRequest({
-        path: 'items/',
+        path: `${API}items/`,
     });
 
-const postNewItem = (params) =>
+const postNewItem = (data) =>
     postRequest({
-        path: 'items/',
-        data: params,
+        path: `${API}items/`,
+        data,
     });
 
 const deleteItem = (id) =>
     deleteRequest({
-        path: `items/${id}/`,
+        path: `${API}items/${id}/`,
     });
 
 const getCategories = () =>
     getRequest({
-        path: 'categories',
+        path: `${API}categories/`,
     });
 
 export { register, login, getProductManagerItems, getCategories, postNewItem, deleteItem };
