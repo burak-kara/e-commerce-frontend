@@ -2,38 +2,66 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { logo } from '../_assets';
 import { Search, Account, DropDown, Basket } from '../_utilities/icons';
-import { BASKET, PROFILE, LANDING, SETTINGS, ORDERS, SIGN_OUT } from '../_constants';
+import {
+    BASKET,
+    PROFILE,
+    LANDING,
+    SETTINGS,
+    ORDERS,
+    SIGN_OUT,
+    P_M_ITEMS,
+    SIGN_IN,
+    SIGN_UP,
+} from '../_constants';
 
 const Header = () => {
     const history = useHistory();
 
-    const handleLogoClick = () => {
+    const handleLogo = () => {
         history.push({
             pathname: LANDING,
         });
     };
 
-    const handleSearchClick = () => {
+    const handleSearch = () => {
         history.push({
             pathname: PROFILE,
         });
     };
 
-    const handleAccountClick = () => {
+    const handleAccount = () => {
         history.push({
             pathname: PROFILE,
         });
     };
 
-    const handleOrdersClick = () => {
+    const handleOrders = () => {
         history.push({
             pathname: ORDERS,
         });
     };
 
-    const handleSettingsClick = () => {
+    const handleSettings = () => {
         history.push({
             pathname: SETTINGS,
+        });
+    };
+
+    const handleManageItems = () => {
+        history.push({
+            pathname: P_M_ITEMS,
+        });
+    };
+
+    const handleSignIn = () => {
+        history.push({
+            pathname: SIGN_IN,
+        });
+    };
+
+    const handleSignUp = () => {
+        history.push({
+            pathname: SIGN_UP,
         });
     };
 
@@ -43,7 +71,7 @@ const Header = () => {
         });
     };
 
-    const handleBasketClick = () => {
+    const handleBasket = () => {
         history.push({
             pathname: BASKET,
         });
@@ -61,11 +89,7 @@ const Header = () => {
         <div className="header ">
             <div className="container h-100">
                 <nav className="navbar navbar-expand-lg h-100 ">
-                    <button
-                        className="header-brand"
-                        type="button"
-                        onClick={() => handleLogoClick()}
-                    >
+                    <button className="header-brand" type="button" onClick={() => handleLogo()}>
                         {/* TODO onClick */}
                         <img className="logo" src={logo} alt="logo" />
                     </button>
@@ -83,7 +107,7 @@ const Header = () => {
                                 <button
                                     className="btn btn-dark h-100 search-btn"
                                     type="button"
-                                    onClick={() => handleSearchClick()}
+                                    onClick={() => handleSearch()}
                                 >
                                     <Search />
                                     <div className="ml-1">Search</div>
@@ -97,7 +121,7 @@ const Header = () => {
                                     type="button"
                                     aria-haspopup="true"
                                     aria-expanded="false"
-                                    onClick={() => handleAccountClick()}
+                                    onClick={() => handleAccount()}
                                 >
                                     <Account />
                                     <p className="name">{user.name}</p>
@@ -107,7 +131,7 @@ const Header = () => {
                                     <button
                                         className="dropdown-item menu-btn"
                                         type="button"
-                                        onClick={() => handleAccountClick()}
+                                        onClick={() => handleAccount()}
                                     >
                                         Profile
                                     </button>
@@ -115,7 +139,7 @@ const Header = () => {
                                     <button
                                         className="dropdown-item menu-btn"
                                         type="button"
-                                        onClick={() => handleOrdersClick()}
+                                        onClick={() => handleOrders()}
                                     >
                                         Orders
                                     </button>
@@ -123,9 +147,33 @@ const Header = () => {
                                     <button
                                         className="dropdown-item menu-btn"
                                         type="button"
-                                        onClick={() => handleSettingsClick()}
+                                        onClick={() => handleSettings()}
                                     >
                                         Settings
+                                    </button>
+                                    <div className="dropdown-divider" />
+                                    <button
+                                        className="dropdown-item menu-btn"
+                                        type="button"
+                                        onClick={() => handleManageItems()}
+                                    >
+                                        Manage Items
+                                    </button>
+                                    <div className="dropdown-divider md-b" />
+                                    <button
+                                        className="dropdown-item menu-btn"
+                                        type="button"
+                                        onClick={() => handleSignIn()}
+                                    >
+                                        Sign in
+                                    </button>
+                                    <div className="dropdown-divider md-b" />
+                                    <button
+                                        className="dropdown-item menu-btn"
+                                        type="button"
+                                        onClick={() => handleSignUp()}
+                                    >
+                                        Sign up
                                     </button>
                                     <div className="dropdown-divider md-b" />
                                     <button
@@ -140,7 +188,7 @@ const Header = () => {
                             <button
                                 className="btn b-btn"
                                 type="button"
-                                onClick={() => handleBasketClick()}
+                                onClick={() => handleBasket()}
                             >
                                 <Basket />
                                 <div className="ml-1">Basket</div>
