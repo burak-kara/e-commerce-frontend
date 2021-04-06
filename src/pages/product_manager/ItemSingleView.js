@@ -129,14 +129,14 @@ const ItemSingleView = () => {
     };
 
     const onConfirm = () => {
-        // TODO push to backend
         postNewItem(form)
             .then(() => {
                 // TODO successful message
-
-                history.push({
-                    pathname: P_M_ITEMS,
-                });
+                setTimeout(() => {
+                    history.push({
+                        pathname: P_M_ITEMS,
+                    });
+                }, 500);
             })
             .catch(() => {
                 // TODO error handler

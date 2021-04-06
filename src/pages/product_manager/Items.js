@@ -16,7 +16,7 @@ const Items = () => {
     // TODO get this from storage
     const role = PM;
 
-    useEffect(() => {
+    const getItems = () => {
         setLoading(true);
         getProductManagerItems()
             .then((response) => {
@@ -28,6 +28,10 @@ const Items = () => {
                 setLoading(false);
                 setLoading(!loading); // TODO delete
             });
+    };
+
+    useEffect(() => {
+        getItems();
     }, []);
 
     const handleDelete = (id) => {
@@ -35,11 +39,12 @@ const Items = () => {
         setDeleteId(id);
     };
 
-    const onDiscard = () => {
+    const onDelete = () => {
         setConfirmModal(false);
         deleteItem(deleteId)
             .then(() => {
                 // TODO success message
+                getItems();
             })
             .catch(() => {
                 // TODO handle error
@@ -102,7 +107,7 @@ const Items = () => {
             <DiscardModal
                 show={confirmModal}
                 onHide={() => setConfirmModal(false)}
-                onDiscard={onDiscard}
+                onDiscard={onDelete}
                 header="Delete the Product?"
                 body="If you delete this product now, you will lose it permanently."
                 buttonText="Delete"
