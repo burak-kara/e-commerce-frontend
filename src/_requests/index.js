@@ -42,7 +42,7 @@ const login = (params) => {
 
 const getProductManagerItems = () =>
     getRequest({
-        path: 'items',
+        path: 'items/',
     });
 
 const postNewItem = (params) =>

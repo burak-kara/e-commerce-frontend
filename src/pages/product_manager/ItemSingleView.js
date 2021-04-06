@@ -133,13 +133,14 @@ const ItemSingleView = () => {
         postNewItem(form)
             .then(() => {
                 // TODO successful message
+
+                history.push({
+                    pathname: P_M_ITEMS,
+                });
             })
             .catch(() => {
                 // TODO error handler
             });
-        history.push({
-            pathname: P_M_ITEMS,
-        });
     };
 
     const renderCategories = () => {
