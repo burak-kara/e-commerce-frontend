@@ -4,13 +4,6 @@ pipelines:
     branches:
         development:
             - step:
-                  name: Test
-                  caches:
-                      - node
-                  script:
-                      - npm install && npm test
-
-            - step:
                   name: Build
                   caches:
                       - node
