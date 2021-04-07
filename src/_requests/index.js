@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 // TODO change to the deployed backend server
-const API_URL = 'http://127.0.0.1:8000/';
-// const API_URL = 'https://e-commerce-ozu.herokuapp.com/;
-// const API_URL = 'http://ozustoreapi-env.eba-izf9se3q.eu-north-1.elasticbeanstalk.com;
+// const API_URL = 'http://127.0.0.1:8000/';
+const API_URL = 'https://burak-kara.dev/';
 
 const API = 'api/';
 const AUTH = 'rest-auth/';
