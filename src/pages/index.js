@@ -8,6 +8,7 @@ import Signin from './signin/Signin';
 import Home from './home/Home';
 import Basket from './basket/Basket';
 import Items from './product_manager/Items';
+import Products from './products/Products';
 import ItemSingleView from './product_manager/ItemSingleView';
 
 export {
@@ -22,4 +23,5 @@ export {
     Basket,
     Items,
     ItemSingleView,
+    Products,
 };

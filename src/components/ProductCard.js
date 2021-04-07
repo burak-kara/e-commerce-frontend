@@ -84,7 +84,7 @@ const ProductCard = (props) => {
                     <button
                         className={`btn ${role === PM ? 'pm-edit' : 'basket'}`}
                         type="button"
-                        onClick={handleBottom}
+                        onClick={() => handleBottom(id)}
                     >
                         {getBottomIcon()}
                     </button>

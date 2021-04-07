@@ -1,7 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { P_M_ITEMS, SIGN_IN, SIGN_OUT, SIGN_UP } from '../../_constants';
-import Products from '../../components/products/Products';
 
 const Home = () => {
     const history = useHistory();
@@ -49,7 +48,6 @@ const Home = () => {
             <button className="btn btn-danger" type="submit" onClick={() => handleProductManager()}>
                 Product manager
             </button>
-            <Products />
         </div>
     );
 };
