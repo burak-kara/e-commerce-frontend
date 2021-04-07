@@ -38,8 +38,13 @@ const Routes = () => {
         return pathname === SIGN_UP || pathname === SIGN_UP || pathname === SIGN_UP;
     };
 
+    const isLoginPage = () => {
+        const { pathname } = history.location;
+        return pathname === SIGN_IN || pathname === SIGN_IN || pathname === SIGN_IN;
+    };
+
     const renderHeader = () =>
-        isSignPage() ? null : (
+        isSignPage() || isLoginPage() ? null : (
             <>
                 <div className="sticky-top">
                     <Header />
