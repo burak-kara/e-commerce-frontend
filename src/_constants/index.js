@@ -10,6 +10,10 @@ import {
     P_M_ITEMS,
     P_M_ITEM_DETAILS,
     P_M_NEW_ITEM,
+    CAT_ELECTRONICS,
+    CAT_OTHERS,
+    CAT_CONSUMABLES,
+    CAT_COFFEE_BEANS,
 } from './routes';
 
 export {
@@ -24,6 +28,10 @@ export {
     P_M_ITEMS,
     P_M_ITEM_DETAILS,
     P_M_NEW_ITEM,
+    CAT_ELECTRONICS,
+    CAT_OTHERS,
+    CAT_CONSUMABLES,
+    CAT_COFFEE_BEANS,
 };
 
 export const noneError = 'N';

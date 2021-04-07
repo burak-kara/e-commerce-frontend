@@ -13,6 +13,7 @@ import {
     Signin,
     Signout,
     Signup,
+    Products,
 } from '../index';
 import {
     BASKET,
@@ -25,6 +26,10 @@ import {
     SIGN_IN,
     SIGN_OUT,
     SIGN_UP,
+    CAT_ELECTRONICS,
+    CAT_OTHERS,
+    CAT_CONSUMABLES,
+    CAT_COFFEE_BEANS,
 } from '../../_constants';
 
 const Routes = () => {
@@ -58,22 +63,78 @@ const Routes = () => {
             {renderHeader()}
 
             <Switch>
-                <Route exact path="/test" component={Dummy} />
+                <Route exact path="/test">
+                    <Dummy />
+                </Route>
 
-                <Route exact path={LANDING} component={Home} />
+                <Route exact path={LANDING}>
+                    <Home />
+                </Route>
 
-                <Route exact path={BASKET} component={Basket} />
+                <Route exact path={BASKET}>
+                    <Basket />
+                </Route>
 
-                <Route exact path={PROFILE} component={Profile} />
-                <Route exact path={SETTINGS} component={Settings} />
-                <Route exact path={ORDERS} component={Orders} />
+                <Route exact path={PROFILE}>
+                    <Profile />
+                </Route>
+                <Route exact path={SETTINGS}>
+                    <Settings />
+                </Route>
+                <Route exact path={ORDERS}>
+                    <Orders />
+                </Route>
 
-                <Route exact path={SIGN_UP} component={Signup} />
-                <Route exact path={SIGN_OUT} component={Signout} />
-                <Route exact path={SIGN_IN} component={Signin} />
+                <Route exact path={SIGN_UP}>
+                    <Signup />
+                </Route>
+                <Route exact path={SIGN_OUT}>
+                    <Signout />
+                </Route>
+                <Route exact path={SIGN_IN}>
+                    <Signin />
+                </Route>
 
-                <Route exact path={P_M_ITEMS} component={Items} />
-                <Route exact path={P_M_NEW_ITEM} component={ItemSingleView} />
+                <Route exact path={P_M_ITEMS}>
+                    <Items />
+                </Route>
+                <Route exact path={P_M_NEW_ITEM}>
+                    <ItemSingleView />
+                </Route>
+
+                <Route exact path={CAT_ELECTRONICS}>
+                    <Products category={CAT_ELECTRONICS} />
+                </Route>
+                <Route exact path={CAT_OTHERS}>
+                    <Products category={CAT_OTHERS} />
+                </Route>
+                <Route exact path={CAT_CONSUMABLES}>
+                    <Products category={CAT_CONSUMABLES} />
+                </Route>
+                <Route exact path={CAT_COFFEE_BEANS}>
+                    <Products category={CAT_COFFEE_BEANS} />
+                </Route>
+                {/* <Route exact path={CAT_FASHION}> */}
+                {/*    <Products category={CAT_FASHION} /> */}
+                {/* </Route> */}
+                {/* <Route exact path={CAT_FURNITURE}> */}
+                {/*    <Products category={CAT_FURNITURE} /> */}
+                {/* </Route> */}
+                {/* <Route exact path={CAT_BOOKS}> */}
+                {/*    <Products category={CAT_BOOKS} /> */}
+                {/* </Route> */}
+                {/* <Route exact path={CAT_AUTO}> */}
+                {/*    <Products category={CAT_AUTO} /> */}
+                {/* </Route> */}
+                {/* <Route exact path={CAT_SPORTS}> */}
+                {/*    <Products category={CAT_SPORTS} /> */}
+                {/* </Route> */}
+                {/* <Route exact path={CAT_GAMES}> */}
+                {/*    <Products category={CAT_GAMES} /> */}
+                {/* </Route> */}
+                {/* <Route exact path={CAT_HEALTH}> */}
+                {/*    <Products category={CAT_HEALTH} /> */}
+                {/* </Route> */}
                 {/* <Route path="*" component={ProtectedHandler} /> */}
             </Switch>
         </>

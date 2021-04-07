@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // TODO change to the deployed backend server
-// const API_URL = 'http://127.0.0.1:8000/';
-const API_URL = 'https://burak-kara.dev/';
+const API_URL = 'http://127.0.0.1:8000/';
+// const API_URL = 'https://burak-kara.dev/';
 
 const API = 'api/';
 const AUTH = 'rest-auth/';
@@ -41,10 +41,17 @@ const login = (data) =>
         data,
     });
 
-const getProductManagerItems = () =>
+const getItems = () =>
     getRequest({
         path: `${API}items/`,
     });
+
+const getItemsByCategory = (category) => {
+    const cat = category.replaceAll('-', ' ');
+    return getRequest({
+        path: `${API}items/${cat}/`,
+    });
+};
 
 const postNewItem = (data) =>
     postRequest({
@@ -62,4 +69,4 @@ const getCategories = () =>
         path: `${API}categories/`,
     });
 
-export { register, login, getProductManagerItems, getCategories, postNewItem, deleteItem };
+export { register, login, getItems, getCategories, postNewItem, deleteItem, getItemsByCategory };

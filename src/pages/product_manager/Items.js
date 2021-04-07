@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { DiscardModal, ProductCard } from '../../components';
-import { getProductManagerItems, deleteItem } from '../../_requests';
+import { getItems, deleteItem } from '../../_requests';
 import { Add } from '../../_utilities/icons';
 import { P_M_NEW_ITEM, PM } from '../../_constants';
 
@@ -16,9 +16,9 @@ const Items = () => {
     // TODO get this from storage
     const role = PM;
 
-    const getItems = () => {
+    const fetchItems = () => {
         setLoading(true);
-        getProductManagerItems()
+        getItems()
             .then((response) => {
                 setItems(response.data);
                 setLoading(false);
@@ -31,7 +31,7 @@ const Items = () => {
     };
 
     useEffect(() => {
-        getItems();
+        fetchItems();
     }, []);
 
     const handleDelete = (id) => {
@@ -44,7 +44,7 @@ const Items = () => {
         deleteItem(deleteId)
             .then(() => {
                 // TODO success message
-                getItems();
+                fetchItems();
             })
             .catch(() => {
                 // TODO handle error
