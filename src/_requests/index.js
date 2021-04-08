@@ -1,11 +1,16 @@
 import axios from 'axios';
 
+const { REACT_APP_API_URL_LOCAL, REACT_APP_API_URL_DEPLOYED, NODE_ENV } = process.env;
+
 // TODO change to the deployed backend server
-// const API_URL = 'http://127.0.0.1:8000/api/';
-const API_URL = 'https://e-commerce-ozu.herokuapp.com/api/';
+const API_URL = NODE_ENV === 'production' ? REACT_APP_API_URL_DEPLOYED : REACT_APP_API_URL_LOCAL;
+
+const API = 'api/';
+const AUTH = 'rest-auth/';
 
 axios.defaults.headers.common.Accept = '*/*';
 
+// Common Request Makers
 const getRequest = (params) => {
     const { path } = params;
     const url = API_URL + path;
@@ -24,41 +29,45 @@ const deleteRequest = (params) => {
     return axios.delete(url);
 };
 
-const register = (params) => {
-    const { path, data } = params;
-    return postRequest({
-        path,
-        data,
-    });
-};
-
-const login = (params) => {
-    const { path, data } = params;
-    return postRequest({
-        path,
-        data,
-    });
-};
-
-const getProductManagerItems = () =>
-    getRequest({
-        path: 'items',
-    });
-
-const postNewItem = (params) =>
+// Session Requests
+const register = (data) =>
     postRequest({
-        path: 'items/',
-        data: params,
+        path: `${AUTH}registration/`,
+        data,
+    });
+
+const login = (data) =>
+    postRequest({
+        path: `${AUTH}login/`,
+        data,
+    });
+
+const getItems = () =>
+    getRequest({
+        path: `${API}items/`,
+    });
+
+const getItemsByCategory = (category) => {
+    const cat = category.replaceAll('-', ' ');
+    return getRequest({
+        path: `${API}items/${cat}/`,
+    });
+};
+
+const postNewItem = (data) =>
+    postRequest({
+        path: `${API}items/`,
+        data,
     });
 
 const deleteItem = (id) =>
     deleteRequest({
-        path: `items/${id}/`,
+        path: `${API}items/${id}/`,
     });
 
 const getCategories = () =>
     getRequest({
-        path: 'categories',
+        path: `${API}categories/`,
     });
 
-export { register, login, getProductManagerItems, getCategories, postNewItem, deleteItem };
+export { register, login, getItems, getCategories, postNewItem, deleteItem, getItemsByCategory };

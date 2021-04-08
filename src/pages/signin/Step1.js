@@ -5,11 +5,10 @@ import { Show, Hide } from '../../_utilities/icons';
 
 const Step1 = (props) => {
     const { currentStep, setField, errors, form } = props;
-    const { email, username, password, password_validation } = form;
+    const { username, password } = form;
     const [showPassword, setPasswordShow] = useState(false);
-    const [showRepassword, setRepasswordShow] = useState(false);
 
-    if (currentStep !== 1) {
+    if (currentStep !== 0) {
         return null;
     }
 
@@ -17,29 +16,8 @@ const Step1 = (props) => {
         setPasswordShow(!showPassword);
     };
 
-    const handleRepasswordClick = () => {
-        setRepasswordShow(!showRepassword);
-    };
-
     return (
         <>
-            <Form.Row>
-                <Form.Group as={Col} md="12" controlId="email">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control
-                        required
-                        name="email"
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setField('email', e.target.value)}
-                        isInvalid={!!errors.email && errors.email !== noneError}
-                        isValid={errors.email === noneError}
-                    />
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                    <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
-                </Form.Group>
-            </Form.Row>
             <Form.Row>
                 <Form.Group as={Col} md="12" controlId="username">
                     <Form.Label>Username</Form.Label>
@@ -83,39 +61,6 @@ const Step1 = (props) => {
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         <Form.Control.Feedback type="invalid">
                             {errors.password}
-                        </Form.Control.Feedback>
-                    </InputGroup>
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
-                <Form.Group as={Col} md="12" controlId="password_validation">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <InputGroup>
-                        <Form.Control
-                            required
-                            name="password_validation"
-                            type={showRepassword ? 'text' : 'password'}
-                            placeholder="Confirm password"
-                            value={password_validation}
-                            onChange={(e) => setField('password_validation', e.target.value)}
-                            isInvalid={
-                                !!errors.password_validation &&
-                                errors.password_validation !== noneError
-                            }
-                            isValid={errors.password_validation === noneError}
-                        />
-                        <InputGroup.Append>
-                            <button
-                                className="btn password_btn"
-                                type="button"
-                                onClick={handleRepasswordClick}
-                            >
-                                {showRepassword ? <Hide color="white" /> : <Show color="white" />}
-                            </button>
-                        </InputGroup.Append>
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.password_validation}
                         </Form.Control.Feedback>
                     </InputGroup>
                 </Form.Group>

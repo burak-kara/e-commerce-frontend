@@ -129,17 +129,18 @@ const ItemSingleView = () => {
     };
 
     const onConfirm = () => {
-        // TODO push to backend
         postNewItem(form)
             .then(() => {
                 // TODO successful message
+                setTimeout(() => {
+                    history.push({
+                        pathname: P_M_ITEMS,
+                    });
+                }, 500);
             })
             .catch(() => {
                 // TODO error handler
             });
-        history.push({
-            pathname: P_M_ITEMS,
-        });
     };
 
     const renderCategories = () => {

@@ -10,6 +10,10 @@ import {
     P_M_ITEMS,
     P_M_ITEM_DETAILS,
     P_M_NEW_ITEM,
+    CAT_ELECTRONICS,
+    CAT_OTHERS,
+    CAT_CONSUMABLES,
+    CAT_COFFEE_BEANS,
 } from './routes';
 
 export {
@@ -24,6 +28,10 @@ export {
     P_M_ITEMS,
     P_M_ITEM_DETAILS,
     P_M_NEW_ITEM,
+    CAT_ELECTRONICS,
+    CAT_OTHERS,
+    CAT_CONSUMABLES,
+    CAT_COFFEE_BEANS,
 };
 
 export const noneError = 'N';
@@ -39,4 +47,4 @@ export const emailRegex = new RegExp(
     '^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}' +
         '\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$',
 );
-export const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,8}$/;
+export const passwordRegex = /^(?=.*[0-9])(?=.*[.!@#$%^&*])[a-zA-Z0-9.!@#$%^&*]{6,8}$/;
