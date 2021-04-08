@@ -38,6 +38,7 @@ export {
 
 export const noneError = 'N';
 export const STAR_COUNT = 5;
+export const TOKEN = 'token';
 
 // roles
 export const COSTUMER = 'costumer';

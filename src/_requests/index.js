@@ -1,14 +1,20 @@
 import axios from 'axios';
+import { TOKEN } from '../_constants';
 
 const { REACT_APP_API_URL_LOCAL, REACT_APP_API_URL_DEPLOYED, NODE_ENV } = process.env;
 
 // TODO change to the deployed backend server
 const API_URL = NODE_ENV === 'production' ? REACT_APP_API_URL_DEPLOYED : REACT_APP_API_URL_LOCAL;
 
+const token = localStorage.getItem(TOKEN);
+
 const API = 'api/';
 const AUTH = 'rest-auth/';
 
 axios.defaults.headers.common.Accept = '*/*';
+if (token) {
+    axios.defaults.headers.common.Authorization = `Token ${token}`;
+}
 
 // Common Request Makers
 const getRequest = (params) => {
@@ -46,6 +52,16 @@ const login = (data) =>
     postRequest({
         path: `${AUTH}login/`,
         data,
+    });
+
+const logout = () =>
+    postRequest({
+        path: `${AUTH}logout/`,
+    });
+
+const getUser = () =>
+    getRequest({
+        path: `${AUTH}user/`,
     });
 
 const getItems = () =>
@@ -92,6 +108,8 @@ const getCategories = () =>
 export {
     register,
     login,
+    logout,
+    getUser,
     getItems,
     getItemById,
     getItemsByCategory,

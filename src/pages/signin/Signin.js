@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Col, InputGroup } from 'react-bootstrap';
-import { LANDING, noneError } from '../../_constants';
+import { LANDING, noneError, TOKEN } from '../../_constants';
 import { logo } from '../../_assets';
 import { login } from '../../_requests';
 import { Hide, Show } from '../../_utilities/icons';
@@ -9,9 +9,14 @@ import { Loading } from '../../components';
 
 const Signin = () => {
     const history = useHistory();
-    const [form, setForm] = useState({ is_sales_manager: false, is_product_manager: false });
     const [showPassword, setPasswordShow] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [form, setForm] = useState({
+        is_sales_manager: false,
+        is_product_manager: false,
+        username: '',
+        password: '',
+    });
     const [errors, setErrors] = useState({
         username: '',
         password: '',
@@ -58,10 +63,10 @@ const Signin = () => {
         if (!checkAnyError(stepError)) {
             setLoading(true);
             login(form)
-                .then((r) => {
+                .then((response) => {
                     // TODO add success message
                     setLoading(true);
-                    localStorage.setItem('key', r.key);
+                    localStorage.setItem(TOKEN, response.data.key);
                     setTimeout(() => {
                         setLoading(false);
                         history.push({

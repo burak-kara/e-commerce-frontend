@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { logo } from '../_assets';
 import { Search, Account, DropDown, Basket } from '../_utilities/icons';
@@ -12,10 +12,28 @@ import {
     P_M_ITEMS,
     SIGN_IN,
     SIGN_UP,
+    TOKEN,
 } from '../_constants';
+import { getUser } from '../_requests';
 
 const Header = () => {
     const history = useHistory();
+    const [user, setUser] = useState();
+    const [token, setToken] = useState();
+
+    useEffect(() => {
+        const tk = localStorage.getItem(TOKEN);
+        setToken(tk);
+        if (tk) {
+            getUser()
+                .then((response) => {
+                    setUser(response.data);
+                })
+                .catch(() => {
+                    // TODO handle errors
+                });
+        }
+    }, [token]);
 
     const handleLogo = () => {
         history.push({
@@ -31,7 +49,7 @@ const Header = () => {
 
     const handleAccount = () => {
         history.push({
-            pathname: PROFILE,
+            pathname: user ? PROFILE : SIGN_IN,
         });
     };
 
@@ -53,12 +71,6 @@ const Header = () => {
         });
     };
 
-    const handleSignIn = () => {
-        history.push({
-            pathname: SIGN_IN,
-        });
-    };
-
     const handleSignUp = () => {
         history.push({
             pathname: SIGN_UP,
@@ -75,12 +87,6 @@ const Header = () => {
         history.push({
             pathname: BASKET,
         });
-    };
-
-    // TODO delete
-    const user = {
-        name: 'John',
-        surname: 'Doe',
     };
 
     const DropdownIcon = () => <DropDown color="color" size="1em" />;
@@ -123,66 +129,73 @@ const Header = () => {
                                     aria-expanded="false"
                                     onClick={() => handleAccount()}
                                 >
-                                    <Account />
-                                    <p className="name">{user.name}</p>
-                                    <DropdownIcon />
+                                    {user ? <Account /> : null}
+                                    <p className="name">{user ? user.first_name : 'Login'}</p>
+                                    {user ? <DropdownIcon /> : null}
                                 </button>
                                 <div className="dropdown-menu">
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleAccount()}
-                                    >
-                                        Profile
-                                    </button>
-                                    <div className="dropdown-divider" />
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleOrders()}
-                                    >
-                                        Orders
-                                    </button>
-                                    <div className="dropdown-divider" />
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleSettings()}
-                                    >
-                                        Settings
-                                    </button>
-                                    <div className="dropdown-divider" />
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleManageItems()}
-                                    >
-                                        Manage Items
-                                    </button>
-                                    <div className="dropdown-divider md-b" />
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleSignIn()}
-                                    >
-                                        Sign in
-                                    </button>
-                                    <div className="dropdown-divider md-b" />
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleSignUp()}
-                                    >
-                                        Sign up
-                                    </button>
-                                    <div className="dropdown-divider md-b" />
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleSignOut()}
-                                    >
-                                        Logout
-                                    </button>
+                                    {user ? (
+                                        <>
+                                            {user ? (
+                                                <button
+                                                    className="dropdown-item menu-btn"
+                                                    type="button"
+                                                    onClick={() => handleAccount()}
+                                                >
+                                                    Profile
+                                                </button>
+                                            ) : null}
+                                            {user ? (
+                                                <>
+                                                    <div className="dropdown-divider" />
+                                                    <button
+                                                        className="dropdown-item menu-btn"
+                                                        type="button"
+                                                        onClick={() => handleOrders()}
+                                                    >
+                                                        Orders
+                                                    </button>
+                                                </>
+                                            ) : null}
+                                            {user ? (
+                                                <>
+                                                    <div className="dropdown-divider" />
+                                                    <button
+                                                        className="dropdown-item menu-btn"
+                                                        type="button"
+                                                        onClick={() => handleSettings()}
+                                                    >
+                                                        Settings
+                                                    </button>
+                                                </>
+                                            ) : null}
+
+                                            <div className="dropdown-divider" />
+                                            <button
+                                                className="dropdown-item menu-btn"
+                                                type="button"
+                                                onClick={() => handleManageItems()}
+                                            >
+                                                Manage Items
+                                            </button>
+                                            <div className="dropdown-divider md-b" />
+                                            <button
+                                                className="dropdown-item menu-btn"
+                                                type="button"
+                                                onClick={() => handleSignOut()}
+                                            >
+                                                Logout
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <button
+                                            className="dropdown-item menu-btn"
+                                            type="button"
+                                            onClick={() => handleSignUp()}
+                                        >
+                                            Sign up
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                             <button

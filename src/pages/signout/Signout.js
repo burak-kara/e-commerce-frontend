@@ -1,20 +1,27 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import { SIGN_IN } from '../../_constants';
+import { LANDING, TOKEN } from '../../_constants';
+import { logout } from '../../_requests';
 
 const Signout = () => {
     const history = useHistory();
 
     useEffect(() => {
-        Cookies.remove('session');
-        setTimeout(() => {
-            history.push({
-                pathname: SIGN_IN,
+        logout()
+            .then(() => {
+                localStorage.removeItem(TOKEN);
+                setTimeout(() => {
+                    history.push({
+                        pathname: LANDING,
+                    });
+                }, 500);
+            })
+            .catch(() => {
+                // TODO handle error
             });
-        }, 5000);
     }, []);
 
+    // TODO proper sign up page
     return <div>Logging out!</div>;
 };
 
