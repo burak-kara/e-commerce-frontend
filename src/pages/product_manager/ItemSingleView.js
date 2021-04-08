@@ -49,7 +49,6 @@ const ItemSingleView = () => {
             setId(id);
             getItemById(id)
                 .then((response) => {
-                    console.log(response.data);
                     setForm(response.data);
                     setLoading(false);
                 })
