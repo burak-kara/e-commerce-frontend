@@ -1,78 +1,78 @@
 $bg-img: url('../images/bg.png');
 
 .signin {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 
-	&:before {
-		content: '';
-		background-image: $bg-img;
-		background-color: #ed5f1f;
-		opacity: 0.6;
-		filter: blur(1px);
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: cover;
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-	}
+    &:before {
+        content: '';
+        background-image: $bg-img;
+        background-color: #ed5f1f;
+        opacity: 0.6;
+        filter: blur(1px);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
 
-	.form-container {
-		height: 710px;
-		padding: 50px;
-		border-radius: 20px;
-		background-color: $header-bg;
-		box-shadow: 0 0 5px 0 $header-bg-shadow;
+    .form-container {
+        height: 710px;
+        padding: 50px;
+        border-radius: 20px;
+        background-color: $header-bg;
+        box-shadow: 0 0 5px 0 $header-bg-shadow;
 
-		.logo-container {
-			display: flex;
-			justify-content: center;
-			margin-bottom: 80px;
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 80px;
 
-			.header-brand {
-				border: none !important;
-				background-color: $transparent;
-				margin-bottom: 30px;
+            .header-brand {
+                border: none !important;
+                background-color: $transparent;
+                margin-bottom: 30px;
 
-				.logo {
-					max-width: 200px;
-					max-height: 100px;
-				}
-			}
-		}
+                .logo {
+                    max-width: 200px;
+                    max-height: 100px;
+                }
+            }
+        }
 
-		.password_btn {
-			background-color: $a-btn;
+        .password_btn {
+            background-color: $a-btn;
 
-			&:focus {
-				outline: none !important;
-				box-shadow: none !important;
-			}
-		}
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+        }
 
-		.sign-in-btn {
-			color: $nav-btn-hover;
-			background-color: $common-btn;
+        .sign-in-btn {
+            color: $nav-btn-hover;
+            background-color: $common-btn;
 
-			&:focus {
-				outline: none !important;
-				box-shadow: none !important;
-			}
-		}
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+        }
 
-		.btn-container {
-			display: flex;
-			justify-content: center;
+        .btn-container {
+            display: flex;
+            justify-content: center;
 
-			.btn {
-				height: 38px;
-				width: 100px;
-			}
-		}
-	}
+            .btn {
+                height: 38px;
+                width: 100px;
+            }
+        }
+    }
 }

@@ -34,6 +34,9 @@
 
         .cat {
             margin-bottom: 0;
+            text-transform: capitalize;
+            outline: none !important;
+            box-shadow: none !important;
         }
     }
 }

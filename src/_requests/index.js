@@ -1,8 +1,9 @@
 import axios from 'axios';
 
+const { REACT_APP_API_URL_LOCAL, REACT_APP_API_URL_DEPLOYED, NODE_ENV } = process.env;
+
 // TODO change to the deployed backend server
-// const API_URL = 'http://127.0.0.1:8000/';
-const API_URL = 'https://burak-kara.dev/';
+const API_URL = NODE_ENV === 'production' ? REACT_APP_API_URL_DEPLOYED : REACT_APP_API_URL_LOCAL;
 
 const API = 'api/';
 const AUTH = 'rest-auth/';
@@ -26,7 +27,7 @@ const putRequest = (params) => {
     const { path, data } = params;
     const url = API_URL + path;
     return axios.put(url, data);
-}
+};
 
 const deleteRequest = (params) => {
     const { path } = params;
@@ -47,15 +48,22 @@ const login = (data) =>
         data,
     });
 
-const getProductManagerItems = () =>
+const getItems = () =>
     getRequest({
         path: `${API}items/`,
     });
 
 const getItemById = (id) =>
     getRequest({
-        path: `${API}items/${id}/`
+        path: `${API}items/${id}/`,
     });
+
+const getItemsByCategory = (category) => {
+    const cat = category.replaceAll('-', ' ');
+    return getRequest({
+        path: `${API}items/${cat}/`,
+    });
+};
 
 const postNewItem = (data) =>
     postRequest({
@@ -64,12 +72,12 @@ const postNewItem = (data) =>
     });
 
 const editItem = (data) => {
-    const {id} = data;
+    const { id } = data;
     return putRequest({
         path: `${API}items/${id}/`,
-        data
+        data,
     });
-}
+};
 
 const deleteItem = (id) =>
     deleteRequest({
@@ -81,11 +89,14 @@ const getCategories = () =>
         path: `${API}categories/`,
     });
 
-export { register,
-         login,
-         getProductManagerItems,
-         getItemById,
-         getCategories,
-         postNewItem,
-         editItem,
-         deleteItem };
+export {
+    register,
+    login,
+    getItems,
+    getItemById,
+    getItemsByCategory,
+    getCategories,
+    postNewItem,
+    editItem,
+    deleteItem,
+};
