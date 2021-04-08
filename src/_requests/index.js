@@ -1,8 +1,9 @@
 import axios from 'axios';
 
+const { REACT_APP_API_URL_LOCAL, REACT_APP_API_URL_DEPLOYED, NODE_ENV } = process.env;
+
 // TODO change to the deployed backend server
-const API_URL = 'http://127.0.0.1:8000/';
-// const API_URL = 'https://burak-kara.dev/';
+const API_URL = NODE_ENV === 'production' ? REACT_APP_API_URL_DEPLOYED : REACT_APP_API_URL_LOCAL;
 
 const API = 'api/';
 const AUTH = 'rest-auth/';
