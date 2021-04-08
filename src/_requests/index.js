@@ -22,6 +22,12 @@ const postRequest = (params) => {
     return axios.post(url, data);
 };
 
+const putRequest = (params) => {
+    const { path, data } = params;
+    const url = API_URL + path;
+    return axios.put(url, data);
+}
+
 const deleteRequest = (params) => {
     const { path } = params;
     const url = API_URL + path;
@@ -46,11 +52,24 @@ const getProductManagerItems = () =>
         path: `${API}items/`,
     });
 
+const getItemById = (id) =>
+    getRequest({
+        path: `${API}items/${id}/`
+    });
+
 const postNewItem = (data) =>
     postRequest({
         path: `${API}items/`,
         data,
     });
+
+const editItem = (data) => {
+    const {id} = data;
+    return putRequest({
+        path: `${API}items/${id}/`,
+        data
+    });
+}
 
 const deleteItem = (id) =>
     deleteRequest({
@@ -62,4 +81,11 @@ const getCategories = () =>
         path: `${API}categories/`,
     });
 
-export { register, login, getProductManagerItems, getCategories, postNewItem, deleteItem };
+export { register,
+         login,
+         getProductManagerItems,
+         getItemById,
+         getCategories,
+         postNewItem,
+         editItem,
+         deleteItem };

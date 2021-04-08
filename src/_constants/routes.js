@@ -14,6 +14,7 @@ const SETTINGS = '/settings';
 const P_M_ITEMS = '/product-manager-items';
 const P_M_ITEM_DETAILS = `${P_M_ITEMS}/details`; // product-manager-items/details?id=123456
 const P_M_NEW_ITEM = `${P_M_ITEMS}/new`; // product-manager-items/details?id=123456
+const P_M_EDIT_ITEM = `${P_M_ITEMS}/edit`; // product-manager-items/details?id=123456
 
 // const S_M_CAMPAIGN = 'sales-manager-campaigns';
 
@@ -34,4 +35,5 @@ export {
     P_M_ITEMS,
     P_M_ITEM_DETAILS,
     P_M_NEW_ITEM,
+    P_M_EDIT_ITEM
 };

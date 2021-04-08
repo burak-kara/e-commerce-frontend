@@ -10,6 +10,7 @@ import {
     P_M_ITEMS,
     P_M_ITEM_DETAILS,
     P_M_NEW_ITEM,
+    P_M_EDIT_ITEM
 } from './routes';
 
 export {
@@ -24,6 +25,7 @@ export {
     P_M_ITEMS,
     P_M_ITEM_DETAILS,
     P_M_NEW_ITEM,
+    P_M_EDIT_ITEM
 };
 
 export const noneError = 'N';

@@ -20,6 +20,7 @@ import {
     ORDERS,
     P_M_ITEMS,
     P_M_NEW_ITEM,
+    P_M_EDIT_ITEM,
     PROFILE,
     SETTINGS,
     SIGN_IN,
@@ -74,6 +75,7 @@ const Routes = () => {
 
                 <Route exact path={P_M_ITEMS} component={Items} />
                 <Route exact path={P_M_NEW_ITEM} component={ItemSingleView} />
+                <Route exact path={P_M_EDIT_ITEM} component={ItemSingleView} />
                 {/* <Route path="*" component={ProtectedHandler} /> */}
             </Switch>
         </>

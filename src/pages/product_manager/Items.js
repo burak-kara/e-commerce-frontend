@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { DiscardModal, ProductCard } from '../../components';
 import { getProductManagerItems, deleteItem } from '../../_requests';
 import { Add } from '../../_utilities/icons';
-import { P_M_NEW_ITEM, PM } from '../../_constants';
+import { P_M_NEW_ITEM, PM, P_M_EDIT_ITEM } from '../../_constants';
 
 const Items = () => {
     const history = useHistory();
@@ -51,8 +51,12 @@ const Items = () => {
             });
     };
 
-    const handleEdit = () => {
+    const handleEdit = (id) => {
         // TODO Orkun
+        history.push({
+            pathname: P_M_EDIT_ITEM,
+            state: { id }
+        });
     };
 
     const handleCard = () => {
