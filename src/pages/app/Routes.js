@@ -21,6 +21,7 @@ import {
     ORDERS,
     P_M_ITEMS,
     P_M_NEW_ITEM,
+    P_M_EDIT_ITEM,
     PROFILE,
     SETTINGS,
     SIGN_IN,
@@ -99,6 +100,10 @@ const Routes = () => {
                     <Items />
                 </Route>
                 <Route exact path={P_M_NEW_ITEM}>
+                    <ItemSingleView />
+                </Route>
+
+                <Route exact path={P_M_EDIT_ITEM}>
                     <ItemSingleView />
                 </Route>
 

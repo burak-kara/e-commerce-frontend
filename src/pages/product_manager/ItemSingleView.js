@@ -4,7 +4,7 @@ import { Form, Col, InputGroup } from 'react-bootstrap';
 import PreviewModal from './PreviewModal';
 import { DiscardModal } from '../../components';
 import { noneError, P_M_ITEMS } from '../../_constants';
-import { getCategories, postNewItem } from '../../_requests';
+import { getCategories, postNewItem, editItem, getItemById } from '../../_requests';
 
 // TODO delete after BE implementation
 const camps = [
@@ -14,11 +14,23 @@ const camps = [
 
 const ItemSingleView = () => {
     const history = useHistory();
+    const [editId, setId] = useState();
     const [previewModal, setPreviewModal] = useState(false);
     const [confirmModal, setConfirmModal] = useState(false);
     const [categories, setCategories] = useState();
     const [loading, setLoading] = useState(false);
-    const [form, setForm] = useState({ seller: '2' });
+    const [form, setForm] = useState({
+        seller: '2',
+        image: '',
+        name: '',
+        brand: '',
+        category: '',
+        price: '',
+        stock: '',
+        description: '',
+        specs: '',
+        campaign: '',
+    });
     const [errors, setErrors] = useState({
         image: '',
         name: '',
@@ -30,6 +42,24 @@ const ItemSingleView = () => {
         specs: '',
         campaign: '',
     });
+
+    useEffect(() => {
+        if (history.location.state) {
+            const { id } = history.location.state;
+            setId(id);
+            getItemById(id)
+                .then((response) => {
+                    console.log(response.data);
+                    setForm(response.data);
+                    setLoading(false);
+                })
+                .catch(() => {
+                    // TODO handle error
+                    setLoading(false);
+                    setLoading(!loading); // TODO delete
+                });
+        }
+    }, []);
 
     useEffect(() => {
         setLoading(true);
@@ -129,24 +159,39 @@ const ItemSingleView = () => {
     };
 
     const onConfirm = () => {
-        postNewItem(form)
-            .then(() => {
-                // TODO successful message
-                setTimeout(() => {
-                    history.push({
-                        pathname: P_M_ITEMS,
-                    });
-                }, 500);
-            })
-            .catch(() => {
-                // TODO error handler
-            });
+        if (editId) {
+            editItem(form)
+                .then(() => {
+                    // TODO successful message
+                    setTimeout(() => {
+                        history.push({
+                            pathname: P_M_ITEMS,
+                        });
+                    }, 500);
+                })
+                .catch(() => {
+                    // TODO error handler
+                });
+        } else {
+            postNewItem(form)
+                .then(() => {
+                    // TODO successful message
+                    setTimeout(() => {
+                        history.push({
+                            pathname: P_M_ITEMS,
+                        });
+                    }, 500);
+                })
+                .catch(() => {
+                    // TODO error handler
+                });
+        }
     };
 
     const renderCategories = () => {
         const cats = [<option key="default">Choose category</option>];
-        categories.forEach((item) => {
-            cats.push(<option key={item.name}>{item.name}</option>);
+        categories.forEach((category) => {
+            cats.push(<option key={category.name}>{category.name}</option>);
         });
         return cats;
     };
@@ -174,6 +219,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('image', e.target.value)}
                                 isInvalid={!!errors.image && errors.image !== noneError}
                                 isValid={errors.image === noneError}
+                                value={form.image}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
@@ -190,6 +236,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('name', e.target.value)}
                                 isInvalid={!!errors.name && errors.name !== noneError}
                                 isValid={errors.name === noneError}
+                                value={form.name}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
@@ -206,6 +253,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('brand', e.target.value)}
                                 isInvalid={!!errors.brand && errors.brand !== noneError}
                                 isValid={errors.brand === noneError}
+                                value={form.brand}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
@@ -224,6 +272,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('category', e.target.value)}
                                 isInvalid={!!errors.category && errors.category !== noneError}
                                 isValid={errors.category === noneError}
+                                value={form.category}
                             >
                                 {categories ? renderCategories() : null}
                             </Form.Control>
@@ -243,6 +292,7 @@ const ItemSingleView = () => {
                                     onChange={(e) => setField('price', e.target.value)}
                                     isInvalid={!!errors.price && errors.price !== noneError}
                                     isValid={errors.price === noneError}
+                                    value={form.price}
                                 />
                                 <InputGroup.Append>
                                     <InputGroup.Text>₺</InputGroup.Text>
@@ -263,6 +313,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('stock', e.target.value)}
                                 isInvalid={!!errors.stock && errors.stock !== noneError}
                                 isValid={errors.stock === noneError}
+                                value={form.stock}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
@@ -279,6 +330,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('campaign', e.target.value)}
                                 isInvalid={!!errors.campaign && errors.campaign !== noneError}
                                 isValid={errors.campaign === noneError}
+                                value={form.campaign}
                             >
                                 {renderCampaigns()}
                             </Form.Control>
@@ -298,6 +350,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('description', e.target.value)}
                                 isInvalid={!!errors.description && errors.description !== noneError}
                                 isValid={errors.description === noneError}
+                                value={form.description}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
@@ -316,6 +369,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('specs', e.target.value)}
                                 isInvalid={!!errors.specs && errors.specs !== noneError}
                                 isValid={errors.specs === noneError}
+                                value={form.specs}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
