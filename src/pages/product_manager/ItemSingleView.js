@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Col, InputGroup } from 'react-bootstrap';
 import PreviewModal from './PreviewModal';
-import { DiscardModal } from '../../components';
+import { Alert, DiscardModal } from '../../components';
 import { noneError, P_M_ITEMS } from '../../_constants';
 import { getCategories, postNewItem, editItem, getItemById } from '../../_requests';
 
@@ -19,6 +19,9 @@ const ItemSingleView = () => {
     const [confirmModal, setConfirmModal] = useState(false);
     const [categories, setCategories] = useState();
     const [loading, setLoading] = useState(false);
+    const [alertOpen, setAlertsOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const [severity, setSeverity] = useState('');
     const [form, setForm] = useState({
         seller: '2',
         image: '',
@@ -51,11 +54,15 @@ const ItemSingleView = () => {
                 .then((response) => {
                     setForm(response.data);
                     setLoading(false);
+                    // TODO loading
                 })
                 .catch(() => {
-                    // TODO handle error
+                    setMessage('Error while fetching the item!');
+                    setSeverity('error');
+                    setAlertsOpen(true);
                     setLoading(false);
                     setLoading(!loading); // TODO delete
+                    // TODO loading
                 });
         }
     }, []);
@@ -66,11 +73,15 @@ const ItemSingleView = () => {
             .then((response) => {
                 setCategories(response.data);
                 setLoading(false);
+                // TODO loading
             })
             .catch(() => {
-                // TODO handle error
+                setMessage('Error while fetching categories!');
+                setSeverity('error');
+                setAlertsOpen(true);
                 setLoading(false);
                 setLoading(!loading); // TODO delete
+                // TODO loading
             });
     }, []);
 
@@ -161,7 +172,9 @@ const ItemSingleView = () => {
         if (editId) {
             editItem(form)
                 .then(() => {
-                    // TODO successful message
+                    setMessage('Successfully updated the item!');
+                    setSeverity('success');
+                    setAlertsOpen(true);
                     setTimeout(() => {
                         history.push({
                             pathname: P_M_ITEMS,
@@ -169,12 +182,16 @@ const ItemSingleView = () => {
                     }, 500);
                 })
                 .catch(() => {
-                    // TODO error handler
+                    setMessage('Error while updating the product!');
+                    setSeverity('error');
+                    setAlertsOpen(true);
                 });
         } else {
             postNewItem(form)
                 .then(() => {
-                    // TODO successful message
+                    setMessage('Successfully added the item!');
+                    setSeverity('success');
+                    setAlertsOpen(true);
                     setTimeout(() => {
                         history.push({
                             pathname: P_M_ITEMS,
@@ -182,7 +199,9 @@ const ItemSingleView = () => {
                     }, 500);
                 })
                 .catch(() => {
-                    // TODO error handler
+                    setMessage('Error while adding new product!');
+                    setSeverity('error');
+                    setAlertsOpen(true);
                 });
         }
     };
@@ -403,6 +422,12 @@ const ItemSingleView = () => {
                 onHide={() => setConfirmModal(false)}
                 onDiscard={onDiscard}
                 header="Discard New Product?"
+            />
+            <Alert
+                open={alertOpen}
+                handleClose={() => setAlertsOpen(false)}
+                message={message}
+                severity={severity}
             />
         </>
     );

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-import { DiscardModal, ProductCard } from '../../components';
-import { getItems, deleteItem } from '../../_requests';
 import { Add } from '../../_utilities/icons';
+import { getItems, deleteItem } from '../../_requests';
+import { Alert, DiscardModal, ProductCard } from '../../components';
 import { P_M_NEW_ITEM, PM, P_M_EDIT_ITEM } from '../../_constants';
 
 const Items = () => {
@@ -12,6 +12,9 @@ const Items = () => {
     const [deleteId, setDeleteId] = useState('');
     const [loading, setLoading] = useState(false);
     const [confirmModal, setConfirmModal] = useState(false);
+    const [alertOpen, setAlertsOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const [severity, setSeverity] = useState('');
 
     // TODO get this from storage
     const role = PM;
@@ -22,11 +25,15 @@ const Items = () => {
             .then((response) => {
                 setItems(response.data);
                 setLoading(false);
+                // TODO loading
             })
             .catch(() => {
-                // TODO handle error
+                setMessage('Error while fetching items!');
+                setSeverity('error');
+                setAlertsOpen(true);
                 setLoading(false);
                 setLoading(!loading); // TODO delete
+                // TODO loading
             });
     };
 
@@ -43,16 +50,19 @@ const Items = () => {
         setConfirmModal(false);
         deleteItem(deleteId)
             .then(() => {
-                // TODO success message
+                setMessage('Product is deleted successfully!');
+                setSeverity('success');
+                setAlertsOpen(true);
                 fetchItems();
             })
             .catch(() => {
-                // TODO handle error
+                setMessage('Error while deleting the product!');
+                setSeverity('error');
+                setAlertsOpen(true);
             });
     };
 
     const handleEdit = (id) => {
-        // TODO Orkun
         history.push({
             pathname: P_M_EDIT_ITEM,
             state: { id },
@@ -115,6 +125,12 @@ const Items = () => {
                 header="Delete the Product?"
                 body="If you delete this product now, you will lose it permanently."
                 buttonText="Delete"
+            />
+            <Alert
+                open={alertOpen}
+                handleClose={() => setAlertsOpen(false)}
+                message={message}
+                severity={severity}
             />
         </>
     );

@@ -33,6 +33,7 @@ const Products = (params) => {
                     setLoading(false);
                     setLoading(false);
                     setLoading(!loading); // TODO delete
+                    // TODO loading
                 });
         }
     }, [category]);
@@ -75,7 +76,6 @@ const Products = (params) => {
             <Container fluid="lg" className="pm-item-list">
                 <Row className="row">{items ? renderItems() : null}</Row>
             </Container>
-
             <Alert
                 open={alertOpen}
                 handleClose={() => setAlertsOpen(false)}
