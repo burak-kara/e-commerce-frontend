@@ -58,10 +58,12 @@ const logout = () =>
         path: `${AUTH}logout/`,
     });
 
-const getUser = () =>
-    getRequest({
+const getUser = (tt) => {
+    axios.defaults.headers.common.Authorization = `Token ${tt}`;
+    return getRequest({
         path: `${AUTH}user/`,
     });
+};
 
 const getItems = () =>
     getRequest({

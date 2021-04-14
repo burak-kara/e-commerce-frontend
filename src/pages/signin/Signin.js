@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { Form, Col, InputGroup } from 'react-bootstrap';
 import { LANDING, noneError, TIME_OUT, TOKEN } from '../../_constants';
 import { logo } from '../../_assets';
-import { login } from '../../_requests';
+import { getUser, login } from '../../_requests';
 import { Hide, Show } from '../../_utilities/icons';
 import { Loading } from '../../components';
-import { openAlert } from '../../_redux/actions';
+import { openAlert, setToken, setUser } from '../../_redux/actions';
 
 const Signin = (params) => {
     const history = useHistory();
@@ -66,18 +66,31 @@ const Signin = (params) => {
             setLoading(true);
             login(form)
                 .then((response) => {
+                    localStorage.setItem(TOKEN, response.data.key);
                     params.openAlert({
                         message: 'Logged in successfully!',
                         severity: 'success',
                     });
-                    localStorage.setItem(TOKEN, response.data.key);
-                    setTimeout(() => {
-                        setLoading(false);
-                        history.push({
-                            pathname: LANDING,
+                    params.setToken({
+                        token: response.data.key,
+                    });
+                    getUser(response.data.key)
+                        .then((r) => {
+                            params.setUser(r.data);
+                            setTimeout(() => {
+                                setLoading(false);
+                                history.push({
+                                    pathname: LANDING,
+                                });
+                            }, TIME_OUT);
+                            setLoading(false);
+                        })
+                        .catch(() => {
+                            params.openAlert({
+                                message: 'Error while getting user info',
+                                severity: 'error',
+                            });
                         });
-                    }, TIME_OUT);
-                    setLoading(false);
                 })
                 .catch(() => {
                     params.openAlert({
@@ -178,4 +191,4 @@ const Signin = (params) => {
     );
 };
 
-export default connect(null, { openAlert })(Signin);
+export default connect(null, { openAlert, setToken, setUser })(Signin);

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../_requests';
-import { openAlert } from '../../_redux/actions';
+import { openAlert, removeToken, removeUser } from '../../_redux/actions';
 import { LANDING, TIME_OUT, TOKEN } from '../../_constants';
 
 const Signout = (params) => {
@@ -16,6 +16,8 @@ const Signout = (params) => {
                     message: 'Logged out successfully',
                     severity: 'success',
                 });
+                params.removeToken();
+                params.removeUser();
                 setTimeout(() => {
                     history.push({
                         pathname: LANDING,
@@ -34,4 +36,4 @@ const Signout = (params) => {
     return <div>Logging out!</div>;
 };
 
-export default connect(null, { openAlert })(Signout);
+export default connect(null, { openAlert, removeToken, removeUser })(Signout);
