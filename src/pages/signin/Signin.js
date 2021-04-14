@@ -5,12 +5,15 @@ import { LANDING, noneError, TOKEN } from '../../_constants';
 import { logo } from '../../_assets';
 import { login } from '../../_requests';
 import { Hide, Show } from '../../_utilities/icons';
-import { Loading } from '../../components';
+import { Alert, Loading } from '../../components';
 
 const Signin = () => {
     const history = useHistory();
     const [showPassword, setPasswordShow] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [alertOpen, setAlertsOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const [severity, setSeverity] = useState('');
     const [form, setForm] = useState({
         is_sales_manager: false,
         is_product_manager: false,
@@ -64,8 +67,9 @@ const Signin = () => {
             setLoading(true);
             login(form)
                 .then((response) => {
-                    // TODO add success message
-                    setLoading(true);
+                    setMessage('Logged in successfully.');
+                    setSeverity('success');
+                    setAlertsOpen(true);
                     localStorage.setItem(TOKEN, response.data.key);
                     setTimeout(() => {
                         setLoading(false);
@@ -73,10 +77,13 @@ const Signin = () => {
                             pathname: LANDING,
                         });
                     }, 500);
+                    setLoading(false);
                 })
                 .catch(() => {
+                    setMessage('Wrong credentials while logging in!');
+                    setSeverity('error');
+                    setAlertsOpen(true);
                     setLoading(false);
-                    // TODO handle errors
                 });
         }
     };
@@ -166,6 +173,12 @@ const Signin = () => {
                 </Form.Row>
                 <div className="form-row btn-container">{renderSubmitButton()}</div>
             </Form>
+            <Alert
+                open={alertOpen}
+                handleClose={() => setAlertsOpen(false)}
+                message={message}
+                severity={severity}
+            />
         </div>
     );
 };
