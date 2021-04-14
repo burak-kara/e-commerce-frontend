@@ -75,3 +75,4 @@ yarn-error.log*
 .firebase
 TODO_list
 react-app-env.d.ts
+.env
