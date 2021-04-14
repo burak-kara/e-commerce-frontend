@@ -11,7 +11,7 @@ const Alert = (props) => {
         <Snackbar
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             open={open}
-            autoHideDuration={duration || 2000}
+            autoHideDuration={duration || 3000}
             onClose={handleClose}
         >
             <MuiCustomAlert onClose={handleClose} severity={severity}>

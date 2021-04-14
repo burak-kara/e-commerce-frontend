@@ -3,16 +3,19 @@ import { useHistory } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import Step1 from './Step1';
 import Step2 from './Step2';
-import { LANDING, noneError, emailRegex, passwordRegex } from '../../_constants';
 import { logo } from '../../_assets';
-import { Loading } from '../../components';
 import { register } from '../../_requests';
+import { Alert, Loading } from '../../components';
+import { LANDING, noneError, emailRegex, passwordRegex, TOKEN } from '../../_constants';
 
 const Signup = () => {
     const history = useHistory();
     const [isNext, setIsNext] = useState(false);
     const [form, setForm] = useState({ is_sales_manager: false, is_product_manager: false });
     const [currentStep, setCurrentStep] = useState(1);
+    const [alertOpen, setAlertsOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const [severity, setSeverity] = useState('');
     const [errors, setErrors] = useState({
         email: '',
         username: '',
@@ -130,23 +133,48 @@ const Signup = () => {
         return isError;
     };
 
+    const setServerSideResponse = (serverErrors) => {
+        const newErrors = {
+            email: noneError,
+            username: noneError,
+            password: noneError,
+            password_validation: noneError,
+            first_name: noneError,
+            last_name: noneError,
+            phone_number: noneError,
+            birthday: noneError,
+        };
+
+        Object.keys(serverErrors).forEach((key) => {
+            // eslint-disable-next-line prefer-destructuring
+            newErrors[key] = serverErrors[key][0];
+        });
+        return newErrors;
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const stepError = findStep2Errors();
         setErrors(stepError);
         if (!checkAnyError(stepError)) {
             register(form)
-                .then(() => {
-                    // TODO add success message
+                .then((response) => {
+                    setMessage('Logged in successfully.');
+                    setSeverity('success');
+                    setAlertsOpen(true);
+                    localStorage.setItem(TOKEN, response.data.key);
                     setTimeout(() => {
                         history.push({
                             pathname: LANDING,
                         });
                     }, 500);
                 })
-                .catch(() => {
-                    // TODO handle errors
-                    // e.g. user exist message
+                .catch((error) => {
+                    setMessage('Wrong credentials while signing up!');
+                    setSeverity('error');
+                    setAlertsOpen(true);
+                    const serverErrors = setServerSideResponse(error.response.data);
+                    setErrors(serverErrors);
                 });
         }
     };
@@ -225,6 +253,12 @@ const Signup = () => {
                     {renderSubmitButton()}
                 </div>
             </Form>
+            <Alert
+                open={alertOpen}
+                handleClose={() => setAlertsOpen(false)}
+                message={message}
+                severity={severity}
+            />
         </div>
     );
 };
