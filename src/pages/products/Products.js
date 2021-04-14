@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-import { ProductCard } from '../../components';
+import { Alert, ProductCard } from '../../components';
 import { getItemsByCategory } from '../../_requests';
 
 const Products = (params) => {
@@ -10,6 +10,9 @@ const Products = (params) => {
     const [loading, setLoading] = useState(false);
     const [chosenId, setId] = useState('');
     const [category, setCategory] = useState();
+    const [alertOpen, setAlertsOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const [severity, setSeverity] = useState('');
 
     useEffect(() => {
         setCategory(params.category.substring(1));
@@ -24,7 +27,10 @@ const Products = (params) => {
                     setLoading(false);
                 })
                 .catch(() => {
-                    // TODO handle error
+                    setMessage('Error while fetching items!');
+                    setSeverity('error');
+                    setAlertsOpen(true);
+                    setLoading(false);
                     setLoading(false);
                     setLoading(!loading); // TODO delete
                 });
@@ -65,9 +71,18 @@ const Products = (params) => {
     };
 
     return (
-        <Container fluid="lg" className="pm-item-list">
-            <Row className="row">{items ? renderItems() : null}</Row>
-        </Container>
+        <>
+            <Container fluid="lg" className="pm-item-list">
+                <Row className="row">{items ? renderItems() : null}</Row>
+            </Container>
+
+            <Alert
+                open={alertOpen}
+                handleClose={() => setAlertsOpen(false)}
+                message={message}
+                severity={severity}
+            />
+        </>
     );
 };
 
