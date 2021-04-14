@@ -41,16 +41,11 @@ const Routes = () => {
 
     const isSignPage = () => {
         const { pathname } = history.location;
-        return pathname === SIGN_UP || pathname === SIGN_UP || pathname === SIGN_UP;
-    };
-
-    const isLoginPage = () => {
-        const { pathname } = history.location;
-        return pathname === SIGN_IN || pathname === SIGN_IN || pathname === SIGN_IN;
+        return pathname === SIGN_UP || pathname === SIGN_IN || pathname === SIGN_OUT;
     };
 
     const renderHeader = () =>
-        isSignPage() || isLoginPage() ? null : (
+        isSignPage() ? null : (
             <>
                 <div className="sticky-top">
                     <Header />

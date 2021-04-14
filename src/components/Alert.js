@@ -1,24 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import MuiAlert from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar';
+import { Snackbar } from '@material-ui/core';
+import { closeAlert } from '../_redux/actions';
 
 const MuiCustomAlert = (props) => <MuiAlert elevation={6} variant="filled" {...props} />;
 
 const Alert = (props) => {
-    const { open, duration, handleClose, severity, message } = props;
+    const { open, duration, severity, message } = props;
 
     return (
         <Snackbar
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             open={open}
             autoHideDuration={duration || 3000}
-            onClose={handleClose}
+            onClose={() => props.closeAlert()}
         >
-            <MuiCustomAlert onClose={handleClose} severity={severity}>
+            <MuiCustomAlert onClose={() => props.closeAlert()} severity={severity}>
                 {message}
             </MuiCustomAlert>
         </Snackbar>
     );
 };
 
-export default Alert;
+const mapStateToProps = (props) => props.alert;
+
+export default connect(mapStateToProps, { closeAlert })(Alert);

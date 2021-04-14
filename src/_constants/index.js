@@ -39,6 +39,7 @@ export {
 export const noneError = 'N';
 export const STAR_COUNT = 5;
 export const TOKEN = 'token';
+export const TIME_OUT = 500
 
 // roles
 export const COSTUMER = 'costumer';

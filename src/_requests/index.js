@@ -3,7 +3,6 @@ import { TOKEN } from '../_constants';
 
 const { REACT_APP_API_URL_LOCAL, REACT_APP_API_URL_DEPLOYED, NODE_ENV } = process.env;
 
-// TODO change to the deployed backend server
 const API_URL = NODE_ENV === 'production' ? REACT_APP_API_URL_DEPLOYED : REACT_APP_API_URL_LOCAL;
 
 const token = localStorage.getItem(TOKEN);
