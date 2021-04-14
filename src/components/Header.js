@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { logo } from '../_assets';
+import { getUser } from '../_requests';
+import { openAlert } from '../_redux/actions';
 import { Search, Account, DropDown, Basket } from '../_utilities/icons';
 import {
     BASKET,
@@ -14,9 +17,8 @@ import {
     SIGN_UP,
     TOKEN,
 } from '../_constants';
-import { getUser } from '../_requests';
 
-const Header = () => {
+const Header = (params) => {
     const history = useHistory();
     const [user, setUser] = useState();
     const [token, setToken] = useState();
@@ -30,7 +32,10 @@ const Header = () => {
                     setUser(response.data);
                 })
                 .catch(() => {
-                    // TODO handle errors
+                    params.openAlert({
+                        message: 'Error while getting user info',
+                        severity: 'error',
+                    });
                 });
         }
     }, [token]);
@@ -96,7 +101,6 @@ const Header = () => {
             <div className="container h-100">
                 <nav className="navbar navbar-expand-lg h-100 ">
                     <button className="header-brand" type="button" onClick={() => handleLogo()}>
-                        {/* TODO onClick */}
                         <img className="logo" src={logo} alt="logo" />
                     </button>
                     <div className="collapse navbar-collapse h-50 justify-content-end">
@@ -214,4 +218,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default connect(null, { openAlert })(Header);

@@ -1,23 +1,32 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { LANDING, TOKEN } from '../../_constants';
+import { connect } from 'react-redux';
 import { logout } from '../../_requests';
+import { openAlert } from '../../_redux/actions';
+import { LANDING, TIME_OUT, TOKEN } from '../../_constants';
 
-const Signout = () => {
+const Signout = (params) => {
     const history = useHistory();
 
     useEffect(() => {
         logout()
             .then(() => {
                 localStorage.removeItem(TOKEN);
+                params.openAlert({
+                    message: 'Logged out successfully',
+                    severity: 'success',
+                });
                 setTimeout(() => {
                     history.push({
                         pathname: LANDING,
                     });
-                }, 500);
+                }, TIME_OUT);
             })
             .catch(() => {
-                // TODO handle error
+                params.openAlert({
+                    message: 'Error during signing up',
+                    severity: 'error',
+                });
             });
     }, []);
 
@@ -25,4 +34,4 @@ const Signout = () => {
     return <div>Logging out!</div>;
 };
 
-export default Signout;
+export default connect(null, { openAlert })(Signout);

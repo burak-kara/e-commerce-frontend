@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
-import { Alert, ProductCard } from '../../components';
+import { ProductCard } from '../../components';
 import { getItemsByCategory } from '../../_requests';
+import { openAlert } from '../../_redux/actions';
 
 const Products = (params) => {
     const location = useLocation();
@@ -10,9 +12,6 @@ const Products = (params) => {
     const [loading, setLoading] = useState(false);
     const [chosenId, setId] = useState('');
     const [category, setCategory] = useState();
-    const [alertOpen, setAlertsOpen] = useState(false);
-    const [message, setMessage] = useState('');
-    const [severity, setSeverity] = useState('');
 
     useEffect(() => {
         setCategory(params.category.substring(1));
@@ -27,10 +26,10 @@ const Products = (params) => {
                     setLoading(false);
                 })
                 .catch(() => {
-                    setMessage('Error while fetching items!');
-                    setSeverity('error');
-                    setAlertsOpen(true);
-                    setLoading(false);
+                    params.openAlert({
+                        message: 'Error while fetching items!',
+                        severity: 'error',
+                    });
                     setLoading(false);
                     setLoading(!loading); // TODO delete
                     // TODO loading
@@ -72,18 +71,10 @@ const Products = (params) => {
     };
 
     return (
-        <>
-            <Container fluid="lg" className="pm-item-list">
-                <Row className="row">{items ? renderItems() : null}</Row>
-            </Container>
-            <Alert
-                open={alertOpen}
-                handleClose={() => setAlertsOpen(false)}
-                message={message}
-                severity={severity}
-            />
-        </>
+        <Container fluid="lg" className="pm-item-list">
+            <Row className="row">{items ? renderItems() : null}</Row>
+        </Container>
     );
 };
 
-export default Products;
+export default connect(null, { openAlert })(Products);

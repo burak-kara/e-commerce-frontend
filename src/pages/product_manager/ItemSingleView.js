@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Col, InputGroup } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import PreviewModal from './PreviewModal';
-import { Alert, DiscardModal } from '../../components';
-import { noneError, P_M_ITEMS } from '../../_constants';
+import { DiscardModal } from '../../components';
+import { noneError, P_M_ITEMS, TIME_OUT } from '../../_constants';
 import { getCategories, postNewItem, editItem, getItemById } from '../../_requests';
+import { openAlert } from '../../_redux/actions';
 
 // TODO delete after BE implementation
 const camps = [
@@ -12,16 +14,13 @@ const camps = [
     "Süpermarket Alışverişine Solo Tuvalet Kağıdı 32'li %20 indirimli",
 ];
 
-const ItemSingleView = () => {
+const ItemSingleView = (params) => {
     const history = useHistory();
     const [editId, setId] = useState();
     const [previewModal, setPreviewModal] = useState(false);
     const [confirmModal, setConfirmModal] = useState(false);
     const [categories, setCategories] = useState();
     const [loading, setLoading] = useState(false);
-    const [alertOpen, setAlertsOpen] = useState(false);
-    const [message, setMessage] = useState('');
-    const [severity, setSeverity] = useState('');
     const [form, setForm] = useState({
         seller: '2',
         image: '',
@@ -57,9 +56,10 @@ const ItemSingleView = () => {
                     // TODO loading
                 })
                 .catch(() => {
-                    setMessage('Error while fetching the item!');
-                    setSeverity('error');
-                    setAlertsOpen(true);
+                    params.openAlert({
+                        message: 'Error while fetching the item!',
+                        severity: 'error',
+                    });
                     setLoading(false);
                     setLoading(!loading); // TODO delete
                     // TODO loading
@@ -76,9 +76,10 @@ const ItemSingleView = () => {
                 // TODO loading
             })
             .catch(() => {
-                setMessage('Error while fetching categories!');
-                setSeverity('error');
-                setAlertsOpen(true);
+                params.openAlert({
+                    message: 'Error while fetching categories!',
+                    severity: 'error',
+                });
                 setLoading(false);
                 setLoading(!loading); // TODO delete
                 // TODO loading
@@ -172,36 +173,40 @@ const ItemSingleView = () => {
         if (editId) {
             editItem(form)
                 .then(() => {
-                    setMessage('Successfully updated the item!');
-                    setSeverity('success');
-                    setAlertsOpen(true);
+                    params.openAlert({
+                        message: 'Successfully updated the item!',
+                        severity: 'success',
+                    });
                     setTimeout(() => {
                         history.push({
                             pathname: P_M_ITEMS,
                         });
-                    }, 500);
+                    }, TIME_OUT);
                 })
                 .catch(() => {
-                    setMessage('Error while updating the product!');
-                    setSeverity('error');
-                    setAlertsOpen(true);
+                    params.openAlert({
+                        message: 'Error while updating the product!',
+                        severity: 'error',
+                    });
                 });
         } else {
             postNewItem(form)
                 .then(() => {
-                    setMessage('Successfully added the item!');
-                    setSeverity('success');
-                    setAlertsOpen(true);
+                    params.openAlert({
+                        message: 'Successfully added the item!',
+                        severity: 'success',
+                    });
                     setTimeout(() => {
                         history.push({
                             pathname: P_M_ITEMS,
                         });
-                    }, 500);
+                    }, TIME_OUT);
                 })
                 .catch(() => {
-                    setMessage('Error while adding new product!');
-                    setSeverity('error');
-                    setAlertsOpen(true);
+                    params.openAlert({
+                        message: 'Error while adding new product!',
+                        severity: 'error',
+                    });
                 });
         }
     };
@@ -423,14 +428,8 @@ const ItemSingleView = () => {
                 onDiscard={onDiscard}
                 header="Discard New Product?"
             />
-            <Alert
-                open={alertOpen}
-                handleClose={() => setAlertsOpen(false)}
-                message={message}
-                severity={severity}
-            />
         </>
     );
 };
 
-export default ItemSingleView;
+export default connect(null, { openAlert })(ItemSingleView);

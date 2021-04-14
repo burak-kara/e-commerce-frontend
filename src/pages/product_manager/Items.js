@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { Add } from '../../_utilities/icons';
 import { getItems, deleteItem } from '../../_requests';
-import { Alert, DiscardModal, ProductCard } from '../../components';
+import { DiscardModal, ProductCard } from '../../components';
 import { P_M_NEW_ITEM, PM, P_M_EDIT_ITEM } from '../../_constants';
+import { openAlert } from '../../_redux/actions';
 
-const Items = () => {
+const Items = (params) => {
     const history = useHistory();
     const [items, setItems] = useState();
     const [deleteId, setDeleteId] = useState('');
     const [loading, setLoading] = useState(false);
     const [confirmModal, setConfirmModal] = useState(false);
-    const [alertOpen, setAlertsOpen] = useState(false);
-    const [message, setMessage] = useState('');
-    const [severity, setSeverity] = useState('');
 
     // TODO get this from storage
     const role = PM;
@@ -28,9 +27,10 @@ const Items = () => {
                 // TODO loading
             })
             .catch(() => {
-                setMessage('Error while fetching items!');
-                setSeverity('error');
-                setAlertsOpen(true);
+                params.openAlert({
+                    message: 'Error while fetching items!',
+                    severity: 'error',
+                });
                 setLoading(false);
                 setLoading(!loading); // TODO delete
                 // TODO loading
@@ -50,15 +50,17 @@ const Items = () => {
         setConfirmModal(false);
         deleteItem(deleteId)
             .then(() => {
-                setMessage('Product is deleted successfully!');
-                setSeverity('success');
-                setAlertsOpen(true);
+                params.openAlert({
+                    message: 'Product is deleted successfully!',
+                    severity: 'success',
+                });
                 fetchItems();
             })
             .catch(() => {
-                setMessage('Error while deleting the product!');
-                setSeverity('error');
-                setAlertsOpen(true);
+                params.openAlert({
+                    message: 'Error while deleting the product!',
+                    severity: 'error',
+                });
             });
     };
 
@@ -126,14 +128,8 @@ const Items = () => {
                 body="If you delete this product now, you will lose it permanently."
                 buttonText="Delete"
             />
-            <Alert
-                open={alertOpen}
-                handleClose={() => setAlertsOpen(false)}
-                message={message}
-                severity={severity}
-            />
         </>
     );
 };
 
-export default Items;
+export default connect(null, { openAlert })(Items);

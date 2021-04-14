@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import { logo } from '../../_assets';
 import { register } from '../../_requests';
-import { Alert, Loading } from '../../components';
-import { LANDING, noneError, emailRegex, passwordRegex, TOKEN } from '../../_constants';
+import { Loading } from '../../components';
+import { openAlert } from '../../_redux/actions';
+import { LANDING, noneError, emailRegex, passwordRegex, TOKEN, TIME_OUT } from '../../_constants';
 
-const Signup = () => {
+const Signup = (params) => {
     const history = useHistory();
     const [isNext, setIsNext] = useState(false);
     const [form, setForm] = useState({ is_sales_manager: false, is_product_manager: false });
     const [currentStep, setCurrentStep] = useState(1);
-    const [alertOpen, setAlertsOpen] = useState(false);
-    const [message, setMessage] = useState('');
-    const [severity, setSeverity] = useState('');
     const [errors, setErrors] = useState({
         email: '',
         username: '',
@@ -159,20 +158,22 @@ const Signup = () => {
         if (!checkAnyError(stepError)) {
             register(form)
                 .then((response) => {
-                    setMessage('Logged in successfully.');
-                    setSeverity('success');
-                    setAlertsOpen(true);
+                    params.openAlert({
+                        message: 'Logged in successfully.',
+                        severity: 'success',
+                    });
                     localStorage.setItem(TOKEN, response.data.key);
                     setTimeout(() => {
                         history.push({
                             pathname: LANDING,
                         });
-                    }, 500);
+                    }, TIME_OUT);
                 })
                 .catch((error) => {
-                    setMessage('Wrong credentials while signing up!');
-                    setSeverity('error');
-                    setAlertsOpen(true);
+                    params.openAlert({
+                        message: 'Wrong credentials while signing up!',
+                        severity: 'error',
+                    });
                     const serverErrors = setServerSideResponse(error.response.data);
                     setErrors(serverErrors);
                 });
@@ -193,7 +194,7 @@ const Signup = () => {
             setIsNext(!isNext);
             setTimeout(() => {
                 setCurrentStep(currentStep + 1);
-            }, 500);
+            }, TIME_OUT);
         }
     };
 
@@ -253,14 +254,8 @@ const Signup = () => {
                     {renderSubmitButton()}
                 </div>
             </Form>
-            <Alert
-                open={alertOpen}
-                handleClose={() => setAlertsOpen(false)}
-                message={message}
-                severity={severity}
-            />
         </div>
     );
 };
 
-export default Signup;
+export default connect(null, { openAlert })(Signup);

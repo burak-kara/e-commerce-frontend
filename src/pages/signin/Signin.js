@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Form, Col, InputGroup } from 'react-bootstrap';
-import { LANDING, noneError, TOKEN } from '../../_constants';
+import { LANDING, noneError, TIME_OUT, TOKEN } from '../../_constants';
 import { logo } from '../../_assets';
 import { login } from '../../_requests';
 import { Hide, Show } from '../../_utilities/icons';
-import { Alert, Loading } from '../../components';
+import { Loading } from '../../components';
+import { openAlert } from '../../_redux/actions';
 
-const Signin = () => {
+const Signin = (params) => {
     const history = useHistory();
     const [showPassword, setPasswordShow] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [alertOpen, setAlertsOpen] = useState(false);
-    const [message, setMessage] = useState('');
-    const [severity, setSeverity] = useState('');
     const [form, setForm] = useState({
         is_sales_manager: false,
         is_product_manager: false,
@@ -67,22 +66,24 @@ const Signin = () => {
             setLoading(true);
             login(form)
                 .then((response) => {
-                    setMessage('Logged in successfully.');
-                    setSeverity('success');
-                    setAlertsOpen(true);
+                    params.openAlert({
+                        message: 'Logged in successfully!',
+                        severity: 'success',
+                    });
                     localStorage.setItem(TOKEN, response.data.key);
                     setTimeout(() => {
                         setLoading(false);
                         history.push({
                             pathname: LANDING,
                         });
-                    }, 500);
+                    }, TIME_OUT);
                     setLoading(false);
                 })
                 .catch(() => {
-                    setMessage('Wrong credentials while logging in!');
-                    setSeverity('error');
-                    setAlertsOpen(true);
+                    params.openAlert({
+                        message: 'Wrong credentials while logging in!',
+                        severity: 'error',
+                    });
                     setLoading(false);
                 });
         }
@@ -173,14 +174,8 @@ const Signin = () => {
                 </Form.Row>
                 <div className="form-row btn-container">{renderSubmitButton()}</div>
             </Form>
-            <Alert
-                open={alertOpen}
-                handleClose={() => setAlertsOpen(false)}
-                message={message}
-                severity={severity}
-            />
         </div>
     );
 };
 
-export default Signin;
+export default connect(null, { openAlert })(Signin);
