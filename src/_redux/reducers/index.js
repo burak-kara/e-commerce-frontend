@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import alert from './alert';
-import session from './session';
+import user from './user';
 import token from './token';
 
-export default combineReducers({ alert, session, token });
+export default combineReducers({ alert, user, token });

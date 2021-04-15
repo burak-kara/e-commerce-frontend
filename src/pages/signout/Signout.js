@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../_requests';
 import { openAlert, removeToken, removeUser } from '../../_redux/actions';
 import { LANDING, TIME_OUT, TOKEN } from '../../_constants';
 
 const Signout = (params) => {
-    const history = useHistory();
-
     useEffect(() => {
         logout()
             .then(() => {
@@ -19,9 +16,9 @@ const Signout = (params) => {
                 params.removeToken();
                 params.removeUser();
                 setTimeout(() => {
-                    history.push({
-                        pathname: LANDING,
-                    });
+                    // refreshes the page after signout
+                    // to clear storage & state
+                    window.location.href = LANDING;
                 }, TIME_OUT);
             })
             .catch(() => {

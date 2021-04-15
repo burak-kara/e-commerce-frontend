@@ -5,6 +5,7 @@ import {
     REMOVE_USER,
     SET_TOKEN,
     REMOVE_TOKEN,
+    SET_USER_DETAIL,
 } from './actionTypes';
 
 export const openAlert = (payload) => ({
@@ -18,6 +19,11 @@ export const closeAlert = () => ({
 
 export const setUser = (payload) => ({
     type: SET_USER,
+    payload,
+});
+
+export const setUserDetail = (payload) => ({
+    type: SET_USER_DETAIL,
     payload,
 });
 

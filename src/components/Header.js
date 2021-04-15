@@ -14,15 +14,11 @@ import {
     P_M_ITEMS,
     SIGN_IN,
     SIGN_UP,
-    COSTUMER,
-    PM,
-    SM,
 } from '../_constants';
 
 const Header = () => {
     const history = useHistory();
-    const user = useStore().getState().session;
-    // TODO fix get from redux store
+    const { user } = useStore().getState();
 
     const handleLogo = () => {
         history.push({
@@ -146,7 +142,7 @@ const Header = () => {
         </>
     );
 
-    // TODO
+    // TODO put proper menu
     const RenderSalesManagerMenu = () => (
         <>
             <button
@@ -170,15 +166,14 @@ const Header = () => {
     const renderMenu = () => {
         if (user && user.first_name) {
             const renders = [<RenderCommonMenu key="0" />];
-            if (user.role === COSTUMER) {
-                renders.push(<RenderCustomerMenu key="1" />);
-            }
-            if (user.role === PM) {
+            if (user.is_product_manager) {
                 renders.push(<RenderProductManagerMenu key="2" />);
             }
-            if (user.role === SM) {
+            if (user.is_sales_manager) {
                 renders.push(<RenderSalesManagerMenu key="3" />);
             }
+            renders.push(<RenderCustomerMenu key="1" />);
+
             return renders;
         }
         return (
