@@ -169,15 +169,15 @@ const Header = () => {
 
     const renderMenu = () => {
         if (user && user.first_name) {
-            const renders = [<RenderCommonMenu />];
+            const renders = [<RenderCommonMenu key="0" />];
             if (user.role === COSTUMER) {
-                renders.push(<RenderCustomerMenu />);
+                renders.push(<RenderCustomerMenu key="1" />);
             }
             if (user.role === PM) {
-                renders.push(<RenderProductManagerMenu />);
+                renders.push(<RenderProductManagerMenu key="2" />);
             }
             if (user.role === SM) {
-                renders.push(<RenderSalesManagerMenu />);
+                renders.push(<RenderSalesManagerMenu key="3" />);
             }
             return renders;
         }
