@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { connect, useStore } from 'react-redux';
 import { Add } from '../../_utilities/icons';
 import { getItems, deleteItem } from '../../_requests';
 import { DiscardModal, ProductCard } from '../../components';
-import { P_M_NEW_ITEM, PM, P_M_EDIT_ITEM } from '../../_constants';
+import { P_M_NEW_ITEM, P_M_EDIT_ITEM } from '../../_constants';
 import { openAlert } from '../../_redux/actions';
 
 const Items = (params) => {
@@ -14,9 +14,7 @@ const Items = (params) => {
     const [deleteId, setDeleteId] = useState('');
     const [loading, setLoading] = useState(false);
     const [confirmModal, setConfirmModal] = useState(false);
-
-    // TODO get this from storage
-    const role = PM;
+    const { user } = useStore().getState();
 
     const fetchItems = () => {
         setLoading(true);
@@ -81,8 +79,8 @@ const Items = (params) => {
         });
     };
 
-    const handleUpper = role === PM ? handleDelete : null;
-    const handleBottom = role === PM ? handleEdit : null;
+    const handleUpper = user.is_product_manager ? handleDelete : null;
+    const handleBottom = user.is_product_manager ? handleEdit : null;
 
     const renderItems = () => {
         const itemsCol = [];
@@ -90,7 +88,6 @@ const Items = (params) => {
             itemsCol.push(
                 <Col xs={12} md={6} xl={4} className="col" key={item.id}>
                     <ProductCard
-                        role={role}
                         handleUpper={handleUpper}
                         handleBottom={handleBottom}
                         handleCard={handleCard}

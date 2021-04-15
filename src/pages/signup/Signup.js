@@ -8,7 +8,15 @@ import { logo } from '../../_assets';
 import { register } from '../../_requests';
 import { Loading } from '../../components';
 import { openAlert } from '../../_redux/actions';
-import { LANDING, noneError, emailRegex, passwordRegex, TOKEN, TIME_OUT } from '../../_constants';
+import {
+    LANDING,
+    noneError,
+    emailRegex,
+    passwordRegex,
+    TOKEN,
+    TIME_OUT,
+    SIGN_IN,
+} from '../../_constants';
 
 const Signup = (params) => {
     const history = useHistory();
@@ -165,7 +173,7 @@ const Signup = (params) => {
                     localStorage.setItem(TOKEN, response.data.key);
                     setTimeout(() => {
                         history.push({
-                            pathname: LANDING,
+                            pathname: SIGN_IN,
                         });
                     }, TIME_OUT);
                 })

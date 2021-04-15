@@ -15,6 +15,7 @@ import {
     CAT_OTHERS,
     CAT_CONSUMABLES,
     CAT_COFFEE_BEANS,
+    UNAUTH,
 } from './routes';
 
 export {
@@ -34,12 +35,13 @@ export {
     CAT_OTHERS,
     CAT_CONSUMABLES,
     CAT_COFFEE_BEANS,
+    UNAUTH,
 };
 
 export const noneError = 'N';
 export const STAR_COUNT = 5;
 export const TOKEN = 'token';
-export const TIME_OUT = 500
+export const TIME_OUT = 500;
 
 // roles
 export const COSTUMER = 'costumer';

@@ -65,6 +65,11 @@ const getUser = (tt) => {
     });
 };
 
+const getUserDetail = (id) =>
+    getRequest({
+        path: `${API}user/${id}/`,
+    });
+
 const getItems = () =>
     getRequest({
         path: `${API}items/`,
@@ -111,6 +116,7 @@ export {
     login,
     logout,
     getUser,
+    getUserDetail,
     getItems,
     getItemById,
     getItemsByCategory,
