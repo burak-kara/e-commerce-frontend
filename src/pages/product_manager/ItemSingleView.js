@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Col, InputGroup } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import PreviewModal from './PreviewModal';
 import { DiscardModal } from '../../components';
-import { noneError, P_M_ITEMS } from '../../_constants';
-import { getCategories, postNewItem } from '../../_requests';
+import { noneError, P_M_ITEMS, TIME_OUT } from '../../_constants';
+import { getCategories, postNewItem, editItem, getItemById } from '../../_requests';
+import { openAlert } from '../../_redux/actions';
 
 // TODO delete after BE implementation
 const camps = [
@@ -12,13 +14,25 @@ const camps = [
     "Süpermarket Alışverişine Solo Tuvalet Kağıdı 32'li %20 indirimli",
 ];
 
-const ItemSingleView = () => {
+const ItemSingleView = (params) => {
     const history = useHistory();
+    const [editId, setId] = useState();
     const [previewModal, setPreviewModal] = useState(false);
     const [confirmModal, setConfirmModal] = useState(false);
     const [categories, setCategories] = useState();
     const [loading, setLoading] = useState(false);
-    const [form, setForm] = useState({ seller: '2' });
+    const [form, setForm] = useState({
+        seller: '2',
+        image: '',
+        name: '',
+        brand: '',
+        category: '',
+        price: '',
+        stock: '',
+        description: '',
+        specs: '',
+        campaign: '',
+    });
     const [errors, setErrors] = useState({
         image: '',
         name: '',
@@ -32,16 +46,43 @@ const ItemSingleView = () => {
     });
 
     useEffect(() => {
+        if (history.location.state) {
+            const { id } = history.location.state;
+            setId(id);
+            getItemById(id)
+                .then((response) => {
+                    setForm(response.data);
+                    setLoading(false);
+                    // TODO loading
+                })
+                .catch(() => {
+                    params.openAlert({
+                        message: 'Error while fetching the item!',
+                        severity: 'error',
+                    });
+                    setLoading(false);
+                    setLoading(!loading); // TODO delete
+                    // TODO loading
+                });
+        }
+    }, []);
+
+    useEffect(() => {
         setLoading(true);
         getCategories()
             .then((response) => {
                 setCategories(response.data);
                 setLoading(false);
+                // TODO loading
             })
             .catch(() => {
-                // TODO handle error
+                params.openAlert({
+                    message: 'Error while fetching categories!',
+                    severity: 'error',
+                });
                 setLoading(false);
                 setLoading(!loading); // TODO delete
+                // TODO loading
             });
     }, []);
 
@@ -129,24 +170,51 @@ const ItemSingleView = () => {
     };
 
     const onConfirm = () => {
-        postNewItem(form)
-            .then(() => {
-                // TODO successful message
-                setTimeout(() => {
-                    history.push({
-                        pathname: P_M_ITEMS,
+        if (editId) {
+            editItem(form)
+                .then(() => {
+                    params.openAlert({
+                        message: 'Successfully updated the item!',
+                        severity: 'success',
                     });
-                }, 500);
-            })
-            .catch(() => {
-                // TODO error handler
-            });
+                    setTimeout(() => {
+                        history.push({
+                            pathname: P_M_ITEMS,
+                        });
+                    }, TIME_OUT);
+                })
+                .catch(() => {
+                    params.openAlert({
+                        message: 'Error while updating the product!',
+                        severity: 'error',
+                    });
+                });
+        } else {
+            postNewItem(form)
+                .then(() => {
+                    params.openAlert({
+                        message: 'Successfully added the item!',
+                        severity: 'success',
+                    });
+                    setTimeout(() => {
+                        history.push({
+                            pathname: P_M_ITEMS,
+                        });
+                    }, TIME_OUT);
+                })
+                .catch(() => {
+                    params.openAlert({
+                        message: 'Error while adding new product!',
+                        severity: 'error',
+                    });
+                });
+        }
     };
 
     const renderCategories = () => {
         const cats = [<option key="default">Choose category</option>];
-        categories.forEach((item) => {
-            cats.push(<option key={item.name}>{item.name}</option>);
+        categories.forEach((category) => {
+            cats.push(<option key={category.name}>{category.name}</option>);
         });
         return cats;
     };
@@ -174,6 +242,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('image', e.target.value)}
                                 isInvalid={!!errors.image && errors.image !== noneError}
                                 isValid={errors.image === noneError}
+                                value={form.image}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
@@ -190,6 +259,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('name', e.target.value)}
                                 isInvalid={!!errors.name && errors.name !== noneError}
                                 isValid={errors.name === noneError}
+                                value={form.name}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
@@ -206,6 +276,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('brand', e.target.value)}
                                 isInvalid={!!errors.brand && errors.brand !== noneError}
                                 isValid={errors.brand === noneError}
+                                value={form.brand}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
@@ -224,6 +295,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('category', e.target.value)}
                                 isInvalid={!!errors.category && errors.category !== noneError}
                                 isValid={errors.category === noneError}
+                                value={form.category}
                             >
                                 {categories ? renderCategories() : null}
                             </Form.Control>
@@ -243,6 +315,7 @@ const ItemSingleView = () => {
                                     onChange={(e) => setField('price', e.target.value)}
                                     isInvalid={!!errors.price && errors.price !== noneError}
                                     isValid={errors.price === noneError}
+                                    value={form.price}
                                 />
                                 <InputGroup.Append>
                                     <InputGroup.Text>₺</InputGroup.Text>
@@ -263,6 +336,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('stock', e.target.value)}
                                 isInvalid={!!errors.stock && errors.stock !== noneError}
                                 isValid={errors.stock === noneError}
+                                value={form.stock}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
@@ -279,6 +353,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('campaign', e.target.value)}
                                 isInvalid={!!errors.campaign && errors.campaign !== noneError}
                                 isValid={errors.campaign === noneError}
+                                value={form.campaign}
                             >
                                 {renderCampaigns()}
                             </Form.Control>
@@ -298,6 +373,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('description', e.target.value)}
                                 isInvalid={!!errors.description && errors.description !== noneError}
                                 isValid={errors.description === noneError}
+                                value={form.description}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
@@ -316,6 +392,7 @@ const ItemSingleView = () => {
                                 onChange={(e) => setField('specs', e.target.value)}
                                 isInvalid={!!errors.specs && errors.specs !== noneError}
                                 isValid={errors.specs === noneError}
+                                value={form.specs}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
@@ -355,4 +432,4 @@ const ItemSingleView = () => {
     );
 };
 
-export default ItemSingleView;
+export default connect(null, { openAlert })(ItemSingleView);

@@ -1,14 +1,19 @@
 import axios from 'axios';
+import { TOKEN } from '../_constants';
 
 const { REACT_APP_API_URL_LOCAL, REACT_APP_API_URL_DEPLOYED, NODE_ENV } = process.env;
 
-// TODO change to the deployed backend server
 const API_URL = NODE_ENV === 'production' ? REACT_APP_API_URL_DEPLOYED : REACT_APP_API_URL_LOCAL;
+
+const token = localStorage.getItem(TOKEN);
 
 const API = 'api/';
 const AUTH = 'rest-auth/';
 
 axios.defaults.headers.common.Accept = '*/*';
+if (token) {
+    axios.defaults.headers.common.Authorization = `Token ${token}`;
+}
 
 // Common Request Makers
 const getRequest = (params) => {
@@ -21,6 +26,12 @@ const postRequest = (params) => {
     const { path, data } = params;
     const url = API_URL + path;
     return axios.post(url, data);
+};
+
+const putRequest = (params) => {
+    const { path, data } = params;
+    const url = API_URL + path;
+    return axios.put(url, data);
 };
 
 const deleteRequest = (params) => {
@@ -42,9 +53,26 @@ const login = (data) =>
         data,
     });
 
+const logout = () =>
+    postRequest({
+        path: `${AUTH}logout/`,
+    });
+
+const getUser = (tt) => {
+    axios.defaults.headers.common.Authorization = `Token ${tt}`;
+    return getRequest({
+        path: `${AUTH}user/`,
+    });
+};
+
 const getItems = () =>
     getRequest({
         path: `${API}items/`,
+    });
+
+const getItemById = (id) =>
+    getRequest({
+        path: `${API}items/${id}/`,
     });
 
 const getItemsByCategory = (category) => {
@@ -60,6 +88,14 @@ const postNewItem = (data) =>
         data,
     });
 
+const editItem = (data) => {
+    const { id } = data;
+    return putRequest({
+        path: `${API}items/${id}/`,
+        data,
+    });
+};
+
 const deleteItem = (id) =>
     deleteRequest({
         path: `${API}items/${id}/`,
@@ -70,4 +106,16 @@ const getCategories = () =>
         path: `${API}categories/`,
     });
 
-export { register, login, getItems, getCategories, postNewItem, deleteItem, getItemsByCategory };
+export {
+    register,
+    login,
+    logout,
+    getUser,
+    getItems,
+    getItemById,
+    getItemsByCategory,
+    getCategories,
+    postNewItem,
+    editItem,
+    deleteItem,
+};

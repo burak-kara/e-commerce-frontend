@@ -21,6 +21,7 @@ import {
     ORDERS,
     P_M_ITEMS,
     P_M_NEW_ITEM,
+    P_M_EDIT_ITEM,
     PROFILE,
     SETTINGS,
     SIGN_IN,
@@ -40,16 +41,11 @@ const Routes = () => {
 
     const isSignPage = () => {
         const { pathname } = history.location;
-        return pathname === SIGN_UP || pathname === SIGN_UP || pathname === SIGN_UP;
-    };
-
-    const isLoginPage = () => {
-        const { pathname } = history.location;
-        return pathname === SIGN_IN || pathname === SIGN_IN || pathname === SIGN_IN;
+        return pathname === SIGN_UP || pathname === SIGN_IN || pathname === SIGN_OUT;
     };
 
     const renderHeader = () =>
-        isSignPage() || isLoginPage() ? null : (
+        isSignPage() ? null : (
             <>
                 <div className="sticky-top">
                     <Header />
@@ -99,6 +95,10 @@ const Routes = () => {
                     <Items />
                 </Route>
                 <Route exact path={P_M_NEW_ITEM}>
+                    <ItemSingleView />
+                </Route>
+
+                <Route exact path={P_M_EDIT_ITEM}>
                     <ItemSingleView />
                 </Route>
 

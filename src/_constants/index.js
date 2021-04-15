@@ -10,6 +10,7 @@ import {
     P_M_ITEMS,
     P_M_ITEM_DETAILS,
     P_M_NEW_ITEM,
+    P_M_EDIT_ITEM,
     CAT_ELECTRONICS,
     CAT_OTHERS,
     CAT_CONSUMABLES,
@@ -28,6 +29,7 @@ export {
     P_M_ITEMS,
     P_M_ITEM_DETAILS,
     P_M_NEW_ITEM,
+    P_M_EDIT_ITEM,
     CAT_ELECTRONICS,
     CAT_OTHERS,
     CAT_CONSUMABLES,
@@ -36,6 +38,8 @@ export {
 
 export const noneError = 'N';
 export const STAR_COUNT = 5;
+export const TOKEN = 'token';
+export const TIME_OUT = 500
 
 // roles
 export const COSTUMER = 'costumer';

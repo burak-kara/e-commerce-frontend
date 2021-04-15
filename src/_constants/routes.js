@@ -14,6 +14,7 @@ const SETTINGS = '/settings';
 const P_M_ITEMS = '/product-manager-items';
 const P_M_ITEM_DETAILS = `${P_M_ITEMS}/details`; // product-manager-items/details?id=123456
 const P_M_NEW_ITEM = `${P_M_ITEMS}/new`;
+const P_M_EDIT_ITEM = `${P_M_ITEMS}/edit`;
 
 const CAT_ELECTRONICS = '/electronics';
 const CAT_OTHERS = '/others';
@@ -47,6 +48,7 @@ export {
     P_M_ITEMS,
     P_M_ITEM_DETAILS,
     P_M_NEW_ITEM,
+    P_M_EDIT_ITEM,
     CAT_ELECTRONICS,
     CAT_OTHERS,
     CAT_CONSUMABLES,

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect, useStore } from 'react-redux';
 import { logo } from '../_assets';
+import { openAlert } from '../_redux/actions';
 import { Search, Account, DropDown, Basket } from '../_utilities/icons';
 import {
     BASKET,
@@ -12,10 +14,15 @@ import {
     P_M_ITEMS,
     SIGN_IN,
     SIGN_UP,
+    COSTUMER,
+    PM,
+    SM,
 } from '../_constants';
 
 const Header = () => {
     const history = useHistory();
+    const user = useStore().getState().session;
+    // TODO fix get from redux store
 
     const handleLogo = () => {
         history.push({
@@ -31,7 +38,7 @@ const Header = () => {
 
     const handleAccount = () => {
         history.push({
-            pathname: PROFILE,
+            pathname: user ? PROFILE : SIGN_IN,
         });
     };
 
@@ -53,12 +60,6 @@ const Header = () => {
         });
     };
 
-    const handleSignIn = () => {
-        history.push({
-            pathname: SIGN_IN,
-        });
-    };
-
     const handleSignUp = () => {
         history.push({
             pathname: SIGN_UP,
@@ -77,10 +78,120 @@ const Header = () => {
         });
     };
 
-    // TODO delete
-    const user = {
-        name: 'John',
-        surname: 'Doe',
+    const renderAccountButton = () =>
+        user && user.first_name ? (
+            <>
+                <Account />
+                <p className="name">{user.first_name}</p>
+                <DropdownIcon />
+            </>
+        ) : (
+            <p className="name">Login</p>
+        );
+
+    const RenderCommonMenu = () => (
+        <>
+            <button
+                className="dropdown-item menu-btn"
+                type="button"
+                onClick={() => handleAccount()}
+            >
+                Profile
+            </button>
+            <div className="dropdown-divider" />
+            <button
+                className="dropdown-item menu-btn"
+                type="button"
+                onClick={() => handleSettings()}
+            >
+                Settings
+            </button>
+        </>
+    );
+
+    const RenderCustomerMenu = () => (
+        <>
+            <div className="dropdown-divider" />
+            <button className="dropdown-item menu-btn" type="button" onClick={() => handleOrders()}>
+                Orders
+            </button>
+            <div className="dropdown-divider md-b" />
+            <button
+                className="dropdown-item menu-btn"
+                type="button"
+                onClick={() => handleSignOut()}
+            >
+                Logout
+            </button>
+        </>
+    );
+
+    const RenderProductManagerMenu = () => (
+        <>
+            <button
+                className="dropdown-item menu-btn"
+                type="button"
+                onClick={() => handleManageItems()}
+            >
+                Manage Items
+            </button>
+            <div className="dropdown-divider md-b" />
+            <button
+                className="dropdown-item menu-btn"
+                type="button"
+                onClick={() => handleSignOut()}
+            >
+                Logout
+            </button>
+        </>
+    );
+
+    // TODO
+    const RenderSalesManagerMenu = () => (
+        <>
+            <button
+                className="dropdown-item menu-btn"
+                type="button"
+                onClick={() => handleManageItems()}
+            >
+                Manage Items
+            </button>
+            <div className="dropdown-divider md-b" />
+            <button
+                className="dropdown-item menu-btn"
+                type="button"
+                onClick={() => handleSignOut()}
+            >
+                Logout
+            </button>
+        </>
+    );
+
+    const renderMenu = () => {
+        if (user && user.first_name) {
+            const renders = [<RenderCommonMenu />];
+            if (user.role === COSTUMER) {
+                renders.push(<RenderCustomerMenu />);
+            }
+            if (user.role === PM) {
+                renders.push(<RenderProductManagerMenu />);
+            }
+            if (user.role === SM) {
+                renders.push(<RenderSalesManagerMenu />);
+            }
+            return renders;
+        }
+        return (
+            <>
+                <button
+                    className="dropdown-item menu-btn"
+                    type="button"
+                    onClick={() => handleSignUp()}
+                >
+                    Sign up
+                </button>
+            </>
+        );
     };
 
     const DropdownIcon = () => <DropDown color="color" size="1em" />;
@@ -90,7 +201,6 @@ const Header = () => {
             <div className="container h-100">
                 <nav className="navbar navbar-expand-lg h-100 ">
                     <button className="header-brand" type="button" onClick={() => handleLogo()}>
-                        {/* TODO onClick */}
                         <img className="logo" src={logo} alt="logo" />
                     </button>
                     <div className="collapse navbar-collapse h-50 justify-content-end">
@@ -123,67 +233,9 @@ const Header = () => {
                                     aria-expanded="false"
                                     onClick={() => handleAccount()}
                                 >
-                                    <Account />
-                                    <p className="name">{user.name}</p>
-                                    <DropdownIcon />
+                                    {renderAccountButton()}
                                 </button>
-                                <div className="dropdown-menu">
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleAccount()}
-                                    >
-                                        Profile
-                                    </button>
-                                    <div className="dropdown-divider" />
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleOrders()}
-                                    >
-                                        Orders
-                                    </button>
-                                    <div className="dropdown-divider" />
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleSettings()}
-                                    >
-                                        Settings
-                                    </button>
-                                    <div className="dropdown-divider" />
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleManageItems()}
-                                    >
-                                        Manage Items
-                                    </button>
-                                    <div className="dropdown-divider md-b" />
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleSignIn()}
-                                    >
-                                        Sign in
-                                    </button>
-                                    <div className="dropdown-divider md-b" />
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleSignUp()}
-                                    >
-                                        Sign up
-                                    </button>
-                                    <div className="dropdown-divider md-b" />
-                                    <button
-                                        className="dropdown-item menu-btn"
-                                        type="button"
-                                        onClick={() => handleSignOut()}
-                                    >
-                                        Logout
-                                    </button>
-                                </div>
+                                <div className="dropdown-menu">{renderMenu()}</div>
                             </div>
                             <button
                                 className="btn b-btn"
@@ -201,4 +253,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default connect(null, { openAlert })(Header);
