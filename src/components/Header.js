@@ -77,9 +77,11 @@ const Header = () => {
     const renderAccountButton = () =>
         user && user.first_name ? (
             <>
-                <Account />
-                <p className="name">{user.first_name}</p>
-                <DropdownIcon />
+                <Account key="account" />
+                <p className="name" key="name">
+                    {user.first_name}
+                </p>
+                <DropdownIcon key="icon" />
             </>
         ) : (
             <p className="name">Login</p>

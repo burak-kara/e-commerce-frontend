@@ -77,7 +77,7 @@ const Routes = () => {
             <Switch>
                 {/* Common Routes for all users */}
                 <Route exact path={LANDING} component={Home} />
-                <AuthenticatedRoute exact path={BASKET} component={Basket} />
+                <Route exact path={BASKET} component={Basket} />
 
                 {/* Common Routes for not logged in users */}
                 <UnAuthenticatedRoute exact path={SIGN_IN} component={Signin} />

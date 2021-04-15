@@ -19,7 +19,7 @@ const CustomerRoute = ({ component: Component, roles, ...rest }) => {
                 }
 
                 // role check
-                if (!user.is_sales_manager && !user.is_product_manager) {
+                if (user.is_sales_manager || user.is_product_manager) {
                     return <Redirect to={{ pathname: UN_AUTHORIZED }} />;
                 }
 
