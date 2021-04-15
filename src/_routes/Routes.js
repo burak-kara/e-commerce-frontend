@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
-import { Header, Navigation } from '../../components';
+import { Header, Navigation } from '../components';
+import ProductManagerRoute from './ProductManagerRoute';
 import {
     Basket,
-    Dummy,
     Home,
     Items,
     ItemSingleView,
@@ -14,7 +14,7 @@ import {
     Signout,
     Signup,
     Products,
-} from '../index';
+} from '../pages';
 import {
     BASKET,
     LANDING,
@@ -31,7 +31,10 @@ import {
     CAT_OTHERS,
     CAT_CONSUMABLES,
     CAT_COFFEE_BEANS,
-} from '../../_constants';
+} from '../_constants';
+import CustomerRoute from './CustomerRoute';
+import AuthenticatedRoute from './AuthenticatedRoute';
+import UnAuthenticatedRoute from './UnAuthenticatedRoute';
 
 const Routes = () => {
     const history = useHistory();
@@ -59,49 +62,28 @@ const Routes = () => {
             {renderHeader()}
 
             <Switch>
-                <Route exact path="/test">
-                    <Dummy />
-                </Route>
+                {/* Common Routes for all users */}
+                <Route exact path={LANDING} component={Home} />
+                <Route exact path={BASKET} component={Basket} />
 
-                <Route exact path={LANDING}>
-                    <Home />
-                </Route>
+                {/* Common Routes for not logged in users */}
+                <UnAuthenticatedRoute exact path={SIGN_IN} component={Signin}/>
+                <UnAuthenticatedRoute exact path={SIGN_UP} component={Signup}/>
 
-                <Route exact path={BASKET}>
-                    <Basket />
-                </Route>
+                {/* Common Routes for logged in users */}
+                <AuthenticatedRoute exact path={PROFILE} component={Profile} />
+                <AuthenticatedRoute exact path={SETTINGS} component={Settings} />
+                <AuthenticatedRoute exact path={SIGN_OUT} component={Signout} />
 
-                <Route exact path={PROFILE}>
-                    <Profile />
-                </Route>
-                <Route exact path={SETTINGS}>
-                    <Settings />
-                </Route>
-                <Route exact path={ORDERS}>
-                    <Orders />
-                </Route>
+                {/* Routes for customers */}
+                <CustomerRoute exact path={ORDERS} component={Orders} />
 
-                <Route exact path={SIGN_UP}>
-                    <Signup />
-                </Route>
-                <Route exact path={SIGN_OUT}>
-                    <Signout />
-                </Route>
-                <Route exact path={SIGN_IN}>
-                    <Signin />
-                </Route>
+                {/* Routes for product managers */}
+                <ProductManagerRoute exact path={P_M_ITEMS} component={Items} />
+                <ProductManagerRoute exact path={P_M_NEW_ITEM} component={ItemSingleView} />
+                <ProductManagerRoute exact path={P_M_EDIT_ITEM} component={ItemSingleView} />
 
-                <Route exact path={P_M_ITEMS}>
-                    <Items />
-                </Route>
-                <Route exact path={P_M_NEW_ITEM}>
-                    <ItemSingleView />
-                </Route>
-
-                <Route exact path={P_M_EDIT_ITEM}>
-                    <ItemSingleView />
-                </Route>
-
+                {/* Categories */}
                 <Route exact path={CAT_ELECTRONICS}>
                     <Products category={CAT_ELECTRONICS} />
                 </Route>
