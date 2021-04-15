@@ -157,7 +157,6 @@ const Signin = (params) => {
                             isInvalid={!!errors.username && errors.username !== noneError}
                             isValid={errors.username === noneError}
                         />
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         <Form.Control.Feedback type="invalid">
                             {errors.username}
                         </Form.Control.Feedback>
@@ -186,7 +185,6 @@ const Signin = (params) => {
                                     {showPassword ? <Hide color="white" /> : <Show color="white" />}
                                 </button>
                             </InputGroup.Append>
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
                                 {errors.password}
                             </Form.Control.Feedback>

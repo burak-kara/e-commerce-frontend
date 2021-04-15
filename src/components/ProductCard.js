@@ -1,7 +1,7 @@
 import React from 'react';
+import { useStore } from 'react-redux';
 import { Basket, Delete, Edit, Favorite } from '../_utilities/icons';
 import StarMaker from './StarMaker';
-import { PM } from '../_constants';
 import { logo } from '../_assets';
 
 const ProductCard = (props) => {
@@ -17,9 +17,10 @@ const ProductCard = (props) => {
         handleUpper,
         handleBottom,
         handleCard,
-        role,
         isPreview,
     } = props;
+    const { user } = useStore().getState();
+    const isPM = user.is_product_manager;
 
     const getImageContainer = () => {
         const img = <img src={image || logo} alt="product" className={image ? 'image' : 'logo'} />;
@@ -42,20 +43,14 @@ const ProductCard = (props) => {
         if (isPreview) {
             return null;
         }
-        if (role === PM) {
-            return <Delete size="2em" />;
-        }
-        return <Favorite size="2em" />;
+        return isPM ? <Delete size="2em" /> : <Favorite size="2em" />;
     };
 
     const getBottomIcon = () => {
         if (isPreview) {
             return null;
         }
-        if (role === PM) {
-            return <Edit size="2em" />;
-        }
-        return <Basket size="2em" />;
+        return isPM ? <Edit size="2em" /> : <Basket size="2em" />;
     };
 
     return (
@@ -67,7 +62,7 @@ const ProductCard = (props) => {
                 </div>
                 <div className="upper-container">
                     <button
-                        className={`btn ${role === PM ? 'pm-delete' : 'fav'}`}
+                        className={`btn ${isPM ? 'pm-delete' : 'fav'}`}
                         type="button"
                         onClick={() => handleUpper(id)}
                     >
@@ -82,7 +77,7 @@ const ProductCard = (props) => {
                 </div>
                 <div className="bottom-container">
                     <button
-                        className={`btn ${role === PM ? 'pm-edit' : 'basket'}`}
+                        className={`btn ${isPM ? 'pm-edit' : 'basket'}`}
                         type="button"
                         onClick={() => handleBottom(id)}
                     >

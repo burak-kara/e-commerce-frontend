@@ -34,7 +34,7 @@ const Header = () => {
 
     const handleAccount = () => {
         history.push({
-            pathname: user ? PROFILE : SIGN_IN,
+            pathname: user && user.first_name ? PROFILE : SIGN_IN,
         });
     };
 
