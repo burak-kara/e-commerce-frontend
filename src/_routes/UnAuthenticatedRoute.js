@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useStore } from 'react-redux';
-import { LANDING } from "../_constants";
+import { LANDING } from '../_constants';
 
 const UnAuthenticatedRoute = ({ component: Component, roles, ...rest }) => {
     const { user } = useStore().getState();

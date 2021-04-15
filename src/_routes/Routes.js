@@ -47,7 +47,7 @@ const Routes = () => {
         return pathname === SIGN_UP || pathname === SIGN_IN || pathname === SIGN_OUT;
     };
 
-    const renderHeader = () =>
+    const RenderHeader = () =>
         isSignPage() ? null : (
             <>
                 <div className="sticky-top">
@@ -59,7 +59,7 @@ const Routes = () => {
 
     return (
         <>
-            {renderHeader()}
+            <RenderHeader />
 
             <Switch>
                 {/* Common Routes for all users */}
@@ -67,8 +67,8 @@ const Routes = () => {
                 <Route exact path={BASKET} component={Basket} />
 
                 {/* Common Routes for not logged in users */}
-                <UnAuthenticatedRoute exact path={SIGN_IN} component={Signin}/>
-                <UnAuthenticatedRoute exact path={SIGN_UP} component={Signup}/>
+                <UnAuthenticatedRoute exact path={SIGN_IN} component={Signin} />
+                <UnAuthenticatedRoute exact path={SIGN_UP} component={Signup} />
 
                 {/* Common Routes for logged in users */}
                 <AuthenticatedRoute exact path={PROFILE} component={Profile} />

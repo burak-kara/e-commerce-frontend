@@ -34,11 +34,7 @@ const CAT_COFFEE_BEANS = '/coffee-beans';
 
 // const S_M_CAMPAIGN = 'sales-manager-campaigns';
 
-// TODO delete
-const TEST = '/test';
-
 export {
-    TEST,
     LANDING,
     BASKET,
     PROFILE,

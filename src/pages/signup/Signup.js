@@ -15,8 +15,8 @@ import {
     passwordRegex,
     TOKEN,
     TIME_OUT,
-    SIGN_IN
-} from "../../_constants";
+    SIGN_IN,
+} from '../../_constants';
 
 const Signup = (params) => {
     const history = useHistory();

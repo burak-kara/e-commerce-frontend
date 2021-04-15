@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useStore } from 'react-redux';
-import { SIGN_IN, UNAUTH } from "../_constants";
+import { SIGN_IN, UNAUTH } from '../_constants';
 
 const SalesManagerRoute = ({ component: Component, roles, ...rest }) => {
     const { user } = useStore().getState();
