@@ -36,7 +36,6 @@ const Step1 = (props) => {
                         isInvalid={!!errors.email && errors.email !== noneError}
                         isValid={errors.email === noneError}
                     />
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
                 </Form.Group>
             </Form.Row>
@@ -53,7 +52,6 @@ const Step1 = (props) => {
                         isInvalid={!!errors.username && errors.username !== noneError}
                         isValid={errors.username === noneError}
                     />
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid">{errors.username}</Form.Control.Feedback>
                 </Form.Group>
             </Form.Row>
@@ -80,7 +78,6 @@ const Step1 = (props) => {
                                 {showPassword ? <Hide color="white" /> : <Show color="white" />}
                             </button>
                         </InputGroup.Append>
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         <Form.Control.Feedback type="invalid">
                             {errors.password}
                         </Form.Control.Feedback>
@@ -113,7 +110,6 @@ const Step1 = (props) => {
                                 {showRepassword ? <Hide color="white" /> : <Show color="white" />}
                             </button>
                         </InputGroup.Append>
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         <Form.Control.Feedback type="invalid">
                             {errors.password_validation}
                         </Form.Control.Feedback>

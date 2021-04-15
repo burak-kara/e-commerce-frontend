@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import Step1 from './Step1';
 import Step2 from './Step2';
-import { LANDING, noneError, emailRegex, passwordRegex } from '../../_constants';
 import { logo } from '../../_assets';
-import { Loading } from '../../components';
 import { register } from '../../_requests';
+import { Loading } from '../../components';
+import { openAlert } from '../../_redux/actions';
+import { LANDING, noneError, emailRegex, passwordRegex, TOKEN, TIME_OUT } from '../../_constants';
 
-const Signup = () => {
+const Signup = (params) => {
     const history = useHistory();
     const [isNext, setIsNext] = useState(false);
     const [form, setForm] = useState({ is_sales_manager: false, is_product_manager: false });
@@ -130,23 +132,50 @@ const Signup = () => {
         return isError;
     };
 
+    const setServerSideResponse = (serverErrors) => {
+        const newErrors = {
+            email: noneError,
+            username: noneError,
+            password: noneError,
+            password_validation: noneError,
+            first_name: noneError,
+            last_name: noneError,
+            phone_number: noneError,
+            birthday: noneError,
+        };
+
+        Object.keys(serverErrors).forEach((key) => {
+            // eslint-disable-next-line prefer-destructuring
+            newErrors[key] = serverErrors[key][0];
+        });
+        return newErrors;
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const stepError = findStep2Errors();
         setErrors(stepError);
         if (!checkAnyError(stepError)) {
             register(form)
-                .then(() => {
-                    // TODO add success message
+                .then((response) => {
+                    params.openAlert({
+                        message: 'Logged in successfully.',
+                        severity: 'success',
+                    });
+                    localStorage.setItem(TOKEN, response.data.key);
                     setTimeout(() => {
                         history.push({
                             pathname: LANDING,
                         });
-                    }, 500);
+                    }, TIME_OUT);
                 })
-                .catch(() => {
-                    // TODO handle errors
-                    // e.g. user exist message
+                .catch((error) => {
+                    params.openAlert({
+                        message: 'Wrong credentials while signing up!',
+                        severity: 'error',
+                    });
+                    const serverErrors = setServerSideResponse(error.response.data);
+                    setErrors(serverErrors);
                 });
         }
     };
@@ -165,7 +194,7 @@ const Signup = () => {
             setIsNext(!isNext);
             setTimeout(() => {
                 setCurrentStep(currentStep + 1);
-            }, 500);
+            }, TIME_OUT);
         }
     };
 
@@ -229,4 +258,4 @@ const Signup = () => {
     );
 };
 
-export default Signup;
+export default connect(null, { openAlert })(Signup);

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { getCategories } from '../_requests';
+import { openAlert } from '../_redux/actions';
 
-const Navigation = () => {
+const Navigation = (params) => {
     const history = useHistory();
     const [categories, setCategories] = useState([]);
 
@@ -39,7 +41,10 @@ const Navigation = () => {
                 }
             })
             .catch(() => {
-                // TODO handle error
+                params.openAlert({
+                    message: 'Error while getting user info',
+                    severity: 'error',
+                });
             });
     }, []);
 
@@ -52,4 +57,4 @@ const Navigation = () => {
     );
 };
 
-export default Navigation;
+export default connect(null, { openAlert })(Navigation);

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-import { DiscardModal, ProductCard } from '../../components';
-import { getItems, deleteItem } from '../../_requests';
+import { connect } from 'react-redux';
 import { Add } from '../../_utilities/icons';
+import { getItems, deleteItem } from '../../_requests';
+import { DiscardModal, ProductCard } from '../../components';
 import { P_M_NEW_ITEM, PM, P_M_EDIT_ITEM } from '../../_constants';
+import { openAlert } from '../../_redux/actions';
 
-const Items = () => {
+const Items = (params) => {
     const history = useHistory();
     const [items, setItems] = useState();
     const [deleteId, setDeleteId] = useState('');
@@ -22,11 +24,16 @@ const Items = () => {
             .then((response) => {
                 setItems(response.data);
                 setLoading(false);
+                // TODO loading
             })
             .catch(() => {
-                // TODO handle error
+                params.openAlert({
+                    message: 'Error while fetching items!',
+                    severity: 'error',
+                });
                 setLoading(false);
                 setLoading(!loading); // TODO delete
+                // TODO loading
             });
     };
 
@@ -43,16 +50,21 @@ const Items = () => {
         setConfirmModal(false);
         deleteItem(deleteId)
             .then(() => {
-                // TODO success message
+                params.openAlert({
+                    message: 'Product is deleted successfully!',
+                    severity: 'success',
+                });
                 fetchItems();
             })
             .catch(() => {
-                // TODO handle error
+                params.openAlert({
+                    message: 'Error while deleting the product!',
+                    severity: 'error',
+                });
             });
     };
 
     const handleEdit = (id) => {
-        // TODO Orkun
         history.push({
             pathname: P_M_EDIT_ITEM,
             state: { id },
@@ -120,4 +132,4 @@ const Items = () => {
     );
 };
 
-export default Items;
+export default connect(null, { openAlert })(Items);

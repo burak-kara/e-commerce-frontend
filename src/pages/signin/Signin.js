@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Form, Col, InputGroup } from 'react-bootstrap';
-import { LANDING, noneError, TOKEN } from '../../_constants';
+import { LANDING, noneError, TIME_OUT, TOKEN } from '../../_constants';
 import { logo } from '../../_assets';
-import { login } from '../../_requests';
+import { getUser, login } from '../../_requests';
 import { Hide, Show } from '../../_utilities/icons';
 import { Loading } from '../../components';
+import { openAlert, setToken, setUser } from '../../_redux/actions';
 
-const Signin = () => {
+const Signin = (params) => {
     const history = useHistory();
     const [showPassword, setPasswordShow] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -64,19 +66,38 @@ const Signin = () => {
             setLoading(true);
             login(form)
                 .then((response) => {
-                    // TODO add success message
-                    setLoading(true);
                     localStorage.setItem(TOKEN, response.data.key);
-                    setTimeout(() => {
-                        setLoading(false);
-                        history.push({
-                            pathname: LANDING,
+                    params.openAlert({
+                        message: 'Logged in successfully!',
+                        severity: 'success',
+                    });
+                    params.setToken({
+                        token: response.data.key,
+                    });
+                    getUser(response.data.key)
+                        .then((r) => {
+                            params.setUser(r.data);
+                            setTimeout(() => {
+                                setLoading(false);
+                                history.push({
+                                    pathname: LANDING,
+                                });
+                            }, TIME_OUT);
+                            setLoading(false);
+                        })
+                        .catch(() => {
+                            params.openAlert({
+                                message: 'Error while getting user info',
+                                severity: 'error',
+                            });
                         });
-                    }, 500);
                 })
                 .catch(() => {
+                    params.openAlert({
+                        message: 'Wrong credentials while logging in!',
+                        severity: 'error',
+                    });
                     setLoading(false);
-                    // TODO handle errors
                 });
         }
     };
@@ -170,4 +191,4 @@ const Signin = () => {
     );
 };
 
-export default Signin;
+export default connect(null, { openAlert, setToken, setUser })(Signin);

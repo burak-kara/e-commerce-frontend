@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Col, InputGroup } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import PreviewModal from './PreviewModal';
 import { DiscardModal } from '../../components';
-import { noneError, P_M_ITEMS } from '../../_constants';
+import { noneError, P_M_ITEMS, TIME_OUT } from '../../_constants';
 import { getCategories, postNewItem, editItem, getItemById } from '../../_requests';
+import { openAlert } from '../../_redux/actions';
 
 // TODO delete after BE implementation
 const camps = [
@@ -12,7 +14,7 @@ const camps = [
     "Süpermarket Alışverişine Solo Tuvalet Kağıdı 32'li %20 indirimli",
 ];
 
-const ItemSingleView = () => {
+const ItemSingleView = (params) => {
     const history = useHistory();
     const [editId, setId] = useState();
     const [previewModal, setPreviewModal] = useState(false);
@@ -51,11 +53,16 @@ const ItemSingleView = () => {
                 .then((response) => {
                     setForm(response.data);
                     setLoading(false);
+                    // TODO loading
                 })
                 .catch(() => {
-                    // TODO handle error
+                    params.openAlert({
+                        message: 'Error while fetching the item!',
+                        severity: 'error',
+                    });
                     setLoading(false);
                     setLoading(!loading); // TODO delete
+                    // TODO loading
                 });
         }
     }, []);
@@ -66,11 +73,16 @@ const ItemSingleView = () => {
             .then((response) => {
                 setCategories(response.data);
                 setLoading(false);
+                // TODO loading
             })
             .catch(() => {
-                // TODO handle error
+                params.openAlert({
+                    message: 'Error while fetching categories!',
+                    severity: 'error',
+                });
                 setLoading(false);
                 setLoading(!loading); // TODO delete
+                // TODO loading
             });
     }, []);
 
@@ -161,28 +173,40 @@ const ItemSingleView = () => {
         if (editId) {
             editItem(form)
                 .then(() => {
-                    // TODO successful message
+                    params.openAlert({
+                        message: 'Successfully updated the item!',
+                        severity: 'success',
+                    });
                     setTimeout(() => {
                         history.push({
                             pathname: P_M_ITEMS,
                         });
-                    }, 500);
+                    }, TIME_OUT);
                 })
                 .catch(() => {
-                    // TODO error handler
+                    params.openAlert({
+                        message: 'Error while updating the product!',
+                        severity: 'error',
+                    });
                 });
         } else {
             postNewItem(form)
                 .then(() => {
-                    // TODO successful message
+                    params.openAlert({
+                        message: 'Successfully added the item!',
+                        severity: 'success',
+                    });
                     setTimeout(() => {
                         history.push({
                             pathname: P_M_ITEMS,
                         });
-                    }, 500);
+                    }, TIME_OUT);
                 })
                 .catch(() => {
-                    // TODO error handler
+                    params.openAlert({
+                        message: 'Error while adding new product!',
+                        severity: 'error',
+                    });
                 });
         }
     };
@@ -408,4 +432,4 @@ const ItemSingleView = () => {
     );
 };
 
-export default ItemSingleView;
+export default connect(null, { openAlert })(ItemSingleView);

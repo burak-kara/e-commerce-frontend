@@ -25,7 +25,6 @@ const Step2 = (props) => {
                         isInvalid={!!errors.first_name && errors.first_name !== noneError}
                         isValid={errors.first_name === noneError}
                     />
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid">
                         {errors.first_name}
                     </Form.Control.Feedback>
@@ -44,7 +43,6 @@ const Step2 = (props) => {
                         isInvalid={!!errors.last_name && errors.last_name !== noneError}
                         isValid={errors.last_name === noneError}
                     />
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid">{errors.last_name}</Form.Control.Feedback>
                 </Form.Group>
             </Form.Row>
@@ -63,7 +61,6 @@ const Step2 = (props) => {
                         isInvalid={!!errors.phone_number && errors.phone_number !== noneError}
                         isValid={errors.phone_number === noneError}
                     />
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid">
                         {errors.phone_number}
                     </Form.Control.Feedback>
@@ -82,7 +79,6 @@ const Step2 = (props) => {
                         isInvalid={!!errors.birthday && errors.birthday !== noneError}
                         isValid={errors.birthday === noneError}
                     />
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid">{errors.birthday}</Form.Control.Feedback>
                 </Form.Group>
             </Form.Row>

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import { ProductCard } from '../../components';
 import { getItemsByCategory } from '../../_requests';
+import { openAlert } from '../../_redux/actions';
 
 const Products = (params) => {
     const location = useLocation();
@@ -24,9 +26,13 @@ const Products = (params) => {
                     setLoading(false);
                 })
                 .catch(() => {
-                    // TODO handle error
+                    params.openAlert({
+                        message: 'Error while fetching items!',
+                        severity: 'error',
+                    });
                     setLoading(false);
                     setLoading(!loading); // TODO delete
+                    // TODO loading
                 });
         }
     }, [category]);
@@ -71,4 +77,4 @@ const Products = (params) => {
     );
 };
 
-export default Products;
+export default connect(null, { openAlert })(Products);
