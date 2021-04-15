@@ -5,6 +5,7 @@ import ProductManagerRoute from './ProductManagerRoute';
 import CustomerRoute from './CustomerRoute';
 import AuthenticatedRoute from './AuthenticatedRoute';
 import UnAuthenticatedRoute from './UnAuthenticatedRoute';
+import NotFoundRoute from './NotFoundRoute';
 import {
     Basket,
     Home,
@@ -76,7 +77,7 @@ const Routes = () => {
             <Switch>
                 {/* Common Routes for all users */}
                 <Route exact path={LANDING} component={Home} />
-                <Route exact path={BASKET} component={Basket} />
+                <AuthenticatedRoute exact path={BASKET} component={Basket} />
 
                 {/* Common Routes for not logged in users */}
                 <UnAuthenticatedRoute exact path={SIGN_IN} component={Signin} />
@@ -94,10 +95,6 @@ const Routes = () => {
                 <ProductManagerRoute exact path={P_M_ITEMS} component={Items} />
                 <ProductManagerRoute exact path={P_M_NEW_ITEM} component={ItemSingleView} />
                 <ProductManagerRoute exact path={P_M_EDIT_ITEM} component={ItemSingleView} />
-
-                <Route exact path={UN_AUTHORIZED} component={UnAuthorized} />
-                <Route exact path={UN_AUTHENTICATED} component={UnAuthenticated} />
-                <Route exact path={NOT_FOUND} component={NotFound} />
 
                 {/* Categories */}
                 <Route exact path={CAT_ELECTRONICS}>
@@ -133,7 +130,11 @@ const Routes = () => {
                 {/* <Route exact path={CAT_HEALTH}> */}
                 {/*    <Products category={CAT_HEALTH} /> */}
                 {/* </Route> */}
-                {/* <Route path="*" component={ProtectedHandler} /> */}
+
+                <Route exact path={UN_AUTHORIZED} component={UnAuthorized} />
+                <Route exact path={UN_AUTHENTICATED} component={UnAuthenticated} />
+                <Route exact path={NOT_FOUND} component={NotFound} />
+                <NotFoundRoute path="*" component={NotFound} />
             </Switch>
         </>
     );

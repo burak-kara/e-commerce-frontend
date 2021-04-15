@@ -20,7 +20,7 @@ const ProductCard = (props) => {
         isPreview,
     } = props;
     const { user } = useStore().getState();
-    const isPM = user.is_product_manager;
+    const isPM = user?.is_product_manager;
 
     const getImageContainer = () => {
         const img = <img src={image || logo} alt="product" className={image ? 'image' : 'logo'} />;
