@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Form, Col, InputGroup } from 'react-bootstrap';
-import { LANDING, noneError, TIME_OUT, TOKEN } from '../../_constants';
-import { logo } from '../../_assets';
-import { getUser, login } from '../../_requests';
-import { Hide, Show } from '../../_utilities/icons';
+import { openAlert, setToken, setUser, setUserDetail } from '../../_redux/actions';
 import { Loading } from '../../components';
-import { openAlert, setToken, setUser } from '../../_redux/actions';
+import { getUser, getUserDetail, login } from '../../_requests';
+import { Hide, Show } from '../../_utilities/icons';
+import { logo } from '../../_assets';
+import { LANDING, noneError, TOKEN } from '../../_constants';
 
 const Signin = (params) => {
     const history = useHistory();
@@ -77,13 +77,21 @@ const Signin = (params) => {
                     getUser(response.data.key)
                         .then((r) => {
                             params.setUser(r.data);
-                            setTimeout(() => {
-                                setLoading(false);
-                                history.push({
-                                    pathname: LANDING,
+                            const { pk } = r.data;
+                            getUserDetail(pk)
+                                .then((detail) => {
+                                    params.setUserDetail(detail.data);
+                                })
+                                .catch(() => {
+                                    params.openAlert({
+                                        message: 'Error while getting user info',
+                                        severity: 'error',
+                                    });
                                 });
-                            }, TIME_OUT);
                             setLoading(false);
+                            history.push({
+                                pathname: LANDING,
+                            });
                         })
                         .catch(() => {
                             params.openAlert({
@@ -97,8 +105,8 @@ const Signin = (params) => {
                         message: 'Wrong credentials while logging in!',
                         severity: 'error',
                     });
-                    setLoading(false);
                 });
+            setLoading(false);
         }
     };
 
@@ -149,7 +157,6 @@ const Signin = (params) => {
                             isInvalid={!!errors.username && errors.username !== noneError}
                             isValid={errors.username === noneError}
                         />
-                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         <Form.Control.Feedback type="invalid">
                             {errors.username}
                         </Form.Control.Feedback>
@@ -178,7 +185,6 @@ const Signin = (params) => {
                                     {showPassword ? <Hide color="white" /> : <Show color="white" />}
                                 </button>
                             </InputGroup.Append>
-                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
                                 {errors.password}
                             </Form.Control.Feedback>
@@ -191,4 +197,4 @@ const Signin = (params) => {
     );
 };
 
-export default connect(null, { openAlert, setToken, setUser })(Signin);
+export default connect(null, { openAlert, setToken, setUser, setUserDetail })(Signin);

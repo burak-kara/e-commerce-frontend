@@ -14,15 +14,11 @@ import {
     P_M_ITEMS,
     SIGN_IN,
     SIGN_UP,
-    COSTUMER,
-    PM,
-    SM,
 } from '../_constants';
 
 const Header = () => {
     const history = useHistory();
-    const user = useStore().getState().session;
-    // TODO fix get from redux store
+    const { user } = useStore().getState();
 
     const handleLogo = () => {
         history.push({
@@ -38,7 +34,7 @@ const Header = () => {
 
     const handleAccount = () => {
         history.push({
-            pathname: user ? PROFILE : SIGN_IN,
+            pathname: user && user.first_name ? PROFILE : SIGN_IN,
         });
     };
 
@@ -98,7 +94,6 @@ const Header = () => {
             >
                 Profile
             </button>
-            <div className="dropdown-divider" />
             <button
                 className="dropdown-item menu-btn"
                 type="button"
@@ -111,17 +106,8 @@ const Header = () => {
 
     const RenderCustomerMenu = () => (
         <>
-            <div className="dropdown-divider" />
             <button className="dropdown-item menu-btn" type="button" onClick={() => handleOrders()}>
                 Orders
-            </button>
-            <div className="dropdown-divider md-b" />
-            <button
-                className="dropdown-item menu-btn"
-                type="button"
-                onClick={() => handleSignOut()}
-            >
-                Logout
             </button>
         </>
     );
@@ -135,18 +121,10 @@ const Header = () => {
             >
                 Manage Items
             </button>
-            <div className="dropdown-divider md-b" />
-            <button
-                className="dropdown-item menu-btn"
-                type="button"
-                onClick={() => handleSignOut()}
-            >
-                Logout
-            </button>
         </>
     );
 
-    // TODO
+    // TODO put proper menu
     const RenderSalesManagerMenu = () => (
         <>
             <button
@@ -154,31 +132,36 @@ const Header = () => {
                 type="button"
                 onClick={() => handleManageItems()}
             >
-                Manage Items
-            </button>
-            <div className="dropdown-divider md-b" />
-            <button
-                className="dropdown-item menu-btn"
-                type="button"
-                onClick={() => handleSignOut()}
-            >
-                Logout
+                Create Campaign
             </button>
         </>
     );
 
     const renderMenu = () => {
         if (user && user.first_name) {
-            const renders = [<RenderCommonMenu />];
-            if (user.role === COSTUMER) {
-                renders.push(<RenderCustomerMenu />);
+            const renders = [<RenderCommonMenu key="0" />];
+            if (user.is_product_manager) {
+                renders.push(<RenderProductManagerMenu key="2" />);
             }
-            if (user.role === PM) {
-                renders.push(<RenderProductManagerMenu />);
+            if (user.is_sales_manager) {
+                renders.push(<RenderSalesManagerMenu key="3" />);
             }
-            if (user.role === SM) {
-                renders.push(<RenderSalesManagerMenu />);
+            if (!user.is_product_manager && !user.is_sales_manager) {
+                renders.push(<RenderCustomerMenu key="1" />);
             }
+            renders.push(
+                <>
+                    <div className="dropdown-divider md-b" />
+                    <button
+                        className="dropdown-item menu-btn"
+                        type="button"
+                        onClick={() => handleSignOut()}
+                    >
+                        Logout
+                    </button>
+                </>,
+            );
+
             return renders;
         }
         return (

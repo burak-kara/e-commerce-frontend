@@ -1,6 +1,5 @@
-import Dummy from './dummy/Dummy';
 import Profile from './profile/Profile';
-import Orders from './profile/Orders';
+import Orders from './orders/Orders';
 import Settings from './profile/Settings';
 import Signup from './signup/Signup';
 import Signout from './signout/Signout';
@@ -12,7 +11,6 @@ import Products from './products/Products';
 import ItemSingleView from './product_manager/ItemSingleView';
 
 export {
-    Dummy,
     Profile,
     Orders,
     Settings,

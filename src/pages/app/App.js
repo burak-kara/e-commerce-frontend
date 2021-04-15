@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Routes from './Routes';
 import { Alert } from '../../components';
+import Routes from '../../_routes';
 
 const App = () => (
     <>
