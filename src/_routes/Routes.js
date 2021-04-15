@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { Header, Navigation } from '../components';
 import ProductManagerRoute from './ProductManagerRoute';
+import CustomerRoute from './CustomerRoute';
+import AuthenticatedRoute from './AuthenticatedRoute';
+import UnAuthenticatedRoute from './UnAuthenticatedRoute';
 import {
     Basket,
     Home,
@@ -14,6 +17,9 @@ import {
     Signout,
     Signup,
     Products,
+    UnAuthorized,
+    UnAuthenticated,
+    NotFound,
 } from '../pages';
 import {
     BASKET,
@@ -31,10 +37,10 @@ import {
     CAT_OTHERS,
     CAT_CONSUMABLES,
     CAT_COFFEE_BEANS,
+    UN_AUTHORIZED,
+    UN_AUTHENTICATED,
+    NOT_FOUND,
 } from '../_constants';
-import CustomerRoute from './CustomerRoute';
-import AuthenticatedRoute from './AuthenticatedRoute';
-import UnAuthenticatedRoute from './UnAuthenticatedRoute';
 
 const Routes = () => {
     const history = useHistory();
@@ -42,13 +48,19 @@ const Routes = () => {
 
     useEffect(() => {}, [location]);
 
-    const isSignPage = () => {
+    const isHeader = () => {
         const { pathname } = history.location;
-        return pathname === SIGN_UP || pathname === SIGN_IN || pathname === SIGN_OUT;
+        return (
+            pathname === SIGN_UP ||
+            pathname === SIGN_IN ||
+            pathname === UN_AUTHORIZED ||
+            pathname === UN_AUTHENTICATED ||
+            pathname === NOT_FOUND
+        );
     };
 
     const RenderHeader = () =>
-        isSignPage() ? null : (
+        isHeader() ? null : (
             <>
                 <div className="sticky-top">
                     <Header />
@@ -82,6 +94,10 @@ const Routes = () => {
                 <ProductManagerRoute exact path={P_M_ITEMS} component={Items} />
                 <ProductManagerRoute exact path={P_M_NEW_ITEM} component={ItemSingleView} />
                 <ProductManagerRoute exact path={P_M_EDIT_ITEM} component={ItemSingleView} />
+
+                <Route exact path={UN_AUTHORIZED} component={UnAuthorized} />
+                <Route exact path={UN_AUTHENTICATED} component={UnAuthenticated} />
+                <Route exact path={NOT_FOUND} component={NotFound} />
 
                 {/* Categories */}
                 <Route exact path={CAT_ELECTRONICS}>

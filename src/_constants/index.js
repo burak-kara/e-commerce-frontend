@@ -15,7 +15,9 @@ import {
     CAT_OTHERS,
     CAT_CONSUMABLES,
     CAT_COFFEE_BEANS,
-    UNAUTH,
+    UN_AUTHORIZED,
+    UN_AUTHENTICATED,
+    NOT_FOUND,
 } from './routes';
 
 export {
@@ -35,7 +37,9 @@ export {
     CAT_OTHERS,
     CAT_CONSUMABLES,
     CAT_COFFEE_BEANS,
-    UNAUTH,
+    UN_AUTHORIZED,
+    UN_AUTHENTICATED,
+    NOT_FOUND,
 };
 
 export const noneError = 'N';

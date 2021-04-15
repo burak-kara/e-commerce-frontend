@@ -9,6 +9,9 @@ import Basket from './basket/Basket';
 import Items from './product_manager/Items';
 import Products from './products/Products';
 import ItemSingleView from './product_manager/ItemSingleView';
+import NotFound from './error_pages/NotFound';
+import UnAuthorized from './error_pages/UnAuthorized';
+import UnAuthenticated from './error_pages/UnAuthenticated';
 
 export {
     Profile,
@@ -22,4 +25,7 @@ export {
     Items,
     ItemSingleView,
     Products,
+    UnAuthenticated,
+    NotFound,
+    UnAuthorized,
 };
