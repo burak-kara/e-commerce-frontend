@@ -2,6 +2,10 @@ import React, { useEffect } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { Header, Navigation } from '../components';
 import ProductManagerRoute from './ProductManagerRoute';
+import CustomerRoute from './CustomerRoute';
+import AuthenticatedRoute from './AuthenticatedRoute';
+import UnAuthenticatedRoute from './UnAuthenticatedRoute';
+import NotFoundRoute from './NotFoundRoute';
 import {
     Basket,
     Home,
@@ -14,6 +18,9 @@ import {
     Signout,
     Signup,
     Products,
+    UnAuthorized,
+    UnAuthenticated,
+    NotFound,
 } from '../pages';
 import {
     BASKET,
@@ -31,10 +38,10 @@ import {
     CAT_OTHERS,
     CAT_CONSUMABLES,
     CAT_COFFEE_BEANS,
+    UN_AUTHORIZED,
+    UN_AUTHENTICATED,
+    NOT_FOUND,
 } from '../_constants';
-import CustomerRoute from './CustomerRoute';
-import AuthenticatedRoute from './AuthenticatedRoute';
-import UnAuthenticatedRoute from './UnAuthenticatedRoute';
 
 const Routes = () => {
     const history = useHistory();
@@ -42,13 +49,19 @@ const Routes = () => {
 
     useEffect(() => {}, [location]);
 
-    const isSignPage = () => {
+    const isHeader = () => {
         const { pathname } = history.location;
-        return pathname === SIGN_UP || pathname === SIGN_IN || pathname === SIGN_OUT;
+        return (
+            pathname === SIGN_UP ||
+            pathname === SIGN_IN ||
+            pathname === UN_AUTHORIZED ||
+            pathname === UN_AUTHENTICATED ||
+            pathname === NOT_FOUND
+        );
     };
 
     const RenderHeader = () =>
-        isSignPage() ? null : (
+        isHeader() ? null : (
             <>
                 <div className="sticky-top">
                     <Header />
@@ -64,7 +77,7 @@ const Routes = () => {
             <Switch>
                 {/* Common Routes for all users */}
                 <Route exact path={LANDING} component={Home} />
-                <Route exact path={BASKET} component={Basket} />
+                <AuthenticatedRoute exact path={BASKET} component={Basket} />
 
                 {/* Common Routes for not logged in users */}
                 <UnAuthenticatedRoute exact path={SIGN_IN} component={Signin} />
@@ -117,7 +130,11 @@ const Routes = () => {
                 {/* <Route exact path={CAT_HEALTH}> */}
                 {/*    <Products category={CAT_HEALTH} /> */}
                 {/* </Route> */}
-                {/* <Route path="*" component={ProtectedHandler} /> */}
+
+                <Route exact path={UN_AUTHORIZED} component={UnAuthorized} />
+                <Route exact path={UN_AUTHENTICATED} component={UnAuthenticated} />
+                <Route exact path={NOT_FOUND} component={NotFound} />
+                <NotFoundRoute path="*" component={NotFound} />
             </Switch>
         </>
     );
