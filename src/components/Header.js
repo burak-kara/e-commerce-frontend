@@ -94,7 +94,6 @@ const Header = () => {
             >
                 Profile
             </button>
-            <div className="dropdown-divider" />
             <button
                 className="dropdown-item menu-btn"
                 type="button"
@@ -107,17 +106,8 @@ const Header = () => {
 
     const RenderCustomerMenu = () => (
         <>
-            <div className="dropdown-divider" />
             <button className="dropdown-item menu-btn" type="button" onClick={() => handleOrders()}>
                 Orders
-            </button>
-            <div className="dropdown-divider md-b" />
-            <button
-                className="dropdown-item menu-btn"
-                type="button"
-                onClick={() => handleSignOut()}
-            >
-                Logout
             </button>
         </>
     );
@@ -131,14 +121,6 @@ const Header = () => {
             >
                 Manage Items
             </button>
-            <div className="dropdown-divider md-b" />
-            <button
-                className="dropdown-item menu-btn"
-                type="button"
-                onClick={() => handleSignOut()}
-            >
-                Logout
-            </button>
         </>
     );
 
@@ -150,15 +132,7 @@ const Header = () => {
                 type="button"
                 onClick={() => handleManageItems()}
             >
-                Manage Items
-            </button>
-            <div className="dropdown-divider md-b" />
-            <button
-                className="dropdown-item menu-btn"
-                type="button"
-                onClick={() => handleSignOut()}
-            >
-                Logout
+                Create Campaign
             </button>
         </>
     );
@@ -172,7 +146,21 @@ const Header = () => {
             if (user.is_sales_manager) {
                 renders.push(<RenderSalesManagerMenu key="3" />);
             }
-            renders.push(<RenderCustomerMenu key="1" />);
+            if (!user.is_product_manager && !user.is_sales_manager) {
+                renders.push(<RenderCustomerMenu key="1" />);
+            }
+            renders.push(
+                <>
+                    <div className="dropdown-divider md-b" />
+                    <button
+                        className="dropdown-item menu-btn"
+                        type="button"
+                        onClick={() => handleSignOut()}
+                    >
+                        Logout
+                    </button>
+                </>,
+            );
 
             return renders;
         }
