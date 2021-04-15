@@ -11,13 +11,6 @@ const session = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER: {
             const { username, first_name, last_name, email } = action.payload;
-            console.log({
-                ...state,
-                username,
-                first_name,
-                last_name,
-                email,
-            });
             return {
                 ...state,
                 username,
