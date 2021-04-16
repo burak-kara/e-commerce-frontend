@@ -5,7 +5,9 @@ const SIGN_UP = '/sign-up';
 const SIGN_OUT = '/sign-out';
 const PASSWORD_FORGET = '/password-forget';
 
-const UNAUTH = '/unauthorized';
+const UN_AUTHORIZED = '/un-authorized';
+const UN_AUTHENTICATED = '/un-authenticated';
+const NOT_FOUND = '/not-found';
 
 const BASKET = '/basket';
 const PROFILE = '/account';
@@ -52,5 +54,7 @@ export {
     CAT_OTHERS,
     CAT_CONSUMABLES,
     CAT_COFFEE_BEANS,
-    UNAUTH,
+    UN_AUTHORIZED,
+    UN_AUTHENTICATED,
+    NOT_FOUND,
 };
