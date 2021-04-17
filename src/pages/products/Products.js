@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
-import { ProductCard } from '../../components';
+import { PageLoading, ProductCard } from '../../components';
 import { getItemsByCategory } from '../../_requests';
 import { openAlert } from '../../_redux/actions';
 
@@ -31,8 +31,6 @@ const Products = (params) => {
                         severity: 'error',
                     });
                     setLoading(false);
-                    setLoading(!loading); // TODO delete
-                    // TODO loading
                 });
         }
     }, [category]);
@@ -70,7 +68,9 @@ const Products = (params) => {
         return itemsCol;
     };
 
-    return (
+    return loading ? (
+        <PageLoading />
+    ) : (
         <Container fluid="lg" className="pm-item-list">
             <Row className="row">{items ? renderItems() : null}</Row>
         </Container>

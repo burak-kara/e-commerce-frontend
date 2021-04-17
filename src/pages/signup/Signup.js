@@ -6,7 +6,7 @@ import Step1 from './Step1';
 import Step2 from './Step2';
 import { logo } from '../../_assets';
 import { register } from '../../_requests';
-import { Loading } from '../../components';
+import { ComponentLoading } from '../../components';
 import { openAlert } from '../../_redux/actions';
 import {
     LANDING,
@@ -214,7 +214,7 @@ const Signup = (params) => {
     const renderNextButton = () =>
         currentStep < 2 ? (
             <button className="btn font-weight-bold next-signup-btn" type="button" onClick={next}>
-                {isNext ? <Loading /> : 'Next'}
+                {isNext ? <ComponentLoading /> : 'Next'}
             </button>
         ) : null;
 
