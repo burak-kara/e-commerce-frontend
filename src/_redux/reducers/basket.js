@@ -24,6 +24,8 @@ const session = (state = initialState, action) => {
             const { items } = state;
             if (items[id] - 1 >= 0) {
                 items[id] -= 1;
+            } else {
+                delete items[id];
             }
             return {
                 ...state,
@@ -33,7 +35,7 @@ const session = (state = initialState, action) => {
         case REMOVE_BASKET: {
             const { id } = action.payload;
             const { items } = state;
-            items[id] = 0;
+            delete items[id];
             return {
                 ...state,
                 items,
