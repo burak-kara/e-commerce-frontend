@@ -60,6 +60,10 @@
             }
 
             .fav {
+                color: $delete;
+                &:hover {
+                    font-size: 30px;
+                }
             }
         }
 
@@ -142,6 +146,14 @@
                 &:hover {
                     color: $edit;
                     font-size: 30px;
+                }
+            }
+
+            .basket {
+                color: $common-btn;
+                font-size: 24px;
+                &:hover {
+                    font-size: 32px;
                 }
             }
         }

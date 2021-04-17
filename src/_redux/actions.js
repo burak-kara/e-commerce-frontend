@@ -6,6 +6,9 @@ import {
     SET_TOKEN,
     REMOVE_TOKEN,
     SET_USER_DETAIL,
+    ADD_BASKET,
+    DELETE_BASKET,
+    REMOVE_BASKET,
 } from './actionTypes';
 
 export const openAlert = (payload) => ({
@@ -38,4 +41,18 @@ export const setToken = (payload) => ({
 
 export const removeToken = () => ({
     type: REMOVE_TOKEN,
+});
+
+export const addBasket = (id) => ({
+    type: ADD_BASKET,
+    id,
+});
+
+export const deleteBasket = (id) => ({
+    type: DELETE_BASKET,
+    id,
+});
+
+export const removeBasket = () => ({
+    type: REMOVE_BASKET,
 });
