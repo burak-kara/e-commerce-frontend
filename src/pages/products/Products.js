@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import { PageLoading, ProductCard } from '../../components';
 import { getItemsByCategory } from '../../_requests';
-import { openAlert, addBasket } from '../../_redux/actions';
+import { openAlert, addToBasket } from '../../_redux/actions';
 
 const Products = (params) => {
     const location = useLocation();
@@ -43,7 +43,7 @@ const Products = (params) => {
 
     const handleAddBasket = (id) => {
         setId(id);
-        params.addBasket(id);
+        params.addToBasket(id);
         params.openAlert({
             message: 'Product added to the basket!',
             severity: 'success',
@@ -81,4 +81,4 @@ const Products = (params) => {
     );
 };
 
-export default connect(null, { openAlert, addBasket })(Products);
+export default connect(null, { openAlert, addToBasket })(Products);

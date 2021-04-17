@@ -6,8 +6,9 @@ import {
     SET_TOKEN,
     REMOVE_TOKEN,
     SET_USER_DETAIL,
-    ADD_BASKET,
-    DELETE_BASKET,
+    ADD_TO_BASKET,
+    DELETE_FROM_BASKET,
+    REMOVE_FROM_BASKET,
     REMOVE_BASKET,
 } from './actionTypes';
 
@@ -43,14 +44,18 @@ export const removeToken = () => ({
     type: REMOVE_TOKEN,
 });
 
-export const addBasket = (id) => ({
-    type: ADD_BASKET,
+export const addToBasket = (id) => ({
+    type: ADD_TO_BASKET,
     id,
 });
 
-export const deleteBasket = (id) => ({
-    type: DELETE_BASKET,
+export const deleteFromBasket = (id) => ({
+    type: DELETE_FROM_BASKET,
     id,
+});
+
+export const removeFromBasket = () => ({
+    type: REMOVE_FROM_BASKET,
 });
 
 export const removeBasket = () => ({
