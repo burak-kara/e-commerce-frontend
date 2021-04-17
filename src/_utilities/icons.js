@@ -10,6 +10,7 @@ import {
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { BiHide, BiShow } from 'react-icons/bi';
 import { MdFavoriteBorder, MdAdd, MdEdit, MdDelete } from 'react-icons/md';
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 
 const IconMaker = (props) => {
     const { icon } = props;
@@ -46,6 +47,9 @@ const Edit = (props) => <IconMaker icon={<MdEdit />} {...props} />;
 
 const Delete = (props) => <IconMaker icon={<MdDelete />} {...props} />;
 
+const Plus = (props) => <IconMaker icon={<AiOutlinePlusCircle />} {...props} />;
+const Minus = (props) => <IconMaker icon={<AiOutlineMinusCircle />} {...props} />;
+
 export {
     Search,
     Account,
@@ -60,4 +64,6 @@ export {
     Add,
     Edit,
     Delete,
+    Plus,
+    Minus,
 };
