@@ -1,3 +1,11 @@
 .loading {
     height: 38px;
 }
+
+.loading-page {
+    min-height: 500px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $common-btn;
+}
