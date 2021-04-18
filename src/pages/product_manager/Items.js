@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { connect, useStore } from 'react-redux';
 import { Add } from '../../_utilities/icons';
 import { getItems, deleteItem } from '../../_requests';
-import { DiscardModal, ProductCard } from '../../components';
+import { DiscardModal, PageLoading, ProductCard } from '../../components';
 import { P_M_NEW_ITEM, P_M_EDIT_ITEM } from '../../_constants';
 import { openAlert } from '../../_redux/actions';
 
@@ -22,7 +22,6 @@ const Items = (params) => {
             .then((response) => {
                 setItems(response.data);
                 setLoading(false);
-                // TODO loading
             })
             .catch(() => {
                 params.openAlert({
@@ -30,8 +29,6 @@ const Items = (params) => {
                     severity: 'error',
                 });
                 setLoading(false);
-                setLoading(!loading); // TODO delete
-                // TODO loading
             });
     };
 
@@ -99,7 +96,9 @@ const Items = (params) => {
         return itemsCol;
     };
 
-    return (
+    return loading ? (
+        <PageLoading />
+    ) : (
         <>
             <Container fluid="lg" className="pm-item-list">
                 <Row className="add-row">

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Form, Col, InputGroup } from 'react-bootstrap';
 import { openAlert, setToken, setUser, setUserDetail } from '../../_redux/actions';
-import { Loading } from '../../components';
+import { ComponentLoading } from '../../components';
 import { getUser, getUserDetail, login } from '../../_requests';
 import { Hide, Show } from '../../_utilities/icons';
 import { logo } from '../../_assets';
@@ -72,7 +72,7 @@ const Signin = (params) => {
                         severity: 'success',
                     });
                     params.setToken({
-                        token: response.data.key,
+                        key: response.data.key,
                     });
                     getUser(response.data.key)
                         .then((r) => {
@@ -122,7 +122,7 @@ const Signin = (params) => {
 
     const renderSubmitButton = () => (
         <button className="btn font-weight-bold sign-in-btn" type="submit">
-            {loading ? <Loading /> : 'Sign in'}
+            {loading ? <ComponentLoading /> : 'Sign in'}
         </button>
     );
 

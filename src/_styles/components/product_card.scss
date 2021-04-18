@@ -1,7 +1,6 @@
 .product-card {
     width: 370px;
     height: 570px;
-    //background: rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 
     .image-container {
@@ -60,6 +59,10 @@
             }
 
             .fav {
+                color: $delete;
+                &:hover {
+                    font-size: 30px;
+                }
             }
         }
 
@@ -142,6 +145,14 @@
                 &:hover {
                     color: $edit;
                     font-size: 30px;
+                }
+            }
+
+            .basket {
+                color: $common-btn;
+                font-size: 24px;
+                &:hover {
+                    font-size: 32px;
                 }
             }
         }

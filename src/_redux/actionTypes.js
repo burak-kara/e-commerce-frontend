@@ -7,3 +7,9 @@ export const REMOVE_USER = 'REMOVE_USER';
 
 export const SET_TOKEN = 'SET_TOKEN';
 export const REMOVE_TOKEN = 'REMOVE_TOKEN';
+
+export const ADD_TO_BASKET = 'ADD_BASKET';
+export const DELETE_FROM_BASKET = 'DELETE_TO_BASKET';
+export const REMOVE_FROM_BASKET = 'REMOVE_FROM_BASKET';
+export const REMOVE_BASKET = 'REMOVE_BASKET';
+export const CALC_TOTAL = 'CALC_TOTAL';
