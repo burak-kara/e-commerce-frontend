@@ -89,6 +89,13 @@ const Header = () => {
             <p className="name">Login</p>
         );
 
+    const renderBasketButton = () => (
+        <button className="btn b-btn" type="button" onClick={() => handleBasket()}>
+            <BasketIcon />
+            <div className="ml-1">Basket</div>
+        </button>
+    );
+
     const RenderCommonMenu = () => (
         <>
             <button
@@ -225,7 +232,9 @@ const Header = () => {
                                 <div className="dropdown-menu">{renderMenu()}</div>
                             </div>
                             <>
-                                {basket.itemCount === 0 ? null : (
+                                {basket.itemCount === 0 ? (
+                                    <div className="badge">{renderBasketButton()}</div>
+                                ) : (
                                     <Badge
                                         max={10}
                                         badgeContent={basket.itemCount}
@@ -233,14 +242,7 @@ const Header = () => {
                                         color="primary"
                                         overlap="circle"
                                     >
-                                        <button
-                                            className="btn b-btn"
-                                            type="button"
-                                            onClick={() => handleBasket()}
-                                        >
-                                            <BasketIcon />
-                                            <div className="ml-1">Basket</div>
-                                        </button>
+                                        {renderBasketButton()}
                                     </Badge>
                                 )}
                             </>
