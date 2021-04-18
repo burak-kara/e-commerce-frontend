@@ -12,7 +12,7 @@ const Basket = (props) => {
 
     const fetchItems = () => {
         if (basket && basket.items) {
-            setLoading(true);
+            setBasketItems([]);
             Object.keys(basket.items).forEach((key) => {
                 getItemById(key)
                     .then((response) => {
@@ -27,11 +27,18 @@ const Basket = (props) => {
     };
 
     useEffect(() => {
+        setLoading(true);
         fetchItems();
     }, [loading]);
 
     const handleClick = () => {
         // TODO open product details, change pathname
+    };
+
+    const onDelete = (count) => {
+        if (!count || count === 0) {
+            fetchItems();
+        }
     };
 
     const listItems = () => {
@@ -44,7 +51,7 @@ const Basket = (props) => {
                         key={item.id}
                         onClick={() => handleClick(item.id)}
                     >
-                        <BasketProductCard item={item} {...props} />
+                        <BasketProductCard item={item} {...props} onDelete={onDelete} />
                     </ListGroup.Item>,
                 );
             });
@@ -58,7 +65,11 @@ const Basket = (props) => {
                 <Row>
                     <Col xs={12} md={12} xl={10}>
                         <ListGroup variant="flush">
-                            {loading ? <PageLoading /> : listItems()}
+                            {basket.itemCount !== basketItems.length ? (
+                                <PageLoading />
+                            ) : (
+                                listItems()
+                            )}
                         </ListGroup>
                     </Col>
                     <Col xs={12} md={12} xl={2} className="">

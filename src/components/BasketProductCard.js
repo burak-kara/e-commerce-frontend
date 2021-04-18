@@ -6,7 +6,7 @@ import { Minus, Plus, Delete, Favorite } from '../_utilities/icons';
 import { addToBasket, openAlert, deleteFromBasket, removeFromBasket } from '../_redux/actions';
 
 const BasketProductCard = (props) => {
-    const { item, items } = props;
+    const { item, items, onDelete } = props;
     const { image, name, brand, price, id } = item;
 
     // TODO rerender items when count is 0
@@ -35,6 +35,7 @@ const BasketProductCard = (props) => {
                     <Row className="h-100">
                         <Col xs={3} md={4} xl={12} className="icon">
                             <button className="btn fav" type="button">
+                                {/* TODO handle fav click */}
                                 <Favorite size="2em" />
                             </button>
                         </Col>
@@ -44,6 +45,7 @@ const BasketProductCard = (props) => {
                                 type="button"
                                 onClick={() => {
                                     props.removeFromBasket(id);
+                                    onDelete(items[id]);
                                     props.openAlert({
                                         message: 'Product is removed successfully!',
                                         severity: 'success',
@@ -81,6 +83,7 @@ const BasketProductCard = (props) => {
                                 type="button"
                                 onClick={() => {
                                     props.deleteFromBasket(id);
+                                    onDelete(items[id]);
                                     props.openAlert({
                                         message: 'Product is deleted successfully!',
                                         severity: 'warning',
