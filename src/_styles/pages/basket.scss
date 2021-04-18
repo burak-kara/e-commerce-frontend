@@ -106,6 +106,39 @@
             }
         }
     }
+
+    .empty {
+        padding: 0 !important;
+        height: 200px;
+        margin-bottom: 10px;
+        border-radius: 10px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 64px;
+            color: $common-btn;
+        }
+
+        .text {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Calibri Light', sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+        }
+    }
+
+    .total {
+        padding: 10px;
+
+    }
 }
 
 @media only screen and (max-width: 576px) {
@@ -145,6 +178,12 @@
                         padding: 0 20px;
                     }
                 }
+            }
+        }
+
+        .empty {
+            .text {
+                font-size: 18px;
             }
         }
     }

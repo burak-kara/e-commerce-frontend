@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
 import { logo } from '../_assets';
 import { openAlert } from '../_redux/actions';
-import { Search, Account, DropDown, Basket } from '../_utilities/icons';
+import { Search, Account, DropDown, BasketIcon } from '../_utilities/icons';
 import {
     BASKET,
     PROFILE,
@@ -227,7 +227,7 @@ const Header = () => {
                                 type="button"
                                 onClick={() => handleBasket()}
                             >
-                                <Basket />
+                                <BasketIcon />
                                 <div className="ml-1">Basket</div>
                             </button>
                         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStore } from 'react-redux';
-import { Basket, Delete, Edit, Favorite } from '../_utilities/icons';
+import { BasketIcon, Delete, Edit, Favorite } from '../_utilities/icons';
 import StarMaker from './StarMaker';
 import { logo } from '../_assets';
 
@@ -50,7 +50,7 @@ const ProductCard = (props) => {
         if (isPreview) {
             return null;
         }
-        return isPM ? <Edit size="2em" /> : <Basket size="2em" />;
+        return isPM ? <Edit size="2em" /> : <BasketIcon size="2em" />;
     };
 
     return (

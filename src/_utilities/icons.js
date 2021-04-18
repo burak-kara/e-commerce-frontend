@@ -27,7 +27,7 @@ const Account = (props) => <IconMaker icon={<FaRegUser />} {...props} />;
 
 const DropDown = (props) => <IconMaker icon={<IoIosArrowDropdownCircle />} {...props} />;
 
-const Basket = (props) => <IconMaker icon={<RiShoppingCartLine />} {...props} />;
+const BasketIcon = (props) => <IconMaker icon={<RiShoppingCartLine />} {...props} />;
 
 const Hide = (props) => <IconMaker icon={<BiHide />} {...props} />;
 
@@ -54,7 +54,7 @@ export {
     Search,
     Account,
     DropDown,
-    Basket,
+    BasketIcon,
     Hide,
     Show,
     FilledStar,
