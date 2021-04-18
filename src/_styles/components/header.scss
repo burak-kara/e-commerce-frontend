@@ -124,24 +124,31 @@
             }
         }
 
-        .b-btn {
-            width: 100px;
-            height: 100%;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-radius: 4px !important;
-            background-color: $header-border2;
-            color: $header-bg;
-            box-shadow: 0 0 5px 0 $header-bg-shadow;
-
-            &:focus {
-                outline: none !important;
-                box-shadow: none !important;
+        .badge {
+            .MuiBadge-colorPrimary {
+                background-color: $b-btn !important;
+                right: 10px !important;
             }
 
-            &:hover {
-                box-shadow: 0 0 10px 0 $header-bg-shadow;
+            .b-btn {
+                width: 100px;
+                height: 100%;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                border-radius: 4px !important;
+                background-color: $header-border2;
+                color: $header-bg;
+                box-shadow: 0 0 5px 0 $header-bg-shadow;
+
+                &:focus {
+                    outline: none !important;
+                    box-shadow: none !important;
+                }
+
+                &:hover {
+                    box-shadow: 0 0 10px 0 $header-bg-shadow;
+                }
             }
         }
 
