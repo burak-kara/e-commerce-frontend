@@ -238,7 +238,7 @@ const Header = () => {
                                             type="button"
                                             onClick={() => handleBasket()}
                                         >
-                                            <BasketIcon  />
+                                            <BasketIcon />
                                             <div className="ml-1">Basket</div>
                                         </button>
                                     </Badge>
