@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
+import { Badge } from '@material-ui/core';
 import { logo } from '../_assets';
 import { openAlert } from '../_redux/actions';
 import { Search, Account, DropDown, BasketIcon } from '../_utilities/icons';
@@ -18,6 +19,7 @@ import {
 
 const Header = () => {
     const history = useHistory();
+    const { basket } = useStore().getState();
     const { user } = useStore().getState();
 
     const handleLogo = () => {
@@ -222,14 +224,26 @@ const Header = () => {
                                 </button>
                                 <div className="dropdown-menu">{renderMenu()}</div>
                             </div>
-                            <button
-                                className="btn b-btn"
-                                type="button"
-                                onClick={() => handleBasket()}
-                            >
-                                <BasketIcon />
-                                <div className="ml-1">Basket</div>
-                            </button>
+                            <>
+                                {basket.itemCount === 0 ? null : (
+                                    <Badge
+                                        max={10}
+                                        badgeContent={basket.itemCount}
+                                        className="badge"
+                                        color="primary"
+                                        overlap="circle"
+                                    >
+                                        <button
+                                            className="btn b-btn"
+                                            type="button"
+                                            onClick={() => handleBasket()}
+                                        >
+                                            <BasketIcon  />
+                                            <div className="ml-1">Basket</div>
+                                        </button>
+                                    </Badge>
+                                )}
+                            </>
                         </div>
                     </div>
                 </nav>
@@ -238,4 +252,6 @@ const Header = () => {
     );
 };
 
-export default connect(null, { openAlert })(Header);
+const mapStateToProps = (state) => state.basket;
+
+export default connect(mapStateToProps, { openAlert })(Header);
