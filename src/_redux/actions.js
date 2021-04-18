@@ -54,8 +54,9 @@ export const deleteFromBasket = (id) => ({
     id,
 });
 
-export const removeFromBasket = () => ({
+export const removeFromBasket = (id) => ({
     type: REMOVE_FROM_BASKET,
+    id,
 });
 
 export const removeBasket = () => ({

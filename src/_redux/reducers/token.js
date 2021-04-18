@@ -1,16 +1,16 @@
 import { SET_TOKEN, REMOVE_TOKEN } from '../actionTypes';
 
 const initialState = {
-    token: '',
+    key: '',
 };
 
-const session = (state = initialState, action) => {
+const token = (state = initialState, action) => {
     switch (action.type) {
         case SET_TOKEN: {
-            const { token } = action.payload;
+            const { key } = action.payload;
             return {
                 ...state,
-                token,
+                key,
             };
         }
         case REMOVE_TOKEN: {
@@ -21,4 +21,4 @@ const session = (state = initialState, action) => {
     }
 };
 
-export default session;
+export default token;

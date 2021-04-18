@@ -1,49 +1,93 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Row, Col, Container } from 'react-bootstrap';
 import { logo } from '../_assets';
-import { Minus, Plus } from '../_utilities/icons';
+import { Minus, Plus, Delete, Favorite } from '../_utilities/icons';
+import { addToBasket, openAlert, deleteFromBasket, removeFromBasket } from '../_redux/actions';
 
-const BasketProductCard = (params) => {
-    const { item, count } = params;
-    const { image, name, brand, price } = item;
+const BasketProductCard = (props) => {
+    const { item, items } = props;
+    const { image, name, brand, price, id } = item;
 
+    // TODO rerender items when count is 0
     return (
         <Container fluid className="list-item-container">
             <Row className="list-item-container-row">
                 <Col xs={4} md={4} xl={2} className="image-container">
                     <img src={image || logo} alt="product" className="image" />
                 </Col>
-                <Col xs={8} md={8} xl={9} className="">
-                    <Row xs={9} md={8} xl={10}>
-                        <Col xs={9} md={8} xl={10}>
-                            {name  || "Name"}
+                <Col xs={8} md={8} xl={8} className="info-container">
+                    <Row xs={12} md={8} xl={10}>
+                        <Col xs={9} md={8} xl={12}>
+                            <div className="name">{name || 'Name'}</div>
                         </Col>
-                        <Col xs={3} md={4} xl={2}>
-                            Fav
+                        <Col xs={12} md={6} xl={12}>
+                            <div className="brand">{brand || 'Brand'}</div>
                         </Col>
-                    </Row>
-                    <Row xs={9} md={8} xl={10}>
-                        <Col xs={6} md={6} xl={12}>
-                            {brand || "Brand"}
-                        </Col>
-                        <Col xs={6} md={6} xl={12}>
-                            {price || "Price"}
+                        <Col xs={12} md={6} xl={12}>
+                            <div className="price">
+                                <span>{price || 'Price'} ₺</span>
+                            </div>
                         </Col>
                     </Row>
                 </Col>
-                <Col xs={12} md={12} xl={1} className="action-container">
+                <Col xs={6} md={12} xl={1} className="action-container left">
+                    <Row className="h-100">
+                        <Col xs={3} md={4} xl={12} className="icon">
+                            <button className="btn fav" type="button">
+                                <Favorite size="2em" />
+                            </button>
+                        </Col>
+                        <Col xs={4} md={6} xl={12} className="icon">
+                            <button
+                                className="btn"
+                                type="button"
+                                onClick={() => {
+                                    props.removeFromBasket(id);
+                                    props.openAlert({
+                                        message: 'Product is removed successfully!',
+                                        severity: 'success',
+                                    });
+                                }}
+                            >
+                                <Delete size="2em" />
+                            </button>
+                        </Col>
+                    </Row>
+                </Col>
+                <Col xs={6} md={12} xl={1} className="action-container">
                     <Row className="h-100">
                         <Col xs={4} md={6} xl={12} className="icon">
-                            <button className="btn" type="button">
+                            <button
+                                className="btn"
+                                type="button"
+                                onClick={() => {
+                                    props.addToBasket(id);
+                                    props.openAlert({
+                                        message: 'Product is added successfully!',
+                                        severity: 'success',
+                                    });
+                                }}
+                            >
                                 <Plus size="2em" />
                             </button>
                         </Col>
                         <Col xs={4} md={6} xl={12} className="icon">
-                            <div className="count">{count || '0'}</div>
+                            <div className="count">{items[id]}</div>
                         </Col>
                         <Col xs={4} md={6} xl={12} className="icon">
-                            <button className="btn" type="button">
-                                <Minus size="2em" />
+                            <button
+                                className="btn"
+                                type="button"
+                                onClick={() => {
+                                    props.deleteFromBasket(id);
+                                    props.openAlert({
+                                        message: 'Product is deleted successfully!',
+                                        severity: 'warning',
+                                    });
+                                }}
+                            >
+                                {items[id] === 1 ? <Delete size="2em" /> : <Minus size="2em" />}
                             </button>
                         </Col>
                     </Row>
@@ -53,4 +97,6 @@ const BasketProductCard = (params) => {
     );
 };
 
-export default BasketProductCard;
+export default connect(null, { openAlert, addToBasket, deleteFromBasket, removeFromBasket })(
+    BasketProductCard,
+);

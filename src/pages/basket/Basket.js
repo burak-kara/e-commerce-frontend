@@ -5,12 +5,12 @@ import { openAlert, addToBasket, deleteFromBasket, removeFromBasket } from '../.
 import { getItemById } from '../../_requests';
 import { BasketProductCard, PageLoading } from '../../components';
 
-const Basket = () => {
+const Basket = (props) => {
     const { basket } = useStore().getState();
-    const [items, setItems] = useState([]);
+    const [basketItems, setBasketItems] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
+    const fetchItems = () => {
         if (basket && basket.items) {
             setLoading(true);
             Object.keys(basket.items).forEach((key) => {
@@ -18,21 +18,33 @@ const Basket = () => {
                     .then((response) => {
                         const item = response.data;
                         // eslint-disable-next-line no-shadow
-                        setItems((items) => [...items, item]);
+                        setBasketItems((basketItems) => [...basketItems, item]);
                     })
                     .catch(() => {});
             });
         }
         setLoading(false);
-    }, []);
+    };
+
+    useEffect(() => {
+        fetchItems();
+    }, [loading]);
+
+    const handleClick = () => {
+        // TODO open product details, change pathname
+    };
 
     const listItems = () => {
         const list = [];
-        if (items) {
-            items.forEach((item) => {
+        if (basketItems) {
+            basketItems.forEach((item) => {
                 list.push(
-                    <ListGroup.Item className="list-item">
-                        <BasketProductCard item={item} count={basket.items[item.id]} />
+                    <ListGroup.Item
+                        className="list-item"
+                        key={item.id}
+                        onClick={() => handleClick(item.id)}
+                    >
+                        <BasketProductCard item={item} {...props} />
                     </ListGroup.Item>,
                 );
             });
@@ -45,7 +57,9 @@ const Basket = () => {
             <Container fluid className="basket-page">
                 <Row>
                     <Col xs={12} md={12} xl={10}>
-                        <ListGroup>{loading ? <PageLoading /> : listItems()}</ListGroup>
+                        <ListGroup variant="flush">
+                            {loading ? <PageLoading /> : listItems()}
+                        </ListGroup>
                     </Col>
                     <Col xs={12} md={12} xl={2} className="">
                         Total vs
@@ -56,7 +70,9 @@ const Basket = () => {
     );
 };
 
-export default connect(null, {
+const mapStateToProps = (state) => state.basket;
+
+export default connect(mapStateToProps, {
     openAlert,
     addToBasket,
     deleteFromBasket,

@@ -72,7 +72,7 @@ const Signin = (params) => {
                         severity: 'success',
                     });
                     params.setToken({
-                        token: response.data.key,
+                        key: response.data.key,
                     });
                     getUser(response.data.key)
                         .then((r) => {
