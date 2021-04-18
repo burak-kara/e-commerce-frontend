@@ -137,7 +137,28 @@
 
     .total {
         padding: 10px;
+        font-family: -apple-system, 'SFProText', system-ui, Helvetica Neue, sans-serif;
+        font-weight: 600;
 
+        .title {
+            line-height: 1.5;
+            font-size: 16px;
+            color: $a-btn;
+        }
+
+        .total-price {
+            font-style: normal;
+            font-size: 24px;
+
+            .currency {
+                font-size: 18px;
+            }
+        }
+
+        .btn {
+            background-color: $header-border2;
+            color: $header-bg;
+        }
     }
 }
 

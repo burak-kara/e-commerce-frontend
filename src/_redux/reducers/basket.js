@@ -3,11 +3,14 @@ import {
     DELETE_FROM_BASKET,
     REMOVE_FROM_BASKET,
     REMOVE_BASKET,
+    CALC_TOTAL,
 } from '../actionTypes';
+import calculateTotalPrice from '../../_utilities/functions';
 
 const initialState = {
     items: {},
     itemCount: 0,
+    total: 0,
     firer: 0, // dummy data to fire up state update
 };
 
@@ -61,6 +64,15 @@ const basket = (state = initialState, action) => {
         }
         case REMOVE_BASKET: {
             return initialState;
+        }
+        case CALC_TOTAL: {
+            const { basketItems } = action;
+            const { items } = state;
+            const tmpTotal = calculateTotalPrice(items, basketItems);
+            return {
+                ...state,
+                total: tmpTotal,
+            };
         }
         default:
             return state;

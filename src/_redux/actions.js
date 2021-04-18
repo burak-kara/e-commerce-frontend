@@ -10,6 +10,7 @@ import {
     DELETE_FROM_BASKET,
     REMOVE_FROM_BASKET,
     REMOVE_BASKET,
+    CALC_TOTAL,
 } from './actionTypes';
 
 export const openAlert = (payload) => ({
@@ -61,4 +62,9 @@ export const removeFromBasket = (id) => ({
 
 export const removeBasket = () => ({
     type: REMOVE_BASKET,
+});
+
+export const calculateTotal = (basketItems) => ({
+    type: CALC_TOTAL,
+    basketItems,
 });

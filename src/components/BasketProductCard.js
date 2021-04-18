@@ -100,6 +100,9 @@ const BasketProductCard = (props) => {
     );
 };
 
-export default connect(null, { openAlert, addToBasket, deleteFromBasket, removeFromBasket })(
-    BasketProductCard,
-);
+export default connect(null, {
+    openAlert,
+    addToBasket,
+    deleteFromBasket,
+    removeFromBasket,
+})(BasketProductCard);
