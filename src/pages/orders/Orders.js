@@ -13,7 +13,7 @@ const orderss = [
     {
         status: 0,
         id: '123456',
-        total_price: '12000,99',
+        total_price: '7849,99',
         date: '25 Mart Per, 11:16',
         items: { 1: 1, 2: 1, 3: 3, 4: 3, 6: 3, 7: 3 },
     },
