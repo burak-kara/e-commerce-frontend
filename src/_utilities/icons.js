@@ -7,10 +7,14 @@ import {
     IoIosStarOutline,
     IoIosStar,
 } from 'react-icons/io';
+import { IoHomeOutline } from 'react-icons/io5';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { BiHide, BiShow } from 'react-icons/bi';
-import { MdFavoriteBorder, MdAdd, MdEdit, MdDelete } from 'react-icons/md';
+import { MdFavoriteBorder, MdAdd, MdEdit, MdDelete, MdTimelapse } from 'react-icons/md';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
+import { SiShopify } from 'react-icons/si';
+import { GiPathDistance } from 'react-icons/gi';
+import { ImCancelCircle } from 'react-icons/im';
 
 const IconMaker = (props) => {
     const { icon } = props;
@@ -48,7 +52,18 @@ const Edit = (props) => <IconMaker icon={<MdEdit />} {...props} />;
 const Delete = (props) => <IconMaker icon={<MdDelete />} {...props} />;
 
 const Plus = (props) => <IconMaker icon={<AiOutlinePlusCircle />} {...props} />;
+
 const Minus = (props) => <IconMaker icon={<AiOutlineMinusCircle />} {...props} />;
+
+const Arrived = (props) => <IconMaker icon={<IoHomeOutline />} {...props} />;
+
+const Path = (props) => <IconMaker icon={<GiPathDistance />} {...props} />;
+
+const Approved = (props) => <IconMaker icon={<SiShopify />} {...props} />;
+
+const Rejected = (props) => <IconMaker icon={<ImCancelCircle />} {...props} />;
+
+const Waiting = (props) => <IconMaker icon={<MdTimelapse />} {...props} />;
 
 export {
     Search,
@@ -66,4 +81,9 @@ export {
     Delete,
     Plus,
     Minus,
+    Arrived,
+    Path,
+    Approved,
+    Rejected,
+    Waiting,
 };

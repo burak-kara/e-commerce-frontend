@@ -104,43 +104,41 @@ const Basket = (props) => {
     };
 
     return (
-        <>
-            <Container fluid className="basket-page">
-                <Row noGutters className="w-100">
-                    <Col xs={12} md={12} xl={10}>
-                        <ListGroup variant="flush">{renderContent()}</ListGroup>
-                    </Col>
-                    <Col xs={12} md={12} xl={2} className="total">
-                        <Row>
-                            <Col xl={12} className="mb-1">
-                                <div className="title">
-                                    <span>TOTAL PRICE</span>
-                                </div>
-                            </Col>
-                            <Col xl={12} className="mb-1">
-                                <div className="total-price">
-                                    <span>
-                                        {basket.total}
-                                        <span className="currency ml-1">TL</span>
-                                    </span>
-                                </div>
-                            </Col>
-                            <Col xl={12}>
-                                <button
-                                    className="btn btn-block"
-                                    type="button"
-                                    onClick={() => {
-                                        props.calculateTotal(basketItems);
-                                    }}
-                                >
-                                    <div className="ml-1">Check Out</div>
-                                </button>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-            </Container>
-        </>
+        <Container fluid className="basket-page">
+            <Row noGutters className="w-100">
+                <Col xs={12} md={12} xl={10}>
+                    <ListGroup variant="flush">{renderContent()}</ListGroup>
+                </Col>
+                <Col xs={12} md={12} xl={2} className="total">
+                    <Row>
+                        <Col xl={12} className="mb-1">
+                            <div className="title">
+                                <span>TOTAL PRICE</span>
+                            </div>
+                        </Col>
+                        <Col xl={12} className="mb-1">
+                            <div className="total-price">
+                                <span>
+                                    {basket.total}
+                                    <span className="currency ml-1">TL</span>
+                                </span>
+                            </div>
+                        </Col>
+                        <Col xl={12}>
+                            <button
+                                className="btn btn-block"
+                                type="button"
+                                onClick={() => {
+                                    props.calculateTotal(basketItems);
+                                }}
+                            >
+                                <div className="ml-1">Check Out</div>
+                            </button>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 
