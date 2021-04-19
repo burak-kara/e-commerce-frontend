@@ -3,18 +3,8 @@ import { Row, Col, Container } from 'react-bootstrap';
 import { Approved, Arrived, Path, Rejected, Waiting } from '../_utilities/icons';
 import { getItemById } from '../_requests';
 
-// TODO delete
-const order = {
-    status: 1,
-    id: '876598',
-    total_price: '99,95',
-    date: '25 Mart Per, 11:16',
-    items: { 1: 1, 2: 1, 3: 3, 4: 3, 6: 3, 7: 3 },
-};
-
-const OrderCard = () => {
-    // const OrderCard = (props) => {
-    // const { order } = props;
+const OrderCard = (props) => {
+    const { order } = props;
     const { status, id, total_price, date, items } = order;
     const [images, setImages] = useState([]);
 
@@ -95,10 +85,10 @@ const OrderCard = () => {
     return (
         <Container fluid className="list-item-container">
             <Row className="list-item-container-row">
-                <Col xs={4} xl={2} className="list-col images-col">
+                <Col xs={4} xl={2} className="list-col images-col mb-3 mb-xl-0">
                     <Images />
                 </Col>
-                <Col xs={4} xl={3} className="list-col">
+                <Col xs={4} xl={3} className="list-col mb-3 mb-xl-0">
                     <Row>
                         <Col xl={12} className="id-col ml-1">
                             <div className="mr-1">
@@ -115,7 +105,7 @@ const OrderCard = () => {
                         </Col>
                     </Row>
                 </Col>
-                <Col xs={4} xl={3} className="list-col status-col">
+                <Col xs={4} xl={3} className="list-col status-col mb-3 mb-xl-0">
                     <Status />
                 </Col>
                 <Col xs={6} xl={2} className="list-col price-col">
