@@ -9,7 +9,6 @@ const BasketProductCard = (props) => {
     const { item, items, onDelete } = props;
     const { image, name, brand, price, id } = item;
 
-    // TODO rerender items when count is 0
     return (
         <Container fluid className="list-item-container">
             <Row className="list-item-container-row">

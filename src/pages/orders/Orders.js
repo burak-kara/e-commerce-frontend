@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Row, Col, Container, ListGroup } from 'react-bootstrap';
 import { PageLoading, OrderCard } from '../../components';
+import { ORDER_DETAIL } from '../../_constants';
 
+// TODO delete
 const orderss = [
     {
         status: -1,
@@ -41,17 +44,23 @@ const orderss = [
 ];
 
 const Orders = () => {
+    const history = useHistory();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
-    console.log(orders);
+    console.log(orders); // TODO delete
 
     useEffect(() => {
         setOrders([]);
         setLoading(false);
     }, []);
 
-    const handleClick = () => {
+    const handleClick = (id) => {
+        console.log('detailsss');
         // TODO open order details model/page
+        history.push({
+            pathname: ORDER_DETAIL,
+            state: { id },
+        });
     };
 
     const listItems = () => {
@@ -59,26 +68,11 @@ const Orders = () => {
         if (orderss.length !== 0) {
             orderss.forEach((item) => {
                 list.push(
-                    <ListGroup.Item
-                        className="list-item"
-                        key={item.id}
-                        onClick={() => handleClick(item.id)}
-                    >
-                        <OrderCard order={item} />
+                    <ListGroup.Item className="list-item" key={item.id}>
+                        <OrderCard order={item} onClick={handleClick} />
                     </ListGroup.Item>,
                 );
             });
-        } else {
-            const item = {};
-            return (
-                <ListGroup.Item
-                    className="list-item "
-                    key={item.id}
-                    onClick={() => handleClick(item.id)}
-                >
-                    <OrderCard order={item} />
-                </ListGroup.Item>
-            );
         }
         return list;
     };

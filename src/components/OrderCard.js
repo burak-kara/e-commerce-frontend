@@ -4,7 +4,7 @@ import { Approved, Arrived, Path, Rejected, Waiting } from '../_utilities/icons'
 import { getItemById } from '../_requests';
 
 const OrderCard = (props) => {
-    const { order } = props;
+    const { order, onClick } = props;
     const { status, id, total_price, date, items } = order;
     const [images, setImages] = useState([]);
 
@@ -27,6 +27,7 @@ const OrderCard = (props) => {
                         src={image}
                         alt="product"
                         className="image"
+                        key={image}
                         style={{ left: `${index * 20}px` }}
                     />,
                 );
@@ -117,7 +118,7 @@ const OrderCard = (props) => {
                     </div>
                 </Col>
                 <Col xs={6} xl={2} className="list-col btn-col">
-                    <button type="button" className="btn btn-block">
+                    <button type="button" className="btn btn-block" onClick={() => onClick(id)}>
                         Details
                     </button>
                 </Col>
