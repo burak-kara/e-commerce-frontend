@@ -65,9 +65,9 @@ const getUser = (tt) => {
     });
 };
 
-const getUserDetail = (id) =>
+const getUserDetail = () =>
     getRequest({
-        path: `${API}user/${id}/`,
+        path: `${API}user/`,
     });
 
 const getItems = () =>
@@ -111,6 +111,17 @@ const getCategories = () =>
         path: `${API}categories/`,
     });
 
+const newOrder = (data) =>
+    postRequest({
+        path: `${API}orders/`,
+        data,
+    });
+
+const getAllOrders = () =>
+    getRequest({
+        path: `${API}orders/`,
+    });
+
 export {
     register,
     login,
@@ -124,4 +135,6 @@ export {
     postNewItem,
     editItem,
     deleteItem,
+    newOrder,
+    getAllOrders,
 };

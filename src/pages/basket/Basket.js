@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Container, ListGroup } from 'react-bootstrap';
+import { Row, Col, Container, ListGroup, Form } from 'react-bootstrap';
 import { connect, useStore } from 'react-redux';
-import { getItemById } from '../../_requests';
+import { getItemById, newOrder } from '../../_requests';
 import { BasketIcon } from '../../_utilities/icons';
-import { BasketProductCard, PageLoading } from '../../components';
+import { BasketProductCard, DiscardModal, PageLoading } from '../../components';
 import {
     openAlert,
     addToBasket,
     deleteFromBasket,
     removeFromBasket,
     calculateTotal,
+    removeBasket,
 } from '../../_redux/actions';
 
+const addressesss = [
+    'Özyeğin University Orman Sk. Cekmekoy Istanbul',
+    'Boğaziçi Üniversitesi 34342 Bebek/İstanbul Türkiye',
+];
+
 const Basket = (props) => {
-    const { basket } = useStore().getState();
+    const { basket, user } = useStore().getState();
     const [basketItems, setBasketItems] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [modal, setModal] = useState(false);
+    const [address, setAddress] = useState('');
+    const [addresses, setAddresses] = useState([]);
 
     const fetchItems = () => {
         if (basket && basket.items) {
@@ -26,6 +35,7 @@ const Basket = (props) => {
                         const item = response.data;
                         // eslint-disable-next-line no-shadow
                         setBasketItems((basketItems) => [...basketItems, item]);
+                        setAddresses(addressesss);
                     })
                     .catch(() => {});
             });
@@ -42,8 +52,40 @@ const Basket = (props) => {
         props.calculateTotal(basketItems);
     }, [basketItems, basket.firer]);
 
-    const handleClick = () => {
-        // TODO open product details, change pathname
+    const onCheckout = () => {
+        if (!(user && user.first_name)) {
+            props.openAlert({
+                message: 'You have to login to complete checkout',
+                severity: 'warning',
+            });
+        } else if (address === '' || address === 'Choose Delivery Address') {
+            props.openAlert({
+                message: 'Choose Delivery Address',
+                severity: 'warning',
+            });
+        } else {
+            setModal(true);
+        }
+    };
+
+    const onConfirm = () => {
+        const body = { items: basket.items, delivery_address: address };
+        newOrder(body)
+            .then(() => {
+                props.openAlert({
+                    message: 'Order is created',
+                    severity: 'success',
+                });
+                setModal(false);
+                props.removeBasket();
+            })
+            .catch(() => {
+                setModal(false);
+                props.openAlert({
+                    message: 'Error during checkout',
+                    severity: 'error',
+                });
+            });
     };
 
     const onDelete = (count) => {
@@ -52,16 +94,20 @@ const Basket = (props) => {
         }
     };
 
-    const listItems = () => {
+    const Options = () => {
+        const options = [<option key="default">Choose Delivery Address</option>];
+        addresses.forEach((add) => {
+            options.push(<option key={add}>{add}</option>);
+        });
+        return options;
+    };
+
+    const ListItems = () => {
         const list = [];
         if (basketItems) {
             basketItems.forEach((item) => {
                 list.push(
-                    <ListGroup.Item
-                        className="list-item"
-                        key={item.id}
-                        onClick={() => handleClick(item.id)}
-                    >
+                    <ListGroup.Item className="list-item" key={item.id}>
                         <BasketProductCard item={item} {...props} onDelete={onDelete} />
                     </ListGroup.Item>,
                 );
@@ -98,47 +144,68 @@ const Basket = (props) => {
                 </ListGroup.Item>
             );
         }
-        if (basket.itemCount !== basketItems.length) return <PageLoading />;
-
-        return listItems();
+        return basket.itemCount !== basketItems.length ? <PageLoading /> : <ListItems />;
     };
 
     return (
-        <Container fluid className="basket-page">
-            <Row noGutters className="w-100">
-                <Col xs={12} md={12} xl={10}>
-                    <ListGroup variant="flush">{renderContent()}</ListGroup>
-                </Col>
-                <Col xs={12} md={12} xl={2} className="total">
-                    <Row>
-                        <Col xl={12} className="mb-1">
-                            <div className="title">
-                                <span>TOTAL PRICE</span>
-                            </div>
-                        </Col>
-                        <Col xl={12} className="mb-1">
-                            <div className="total-price">
-                                <span>
-                                    {basket.total}
-                                    <span className="currency ml-1">TL</span>
-                                </span>
-                            </div>
-                        </Col>
-                        <Col xl={12}>
-                            <button
-                                className="btn btn-block"
-                                type="button"
-                                onClick={() => {
-                                    props.calculateTotal(basketItems);
-                                }}
-                            >
-                                <div className="ml-1">Check Out</div>
-                            </button>
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
-        </Container>
+        <>
+            <Container fluid className="basket-page">
+                <Row noGutters className="w-100">
+                    <Col xs={12} md={12} xl={10}>
+                        <ListGroup variant="flush">{renderContent()}</ListGroup>
+                    </Col>
+                    <Col xs={12} md={12} xl={2} className="total">
+                        <Row>
+                            <Col xl={12} className="mb-1">
+                                <div className="title">
+                                    <span>TOTAL PRICE</span>
+                                </div>
+                            </Col>
+                            <Col xl={12} className="mb-1">
+                                <div className="total-price">
+                                    <span>
+                                        {basket.total}
+                                        <span className="currency ml-1">TL</span>
+                                    </span>
+                                </div>
+                            </Col>
+                            <Col xl={12} className="mb-1">
+                                <Form.Control
+                                    as="select"
+                                    className="dropdown"
+                                    variant="outline-secondary"
+                                    defaultValue="Choose campaign"
+                                    onChange={(e) => setAddress(e.target.value)}
+                                    value={address}
+                                >
+                                    <Options />
+                                </Form.Control>
+                            </Col>
+                            <Col xl={12}>
+                                <button
+                                    className="btn btn-block"
+                                    type="button"
+                                    onClick={onCheckout}
+                                    disabled={!Object.keys(basket.items).length}
+                                >
+                                    <div className="ml-1">Check Out</div>
+                                </button>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </Container>
+            <DiscardModal
+                show={modal}
+                onHide={() => setModal(false)}
+                onDiscard={onConfirm}
+                header="Checkout"
+                leftBtnText="Continue Shopping"
+                buttonText="Confirm Checkout"
+                btnColor="checkout"
+                body="Confirm Checkout"
+            />
+        </>
     );
 };
 
@@ -150,4 +217,5 @@ export default connect(mapStateToProps, {
     deleteFromBasket,
     removeFromBasket,
     calculateTotal,
+    removeBasket,
 })(Basket);

@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
-import { Approved, Arrived, Path, Rejected, Waiting } from '../_utilities/icons';
+import {
+    Approved,
+    Arrived,
+    SingleCheck,
+    DoubleCheck,
+    Path,
+    Rejected,
+    Waiting,
+} from '../_utilities/icons';
 import { getItemById } from '../_requests';
 
 const OrderCard = (props) => {
@@ -42,35 +50,49 @@ const OrderCard = (props) => {
                 return (
                     <>
                         <Waiting className="icon wait" />
-                        <span>Waiting for approval</span>
-                    </>
-                );
-            case -1:
-                return (
-                    <>
-                        <Rejected className="icon reject" />
-                        <span>Order is rejected</span>
+                        <span>Waiting for payment</span>
                     </>
                 );
             case 1:
                 return (
                     <>
-                        <Approved className="icon approve" />
-                        <span>Order is being prepared</span>
+                        <SingleCheck className="icon approve" />
+                        <span>Payment confirmed</span>
                     </>
                 );
             case 2:
+                return (
+                    <>
+                        <DoubleCheck className="icon approve" />
+                        <span>Order is approved</span>
+                    </>
+                );
+            case 3:
+                return (
+                    <>
+                        <Approved className="icon approve" />
+                        <span>We are are preparing your order</span>
+                    </>
+                );
+            case 4:
                 return (
                     <>
                         <Path className="icon ship" />
                         <span>Order is shipped</span>
                     </>
                 );
-            case 3:
+            case 5:
                 return (
                     <>
                         <Arrived className="icon arrived" />
                         <span>Order is delivered</span>
+                    </>
+                );
+            case 6:
+                return (
+                    <>
+                        <Rejected className="icon reject" />
+                        <span>Order is rejected</span>
                     </>
                 );
             default:

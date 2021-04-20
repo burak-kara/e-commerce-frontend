@@ -1,79 +1,80 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Row, Col, Container, ListGroup } from 'react-bootstrap';
 import { PageLoading, OrderCard } from '../../components';
 import { ORDER_DETAIL } from '../../_constants';
+import { getAllOrders } from '../../_requests';
+import { openAlert } from '../../_redux/actions';
+import { BasketIcon } from '../../_utilities/icons';
 
-// TODO delete
-const orderss = [
-    {
-        status: -1,
-        id: '876598',
-        total_price: '99,95',
-        date: '25 Mart Per, 11:16',
-        items: { 1: 1, 2: 1, 3: 3, 4: 3, 6: 3, 7: 3 },
-    },
-    {
-        status: 0,
-        id: '123456',
-        total_price: '7849,99',
-        date: '25 Mart Per, 11:16',
-        items: { 1: 1, 2: 1, 3: 3, 4: 3, 6: 3, 7: 3 },
-    },
-    {
-        status: 1,
-        id: '456789',
-        total_price: '1025,95',
-        date: '25 Mart Per, 11:16',
-        items: { 1: 1, 2: 1, 3: 3, 4: 3, 6: 3, 7: 3 },
-    },
-    {
-        status: 2,
-        id: '123789',
-        total_price: '78,41',
-        date: '25 Mart Per, 11:16',
-        items: { 1: 1, 2: 1, 3: 3, 4: 3, 6: 3, 7: 3 },
-    },
-    {
-        status: 3,
-        id: '741963',
-        total_price: '10,45',
-        date: '25 Mart Per, 11:16',
-        items: { 1: 1, 2: 1, 3: 3, 4: 3, 6: 3, 7: 3 },
-    },
-];
-
-const Orders = () => {
+const Orders = (props) => {
     const history = useHistory();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
-    console.log(orders); // TODO delete
 
     useEffect(() => {
-        setOrders([]);
-        setLoading(false);
+        setLoading(true);
+        getAllOrders()
+            .then((response) => {
+                setOrders(response.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                props.openAlert({
+                    message: 'Error while getting orders!',
+                    severity: 'error',
+                });
+                setLoading(false);
+            });
     }, []);
 
     const handleClick = (id) => {
-        console.log('detailsss');
-        // TODO open order details model/page
         history.push({
             pathname: ORDER_DETAIL,
             state: { id },
         });
     };
 
-    const listItems = () => {
-        const list = [];
-        if (orderss.length !== 0) {
-            orderss.forEach((item) => {
-                list.push(
-                    <ListGroup.Item className="list-item" key={item.id}>
-                        <OrderCard order={item} onClick={handleClick} />
-                    </ListGroup.Item>,
-                );
-            });
+    const ListItems = () => {
+        if (loading) {
+            return <PageLoading />;
         }
+        if (orders.length === 0) {
+            return (
+                <ListGroup.Item className="list-item empty" key="empty-basket">
+                    <Row noGutters className="h-100 w-100">
+                        <Col
+                            xs={{ span: 12, offset: 0 }}
+                            md={{ span: 6, offset: 6 }}
+                            xl={{ span: 4, offset: 4 }}
+                            className="h-50"
+                        >
+                            <div className="icon">
+                                <BasketIcon />
+                            </div>
+                        </Col>
+                        <Col
+                            xs={{ span: 12, offset: 0 }}
+                            md={{ span: 6, offset: 6 }}
+                            xl={{ span: 6, offset: 3 }}
+                            className="h-50"
+                        >
+                            {/* eslint-disable-next-line react/no-unescaped-entities */}
+                            <div className="text">You don't have any previous order</div>
+                        </Col>
+                    </Row>
+                </ListGroup.Item>
+            );
+        }
+        const list = [];
+        orders.forEach((item) => {
+            list.push(
+                <ListGroup.Item className="list-item" key={item.id}>
+                    <OrderCard order={item} onClick={handleClick} />
+                </ListGroup.Item>,
+            );
+        });
         return list;
     };
 
@@ -86,11 +87,13 @@ const Orders = () => {
                     md={{ span: 6, offset: 3 }}
                     xl={{ span: 6, offset: 3 }}
                 >
-                    <ListGroup variant="flush">{loading ? <PageLoading /> : listItems()}</ListGroup>
+                    <ListGroup variant="flush">
+                        <ListItems />
+                    </ListGroup>
                 </Col>
             </Row>
         </Container>
     );
 };
 
-export default Orders;
+export default connect(null, { openAlert })(Orders);

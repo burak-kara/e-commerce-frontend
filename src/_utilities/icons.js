@@ -7,7 +7,7 @@ import {
     IoIosStarOutline,
     IoIosStar,
 } from 'react-icons/io';
-import { IoHomeOutline } from 'react-icons/io5';
+import { IoHomeOutline, IoCheckmarkDone, IoCheckmarkOutline } from 'react-icons/io5';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { BiHide, BiShow } from 'react-icons/bi';
 import { MdFavoriteBorder, MdAdd, MdEdit, MdDelete, MdTimelapse } from 'react-icons/md';
@@ -59,11 +59,15 @@ const Arrived = (props) => <IconMaker icon={<IoHomeOutline />} {...props} />;
 
 const Path = (props) => <IconMaker icon={<GiPathDistance />} {...props} />;
 
-const Approved = (props) => <IconMaker icon={<SiShopify />} {...props} />;
-
 const Rejected = (props) => <IconMaker icon={<ImCancelCircle />} {...props} />;
 
 const Waiting = (props) => <IconMaker icon={<MdTimelapse />} {...props} />;
+
+const SingleCheck = (props) => <IconMaker icon={<IoCheckmarkOutline />} {...props} />;
+
+const DoubleCheck = (props) => <IconMaker icon={<IoCheckmarkDone />} {...props} />;
+
+const Approved = (props) => <IconMaker icon={<SiShopify />} {...props} />;
 
 export {
     Search,
@@ -86,4 +90,6 @@ export {
     Approved,
     Rejected,
     Waiting,
+    SingleCheck,
+    DoubleCheck,
 };
