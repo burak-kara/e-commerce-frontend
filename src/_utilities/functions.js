@@ -29,4 +29,4 @@ const getOrderStatus = (code) => {
 };
 
 export default calculateTotalPrice;
-export { calculateTotalPrice, getOrderStatus };
+export { getOrderStatus };
