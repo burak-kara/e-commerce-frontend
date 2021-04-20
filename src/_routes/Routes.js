@@ -35,9 +35,13 @@ import {
     SIGN_OUT,
     SIGN_UP,
     CAT_ELECTRONICS,
-    CAT_OTHERS,
     CAT_CONSUMABLES,
-    CAT_COFFEE_BEANS,
+    CAT_FASHION,
+    CAT_LIFE,
+    CAT_HOBBY,
+    CAT_TOYS,
+    CAT_COSMETICS,
+    CAT_OTHERS,
     UN_AUTHORIZED,
     UN_AUTHENTICATED,
     NOT_FOUND,
@@ -100,37 +104,27 @@ const Routes = () => {
                 <Route exact path={CAT_ELECTRONICS}>
                     <Products category={CAT_ELECTRONICS} />
                 </Route>
-                <Route exact path={CAT_OTHERS}>
-                    <Products category={CAT_OTHERS} />
-                </Route>
                 <Route exact path={CAT_CONSUMABLES}>
                     <Products category={CAT_CONSUMABLES} />
                 </Route>
-                <Route exact path={CAT_COFFEE_BEANS}>
-                    <Products category={CAT_COFFEE_BEANS} />
+                <Route exact path={CAT_FASHION}>
+                    <Products category={CAT_FASHION} />
                 </Route>
-                {/* <Route exact path={CAT_FASHION}> */}
-                {/*    <Products category={CAT_FASHION} /> */}
-                {/* </Route> */}
-                {/* <Route exact path={CAT_FURNITURE}> */}
-                {/*    <Products category={CAT_FURNITURE} /> */}
-                {/* </Route> */}
-                {/* <Route exact path={CAT_BOOKS}> */}
-                {/*    <Products category={CAT_BOOKS} /> */}
-                {/* </Route> */}
-                {/* <Route exact path={CAT_AUTO}> */}
-                {/*    <Products category={CAT_AUTO} /> */}
-                {/* </Route> */}
-                {/* <Route exact path={CAT_SPORTS}> */}
-                {/*    <Products category={CAT_SPORTS} /> */}
-                {/* </Route> */}
-                {/* <Route exact path={CAT_GAMES}> */}
-                {/*    <Products category={CAT_GAMES} /> */}
-                {/* </Route> */}
-                {/* <Route exact path={CAT_HEALTH}> */}
-                {/*    <Products category={CAT_HEALTH} /> */}
-                {/* </Route> */}
-
+                <Route exact path={CAT_LIFE}>
+                    <Products category={CAT_LIFE} />
+                </Route>
+                <Route exact path={CAT_HOBBY}>
+                    <Products category={CAT_HOBBY} />
+                </Route>
+                <Route exact path={CAT_TOYS}>
+                    <Products category={CAT_TOYS} />
+                </Route>
+                <Route exact path={CAT_COSMETICS}>
+                    <Products category={CAT_COSMETICS} />
+                </Route>
+                <Route exact path={CAT_OTHERS}>
+                    <Products category={CAT_OTHERS} />
+                </Route>
                 <Route exact path={UN_AUTHORIZED} component={UnAuthorized} />
                 <Route exact path={UN_AUTHENTICATED} component={UnAuthenticated} />
                 <Route exact path={NOT_FOUND} component={NotFound} />
