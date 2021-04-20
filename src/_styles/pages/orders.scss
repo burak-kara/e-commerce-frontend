@@ -181,7 +181,7 @@
         .list-item-container {
             .list-item-container-row {
                 .list-col {
-                    color: $black;
+                    color: $a-btn;
                     font-style: normal;
 
                     &.images-col {
@@ -202,7 +202,7 @@
                         justify-content: flex-start;
                         align-items: center;
                         font-weight: 700;
-                        font-size: 21px;
+                        font-size: 18px;
                     }
 
                     .brand-col {
@@ -244,6 +244,7 @@
                         .btn {
                             background-color: $btn-second;
                             color: $common-btn;
+                            font-weight: 500;
 
                             &:focus {
                                 outline: none !important;
@@ -258,5 +259,66 @@
                 }
             }
         }
+    }
+
+    .info-list-item {
+        padding: 5px 0;
+
+        .list-col {
+            font-style: normal;
+            font-weight: 600;
+            color: $a-btn;
+            line-height: 1.5;
+
+            .title {
+                font-size: 16px;
+            }
+
+            &.address-col {
+                .address {
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+            }
+
+            &.date-col {
+                .date {
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+            }
+
+            &.status-col {
+                .status {
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+            }
+
+            .total-col {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                color: $price;
+
+                .total {
+                    font-size: 16px;
+                    font-weight: 500;
+                }
+
+                .currency {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+.review-modal {
+
+    .review-btn {
+        background-color: $common-btn;
+        font-weight: 500;
+        color: $header-bg;
     }
 }

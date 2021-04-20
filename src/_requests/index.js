@@ -122,6 +122,20 @@ const getAllOrders = () =>
         path: `${API}orders/`,
     });
 
+const getOrderDetail = (id) =>
+    getRequest({
+        path: `${API}orders/${id}`,
+    });
+
+// TODO not used yet
+const updateOrder = (data) => {
+    const { id } = data;
+    return putRequest({
+        path: `${API}orders/${id}`,
+        data,
+    });
+};
+
 export {
     register,
     login,
@@ -137,4 +151,6 @@ export {
     deleteItem,
     newOrder,
     getAllOrders,
+    getOrderDetail,
+    updateOrder,
 };

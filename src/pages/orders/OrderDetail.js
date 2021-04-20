@@ -1,66 +1,75 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Row, Col, Container, ListGroup } from 'react-bootstrap';
 import { PageLoading } from '../../components';
 import { logo } from '../../_assets';
+import { getItemById, getOrderDetail } from '../../_requests';
+import { openAlert } from '../../_redux/actions';
+import { getOrderStatus } from '../../_utilities/functions';
+import ReviewModal from './ReviewModal';
 
-const orderItemss = [
-    {
-        id: '1',
-        image: 'https://cutt.ly/Mx6A2pw',
-        name: 'Model 3',
-        brand: 'Tesla',
-        price: '99,95',
-        count: 2,
-    },
-    {
-        id: '2',
-        image: 'https://cutt.ly/sx6Ah6A',
-        name: 'IPhone 11',
-        brand: 'Apple',
-        price: '789,95',
-        count: 3,
-    },
-];
-
-const orderr = {
-    status: -1,
-    id: '876598',
-    total_price: '99,95',
-    date: '25 Mart Per, 11:16',
-    items: { 1: 1, 2: 1, 3: 3, 4: 3, 6: 3, 7: 3 },
+const initialForm = {
+    title: '',
+    rating: '5',
+    comment: '',
+    product_id: '',
 };
 
-const OrderDetail = () => {
+const OrderDetail = (props) => {
     const history = useHistory();
-    const [orderId, setOrderId] = useState();
     const [orderItems, setOrderItems] = useState([]);
     const [order, setOrder] = useState();
     const [loading, setLoading] = useState(false);
-
-    console.log('detail');
-    console.log(orderId);
-    console.log(order);
+    const [itemCounts, setItemCounts] = useState(false);
+    const [modal, setModal] = useState(false);
+    const [form, setForm] = useState(initialForm);
 
     useEffect(() => {
         if (history.location.state) {
             const { id } = history.location.state;
-            setOrderId(id);
-            setLoading(false);
-            setOrderItems(orderItemss); // TODO change
-            setOrder(orderr); // TODO change
-            // TODO getOrder
+            setOrderItems([]);
+            getOrderDetail(id)
+                .then((response) => {
+                    const { data } = response;
+                    setOrder(data);
+                    const { items, item_counts } = data;
+                    setItemCounts(item_counts.split(','));
+                    items.forEach((item_id) => {
+                        getItemById(item_id).then((r) => {
+                            setOrderItems((basketItems) => [...basketItems, r.data]);
+                            setLoading(false);
+                        });
+                    });
+                })
+                .catch(() => {
+                    props.openAlert({
+                        message: 'Error while getting order detail!',
+                        severity: 'error',
+                    });
+                    setLoading(false);
+                });
         }
     }, []);
 
-    const onClick = () => {
-        // TODO open modal for review
+    const onChange = (field, value) => {
+        setForm({
+            ...form,
+            [field]: value,
+        });
     };
 
-    const ListItems = () => {
+    const onConfirm = () => {
+        // TODO send review to BE
+        // console.log(form);
+        setModal(false);
+        setForm(initialForm);
+    };
+
+    const Content = () => {
         const list = [];
         if (orderItems !== 0) {
-            orderItems.forEach((item) => {
+            orderItems.forEach((item, index) => {
                 list.push(
                     <ListGroup.Item className="list-item" key={item.id}>
                         <Container fluid className="list-item-container">
@@ -69,23 +78,25 @@ const OrderDetail = () => {
                                     <img src={item.image || logo} alt="product" className="image" />
                                 </Col>
                                 <Col xs={8} xl={6} className="list-col mb-3 mb-xl-0">
-                                    <Row className="h-100">
-                                        <Col xl={12} className="name-col pl-1 h-25">
+                                    <Row>
+                                        <Col xl={12} className="name-col pl-1">
                                             <div>
                                                 <span>{item.name || 'Name'}</span>
                                             </div>
                                         </Col>
-                                        <Col xl={12} className="brand-col pl-1 h-25">
+                                        <Col xl={12} className="brand-col pl-1">
                                             <div>
                                                 <span>{item.brand || 'Brand'}</span>
                                             </div>
                                         </Col>
-                                        <Col xl={12} className="price-col pl-1 h-50">
+                                        <Col xl={12} className="price-col pl-1">
                                             <div className="mr-1">
                                                 <span>Total Price: </span>
                                             </div>
                                             <div className="mr-1">
-                                                <span>{parseInt(item.price, 10) * item.count}</span>
+                                                <span>
+                                                    {parseInt(item.price, 10) * itemCounts[index]}
+                                                </span>
                                             </div>
                                             <div className="currency">
                                                 <span>TL</span>
@@ -98,14 +109,17 @@ const OrderDetail = () => {
                                         <span>Count:</span>
                                     </div>
                                     <div>
-                                        <span>{item.count || 'Count'}</span>
+                                        <span>{itemCounts[index] || 'Count'}</span>
                                     </div>
                                 </Col>
                                 <Col xs={6} xl={2} className="list-col btn-col">
                                     <button
                                         type="button"
                                         className="btn btn-block"
-                                        onClick={onClick}
+                                        onClick={() => {
+                                            onChange('product_id', item.id);
+                                            setModal(true);
+                                        }}
                                     >
                                         Review
                                     </button>
@@ -119,24 +133,102 @@ const OrderDetail = () => {
         return list;
     };
 
-    const Content = () => (loading ? <PageLoading /> : <ListItems />);
-
-    return (
-        <Container fluid className="order-details">
-            <Row>
-                <Col
-                    className="detail-col"
-                    xs={{ span: 12, offset: 0 }}
-                    md={{ span: 6, offset: 3 }}
-                    xl={{ span: 6, offset: 3 }}
-                >
-                    <ListGroup variant="flush">
-                        <Content />
-                    </ListGroup>
-                </Col>
-            </Row>
-        </Container>
+    return loading ? (
+        <PageLoading />
+    ) : (
+        <>
+            <Container fluid className="order-details">
+                <Row>
+                    <Col
+                        className="detail-col"
+                        xs={{ span: 12, offset: 0 }}
+                        md={{ span: 6, offset: 3 }}
+                        xl={{ span: 6, offset: 3 }}
+                    >
+                        <ListGroup variant="flush">
+                            <Content />
+                        </ListGroup>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col
+                        className="detail-col"
+                        xs={{ span: 12, offset: 0 }}
+                        md={{ span: 6, offset: 3 }}
+                        xl={{ span: 6, offset: 3 }}
+                    >
+                        <ListGroup variant="flush">
+                            <ListGroup.Item className="info-list-item">
+                                <Container>
+                                    <Row>
+                                        <Col
+                                            xs={6}
+                                            xl={3}
+                                            className="list-col address-col mb-3 mb-xl-0"
+                                        >
+                                            <div className="title">
+                                                <span>Delivery Address</span>
+                                            </div>
+                                            <div className="address">
+                                                <span>
+                                                    {order ? order.delivery_address : 'Address'}
+                                                </span>
+                                            </div>
+                                        </Col>
+                                        <Col
+                                            xs={6}
+                                            xl={3}
+                                            className="list-col date-col mb-3 mb-xl-0"
+                                        >
+                                            <div className="title">
+                                                <span>Date</span>
+                                            </div>
+                                            <div className="date">
+                                                <span>{order ? order.date : 'Date'}</span>
+                                            </div>
+                                        </Col>
+                                        <Col xs={6} xl={3} className="list-col status-col">
+                                            <div className="title">
+                                                <span>Status</span>
+                                            </div>
+                                            <div className="status">
+                                                <span>
+                                                    {order
+                                                        ? getOrderStatus(order.status)
+                                                        : 'Status'}
+                                                </span>
+                                            </div>
+                                        </Col>
+                                        <Col xs={6} xl={3} className="list-col">
+                                            <div className="title">
+                                                <span>Total Price</span>
+                                            </div>
+                                            <div className="total-col">
+                                                <div className="total">
+                                                    <span>
+                                                        {order ? order.total_price : 'Status'}
+                                                    </span>
+                                                </div>
+                                                <div className="currency ml-1">
+                                                    <span>TL</span>
+                                                </div>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </Container>
+                            </ListGroup.Item>
+                        </ListGroup>
+                    </Col>
+                </Row>
+            </Container>
+            <ReviewModal
+                show={modal}
+                onHide={() => setModal(false)}
+                onReview={onConfirm}
+                onChange={onChange}
+            />
+        </>
     );
 };
 
-export default OrderDetail;
+export default connect(null, { openAlert })(OrderDetail);

@@ -10,6 +10,7 @@ import {
     Waiting,
 } from '../_utilities/icons';
 import { getItemById } from '../_requests';
+import { getOrderStatus } from '../_utilities/functions';
 
 const OrderCard = (props) => {
     const { order, onClick } = props;
@@ -18,7 +19,7 @@ const OrderCard = (props) => {
 
     useEffect(() => {
         setImages([]);
-        Object.keys(items).forEach((key) => {
+        items.forEach((key) => {
             getItemById(key).then((response) => {
                 // eslint-disable-next-line no-shadow
                 setImages((images) => [...images, response.data.image]);
@@ -45,64 +46,35 @@ const OrderCard = (props) => {
     };
 
     const Status = () => {
+        const content = [];
         switch (status) {
             case 0:
-                return (
-                    <>
-                        <Waiting className="icon wait" />
-                        <span>Waiting for payment</span>
-                    </>
-                );
+                content.push(<Waiting className="icon wait" />);
+                break;
             case 1:
-                return (
-                    <>
-                        <SingleCheck className="icon approve" />
-                        <span>Payment confirmed</span>
-                    </>
-                );
+                content.push(<SingleCheck className="icon approve" />);
+                break;
             case 2:
-                return (
-                    <>
-                        <DoubleCheck className="icon approve" />
-                        <span>Order is approved</span>
-                    </>
-                );
+                content.push(<DoubleCheck className="icon approve" />);
+                break;
             case 3:
-                return (
-                    <>
-                        <Approved className="icon approve" />
-                        <span>We are are preparing your order</span>
-                    </>
-                );
+                content.push(<Approved className="icon approve" />);
+                break;
             case 4:
-                return (
-                    <>
-                        <Path className="icon ship" />
-                        <span>Order is shipped</span>
-                    </>
-                );
+                content.push(<Path className="icon ship" />);
+                break;
             case 5:
-                return (
-                    <>
-                        <Arrived className="icon arrived" />
-                        <span>Order is delivered</span>
-                    </>
-                );
+                content.push(<Arrived className="icon arrived" />);
+                break;
             case 6:
-                return (
-                    <>
-                        <Rejected className="icon reject" />
-                        <span>Order is rejected</span>
-                    </>
-                );
+                content.push(<Rejected className="icon reject" />);
+                break;
             default:
-                return (
-                    <>
-                        <Waiting className="icon wait" />
-                        <span>Waiting for approval</span>
-                    </>
-                );
+                content.push(<Waiting className="icon wait" />);
+                break;
         }
+        content.push(<span>{getOrderStatus(status)}</span>);
+        return content;
     };
 
     return (
