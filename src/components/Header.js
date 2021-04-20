@@ -1,21 +1,22 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
+import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Badge } from '@material-ui/core';
 import { logo } from '../_assets';
-import { openAlert } from '../_redux/actions';
-import { Search, Account, DropDown, BasketIcon } from '../_utilities/icons';
 import {
     BASKET,
-    PROFILE,
     LANDING,
-    SETTINGS,
     ORDERS,
-    SIGN_OUT,
     P_M_ITEMS,
+    PROFILE,
+    SETTINGS,
     SIGN_IN,
+    SIGN_OUT,
     SIGN_UP,
 } from '../_constants';
+import { Account, BasketIcon, DropDown, Search } from '../_utilities/icons';
+import { openAlert } from '../_redux/actions';
 
 const Header = () => {
     const history = useHistory();
@@ -36,7 +37,7 @@ const Header = () => {
 
     const handleAccount = () => {
         history.push({
-            pathname: user && user.first_name ? PROFILE : SIGN_IN,
+            pathname: PROFILE,
         });
     };
 
@@ -58,6 +59,12 @@ const Header = () => {
         });
     };
 
+    const handleSignIn = () => {
+        history.push({
+            pathname: SIGN_IN,
+        });
+    };
+
     const handleSignUp = () => {
         history.push({
             pathname: SIGN_UP,
@@ -76,75 +83,39 @@ const Header = () => {
         });
     };
 
-    const renderAccountButton = () =>
-        user && user.first_name ? (
-            <>
-                <Account key="account" />
-                <p className="name" key="name">
-                    {user.first_name}
-                </p>
-                <DropdownIcon key="icon" />
-            </>
-        ) : (
-            <p className="name">Login</p>
-        );
-
-    const renderBasketButton = () => (
-        <button className="btn b-btn" type="button" onClick={() => handleBasket()}>
-            <BasketIcon />
-            <div className="ml-1">Basket</div>
-        </button>
-    );
-
     const RenderCommonMenu = () => (
         <>
-            <button
-                className="dropdown-item menu-btn"
-                type="button"
-                onClick={() => handleAccount()}
-            >
+            <NavDropdown.Item className="menu-btn" onClick={() => handleAccount()}>
                 Profile
-            </button>
-            <button
-                className="dropdown-item menu-btn"
-                type="button"
-                onClick={() => handleSettings()}
-            >
+            </NavDropdown.Item>
+            <NavDropdown.Item className="menu-btn" onClick={() => handleSettings()}>
                 Settings
-            </button>
+            </NavDropdown.Item>
         </>
     );
 
     const RenderCustomerMenu = () => (
         <>
-            <button className="dropdown-item menu-btn" type="button" onClick={() => handleOrders()}>
+            <NavDropdown.Item className="menu-btn" onClick={() => handleOrders()}>
                 Orders
-            </button>
+            </NavDropdown.Item>
         </>
     );
 
     const RenderProductManagerMenu = () => (
         <>
-            <button
-                className="dropdown-item menu-btn"
-                type="button"
-                onClick={() => handleManageItems()}
-            >
+            <NavDropdown.Item className="menu-btn" onClick={() => handleManageItems()}>
                 Manage Items
-            </button>
+            </NavDropdown.Item>
         </>
     );
 
     // TODO put proper menu
     const RenderSalesManagerMenu = () => (
         <>
-            <button
-                className="dropdown-item menu-btn"
-                type="button"
-                onClick={() => handleManageItems()}
-            >
+            <NavDropdown.Item className="menu-btn" onClick={() => handleManageItems()}>
                 Create Campaign
-            </button>
+            </NavDropdown.Item>
         </>
     );
 
@@ -162,14 +133,10 @@ const Header = () => {
             }
             renders.push(
                 <>
-                    <div className="dropdown-divider md-b" />
-                    <button
-                        className="dropdown-item menu-btn"
-                        type="button"
-                        onClick={() => handleSignOut()}
-                    >
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item className="menu-btn" onClick={() => handleSignOut()}>
                         Logout
-                    </button>
+                    </NavDropdown.Item>
                 </>,
             );
 
@@ -177,39 +144,41 @@ const Header = () => {
         }
         return (
             <>
-                <button
-                    className="dropdown-item menu-btn"
-                    type="button"
-                    onClick={() => handleSignUp()}
-                >
+                <NavDropdown.Item className="menu-btn" onClick={() => handleSignIn()}>
+                    Sign in
+                </NavDropdown.Item>
+                <NavDropdown.Item className="menu-btn" onClick={() => handleSignUp()}>
                     Sign up
-                </button>
+                </NavDropdown.Item>
             </>
         );
     };
 
-    const DropdownIcon = () => <DropDown color="color" size="1em" />;
+    const renderBasketButton = () => (
+        <button className="btn b-btn" type="button" onClick={() => handleBasket()}>
+            <BasketIcon />
+            <div className="ml-1">Basket</div>
+        </button>
+    );
 
     return (
-        <div className="header ">
-            <div className="container h-100">
-                <nav className="navbar navbar-expand-lg h-100 ">
-                    <button className="header-brand" type="button" onClick={() => handleLogo()}>
+        <div className="header-container">
+            <Container fluid="xl" className="container">
+                <Navbar collapseOnSelect expand="lg" className="header">
+                    <Navbar.Brand className="header-brand" onClick={() => handleLogo()}>
                         <img className="logo" src={logo} alt="logo" />
-                    </button>
-                    <div className="collapse navbar-collapse h-50 justify-content-end">
-                        <div
-                            className="form-inline input-group w-75
-                                h-100 mr-3 justify-content-end"
-                        >
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <div className="input-group">
                             <input
                                 type="text"
-                                className="form-control h-100 search-bar"
+                                className="form-control search-bar"
                                 placeholder="Ürün, Kategori ya da Marka ara"
                             />
                             <div className="input-group-append">
                                 <button
-                                    className="btn btn-dark h-100 search-btn"
+                                    className="btn btn-dark btn-block h-100 search-btn"
                                     type="button"
                                     onClick={() => handleSearch()}
                                 >
@@ -218,20 +187,31 @@ const Header = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className="h-btn-container">
-                            <div className="btn-group">
-                                <button
-                                    className="btn btn-dark a-btn mr-2"
-                                    type="button"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                    onClick={() => handleAccount()}
-                                >
-                                    {renderAccountButton()}
-                                </button>
-                                <div className="dropdown-menu">{renderMenu()}</div>
-                            </div>
-                            <>
+                        <Nav className="ml-auto">
+                            <NavDropdown
+                                title={
+                                    user && user.first_name ? (
+                                        <div className="inner-container">
+                                            <Account key="account" className="mr-2" />
+                                            <span className="name" key="name">
+                                                {user.first_name}
+                                            </span>
+                                            <DropDown key="icon" className="ml-2" size="1em" />
+                                        </div>
+                                    ) : (
+                                        <div className="inner-container">
+                                            <span className="name">Login</span>
+                                        </div>
+                                    )
+                                }
+                                id="collasible-nav-dropdown"
+                                className="a-btn"
+                            >
+                                {renderMenu()}
+                            </NavDropdown>
+                        </Nav>
+                        <Nav className="ml-auto">
+                            <Nav.Item>
                                 {basket.itemCount === 0 ? (
                                     <div className="badge">{renderBasketButton()}</div>
                                 ) : (
@@ -245,11 +225,11 @@ const Header = () => {
                                         {renderBasketButton()}
                                     </Badge>
                                 )}
-                            </>
-                        </div>
-                    </div>
-                </nav>
-            </div>
+                            </Nav.Item>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+            </Container>
         </div>
     );
 };

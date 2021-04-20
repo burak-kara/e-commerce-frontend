@@ -1,12 +1,20 @@
-.header {
-    height: $header-size;
-    background-color: $header-bg;
-    box-shadow: 0 0 5px 0 $header-bg-shadow;
+.header-container {
     border-bottom: 5px solid $header-border;
+
+    .container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+.header {
+    min-height: $header-size;
+    background-color: $header-bg;
 
     .header-brand {
         border: none !important;
         background-color: $transparent;
+        cursor: pointer;
 
         .logo {
             max-width: 150px;
@@ -15,10 +23,15 @@
     }
 
     .input-group {
-        width: 600px !important;
-        border: 2px solid $search-bar;
+        max-width: 600px !important;
+        border: 1px solid $search-bar;
         border-radius: 10px;
-        box-shadow: 0 0 5px 0 $header-bg-shadow;
+        box-shadow: 0 0 3px 0 $header-bg-shadow;
+        margin-left: 100px !important;
+
+        @media only screen and (max-width: 576px) {
+            margin-left: 0 !important;
+        }
 
         &:focus {
             outline: none !important;
@@ -43,7 +56,6 @@
             border-bottom-right-radius: 8px !important;
             background-color: $search-btn !important;
             border-color: $search-btn !important;
-            width: 100px;
             height: 100%;
             display: flex;
             justify-content: space-around;
@@ -56,98 +68,59 @@
         }
     }
 
-    .h-btn-container {
+    .a-btn {
+        width: 130px;
         height: 100%;
         display: flex;
+        justify-content: center;
         align-items: center;
-        align-content: space-around;
+        border-radius: 4px !important;
+        border: 1px solid $header-border2;
+        background-color: $header-bg;
+        color: $a-btn;
+        box-shadow: 0 0 3px 0 $header-bg-shadow;
 
-        .btn-group {
-            height: 100%;
+        &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
 
-            .a-btn {
-                width: 130px;
-                height: 100%;
-                display: flex;
-                justify-content: space-around;
-                border-radius: 4px !important;
-                border: 1px solid $header-border2;
-                background-color: $header-bg;
-                color: $a-btn;
-                box-shadow: 0 0 3px 0 $header-bg-shadow;
+        &:hover {
+            box-shadow: 0 0 7px 0 $header-bg-shadow;
+        }
 
-                &:focus {
-                    outline: none !important;
-                    box-shadow: none !important;
+        &.nav-item {
+            .dropdown-toggle {
+                padding-right: 0 !important;
+                padding-left: 0 !important;
+                width: 100%;
+
+                &::after {
+                    display: none;
                 }
 
-                &:hover {
-                    box-shadow: 0 0 7px 0 $header-bg-shadow;
-                }
+                .inner-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
 
-                .name {
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    max-width: 60px;
+                    .name {
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        max-width: 60px;
+                    }
                 }
             }
 
             .dropdown-menu {
-                margin-top: 0;
                 display: none;
-
-                &:hover {
-                    margin-top: 0;
-                    display: block;
-                }
-
-                .dropdown-divider {
-                    margin: 2px !important;
-                }
-
-                .md-b {
-                    margin-bottom: 10px !important;
-                }
             }
 
             &:hover {
                 .dropdown-menu {
                     display: block;
-                }
-            }
-
-            &:focus {
-                .dropdown-menu {
-                    display: block;
-                }
-            }
-        }
-
-        .badge {
-            .MuiBadge-colorPrimary {
-                background-color: $b-btn !important;
-                right: 10px !important;
-            }
-
-            .b-btn {
-                width: 100px;
-                height: 100%;
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                border-radius: 4px !important;
-                background-color: $header-border2;
-                color: $header-bg;
-                box-shadow: 0 0 5px 0 $header-bg-shadow;
-
-                &:focus {
-                    outline: none !important;
-                    box-shadow: none !important;
-                }
-
-                &:hover {
-                    box-shadow: 0 0 10px 0 $header-bg-shadow;
                 }
             }
         }
@@ -158,6 +131,46 @@
 
             &:hover {
                 box-shadow: 0 0 5px 0 $header-bg-shadow;
+            }
+        }
+
+        @media only screen and (max-width: 576px) {
+            width: 100%;
+        }
+    }
+
+    .badge {
+        .MuiBadge-colorPrimary {
+            background-color: $b-btn !important;
+            right: 10px !important;
+        }
+
+        .b-btn {
+            width: 130px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px !important;
+            background-color: $header-border2;
+            color: $header-bg;
+            box-shadow: 0 0 5px 0 $header-bg-shadow;
+
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+
+            &:hover {
+                box-shadow: 0 0 10px 0 $header-bg-shadow;
+            }
+        }
+
+        @media only screen and (max-width: 576px) {
+            width: 100%;
+
+            .b-btn {
+                width: 100%;
             }
         }
     }

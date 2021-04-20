@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Container, Navbar, Nav } from 'react-bootstrap';
 import { openAlert } from '../_redux/actions';
 import {
     CAT_ELECTRONICS,
@@ -13,6 +14,17 @@ import {
     CAT_OTHERS,
 } from '../_constants';
 
+const cats = [
+    CAT_ELECTRONICS,
+    CAT_CONSUMABLES,
+    CAT_FASHION,
+    CAT_LIFE,
+    CAT_HOBBY,
+    CAT_TOYS,
+    CAT_COSMETICS,
+    CAT_OTHERS,
+];
+
 const Navigation = () => {
     const history = useHistory();
 
@@ -24,100 +36,37 @@ const Navigation = () => {
 
     const getName = (name) => name.toLowerCase().replaceAll('/', '').replaceAll('-', ' ');
 
+    const Navs = () => {
+        const navs = [];
+        cats.forEach((cat, index) => {
+            navs.push(
+                <Nav
+                    className="category"
+                    key={cat}
+                    style={{ borderLeft: `${index === 0 ? '0.5px solid' : '0px'}` }}
+                    onClick={() => handleCategory(cat)}
+                >
+                    <Nav.Link eventKey={index}>
+                        <span className="cat font-weight-bolder" role="button">
+                            {getName(cat)}
+                        </span>
+                    </Nav.Link>
+                </Nav>,
+            );
+        });
+        return navs;
+    };
+
     return (
-        <div className="navigation">
-            <ul className="container h-100">
-                <div className="row h-100">
-                    <li className="col category" key={CAT_ELECTRONICS}>
-                        <span
-                            className="cat font-weight-bolder"
-                            role="button"
-                            tabIndex="0"
-                            onClick={() => handleCategory(CAT_ELECTRONICS)}
-                            onKeyDown={() => handleCategory(CAT_ELECTRONICS)}
-                        >
-                            {getName(CAT_ELECTRONICS)}
-                        </span>
-                    </li>
-                    <li className="col category" key={CAT_CONSUMABLES}>
-                        <span
-                            className="cat font-weight-bolder"
-                            role="button"
-                            tabIndex="0"
-                            onClick={() => handleCategory(CAT_CONSUMABLES)}
-                            onKeyDown={() => handleCategory(CAT_CONSUMABLES)}
-                        >
-                            {getName(CAT_CONSUMABLES)}
-                        </span>
-                    </li>
-                    <li className="col category" key={CAT_FASHION}>
-                        <span
-                            className="cat font-weight-bolder"
-                            role="button"
-                            tabIndex="0"
-                            onClick={() => handleCategory(CAT_FASHION)}
-                            onKeyDown={() => handleCategory(CAT_FASHION)}
-                        >
-                            {getName(CAT_FASHION)}
-                        </span>
-                    </li>
-                    <li className="col category" key={CAT_LIFE}>
-                        <span
-                            className="cat font-weight-bolder"
-                            role="button"
-                            tabIndex="0"
-                            onClick={() => handleCategory(CAT_LIFE)}
-                            onKeyDown={() => handleCategory(CAT_LIFE)}
-                        >
-                            {getName(CAT_LIFE)}
-                        </span>
-                    </li>
-                    <li className="col category" key={CAT_HOBBY}>
-                        <span
-                            className="cat font-weight-bolder"
-                            role="button"
-                            tabIndex="0"
-                            onClick={() => handleCategory(CAT_HOBBY)}
-                            onKeyDown={() => handleCategory(CAT_HOBBY)}
-                        >
-                            {getName(CAT_HOBBY)}
-                        </span>
-                    </li>
-                    <li className="col category" key={CAT_TOYS}>
-                        <span
-                            className="cat font-weight-bolder"
-                            role="button"
-                            tabIndex="0"
-                            onClick={() => handleCategory(CAT_TOYS)}
-                            onKeyDown={() => handleCategory(CAT_TOYS)}
-                        >
-                            {getName(CAT_TOYS)}
-                        </span>
-                    </li>
-                    <li className="col category" key={CAT_COSMETICS}>
-                        <span
-                            className="cat font-weight-bolder"
-                            role="button"
-                            tabIndex="0"
-                            onClick={() => handleCategory(CAT_COSMETICS)}
-                            onKeyDown={() => handleCategory(CAT_COSMETICS)}
-                        >
-                            {getName(CAT_COSMETICS)}
-                        </span>
-                    </li>
-                    <li className="col category" key={CAT_OTHERS}>
-                        <span
-                            className="cat font-weight-bolder"
-                            role="button"
-                            tabIndex="0"
-                            onClick={() => handleCategory(CAT_OTHERS)}
-                            onKeyDown={() => handleCategory(CAT_OTHERS)}
-                        >
-                            {getName(CAT_OTHERS)}
-                        </span>
-                    </li>
-                </div>
-            </ul>
+        <div className="navigation-container">
+            <Container fluid="xl" className="container">
+                <Navbar collapseOnSelect expand="lg" className="navigation">
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" className="ml-auto" />
+                    <Navbar.Collapse id="responsive-navbar-nav" className="ml-auto">
+                        <Navs />
+                    </Navbar.Collapse>
+                </Navbar>
+            </Container>
         </div>
     );
 };
