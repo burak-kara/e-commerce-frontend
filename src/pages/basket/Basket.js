@@ -70,6 +70,7 @@ const Basket = (props) => {
 
     const onConfirm = () => {
         const body = { items: basket.items, delivery_address: address };
+        props.removeBasket();
         newOrder(body)
             .then(() => {
                 props.openAlert({
@@ -77,7 +78,6 @@ const Basket = (props) => {
                     severity: 'success',
                 });
                 setModal(false);
-                props.removeBasket();
             })
             .catch(() => {
                 setModal(false);
@@ -164,8 +164,10 @@ const Basket = (props) => {
                             <Col xl={12} className="mb-1">
                                 <div className="total-price">
                                     <span>
-                                        {basket.total}
-                                        <span className="currency ml-1">TL</span>
+                                        {basket.total || ''}
+                                        <span className="currency ml-1">
+                                            {basket.total ? 'TL' : ''}
+                                        </span>
                                     </span>
                                 </div>
                             </Col>

@@ -68,7 +68,7 @@ const OrderDetail = (props) => {
 
     const Content = () => {
         const list = [];
-        if (orderItems !== 0) {
+        if (orderItems.length !== 0) {
             orderItems.forEach((item, index) => {
                 list.push(
                     <ListGroup.Item className="list-item" key={item.id}>

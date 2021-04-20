@@ -63,7 +63,7 @@ const basket = (state = initialState, action) => {
             };
         }
         case REMOVE_BASKET: {
-            return initialState;
+            return { items: {}, itemCount: 0, total: 0, firer: 0 };
         }
         case CALC_TOTAL: {
             const { basketItems } = action;
