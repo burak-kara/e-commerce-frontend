@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
-import { Header2, Navigation } from '../components';
+import { Header, Navigation } from '../components';
 import ProductManagerRoute from './ProductManagerRoute';
 import CustomerRoute from './CustomerRoute';
 import AuthenticatedRoute from './AuthenticatedRoute';
@@ -67,7 +67,9 @@ const Routes = () => {
     const RenderHeader = () =>
         isHeader() ? null : (
             <>
-                <Header2 />
+                <div className="sticky-top">
+                    <Header />
+                </div>
                 <Navigation />
             </>
         );
