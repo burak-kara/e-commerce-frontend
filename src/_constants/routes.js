@@ -23,17 +23,13 @@ const P_M_EDIT_ITEM = `${P_M_ITEMS}/edit`;
 
 // Categories
 const CAT_ELECTRONICS = '/electronics';
-const CAT_OTHERS = '/others';
 const CAT_CONSUMABLES = '/consumables';
-const CAT_COFFEE_BEANS = '/coffee-beans';
-
-// const CAT_FASHION = '/fashion';
-// const CAT_FURNITURE = '/furniture';
-// const CAT_BOOKS = '/books';
-// const CAT_AUTO = '/automotive';
-// const CAT_SPORTS = '/sports';
-// const CAT_GAMES = '/games';
-// const CAT_HEALTH = '/health';
+const CAT_FASHION = '/fashion';
+const CAT_LIFE = '/life-style';
+const CAT_HOBBY = '/hobby';
+const CAT_TOYS = '/toys';
+const CAT_COSMETICS = '/cosmetics';
+const CAT_OTHERS = '/others';
 
 // const S_M_CAMPAIGN = 'sales-manager-campaigns';
 
@@ -53,9 +49,13 @@ export {
     P_M_NEW_ITEM,
     P_M_EDIT_ITEM,
     CAT_ELECTRONICS,
-    CAT_OTHERS,
     CAT_CONSUMABLES,
-    CAT_COFFEE_BEANS,
+    CAT_FASHION,
+    CAT_LIFE,
+    CAT_HOBBY,
+    CAT_TOYS,
+    CAT_COSMETICS,
+    CAT_OTHERS,
     UN_AUTHORIZED,
     UN_AUTHENTICATED,
     NOT_FOUND,
