@@ -12,6 +12,7 @@ const NOT_FOUND = '/not-found';
 const BASKET = '/basket';
 const PROFILE = '/account';
 const ORDERS = '/orders';
+const ORDER_DETAIL = '/order-detail';
 const SETTINGS = '/settings';
 
 // Product manager routes
@@ -39,6 +40,7 @@ export {
     SETTINGS,
     PASSWORD_FORGET,
     ORDERS,
+    ORDER_DETAIL,
     SIGN_UP,
     SIGN_IN,
     SIGN_OUT,

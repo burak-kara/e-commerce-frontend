@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 
 const DiscardModal = (props) => {
-    const { show, onHide, onDiscard, header, body, buttonText } = props;
+    const { show, onHide, onDiscard, header, body, leftBtnText, buttonText, btnColor } = props;
 
     return (
         <Modal
@@ -11,6 +11,7 @@ const DiscardModal = (props) => {
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            dialogClassName="discard-modal"
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
@@ -22,9 +23,13 @@ const DiscardModal = (props) => {
             </Modal.Body>
             <Modal.Footer>
                 <button className="btn btn-outline-secondary mr-2" type="button" onClick={onHide}>
-                    Cancel
+                    {leftBtnText || 'Cancel'}
                 </button>
-                <button className="btn btn-danger mr-2" type="button" onClick={onDiscard}>
+                <button
+                    className={`btn mr-2 ${btnColor || "btn-danger"}`}
+                    type="button"
+                    onClick={onDiscard}
+                >
                     {buttonText || 'Discard'}
                 </button>
             </Modal.Footer>

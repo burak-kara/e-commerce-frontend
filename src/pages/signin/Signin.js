@@ -77,8 +77,7 @@ const Signin = (params) => {
                     getUser(response.data.key)
                         .then((r) => {
                             params.setUser(r.data);
-                            const { pk } = r.data;
-                            getUserDetail(pk)
+                            getUserDetail()
                                 .then((detail) => {
                                     params.setUserDetail(detail.data);
                                 })

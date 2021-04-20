@@ -22,6 +22,7 @@ import {
     UN_AUTHORIZED,
     UN_AUTHENTICATED,
     NOT_FOUND,
+    ORDER_DETAIL,
 } from './routes';
 
 export {
@@ -48,6 +49,7 @@ export {
     UN_AUTHORIZED,
     UN_AUTHENTICATED,
     NOT_FOUND,
+    ORDER_DETAIL,
 };
 
 export const noneError = 'N';
