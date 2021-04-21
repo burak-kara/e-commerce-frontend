@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useStore } from 'react-redux';
 import { Row, Col, Container, ListGroup } from 'react-bootstrap';
 import { PageLoading } from '../../components';
 import { logo } from '../../_assets';
-import { getItemById, getOrderDetail } from '../../_requests';
+import { getItemById, getOrderDetail, newReview } from '../../_requests';
 import { openAlert } from '../../_redux/actions';
 import { getOrderStatus } from '../../_utilities/functions';
 import ReviewModal from './ReviewModal';
@@ -13,11 +13,12 @@ const initialForm = {
     title: '',
     rating: '5',
     comment: '',
-    product_id: '',
+    item: '',
 };
 
 const OrderDetail = (props) => {
     const history = useHistory();
+    const { user } = useStore().getState();
     const [orderItems, setOrderItems] = useState([]);
     const [order, setOrder] = useState();
     const [loading, setLoading] = useState(false);
@@ -60,8 +61,23 @@ const OrderDetail = (props) => {
     };
 
     const onConfirm = () => {
-        // TODO send review to BE
-        // console.log(form);
+        const data = {
+            user: user.pk,
+            ...form,
+        };
+        newReview(data)
+            .then(() => {
+                props.openAlert({
+                    message: 'Review is sent for approval!',
+                    severity: 'success',
+                });
+            })
+            .catch(() => {
+                props.openAlert({
+                    message: 'Error while adding new review!',
+                    severity: 'error',
+                });
+            });
         setModal(false);
         setForm(initialForm);
     };
@@ -117,7 +133,7 @@ const OrderDetail = (props) => {
                                         type="button"
                                         className="btn btn-block"
                                         onClick={() => {
-                                            onChange('product_id', item.id);
+                                            onChange('item', item.id);
                                             setModal(true);
                                         }}
                                     >

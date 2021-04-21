@@ -136,6 +136,40 @@ const updateOrder = (data) => {
     });
 };
 
+const getAllReviews = () =>
+    getRequest({
+        path: `${API}reviews/`,
+    });
+
+const getAllReviewsByItem = (id) =>
+    getRequest({
+        path: `${API}item/reviews/${id}`,
+    });
+
+const getReviewById = (id) =>
+    getRequest({
+        path: `${API}reviews/${id}`,
+    });
+
+const newReview = (data) =>
+    postRequest({
+        path: `${API}reviews/`,
+        data,
+    });
+
+const updateReview = (data) => {
+    const { id } = data;
+    return putRequest({
+        path: `${API}reviews/${id}`,
+        data,
+    });
+};
+
+const deleteReview = (id) =>
+    deleteRequest({
+        path: `${API}reviews/${id}/`,
+    });
+
 export {
     register,
     login,
@@ -153,4 +187,10 @@ export {
     getAllOrders,
     getOrderDetail,
     updateOrder,
+    getAllReviews,
+    getAllReviewsByItem,
+    getReviewById,
+    newReview,
+    updateReview,
+    deleteReview,
 };
