@@ -1,0 +1,18 @@
+======== Known users ========
+- customer
+    - buraknew2
+    - burak1*
+- customer
+    - buraknew3
+    - burak1*
+-product manager
+    - product2
+    - burak1*
+-sales manager
+    - sales
+    - burak1*
+
+======== .env file ========
+if you do not have .env file in your local, create .env file and copy these two lines inside it
+REACT_APP_API_URL_LOCAL=http://192.168.1.110:8000/
+REACT_APP_API_URL_DEPLOYED=https://burak-kara.dev/

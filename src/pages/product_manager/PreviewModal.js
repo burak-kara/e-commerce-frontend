@@ -10,7 +10,7 @@ const PreviewModal = (props) => {
             show={show}
             onHide={onHide}
             size="lg"
-            dialogClassName="confirm-modal"
+            dialogClassName="preview-modal"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >

@@ -5,6 +5,7 @@ import DiscardModal from './DiscardModal';
 import Alert from './Alert';
 import BasketProductCard from './BasketProductCard';
 import { ComponentLoading, PageLoading } from './Loading';
+import OrderCard from './OrderCard';
 
 export {
     Navigation,
@@ -15,4 +16,5 @@ export {
     DiscardModal,
     Alert,
     BasketProductCard,
+    OrderCard,
 };

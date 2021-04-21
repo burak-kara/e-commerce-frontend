@@ -12,12 +12,17 @@ import {
     P_M_NEW_ITEM,
     P_M_EDIT_ITEM,
     CAT_ELECTRONICS,
-    CAT_OTHERS,
     CAT_CONSUMABLES,
-    CAT_COFFEE_BEANS,
+    CAT_FASHION,
+    CAT_LIFE,
+    CAT_HOBBY,
+    CAT_TOYS,
+    CAT_COSMETICS,
+    CAT_OTHERS,
     UN_AUTHORIZED,
     UN_AUTHENTICATED,
     NOT_FOUND,
+    ORDER_DETAIL,
 } from './routes';
 
 export {
@@ -34,12 +39,17 @@ export {
     P_M_NEW_ITEM,
     P_M_EDIT_ITEM,
     CAT_ELECTRONICS,
-    CAT_OTHERS,
     CAT_CONSUMABLES,
-    CAT_COFFEE_BEANS,
+    CAT_FASHION,
+    CAT_LIFE,
+    CAT_HOBBY,
+    CAT_TOYS,
+    CAT_COSMETICS,
+    CAT_OTHERS,
     UN_AUTHORIZED,
     UN_AUTHENTICATED,
     NOT_FOUND,
+    ORDER_DETAIL,
 };
 
 export const noneError = 'N';
