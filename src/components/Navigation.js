@@ -41,9 +41,8 @@ const Navigation = () => {
         cats.forEach((cat, index) => {
             navs.push(
                 <Nav
-                    className="category"
+                    className={`category ${index === cats.length - 1 ? "last" : ""}`}
                     key={cat}
-                    style={{ borderLeft: `${index === 0 ? '0.5px solid' : '0px'}` }}
                     onClick={() => handleCategory(cat)}
                 >
                     <Nav.Link eventKey={index}>
