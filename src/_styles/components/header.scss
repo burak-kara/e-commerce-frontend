@@ -1,5 +1,6 @@
 .header-container {
     border-bottom: 5px solid $header-border;
+    background-color: $header-bg;
 
     .container {
         padding-left: 0 !important;
@@ -22,155 +23,185 @@
         }
     }
 
-    .input-group {
-        max-width: 600px !important;
-        border: 1px solid $search-bar;
-        border-radius: 10px;
-        box-shadow: 0 0 3px 0 $header-bg-shadow;
-        margin-left: 100px !important;
-
-        @media only screen and (max-width: 576px) {
-            margin-left: 0 !important;
-        }
-
-        &:focus {
-            outline: none !important;
-            box-shadow: none !important;
-        }
-
-        &:hover {
-            box-shadow: 0 0 7px 0 $header-bg-shadow;
-        }
-
-        .search-bar {
-            border-radius: 8px;
+    .collapsible-container {
+        .input-group {
+            max-width: 600px !important;
+            border: 1px solid $search-bar;
+            border-radius: 10px;
+            box-shadow: 0 0 3px 0 $header-bg-shadow;
+            margin-left: 100px !important;
 
             &:focus {
                 outline: none !important;
                 box-shadow: none !important;
             }
+
+            &:hover {
+                box-shadow: 0 0 7px 0 $header-bg-shadow;
+            }
+
+            .search-bar {
+                border-radius: 8px;
+
+                &:focus {
+                    outline: none !important;
+                    box-shadow: none !important;
+                }
+            }
+
+            .search-btn {
+                border-top-right-radius: 8px !important;
+                border-bottom-right-radius: 8px !important;
+                background-color: $search-btn !important;
+                border-color: $search-btn !important;
+                height: 100%;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+
+                &:focus {
+                    outline: none !important;
+                    box-shadow: none !important;
+                }
+            }
         }
 
-        .search-btn {
-            border-top-right-radius: 8px !important;
-            border-bottom-right-radius: 8px !important;
-            background-color: $search-btn !important;
-            border-color: $search-btn !important;
+        .a-btn {
+            width: 130px;
             height: 100%;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
+            border-radius: 4px !important;
+            border: 1px solid $header-border2;
+            background-color: $header-bg;
+            color: $a-btn;
+            box-shadow: 0 0 3px 0 $header-bg-shadow;
 
             &:focus {
                 outline: none !important;
                 box-shadow: none !important;
             }
-        }
-    }
 
-    .a-btn {
-        width: 130px;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 4px !important;
-        border: 1px solid $header-border2;
-        background-color: $header-bg;
-        color: $a-btn;
-        box-shadow: 0 0 3px 0 $header-bg-shadow;
+            &:hover {
+                box-shadow: 0 0 7px 0 $header-bg-shadow;
+            }
 
-        &:focus {
-            outline: none !important;
-            box-shadow: none !important;
-        }
+            &.nav-item {
+                .dropdown-toggle {
+                    padding-right: 0 !important;
+                    padding-left: 0 !important;
+                    width: 100%;
 
-        &:hover {
-            box-shadow: 0 0 7px 0 $header-bg-shadow;
-        }
+                    &::after {
+                        display: none;
+                    }
 
-        &.nav-item {
-            .dropdown-toggle {
-                padding-right: 0 !important;
-                padding-left: 0 !important;
-                width: 100%;
+                    .inner-container {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
 
-                &::after {
+                        .name {
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            max-width: 60px;
+                        }
+                    }
+                }
+
+                .dropdown-menu {
                     display: none;
                 }
 
-                .inner-container {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    width: 100%;
-
-                    .name {
-                        overflow: hidden;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
-                        max-width: 60px;
+                &:hover {
+                    .dropdown-menu {
+                        display: block;
                     }
                 }
             }
 
-            .dropdown-menu {
-                display: none;
-            }
+            .menu-btn {
+                margin-right: 10px;
+                height: 50%;
 
-            &:hover {
-                .dropdown-menu {
-                    display: block;
+                &:hover {
+                    box-shadow: 0 0 5px 0 $header-bg-shadow;
                 }
             }
         }
 
-        .menu-btn {
-            margin-right: 10px;
-            height: 50%;
+        .badge {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
 
-            &:hover {
-                box-shadow: 0 0 5px 0 $header-bg-shadow;
+            .MuiBadge-colorPrimary {
+                background-color: $b-btn !important;
+                right: 10px !important;
             }
-        }
-
-        @media only screen and (max-width: 576px) {
-            width: 100%;
-        }
-    }
-
-    .badge {
-        .MuiBadge-colorPrimary {
-            background-color: $b-btn !important;
-            right: 10px !important;
-        }
-
-        .b-btn {
-            width: 130px;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 4px !important;
-            background-color: $header-border2;
-            color: $header-bg;
-            box-shadow: 0 0 5px 0 $header-bg-shadow;
-
-            &:focus {
-                outline: none !important;
-                box-shadow: none !important;
-            }
-
-            &:hover {
-                box-shadow: 0 0 10px 0 $header-bg-shadow;
-            }
-        }
-
-        @media only screen and (max-width: 576px) {
-            width: 100%;
 
             .b-btn {
-                width: 100%;
+                width: 130px;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 4px !important;
+                background-color: $header-border2;
+                color: $header-bg;
+                box-shadow: 0 0 5px 0 $header-bg-shadow;
+
+                &:focus {
+                    outline: none !important;
+                    box-shadow: none !important;
+                }
+
+                &:hover {
+                    box-shadow: 0 0 10px 0 $header-bg-shadow;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .header {
+        padding-left: 0;
+        padding-right: 0;
+
+        .header-brand {
+            margin-left: 16px;
+        }
+
+        .navbar-toggler {
+            margin-right: 16px;
+        }
+
+        .collapsible-container {
+            width: 100%;
+
+            .input-group {
+                margin-left: 0 !important;
+                max-width: 992px !important;
+            }
+
+            .a-btn {
+                margin-left: 16px;
+                margin-right: 16px;
+                width: auto;
+            }
+
+            .b-item {
+                margin-left: 16px;
+                margin-right: 16px;
+                width: auto;
+
+                .badge {
+                    width: 100%;
+
+                    .b-btn {
+                        width: 100%;
+                    }
+                }
             }
         }
     }

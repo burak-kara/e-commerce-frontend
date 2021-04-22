@@ -165,12 +165,15 @@ const Header = () => {
         <div className="header-container">
             <Container fluid="xl" className="container">
                 <Navbar collapseOnSelect expand="lg" className="header">
-                    <Navbar.Brand className="header-brand" onClick={() => handleLogo()}>
+                    <Navbar.Brand
+                        className="header-brand mb-1 mb-xl-0"
+                        onClick={() => handleLogo()}
+                    >
                         <img className="logo" src={logo} alt="logo" />
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <div className="input-group">
+                    <Navbar.Collapse id="responsive-navbar-nav" className="collapsible-container">
+                        <div className="input-group  mb-1 mb-xl-0">
                             <input
                                 type="text"
                                 className="form-control search-bar"
@@ -187,7 +190,7 @@ const Header = () => {
                                 </button>
                             </div>
                         </div>
-                        <Nav className="ml-auto">
+                        <Nav className="ml-auto mb-1 mb-xl-0">
                             <NavDropdown
                                 title={
                                     user && user.first_name ? (
@@ -211,7 +214,7 @@ const Header = () => {
                             </NavDropdown>
                         </Nav>
                         <Nav className="ml-auto">
-                            <Nav.Item>
+                            <Nav.Item className="b-item">
                                 {basket.itemCount === 0 ? (
                                     <div className="badge">{renderBasketButton()}</div>
                                 ) : (
