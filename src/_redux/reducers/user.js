@@ -33,7 +33,15 @@ const user = (state = initialState, action) => {
             };
         }
         case REMOVE_USER: {
-            return null;
+            return {
+                username: '',
+                first_name: '',
+                last_name: '',
+                email: '',
+                phone_number: '',
+                is_product_manager: false,
+                is_sales_manager: false,
+            };
         }
         default:
             return state;
