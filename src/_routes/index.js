@@ -22,6 +22,7 @@ import {
     UnAuthenticated,
     NotFound,
     OrderDetail,
+    Reviews,
 } from '../pages';
 import {
     BASKET,
@@ -47,6 +48,7 @@ import {
     UN_AUTHENTICATED,
     NOT_FOUND,
     ORDER_DETAIL,
+    P_M_REVIEWS,
 } from '../_constants';
 
 const Routes = () => {
@@ -102,6 +104,7 @@ const Routes = () => {
                 <ProductManagerRoute exact path={P_M_ITEMS} component={Items} />
                 <ProductManagerRoute exact path={P_M_NEW_ITEM} component={ItemSingleView} />
                 <ProductManagerRoute exact path={P_M_EDIT_ITEM} component={ItemSingleView} />
+                <ProductManagerRoute exact path={P_M_REVIEWS} component={Reviews} />
 
                 {/* Categories */}
                 <Route exact path={CAT_ELECTRONICS}>

@@ -160,7 +160,7 @@ const newReview = (data) =>
 const updateReview = (data) => {
     const { id } = data;
     return putRequest({
-        path: `${API}reviews/${id}`,
+        path: `${API}reviews/${id}/`,
         data,
     });
 };
