@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
+import moment from 'moment';
 import {
     Approved,
     Arrived,
@@ -10,7 +11,7 @@ import {
     Waiting,
 } from '../_utilities/icons';
 import { getItemById } from '../_requests';
-import { getOrderStatus } from '../_utilities/functions';
+import { ORDER_STATUS } from '../_constants';
 
 const OrderCard = (props) => {
     const { order, onClick } = props;
@@ -73,7 +74,7 @@ const OrderCard = (props) => {
                 content.push(<Waiting className="icon wait" />);
                 break;
         }
-        content.push(<span>{getOrderStatus(status)}</span>);
+        content.push(<span>{ORDER_STATUS[status]}</span>);
         return content;
     };
 
@@ -95,7 +96,7 @@ const OrderCard = (props) => {
                         </Col>
                         <Col xl={12} className="date-col ml-1">
                             <div className="mr-1">
-                                <span>{date}</span>
+                                <span>{moment(date).format('MMMM Do YYYY')}</span>
                             </div>
                         </Col>
                     </Row>

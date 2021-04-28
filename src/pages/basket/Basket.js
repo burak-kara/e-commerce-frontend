@@ -35,6 +35,7 @@ const Basket = (props) => {
                         const item = response.data;
                         // eslint-disable-next-line no-shadow
                         setBasketItems((basketItems) => [...basketItems, item]);
+                        // TODO get addresses of the user
                         setAddresses(addressesss);
                     })
                     .catch(() => {});
@@ -176,7 +177,7 @@ const Basket = (props) => {
                                     as="select"
                                     className="dropdown"
                                     variant="outline-secondary"
-                                    defaultValue="Choose campaign"
+                                    defaultValue="Choose address"
                                     onChange={(e) => setAddress(e.target.value)}
                                     value={address}
                                 >

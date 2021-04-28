@@ -11,6 +11,8 @@ import {
     P_M_ITEMS,
     P_M_REVIEWS,
     PROFILE,
+    S_M_CAMPAIGNS,
+    S_M_ORDERS,
     SETTINGS,
     SIGN_IN,
     SIGN_OUT,
@@ -63,6 +65,18 @@ const Header = () => {
     const handleProductReviews = () => {
         history.push({
             pathname: P_M_REVIEWS,
+        });
+    };
+
+    const handleManageCampaigns = () => {
+        history.push({
+            pathname: S_M_CAMPAIGNS,
+        });
+    };
+
+    const handleSMOrders = () => {
+        history.push({
+            pathname: S_M_ORDERS,
         });
     };
 
@@ -120,11 +134,13 @@ const Header = () => {
         </>
     );
 
-    // TODO put proper menu for SM
     const RenderSalesManagerMenu = () => (
         <>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleManageProducts()}>
-                Create Campaign
+            <NavDropdown.Item className="menu-btn" onClick={() => handleManageCampaigns()}>
+                Manage Campaigns
+            </NavDropdown.Item>
+            <NavDropdown.Item className="menu-btn" onClick={() => handleSMOrders()}>
+                Manage Orders
             </NavDropdown.Item>
         </>
     );

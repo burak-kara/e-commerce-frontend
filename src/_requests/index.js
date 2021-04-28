@@ -131,7 +131,7 @@ const getOrderDetail = (id) =>
 const updateOrder = (data) => {
     const { id } = data;
     return putRequest({
-        path: `${API}orders/${id}`,
+        path: `${API}orders/${id}/`,
         data,
     });
 };

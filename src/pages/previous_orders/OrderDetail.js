@@ -6,8 +6,8 @@ import { PageLoading } from '../../components';
 import { logo } from '../../_assets';
 import { getItemById, getOrderDetail, newReview } from '../../_requests';
 import { openAlert } from '../../_redux/actions';
-import { getOrderStatus } from '../../_utilities/functions';
 import ReviewModal from './ReviewModal';
+import { ORDER_STATUS } from '../../_constants';
 
 const initialForm = {
     title: '',
@@ -209,9 +209,7 @@ const OrderDetail = (props) => {
                                             </div>
                                             <div className="status">
                                                 <span>
-                                                    {order
-                                                        ? getOrderStatus(order.status)
-                                                        : 'Status'}
+                                                    {order ? ORDER_STATUS[order.status] : 'Status'}
                                                 </span>
                                             </div>
                                         </Col>
