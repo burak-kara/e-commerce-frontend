@@ -1,0 +1,133 @@
+.reviews-page {
+    padding-top: 10px;
+    font-family: -apple-system, 'SFProText', system-ui, Helvetica Neue, sans-serif;
+
+    .reviews-page-col {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .badge {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+
+        .MuiBadge-colorPrimary {
+            background-color: $delete !important;
+            top: 3px !important;
+        }
+
+        .list-item {
+            border-radius: 10px !important;
+            box-shadow: 0 0 3px 0 $header-bg-shadow;
+            margin-bottom: 10px;
+            padding: 10px 0;
+            width: 100%;
+
+            .list-item-container {
+                .list-item-container-row {
+                    .list-col {
+                        &.title {
+                            font-style: normal;
+                            font-weight: 500;
+                            font-size: 18px;
+                            display: flex;
+                            justify-content: flex-start;
+                        }
+
+                        &.star-col {
+                            display: flex;
+                            justify-content: flex-end;
+                            align-items: center;
+                            font-weight: 600;
+                            font-style: normal;
+                            color: $black;
+                        }
+
+                        &.comment-col {
+                            .comment {
+                                &:focus {
+                                    outline: none !important;
+                                    box-shadow: none !important;
+                                }
+                            }
+                        }
+
+                        &.date-col {
+                            display: flex;
+                            justify-content: flex-start;
+                            align-items: center;
+                            font-weight: 500;
+                        }
+
+                        &.btn-col {
+                            .btn {
+                                color: $header-bg;
+                                font-weight: 500;
+                            }
+
+                            .reject {
+                                background-color: $delete;
+                            }
+                            .approve {
+                                background-color: $campaign;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.empty {
+                padding: 0 !important;
+                height: 200px;
+                margin-bottom: 10px;
+                border-radius: 10px !important;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .icon {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 64px;
+                    color: $common-btn;
+                }
+
+                .text {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-family: 'Calibri Light', sans-serif;
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 24px;
+                }
+
+                @media only screen and (max-width: 576px) {
+                    .text {
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .reviews-page {
+        .badge {
+            .list-item {
+                .list-item-container {
+                    .list-item-container-row {
+                        .list-col {
+                            &.btn-col {
+                                padding-left: 0 !important;
+                                padding-right: 0 !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
