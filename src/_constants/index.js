@@ -23,6 +23,11 @@ export const P_M_NEW_ITEM = `${P_M_ITEMS}/new`;
 export const P_M_EDIT_ITEM = `${P_M_ITEMS}/edit`;
 export const P_M_REVIEWS = '/reviews';
 
+// Sales Manager Routes
+export const S_M_ORDERS = '/all-orders';
+export const S_M_ORDER_STATUS = '/order-status';
+export const S_M_CAMPAIGNS = '/all-campaigns';
+
 // Categories
 export const CAT_ELECTRONICS = '/electronics';
 export const CAT_CONSUMABLES = '/consumables';
@@ -42,6 +47,16 @@ export const TIME_OUT = 200;
 export const COSTUMER = 'costumer';
 export const PM = 'product_manager';
 export const SM = 'sales_manager';
+
+export const ORDER_STATUS = {
+    0: 'Waiting for payment',
+    1: 'Payment confirmed',
+    2: 'Order is approved',
+    3: 'Order is being prepared',
+    4: 'Order is shipped',
+    5: 'Order is delivered',
+    6: 'Order is rejected',
+};
 
 // Regexes
 export const emailRegex = new RegExp(
