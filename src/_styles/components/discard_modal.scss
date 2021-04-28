@@ -8,10 +8,10 @@
         color: $header-bg;
     }
 
-	.btn {
-		font-family: -apple-system, 'SFProText', system-ui, Helvetica Neue, sans-serif;
-		font-weight: 600;
-	}
+    .btn {
+        font-family: -apple-system, 'SFProText', system-ui, Helvetica Neue, sans-serif;
+        font-weight: 600;
+    }
 
     @media only screen and (max-width: 576px) {
         width: 375px !important;

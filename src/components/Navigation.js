@@ -41,7 +41,7 @@ const Navigation = () => {
         cats.forEach((cat, index) => {
             navs.push(
                 <Nav
-                    className={`category ${index === cats.length - 1 ? "last" : ""}`}
+                    className={`category ${index === cats.length - 1 ? 'last' : ''}`}
                     key={cat}
                     onClick={() => handleCategory(cat)}
                 >

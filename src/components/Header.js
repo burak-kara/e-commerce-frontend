@@ -9,6 +9,7 @@ import {
     LANDING,
     ORDERS,
     P_M_ITEMS,
+    P_M_REVIEWS,
     PROFILE,
     SETTINGS,
     SIGN_IN,
@@ -53,9 +54,15 @@ const Header = () => {
         });
     };
 
-    const handleManageItems = () => {
+    const handleManageProducts = () => {
         history.push({
             pathname: P_M_ITEMS,
+        });
+    };
+
+    const handleProductReviews = () => {
+        history.push({
+            pathname: P_M_REVIEWS,
         });
     };
 
@@ -97,23 +104,26 @@ const Header = () => {
     const RenderCustomerMenu = () => (
         <>
             <NavDropdown.Item className="menu-btn" onClick={() => handleOrders()}>
-                Orders
+                Previous Orders
             </NavDropdown.Item>
         </>
     );
 
     const RenderProductManagerMenu = () => (
         <>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleManageItems()}>
-                Manage Items
+            <NavDropdown.Item className="menu-btn" onClick={() => handleManageProducts()}>
+                Manage Products
+            </NavDropdown.Item>
+            <NavDropdown.Item className="menu-btn" onClick={() => handleProductReviews()}>
+                Product Reviews
             </NavDropdown.Item>
         </>
     );
 
-    // TODO put proper menu
+    // TODO put proper menu for SM
     const RenderSalesManagerMenu = () => (
         <>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleManageItems()}>
+            <NavDropdown.Item className="menu-btn" onClick={() => handleManageProducts()}>
                 Create Campaign
             </NavDropdown.Item>
         </>

@@ -52,6 +52,7 @@
 
             .pm-delete {
                 color: $b-btn;
+
                 &:hover {
                     color: $delete;
                     font-size: 30px;
@@ -60,6 +61,7 @@
 
             .fav {
                 color: $delete;
+
                 &:hover {
                     font-size: 30px;
                 }
@@ -142,6 +144,7 @@
 
             .pm-edit {
                 color: $b-btn;
+
                 &:hover {
                     color: $edit;
                     font-size: 30px;
@@ -151,6 +154,7 @@
             .basket {
                 color: $common-btn;
                 font-size: 24px;
+
                 &:hover {
                     font-size: 32px;
                 }
