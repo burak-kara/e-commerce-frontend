@@ -23,6 +23,9 @@ import {
     NotFound,
     OrderDetail,
     Reviews,
+    ManageCampaigns,
+    ManageOrders,
+    OrderStatus,
 } from '../pages';
 import {
     BASKET,
@@ -49,7 +52,11 @@ import {
     NOT_FOUND,
     ORDER_DETAIL,
     P_M_REVIEWS,
+    S_M_ORDERS,
+    S_M_CAMPAIGNS,
+    S_M_ORDER_STATUS,
 } from '../_constants';
+import SalesManagerRoute from './SalesManagerRoute';
 
 const Routes = () => {
     const history = useHistory();
@@ -105,6 +112,11 @@ const Routes = () => {
                 <ProductManagerRoute exact path={P_M_NEW_ITEM} component={ItemSingleView} />
                 <ProductManagerRoute exact path={P_M_EDIT_ITEM} component={ItemSingleView} />
                 <ProductManagerRoute exact path={P_M_REVIEWS} component={Reviews} />
+
+                {/* Routes for sales managers */}
+                <SalesManagerRoute exact path={S_M_ORDERS} component={ManageOrders} />
+                <SalesManagerRoute exact path={S_M_ORDER_STATUS} component={OrderStatus} />
+                <SalesManagerRoute exact path={S_M_CAMPAIGNS} component={ManageCampaigns} />
 
                 {/* Categories */}
                 <Route exact path={CAT_ELECTRONICS}>
