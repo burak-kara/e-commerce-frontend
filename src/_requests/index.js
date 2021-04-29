@@ -127,7 +127,6 @@ const getOrderDetail = (id) =>
         path: `${API}orders/${id}`,
     });
 
-// TODO not used yet
 const updateOrder = (data) => {
     const { id } = data;
     return putRequest({

@@ -8,6 +8,7 @@ import Signin from './signin/Signin';
 import Home from './home/Home';
 import Basket from './basket/Basket';
 import Products from './products/Products';
+import ProductDetail from './products/ProductDetail';
 import Items from './manage_products/Items';
 import ItemSingleView from './manage_products/ItemSingleView';
 import Reviews from './manage_reviews/Reviews';
@@ -34,6 +35,7 @@ export {
     Reviews,
     ManageOrders,
     OrderStatus,
+    ProductDetail,
     ManageCampaigns,
     UnAuthenticated,
     UnAuthorized,

@@ -80,6 +80,9 @@ const Signin = (params) => {
                             getUserDetail()
                                 .then((detail) => {
                                     params.setUserDetail(detail.data);
+                                    history.push({
+                                        pathname: LANDING,
+                                    });
                                 })
                                 .catch(() => {
                                     params.openAlert({
@@ -88,9 +91,6 @@ const Signin = (params) => {
                                     });
                                 });
                             setLoading(false);
-                            history.push({
-                                pathname: LANDING,
-                            });
                         })
                         .catch(() => {
                             params.openAlert({
@@ -128,7 +128,7 @@ const Signin = (params) => {
     return (
         <div className="signin">
             <Form
-                className="form-container col-lg-3 col-md-2 col-sm-10 col-12"
+                className="form-container col-lg-3 col-md-6 col-sm-10 col-12"
                 noValidate
                 onSubmit={handleSubmit}
             >

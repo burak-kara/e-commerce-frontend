@@ -15,6 +15,7 @@ export const PROFILE = '/account';
 export const ORDERS = '/orders';
 export const ORDER_DETAIL = '/order-detail';
 export const SETTINGS = '/settings';
+export const PRODUCT_DETAIL = '/product-details';
 
 // Product manager routes
 export const P_M_ITEMS = '/product-manager-products';

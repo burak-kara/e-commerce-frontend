@@ -31,8 +31,8 @@ const ProductCard = (props) => {
                 className="image-container"
                 role="button"
                 tabIndex="0"
-                onClick={handleCard}
-                onKeyDown={handleCard}
+                onClick={() => handleCard(id)}
+                onKeyDown={() => {}}
             >
                 {img}
             </div>
