@@ -229,7 +229,7 @@ const Header = () => {
                                         </div>
                                     ) : (
                                         <div className="inner-container">
-                                            <span className="name">Login</span>
+                                            <span className="name">Sign in</span>
                                         </div>
                                     )
                                 }

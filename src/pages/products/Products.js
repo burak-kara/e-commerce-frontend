@@ -5,7 +5,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { DiscardModal, PageLoading, ProductCard } from '../../components';
 import { deleteItem, getItemsByCategory } from '../../_requests';
 import { openAlert, addToBasket } from '../../_redux/actions';
-import { P_M_EDIT_ITEM } from '../../_constants';
+import { P_M_EDIT_ITEM, PRODUCT_DETAIL } from '../../_constants';
 
 const Products = (params) => {
     const history = useHistory();
@@ -61,7 +61,10 @@ const Products = (params) => {
 
     const handleCard = (id) => {
         setId(id);
-        // TODO open product details
+        history.push({
+            pathname: PRODUCT_DETAIL,
+            state: { id },
+        });
     };
 
     const onDelete = () => {

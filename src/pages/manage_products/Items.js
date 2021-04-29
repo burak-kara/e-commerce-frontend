@@ -5,7 +5,7 @@ import { connect, useStore } from 'react-redux';
 import { Add } from '../../_utilities/icons';
 import { getItems, deleteItem } from '../../_requests';
 import { DiscardModal, PageLoading, ProductCard } from '../../components';
-import { P_M_NEW_ITEM, P_M_EDIT_ITEM } from '../../_constants';
+import { P_M_NEW_ITEM, P_M_EDIT_ITEM } from "../../_constants";
 import { openAlert } from '../../_redux/actions';
 
 const Items = (params) => {
@@ -66,10 +66,6 @@ const Items = (params) => {
         });
     };
 
-    const handleCard = () => {
-        // TODO open product details
-    };
-
     const handleAdd = () => {
         history.push({
             pathname: P_M_NEW_ITEM,
@@ -87,7 +83,6 @@ const Items = (params) => {
                     <ProductCard
                         handleUpper={handleUpper}
                         handleBottom={handleBottom}
-                        handleCard={handleCard}
                         {...item}
                     />
                 </Col>,
