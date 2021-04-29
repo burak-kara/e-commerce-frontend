@@ -98,13 +98,6 @@ const ProductDetail = (params) => {
                                 <span>{item.brand}</span>
                             </div>
                         </Col>
-                        {/* <Col xs={12} xl={2} className="fav-col"> */}
-                        {/*    <div className="fav-container"> */}
-                        {/*        <button className="btn fav" type="button" onClick={() => {}}> */}
-                        {/*            <Favorite size="2em" /> */}
-                        {/*        </button> */}
-                        {/*    </div> */}
-                        {/* </Col> */}
                         <Col xs={12} xl={6} className="price-col">
                             <div className="price">
                                 <span>{item.price}</span>
@@ -144,6 +137,40 @@ const ProductDetail = (params) => {
             </Row>
         );
 
+    const Detail = () =>
+        !item ? (
+            <PageLoading />
+        ) : (
+            <Row>
+                <Col xs={12} xl={12} className="form-col">
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={4}
+                        required
+                        name="specs"
+                        type="text"
+                        readOnly
+                        defaultValue={item.description}
+                        className="comment"
+                    />
+                </Col>
+                <Col xs={12} xl={12} className="form-col">
+                    <Form.Label>Specifications</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={4}
+                        required
+                        name="specs"
+                        type="text"
+                        readOnly
+                        defaultValue={item.specs}
+                        className="comment"
+                    />
+                </Col>
+            </Row>
+        );
+
     const Reviews = () => {
         const list = [];
         reviews.forEach((review) => {
@@ -173,11 +200,7 @@ const ProductDetail = (params) => {
                                         className="comment"
                                     />
                                 </Col>
-                                <Col
-                                    xs={{ span: 4, offset: 0 }}
-                                    xl={{ span: 2, offset: 0 }}
-                                    className="list-col date-col"
-                                >
+                                <Col xs={12} xl={12} className="list-col date-col">
                                     <div>
                                         <span>{moment(date).format('MMMM Do YYYY, h:mm a')}</span>
                                     </div>
@@ -197,7 +220,7 @@ const ProductDetail = (params) => {
         <Container fluid className="product-detail">
             <Row>
                 <Col
-                    className="product-detail-col"
+                    className="product-col"
                     xs={{ span: 12, offset: 0 }}
                     md={{ span: 6, offset: 3 }}
                     xl={{ span: 6, offset: 3 }}
@@ -207,11 +230,22 @@ const ProductDetail = (params) => {
             </Row>
             <Row>
                 <Col
+                    className="product-detail-col"
+                    xs={{ span: 12, offset: 0 }}
+                    md={{ span: 6, offset: 3 }}
+                    xl={{ span: 6, offset: 3 }}
+                >
+                    <Detail />
+                </Col>
+            </Row>
+            <Row>
+                <Col
                     className="reviews-page-col"
                     xs={{ span: 12, offset: 0 }}
                     md={{ span: 6, offset: 3 }}
                     xl={{ span: 6, offset: 3 }}
                 >
+                    <Form.Label>Reviews</Form.Label>
                     <ListGroup variant="flush">
                         <Reviews />
                     </ListGroup>
