@@ -95,10 +95,10 @@ const Signup = (params) => {
             newErrors.password_validation = 'Please confirm your password!';
         else if (!password || password === '')
             newErrors.password_validation = 'Please provide a valid password!';
-        else if (password.length < 6 || password.length > 10)
-            newErrors.password = 'Password should be min 6 and max 10 characters!';
-        else if (!passwordRegex.test(password))
-            newErrors.password =
+        else if (password_validation.length < 6 || password_validation.length > 10)
+            newErrors.password_validation = 'Password should be min 6 and max 10 characters!';
+        else if (!passwordRegex.test(password_validation))
+            newErrors.password_validation =
                 'Password should contain at least one number and one special character!';
 
         return newErrors;
