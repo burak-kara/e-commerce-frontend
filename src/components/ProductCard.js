@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useStore } from 'react-redux';
+import { connect, useStore } from 'react-redux';
 import { ComponentLoading } from './Loading';
 import { BasketIcon, Delete, Edit, Favorite } from '../_utilities/icons';
 import StarMaker from './StarMaker';
 import { logo } from '../_assets';
 import { getAllReviewsByItem } from '../_requests';
+import { openAlert } from '../_redux/actions';
 
 const ProductCard = (props) => {
     const {
@@ -40,19 +41,21 @@ const ProductCard = (props) => {
     };
 
     useEffect(() => {
-        setLoading(true);
-        getAllReviewsByItem(id)
-            .then((response) => {
-                calculateRating(response.data);
-                setLoading(false);
-            })
-            .catch(() => {
-                props.openAlert({
-                    message: 'Error while fetching item reviews!',
-                    severity: 'error',
+        if (id) {
+            setLoading(true);
+            getAllReviewsByItem(id)
+                .then((response) => {
+                    calculateRating(response.data);
+                    setLoading(false);
+                })
+                .catch(() => {
+                    props.openAlert({
+                        message: 'Error while fetching item reviews!',
+                        severity: 'error',
+                    });
+                    setLoading(false);
                 });
-                setLoading(false);
-            });
+        }
     }, []);
 
     const getImageContainer = () => {
@@ -91,7 +94,7 @@ const ProductCard = (props) => {
             {getImageContainer()}
             <div className="details">
                 <div className="star-container">
-                    {loading ? <ComponentLoading /> : <StarMaker rating={rating || 0} />}
+                    {loading ? <ComponentLoading /> : <StarMaker rating={isPM ? 0 : rating || 0} />}
                 </div>
                 <div className="upper-container">
                     <button
@@ -124,4 +127,4 @@ const ProductCard = (props) => {
     );
 };
 
-export default ProductCard;
+export default connect(null, { openAlert })(ProductCard);
