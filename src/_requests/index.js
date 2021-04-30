@@ -81,7 +81,7 @@ const getItemById = (id) =>
     });
 
 const getItemsByCategory = (category) => {
-    const cat = category.replaceAll('-', ' ');
+    const cat = category.replaceAll('-', '');
     return getRequest({
         path: `${API}items/${cat}/`,
     });
