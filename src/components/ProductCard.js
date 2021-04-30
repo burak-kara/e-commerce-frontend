@@ -86,14 +86,12 @@ const ProductCard = (props) => {
         return isPM ? <Edit size="2em" /> : <BasketIcon size="2em" />;
     };
 
-    return loading ? (
-        <ComponentLoading />
-    ) : (
+    return (
         <div className="product-card">
             {getImageContainer()}
             <div className="details">
                 <div className="star-container">
-                    <StarMaker rating={rating || 0} />
+                    {loading ? <ComponentLoading /> : <StarMaker rating={rating || 0} />}
                 </div>
                 <div className="upper-container">
                     <button
