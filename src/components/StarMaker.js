@@ -11,13 +11,13 @@ const StarMaker = (props) => {
     const renderStars = () => {
         const stars = [];
         for (let i = 0; i < fullCount; i += 1) {
-            stars.push(<FilledStar key={`${i}-full`} size={size || "18px"} />);
+            stars.push(<FilledStar key={`${i}-full`} size={size || '18px'} />);
         }
         for (let i = 0; i < halfCount; i += 1) {
-            stars.push(<HalfStar key={`${i}-half`} size={size || "18px"} />);
+            stars.push(<HalfStar key={`${i}-half`} size={size || '18px'} />);
         }
         for (let i = 0; i < emptyCount; i += 1) {
-            stars.push(<EmptyStar key={`${i}-empty`} size={size || "18px"} />);
+            stars.push(<EmptyStar key={`${i}-empty`} size={size || '18px'} />);
         }
         return stars;
     };
