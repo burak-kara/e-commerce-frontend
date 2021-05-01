@@ -22,6 +22,11 @@ import {
     UnAuthenticated,
     NotFound,
     OrderDetail,
+    Reviews,
+    ManageCampaigns,
+    ManageOrders,
+    OrderStatus,
+    ProductDetail,
 } from '../pages';
 import {
     BASKET,
@@ -47,7 +52,13 @@ import {
     UN_AUTHENTICATED,
     NOT_FOUND,
     ORDER_DETAIL,
+    P_M_REVIEWS,
+    S_M_ORDERS,
+    S_M_CAMPAIGNS,
+    S_M_ORDER_STATUS,
+    PRODUCT_DETAIL,
 } from '../_constants';
+import SalesManagerRoute from './SalesManagerRoute';
 
 const Routes = () => {
     const history = useHistory();
@@ -84,6 +95,7 @@ const Routes = () => {
                 {/* Common Routes for all users */}
                 <Route exact path={LANDING} component={Home} />
                 <Route exact path={BASKET} component={Basket} />
+                <Route exact path={PRODUCT_DETAIL} component={ProductDetail} />
 
                 {/* Common Routes for not logged in users */}
                 <UnAuthenticatedRoute exact path={SIGN_IN} component={Signin} />
@@ -102,7 +114,14 @@ const Routes = () => {
                 <ProductManagerRoute exact path={P_M_ITEMS} component={Items} />
                 <ProductManagerRoute exact path={P_M_NEW_ITEM} component={ItemSingleView} />
                 <ProductManagerRoute exact path={P_M_EDIT_ITEM} component={ItemSingleView} />
+                <ProductManagerRoute exact path={P_M_REVIEWS} component={Reviews} />
 
+                {/* Routes for sales managers */}
+                <SalesManagerRoute exact path={S_M_ORDERS} component={ManageOrders} />
+                <SalesManagerRoute exact path={S_M_ORDER_STATUS} component={OrderStatus} />
+                <SalesManagerRoute exact path={S_M_CAMPAIGNS} component={ManageCampaigns} />
+
+                {/* Common Routes for all users */}
                 {/* Categories */}
                 <Route exact path={CAT_ELECTRONICS}>
                     <Products category={CAT_ELECTRONICS} />

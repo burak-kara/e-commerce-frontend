@@ -81,7 +81,7 @@ const getItemById = (id) =>
     });
 
 const getItemsByCategory = (category) => {
-    const cat = category.replaceAll('-', ' ');
+    const cat = category.replaceAll('-', '');
     return getRequest({
         path: `${API}items/${cat}/`,
     });
@@ -127,14 +127,47 @@ const getOrderDetail = (id) =>
         path: `${API}orders/${id}`,
     });
 
-// TODO not used yet
 const updateOrder = (data) => {
     const { id } = data;
     return putRequest({
-        path: `${API}orders/${id}`,
+        path: `${API}orders/${id}/`,
         data,
     });
 };
+
+const getAllReviews = () =>
+    getRequest({
+        path: `${API}reviews/`,
+    });
+
+const getAllReviewsByItem = (id) =>
+    getRequest({
+        path: `${API}item/reviews/${id}`,
+    });
+
+const getReviewById = (id) =>
+    getRequest({
+        path: `${API}reviews/${id}`,
+    });
+
+const newReview = (data) =>
+    postRequest({
+        path: `${API}reviews/`,
+        data,
+    });
+
+const updateReview = (data) => {
+    const { id } = data;
+    return putRequest({
+        path: `${API}reviews/${id}/`,
+        data,
+    });
+};
+
+const deleteReview = (id) =>
+    deleteRequest({
+        path: `${API}reviews/${id}/`,
+    });
 
 export {
     register,
@@ -153,4 +186,10 @@ export {
     getAllOrders,
     getOrderDetail,
     updateOrder,
+    getAllReviews,
+    getAllReviewsByItem,
+    getReviewById,
+    newReview,
+    updateReview,
+    deleteReview,
 };

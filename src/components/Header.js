@@ -9,7 +9,10 @@ import {
     LANDING,
     ORDERS,
     P_M_ITEMS,
+    P_M_REVIEWS,
     PROFILE,
+    S_M_CAMPAIGNS,
+    S_M_ORDERS,
     SETTINGS,
     SIGN_IN,
     SIGN_OUT,
@@ -53,9 +56,27 @@ const Header = () => {
         });
     };
 
-    const handleManageItems = () => {
+    const handleManageProducts = () => {
         history.push({
             pathname: P_M_ITEMS,
+        });
+    };
+
+    const handleProductReviews = () => {
+        history.push({
+            pathname: P_M_REVIEWS,
+        });
+    };
+
+    const handleManageCampaigns = () => {
+        history.push({
+            pathname: S_M_CAMPAIGNS,
+        });
+    };
+
+    const handleSMOrders = () => {
+        history.push({
+            pathname: S_M_ORDERS,
         });
     };
 
@@ -97,24 +118,29 @@ const Header = () => {
     const RenderCustomerMenu = () => (
         <>
             <NavDropdown.Item className="menu-btn" onClick={() => handleOrders()}>
-                Orders
+                Previous Orders
             </NavDropdown.Item>
         </>
     );
 
     const RenderProductManagerMenu = () => (
         <>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleManageItems()}>
-                Manage Items
+            <NavDropdown.Item className="menu-btn" onClick={() => handleManageProducts()}>
+                Manage Products
+            </NavDropdown.Item>
+            <NavDropdown.Item className="menu-btn" onClick={() => handleProductReviews()}>
+                Product Reviews
             </NavDropdown.Item>
         </>
     );
 
-    // TODO put proper menu
     const RenderSalesManagerMenu = () => (
         <>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleManageItems()}>
-                Create Campaign
+            <NavDropdown.Item className="menu-btn" onClick={() => handleManageCampaigns()}>
+                Manage Campaigns
+            </NavDropdown.Item>
+            <NavDropdown.Item className="menu-btn" onClick={() => handleSMOrders()}>
+                Manage Orders
             </NavDropdown.Item>
         </>
     );
@@ -165,12 +191,15 @@ const Header = () => {
         <div className="header-container">
             <Container fluid="xl" className="container">
                 <Navbar collapseOnSelect expand="lg" className="header">
-                    <Navbar.Brand className="header-brand" onClick={() => handleLogo()}>
+                    <Navbar.Brand
+                        className="header-brand mb-1 mb-xl-0"
+                        onClick={() => handleLogo()}
+                    >
                         <img className="logo" src={logo} alt="logo" />
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <div className="input-group">
+                    <Navbar.Collapse id="responsive-navbar-nav" className="collapsible-container">
+                        <div className="input-group  mb-1 mb-xl-0">
                             <input
                                 type="text"
                                 className="form-control search-bar"
@@ -187,7 +216,7 @@ const Header = () => {
                                 </button>
                             </div>
                         </div>
-                        <Nav className="ml-auto">
+                        <Nav className="ml-auto mb-1 mb-xl-0">
                             <NavDropdown
                                 title={
                                     user && user.first_name ? (
@@ -200,7 +229,7 @@ const Header = () => {
                                         </div>
                                     ) : (
                                         <div className="inner-container">
-                                            <span className="name">Login</span>
+                                            <span className="name">Sign in</span>
                                         </div>
                                     )
                                 }
@@ -211,7 +240,7 @@ const Header = () => {
                             </NavDropdown>
                         </Nav>
                         <Nav className="ml-auto">
-                            <Nav.Item>
+                            <Nav.Item className="b-item">
                                 {basket.itemCount === 0 ? (
                                     <div className="badge">{renderBasketButton()}</div>
                                 ) : (

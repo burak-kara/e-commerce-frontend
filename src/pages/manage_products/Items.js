@@ -10,11 +10,11 @@ import { openAlert } from '../../_redux/actions';
 
 const Items = (params) => {
     const history = useHistory();
+    const { user } = useStore().getState();
     const [items, setItems] = useState();
     const [deleteId, setDeleteId] = useState('');
     const [loading, setLoading] = useState(false);
     const [confirmModal, setConfirmModal] = useState(false);
-    const { user } = useStore().getState();
 
     const fetchItems = () => {
         setLoading(true);
@@ -66,10 +66,6 @@ const Items = (params) => {
         });
     };
 
-    const handleCard = () => {
-        // TODO open product details
-    };
-
     const handleAdd = () => {
         history.push({
             pathname: P_M_NEW_ITEM,
@@ -84,12 +80,7 @@ const Items = (params) => {
         items.forEach((item) => {
             itemsCol.push(
                 <Col xs={12} md={6} xl={4} className="col" key={item.id}>
-                    <ProductCard
-                        handleUpper={handleUpper}
-                        handleBottom={handleBottom}
-                        handleCard={handleCard}
-                        {...item}
-                    />
+                    <ProductCard handleUpper={handleUpper} handleBottom={handleBottom} {...item} />
                 </Col>,
             );
         });

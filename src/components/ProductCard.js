@@ -1,14 +1,16 @@
-import React from 'react';
-import { useStore } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { connect, useStore } from 'react-redux';
+import { ComponentLoading } from './Loading';
 import { BasketIcon, Delete, Edit, Favorite } from '../_utilities/icons';
 import StarMaker from './StarMaker';
 import { logo } from '../_assets';
+import { getAllReviewsByItem } from '../_requests';
+import { openAlert } from '../_redux/actions';
 
 const ProductCard = (props) => {
     const {
         id,
         image,
-        rating,
         name,
         brand,
         description,
@@ -21,6 +23,40 @@ const ProductCard = (props) => {
     } = props;
     const { user } = useStore().getState();
     const isPM = user?.is_product_manager;
+    const [rating, setRating] = useState(0);
+    const [loading, setLoading] = useState(false);
+
+    const calculateRating = (rev) => {
+        if (rev) {
+            let sum = 0;
+            let count = 0;
+            rev.forEach((review) => {
+                if (review.is_approved) {
+                    sum += parseInt(review.rating, 10);
+                    count += 1;
+                }
+            });
+            setRating(sum / count);
+        }
+    };
+
+    useEffect(() => {
+        if (id) {
+            setLoading(true);
+            getAllReviewsByItem(id)
+                .then((response) => {
+                    calculateRating(response.data);
+                    setLoading(false);
+                })
+                .catch(() => {
+                    props.openAlert({
+                        message: 'Error while fetching item reviews!',
+                        severity: 'error',
+                    });
+                    setLoading(false);
+                });
+        }
+    }, []);
 
     const getImageContainer = () => {
         const img = <img src={image || logo} alt="product" className={image ? 'image' : 'logo'} />;
@@ -31,8 +67,8 @@ const ProductCard = (props) => {
                 className="image-container"
                 role="button"
                 tabIndex="0"
-                onClick={handleCard}
-                onKeyDown={handleCard}
+                onClick={() => handleCard(id)}
+                onKeyDown={() => {}}
             >
                 {img}
             </div>
@@ -58,7 +94,7 @@ const ProductCard = (props) => {
             {getImageContainer()}
             <div className="details">
                 <div className="star-container">
-                    <StarMaker rating={rating || 0} />
+                    {loading ? <ComponentLoading /> : <StarMaker rating={isPM ? 0 : rating || 0} />}
                 </div>
                 <div className="upper-container">
                     <button
@@ -73,7 +109,8 @@ const ProductCard = (props) => {
                 <div className="brand-container">{brand || 'Not Found'}</div>
                 <div className="desc-container">{description || 'Not Found'}</div>
                 <div className="price-container">
-                    <span>{price || 'Not Found'} ₺</span>
+                    <span>{price || 'Not Found'}</span>
+                    <span className="ml-1 currency">TL</span>
                 </div>
                 <div className="bottom-container">
                     <button
@@ -90,4 +127,4 @@ const ProductCard = (props) => {
     );
 };
 
-export default ProductCard;
+export default connect(null, { openAlert })(ProductCard);

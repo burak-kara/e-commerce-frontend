@@ -26,7 +26,7 @@ const DiscardModal = (props) => {
                     {leftBtnText || 'Cancel'}
                 </button>
                 <button
-                    className={`btn mr-2 ${btnColor || "btn-danger"}`}
+                    className={`btn mr-2 ${btnColor || 'btn-danger'}`}
                     type="button"
                     onClick={onDiscard}
                 >
