@@ -5,14 +5,9 @@ import { Row, Col, Container, ListGroup, Form } from 'react-bootstrap';
 import moment from 'moment';
 import { PageLoading } from '../../components';
 import { logo } from '../../_assets';
-import { getItemById, getOrderDetail, updateOrder } from '../../_requests';
+import { getAddressesByUserID, getItemById, getOrderDetail, updateOrder } from '../../_requests';
 import { openAlert } from '../../_redux/actions';
 import { ORDER_STATUS, S_M_ORDERS, TIME_OUT } from '../../_constants';
-
-const addressesss = [
-    'Özyeğin University Orman Sk. Cekmekoy Istanbul',
-    'Boğaziçi Üniversitesi 34342 Bebek/İstanbul Türkiye',
-];
 
 const initialForm = {};
 
@@ -32,19 +27,20 @@ const OrderStatus = (props) => {
             const { id } = history.location.state;
             setOrderItems([]);
             setOrderID(id);
-            // TODO get user addresses
-            setAddresses(addressesss);
             getOrderDetail(id)
                 .then((response) => {
                     const { data } = response;
                     setOrder(data);
-                    const { items, item_counts } = data;
+                    const { items, item_counts, buyer } = data;
                     setItemCounts(item_counts.split(','));
                     items.forEach((item_id) => {
                         getItemById(item_id).then((r) => {
                             setOrderItems((basketItems) => [...basketItems, r.data]);
                             setLoading(false);
                         });
+                    });
+                    getAddressesByUserID(buyer).then((r) => {
+                        setAddresses(r.data.replaceAll("'", '').split(','));
                     });
                 })
                 .catch(() => {
