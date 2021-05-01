@@ -169,6 +169,11 @@ const deleteReview = (id) =>
         path: `${API}reviews/${id}/`,
     });
 
+const getAddressesByUserID = (id) =>
+    getRequest({
+        path: `${API}addresses/${id}/`,
+    });
+
 export {
     register,
     login,
@@ -192,4 +197,5 @@ export {
     newReview,
     updateReview,
     deleteReview,
+    getAddressesByUserID,
 };

@@ -13,11 +13,6 @@ import {
     removeBasket,
 } from '../../_redux/actions';
 
-const addressesss = [
-    'Özyeğin University Orman Sk. Cekmekoy Istanbul',
-    'Boğaziçi Üniversitesi 34342 Bebek/İstanbul Türkiye',
-];
-
 const Basket = (props) => {
     const { basket, user } = useStore().getState();
     const [basketItems, setBasketItems] = useState([]);
@@ -35,8 +30,6 @@ const Basket = (props) => {
                         const item = response.data;
                         // eslint-disable-next-line no-shadow
                         setBasketItems((basketItems) => [...basketItems, item]);
-                        // TODO get addresses of the user
-                        setAddresses(addressesss);
                     })
                     .catch(() => {});
             });
@@ -47,6 +40,7 @@ const Basket = (props) => {
     useEffect(() => {
         setLoading(true);
         fetchItems();
+        setAddresses(user.addresses ? user.addresses.replaceAll("'", '').split(',') : []);
     }, [loading]);
 
     useEffect(() => {
