@@ -57,6 +57,7 @@ import {
     S_M_CAMPAIGNS,
     S_M_ORDER_STATUS,
     PRODUCT_DETAIL,
+    SEARCH,
 } from '../_constants';
 import SalesManagerRoute from './SalesManagerRoute';
 
@@ -96,6 +97,7 @@ const Routes = () => {
                 <Route exact path={LANDING} component={Home} />
                 <Route exact path={BASKET} component={Basket} />
                 <Route exact path={PRODUCT_DETAIL} component={ProductDetail} />
+                <Route path={SEARCH} component={Products} />
 
                 {/* Common Routes for not logged in users */}
                 <UnAuthenticatedRoute exact path={SIGN_IN} component={Signin} />
