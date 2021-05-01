@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
@@ -17,6 +17,7 @@ import {
     SIGN_IN,
     SIGN_OUT,
     SIGN_UP,
+    SEARCH,
 } from '../_constants';
 import { Account, BasketIcon, DropDown, Search } from '../_utilities/icons';
 import { openAlert } from '../_redux/actions';
@@ -25,6 +26,7 @@ const Header = () => {
     const history = useHistory();
     const { basket } = useStore().getState();
     const { user } = useStore().getState();
+    const [search, setSearch] = useState('');
 
     const handleLogo = () => {
         history.push({
@@ -34,7 +36,8 @@ const Header = () => {
 
     const handleSearch = () => {
         history.push({
-            pathname: PROFILE,
+            pathname: `${SEARCH}/${search}`,
+            state: { search },
         });
     };
 
@@ -203,7 +206,8 @@ const Header = () => {
                             <input
                                 type="text"
                                 className="form-control search-bar"
-                                placeholder="Ürün, Kategori ya da Marka ara"
+                                placeholder="Search Products..."
+                                onChange={(e) => setSearch(e.target.value)}
                             />
                             <div className="input-group-append">
                                 <button

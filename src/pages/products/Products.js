@@ -3,7 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import { DiscardModal, PageLoading, ProductCard } from '../../components';
-import { deleteItem, getItemsByCategory } from '../../_requests';
+import { deleteItem, getItemsByCategory, getItemsBySearch } from '../../_requests';
 import { openAlert, addToBasket } from '../../_redux/actions';
 import { P_M_EDIT_ITEM, PRODUCT_DETAIL } from '../../_constants';
 
@@ -18,12 +18,8 @@ const Products = (params) => {
     const [confirmModal, setConfirmModal] = useState(false);
     const [deleteId, setDeleteId] = useState('');
 
-    useEffect(() => {
-        setCategory(params.category.substring(1));
-    }, [location]);
-
-    const fetchItems = () => {
-        getItemsByCategory(category)
+    const fetchByCategory = (cat) => {
+        getItemsByCategory(cat)
             .then((response) => {
                 setItems(response.data);
                 setLoading(false);
@@ -38,11 +34,28 @@ const Products = (params) => {
     };
 
     useEffect(() => {
-        setLoading(true);
-        if (category) {
-            fetchItems();
+        if (params && params.category) {
+            setLoading(true);
+            const cat = params.category.substring(1);
+            setCategory(cat);
+            fetchByCategory(cat);
+        } else if (params && params.location) {
+            setLoading(true);
+            const { search } = params.location.state;
+            getItemsBySearch(search)
+                .then((response) => {
+                    setItems(response.data);
+                    setLoading(false);
+                })
+                .catch(() => {
+                    params.openAlert({
+                        message: 'Error while fetching items!',
+                        severity: 'error',
+                    });
+                    setLoading(false);
+                });
         }
-    }, [category]);
+    }, [location]);
 
     const handleAddFav = (id) => {
         setId(id);
@@ -76,7 +89,7 @@ const Products = (params) => {
                     severity: 'success',
                 });
                 if (category) {
-                    fetchItems();
+                    fetchByCategory();
                 }
             })
             .catch(() => {

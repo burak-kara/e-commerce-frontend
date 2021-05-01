@@ -87,6 +87,11 @@ const getItemsByCategory = (category) => {
     });
 };
 
+const getItemsBySearch = (search) =>
+    getRequest({
+        path: `${API}items/search?search=${search}`,
+    });
+
 const postNewItem = (data) =>
     postRequest({
         path: `${API}items/`,
@@ -169,6 +174,11 @@ const deleteReview = (id) =>
         path: `${API}reviews/${id}/`,
     });
 
+const getAddressesByUserID = (id) =>
+    getRequest({
+        path: `${API}addresses/${id}/`,
+    });
+
 export {
     register,
     login,
@@ -192,4 +202,6 @@ export {
     newReview,
     updateReview,
     deleteReview,
+    getAddressesByUserID,
+    getItemsBySearch,
 };
