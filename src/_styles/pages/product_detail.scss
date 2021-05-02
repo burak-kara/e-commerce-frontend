@@ -3,15 +3,15 @@
     font-family: -apple-system, 'SFProText', system-ui, Helvetica Neue, sans-serif;
 
     .product-col {
-        box-shadow: 0 0 1px 0 $header-bg-shadow;
         border-radius: 20px 20px 0 0 !important;
+        border: 1px solid $border;
 
         .image-col {
             position: relative;
             width: 490px;
             height: 490px;
             border-radius: 20px 0 0 0 !important;
-            box-shadow: 0 0 2px 0 $header-bg-shadow;
+            border-right: 1px solid $border;
             padding-left: 0 !important;
             padding-right: 0 !important;
 
@@ -172,7 +172,7 @@
             padding-right: 10px;
             padding-left: 10px;
             border-radius: 0 5px !important;
-            box-shadow: 0 0 1px 0 $header-bg-shadow;
+            border: 1px solid $border;
             margin-bottom: 10px;
             width: 100%;
 

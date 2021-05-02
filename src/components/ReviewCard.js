@@ -4,7 +4,7 @@ import moment from 'moment';
 import StarMaker from './StarMaker';
 
 const ReviewCard = (props) => {
-    const { item, handleReject, handleApprove } = props;
+    const { item, handleReject, handleApprove, isEvaluated } = props;
     const { id, title, comment, rating, date } = item;
 
     return (
@@ -48,6 +48,7 @@ const ReviewCard = (props) => {
                         type="button"
                         className="btn btn-block reject"
                         onClick={() => handleReject(id)}
+                        disabled={isEvaluated}
                     >
                         Reject
                     </button>
@@ -61,6 +62,7 @@ const ReviewCard = (props) => {
                         type="button"
                         className="btn btn-block approve"
                         onClick={() => handleApprove(id)}
+                        disabled={isEvaluated}
                     >
                         Approve
                     </button>
