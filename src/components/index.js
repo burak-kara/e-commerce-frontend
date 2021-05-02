@@ -1,6 +1,7 @@
 import Navigation from './Navigation';
 import Header from './Header';
 import ProductCard from './ProductCard';
+import ProductCardEmpty from './ProductCardEmpty';
 import DiscardModal from './DiscardModal';
 import Alert from './Alert';
 import BasketProductCard from './BasketProductCard';
@@ -17,4 +18,5 @@ export {
     Alert,
     BasketProductCard,
     OrderCard,
+    ProductCardEmpty,
 };

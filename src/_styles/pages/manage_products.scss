@@ -9,6 +9,52 @@
         }
     }
 
+    .filter-row {
+        .col {
+            padding-top: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-label {
+            color: $black;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .dropdown {
+            color: $black;
+            font-size: 15px;
+            font-weight: 300;
+
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        .btn-col {
+            display: flex;
+            align-items: flex-end;
+
+            .btn {
+                border-radius: 4px !important;
+                border: 1px solid $header-border2;
+                background-color: $header-bg;
+                color: $a-btn;
+
+                &:focus {
+                    outline: none !important;
+                    box-shadow: none !important;
+                }
+
+                &:hover {
+                    box-shadow: 0 0 3px 0 $header-border2;
+                }
+            }
+        }
+    }
+
     .add-row {
         .add-col {
             display: flex;
