@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Container, ListGroup } from 'react-bootstrap';
 import { Badge } from '@material-ui/core';
+import moment from 'moment';
 import { PageLoading } from '../../components';
 import { BasketIcon } from '../../_utilities/icons';
 import { getAllReviews, updateReview } from '../../_requests';
@@ -36,12 +37,12 @@ const Reviews = (props) => {
     const handleReject = (id) => {
         const data = {
             id,
-            is_approved: false,
+            status: 2,
         };
         updateReview(data).then(() => {
             props.openAlert({
                 message: 'Review Rejected!',
-                severity: 'warn',
+                severity: 'warning',
             });
             fetchItems();
         });
@@ -50,7 +51,7 @@ const Reviews = (props) => {
     const handleApprove = (id) => {
         const data = {
             id,
-            is_approved: true,
+            status: 1,
         };
         updateReview(data).then(() => {
             props.openAlert({
@@ -60,6 +61,14 @@ const Reviews = (props) => {
             fetchItems();
         });
     };
+
+    const pushable = (color, content, item) => (
+        <Badge color={color} className="badge" badgeContent={content} key={item.id}>
+            <ListGroup.Item className="list-item">
+                <ReviewCard item={item} handleReject={handleReject} handleApprove={handleApprove} />
+            </ListGroup.Item>
+        </Badge>
+    );
 
     const ListItems = () => {
         if (loading) {
@@ -93,33 +102,19 @@ const Reviews = (props) => {
             );
         }
         const list = [];
+        reviews.sort(
+            (a, b) => moment(b.date).format('YYYYMMDD') - moment(a.date).format('YYYYMMDD'),
+        );
         reviews.forEach((item) => {
-            if (!item.is_approved) {
+            if (item.status === 0) {
+                list.push(pushable('primary', 'New', item));
+            } else {
                 list.push(
-                    <Badge color="primary" variant="dot" className="badge" key={item.id}>
-                        <ListGroup.Item className="list-item">
-                            <ReviewCard
-                                item={item}
-                                handleReject={handleReject}
-                                handleApprove={handleApprove}
-                            />
-                        </ListGroup.Item>
-                    </Badge>,
-                );
-            }
-        });
-        reviews.forEach((item) => {
-            if (item.is_approved) {
-                list.push(
-                    <div className="badge" key={item.id}>
-                        <ListGroup.Item className="list-item">
-                            <ReviewCard
-                                item={item}
-                                handleReject={handleReject}
-                                handleApprove={handleApprove}
-                            />
-                        </ListGroup.Item>
-                    </div>,
+                    pushable(
+                        item.status === 1 ? 'secondary' : 'error',
+                        item.status === 1 ? 'Approved' : 'Rejected',
+                        item,
+                    ),
                 );
             }
         });

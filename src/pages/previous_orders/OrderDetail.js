@@ -219,9 +219,7 @@ const OrderDetail = (props) => {
                                             </div>
                                             <div className="total-col">
                                                 <div className="total">
-                                                    <span>
-                                                        {order ? order.total_price : 'Status'}
-                                                    </span>
+                                                    <span>{order ? order.total_price : '0'}</span>
                                                 </div>
                                                 <div className="currency ml-1">
                                                     <span>TL</span>

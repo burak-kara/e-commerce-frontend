@@ -1,5 +1,5 @@
 .reviews-page {
-    padding-top: 10px;
+    padding-top: 20px;
     font-family: -apple-system, 'SFProText', system-ui, Helvetica Neue, sans-serif;
 
     .reviews-page-col {
@@ -11,15 +11,31 @@
         padding-left: 0 !important;
         padding-right: 0 !important;
 
+        .MuiBadge-badge {
+            right: 50px !important;
+            top: 4px !important;
+            width: 100px;
+            color: $header-bg;
+            font-size: 12px;
+            font-weight: 600 !important;
+        }
+
         .MuiBadge-colorPrimary {
+            background-color: $blue !important;
+        }
+
+        .MuiBadge-colorSecondary {
+            background-color: $campaign !important;
+        }
+
+        .MuiBadge-colorError {
             background-color: $delete !important;
-            top: 3px !important;
         }
 
         .list-item {
             border-radius: 10px !important;
-            box-shadow: 0 0 3px 0 $header-bg-shadow;
-            margin-bottom: 10px;
+            border: 1px solid $border;
+            margin-bottom: 20px;
             padding: 10px 0;
             width: 100%;
 
@@ -61,15 +77,24 @@
 
                         &.btn-col {
                             .btn {
-                                color: $header-bg;
                                 font-weight: 500;
                             }
 
                             .reject {
-                                background-color: $delete;
+                                border-radius: 4px !important;
+                                border: 1px solid $header-border2;
+                                background-color: $header-bg;
+                                color: $a-btn;
                             }
+
                             .approve {
-                                background-color: $campaign;
+                                background-color: $common-btn;
+                                color: $header-bg;
+                            }
+
+                            &:focus {
+                                outline: none !important;
+                                box-shadow: none !important;
                             }
                         }
                     }
