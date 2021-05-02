@@ -48,7 +48,6 @@ const Products = (params) => {
         getItemsByCategory(cat)
             .then((response) => {
                 setItems(response.data);
-                console.log(response.data);
                 setLoading(false);
             })
             .catch(() => {
@@ -65,7 +64,6 @@ const Products = (params) => {
         getItemsBySearch(s)
             .then((response) => {
                 setItems(response.data);
-                console.log(response.data);
                 setLoading(false);
             })
             .catch(() => {
