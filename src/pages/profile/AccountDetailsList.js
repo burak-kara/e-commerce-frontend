@@ -364,10 +364,10 @@ const AccountDetailsList = (params) => {
                     <h3>User Details</h3>
                 </Form.Row>
                 <Form.Row className="labels">
-                    <Form.Group as={Row} md="6">
+                    <Form.Group as={Row} md="12">
                         <Form.Label>First Name</Form.Label>
                     </Form.Group>
-                    <Form.Group as={Row} md="6">
+                    <Form.Group as={Row} md="12">
                         <Form.Label>Last Name</Form.Label>
                     </Form.Group>
                 </Form.Row>
@@ -395,6 +395,54 @@ const AccountDetailsList = (params) => {
                         <Form.Control.Feedback type="invalid">
                             {errors.last_name}
                         </Form.Control.Feedback>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row className="labels">
+                    <Form.Group as={Row} md="12">
+                        <Form.Label>Username</Form.Label>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row className="inputs">
+                    <Form.Group>
+                        <Form.Control
+                            disabled
+                            name="username"
+                            type="text"
+                            placeholder="Username"
+                            defaultValue={user.username}
+                        />
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row className="labels">
+                    <Form.Group as={Row} md="12">
+                        <Form.Label>Email Address</Form.Label>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row className="inputs">
+                    <Form.Group>
+                        <Form.Control
+                            disabled
+                            name="email_address"
+                            type="text"
+                            placeholder="***@***.***"
+                            defaultValue={user.email}
+                        />
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row className="labels">
+                    <Form.Group as={Row} md="12">
+                        <Form.Label>Phone Number</Form.Label>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row className="inputs">
+                    <Form.Group>
+                        <Form.Control
+                            disabled
+                            name="phone_number"
+                            type="text"
+                            placeholder="### ### ####"
+                            defaultValue={user.phone_number}
+                        />
                     </Form.Group>
                 </Form.Row>
                 <Form.Row className="buttons">
