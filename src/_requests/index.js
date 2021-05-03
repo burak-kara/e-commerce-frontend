@@ -92,6 +92,19 @@ const getItemsBySearch = (search) =>
         path: `${API}items/search?search=${search}`,
     });
 
+const getItemsByCategoryBrandSortSearch = (data) => {
+    const { category, brand, ordering, search } = data;
+    const cat = category.replaceAll('-', '');
+    let path = `${API}items/search?`;
+    path += cat ? `category=${cat}&` : '';
+    path += search ? `search=${search}&` : '';
+    path += brand ? `brand=${brand}&` : '';
+    path += ordering ? `ordering=${ordering}&` : '';
+    return getRequest({
+        path,
+    });
+};
+
 const postNewItem = (data) =>
     postRequest({
         path: `${API}items/`,
@@ -179,6 +192,13 @@ const getAddressesByUserID = (id) =>
         path: `${API}addresses/${id}/`,
     });
 
+const getBrandsByCategory = (category) => {
+    const cat = category.replaceAll('-', '');
+    return getRequest({
+        path: `${API}brands/${cat}/`,
+    });
+};
+
 export {
     register,
     login,
@@ -204,4 +224,6 @@ export {
     deleteReview,
     getAddressesByUserID,
     getItemsBySearch,
+    getBrandsByCategory,
+    getItemsByCategoryBrandSortSearch,
 };

@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { connect, useStore } from 'react-redux';
-import { ComponentLoading } from './Loading';
 import { BasketIcon, Delete, Edit, Favorite } from '../_utilities/icons';
 import StarMaker from './StarMaker';
 import { logo } from '../_assets';
-import { getAllReviewsByItem } from '../_requests';
 import { openAlert } from '../_redux/actions';
 
 const ProductCard = (props) => {
@@ -20,43 +18,10 @@ const ProductCard = (props) => {
         handleBottom,
         handleCard,
         isPreview,
+        mean_rating,
     } = props;
     const { user } = useStore().getState();
     const isPM = user?.is_product_manager;
-    const [rating, setRating] = useState(0);
-    const [loading, setLoading] = useState(false);
-
-    const calculateRating = (rev) => {
-        if (rev) {
-            let sum = 0;
-            let count = 0;
-            rev.forEach((review) => {
-                if (review.is_approved) {
-                    sum += parseInt(review.rating, 10);
-                    count += 1;
-                }
-            });
-            setRating(sum / count);
-        }
-    };
-
-    useEffect(() => {
-        if (id) {
-            setLoading(true);
-            getAllReviewsByItem(id)
-                .then((response) => {
-                    calculateRating(response.data);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    props.openAlert({
-                        message: 'Error while fetching item reviews!',
-                        severity: 'error',
-                    });
-                    setLoading(false);
-                });
-        }
-    }, []);
 
     const getImageContainer = () => {
         const img = <img src={image || logo} alt="product" className={image ? 'image' : 'logo'} />;
@@ -75,14 +40,14 @@ const ProductCard = (props) => {
         );
     };
 
-    const getUpperIcon = () => {
+    const UpperIcon = () => {
         if (isPreview) {
             return null;
         }
         return isPM ? <Delete size="2em" /> : <Favorite size="2em" />;
     };
 
-    const getBottomIcon = () => {
+    const BottomIcon = () => {
         if (isPreview) {
             return null;
         }
@@ -94,7 +59,7 @@ const ProductCard = (props) => {
             {getImageContainer()}
             <div className="details">
                 <div className="star-container">
-                    {loading ? <ComponentLoading /> : <StarMaker rating={isPM ? 0 : rating || 0} />}
+                    <StarMaker rating={mean_rating || 0} />
                 </div>
                 <div className="upper-container">
                     <button
@@ -102,7 +67,7 @@ const ProductCard = (props) => {
                         type="button"
                         onClick={() => handleUpper(id)}
                     >
-                        {getUpperIcon()}
+                        <UpperIcon />
                     </button>
                 </div>
                 <div className="name-container">{name || 'Not Found'}</div>
@@ -118,7 +83,7 @@ const ProductCard = (props) => {
                         type="button"
                         onClick={() => handleBottom(id)}
                     >
-                        {getBottomIcon()}
+                        <BottomIcon />
                     </button>
                 </div>
                 <div className="campaign-container">{campaign}</div>
