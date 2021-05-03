@@ -14,7 +14,7 @@ const initialState = {
 const user = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER: {
-            const { pk, username, first_name, last_name, email } = action.payload;
+            const { pk, username, first_name, last_name, email, phone_number } = action.payload;
             return {
                 ...state,
                 pk,
@@ -22,6 +22,7 @@ const user = (state = initialState, action) => {
                 first_name,
                 last_name,
                 email,
+                phone_number
             };
         }
         case SET_USER_DETAIL: {
