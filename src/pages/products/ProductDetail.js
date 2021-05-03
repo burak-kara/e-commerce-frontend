@@ -16,23 +16,6 @@ const ProductDetail = (params) => {
     const [item, setItem] = useState();
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [rating, setRating] = useState(0);
-    const [ratingCount, setRatingCount] = useState();
-
-    const calculateRating = (rev) => {
-        if (rev) {
-            let sum = 0;
-            let count = 0;
-            rev.forEach((review) => {
-                if (review.is_approved) {
-                    sum += parseInt(review.rating, 10);
-                    count += 1;
-                }
-            });
-            setRatingCount(count);
-            setRating(sum / count);
-        }
-    };
 
     useEffect(() => {
         setLoading(true);
@@ -54,7 +37,6 @@ const ProductDetail = (params) => {
             getAllReviewsByItem(id)
                 .then((response) => {
                     setReviews(response.data);
-                    calculateRating(response.data);
                 })
                 .catch(() => {
                     params.openAlert({
@@ -110,12 +92,12 @@ const ProductDetail = (params) => {
                             <Row className="upper-row">
                                 <Col xs={12} xl={12} className="star-col">
                                     <div className="star-container">
-                                        <StarMaker rating={rating || 0} size="28px" />
+                                        <StarMaker rating={item.mean_rating || 0} size="28px" />
                                     </div>
                                 </Col>
                                 <Col xs={12} xl={12} className="reviews-col">
                                     <div>
-                                        <span>{ratingCount || 0} Reviews</span>
+                                        <span>{item.review_count || 0} Reviews</span>
                                     </div>
                                 </Col>
                             </Row>
@@ -174,42 +156,40 @@ const ProductDetail = (params) => {
     const Reviews = () => {
         const list = [];
         reviews.forEach((review) => {
-            if (review.is_approved) {
-                const { title, comment, date } = review;
-                list.push(
-                    <ListGroup.Item className="list-item" key={review.id}>
-                        <Container fluid className="list-item-container">
-                            <Row className="list-item-container-row">
-                                <Col xs={6} xl={6} className="list-col title mb-3 mb-xl-2">
-                                    <div>
-                                        <span>{title}</span>
-                                    </div>
-                                </Col>
-                                <Col xs={6} xl={6} className="list-col star-col mb-xl-2">
-                                    <StarMaker rating={review.rating || 0} />
-                                </Col>
-                                <Col xs={12} xl={12} className="list-col comment-col mb-3 mb-xl-2">
-                                    <Form.Control
-                                        as="textarea"
-                                        rows={4}
-                                        required
-                                        name="specs"
-                                        type="text"
-                                        readOnly
-                                        defaultValue={comment}
-                                        className="comment"
-                                    />
-                                </Col>
-                                <Col xs={12} xl={12} className="list-col date-col">
-                                    <div>
-                                        <span>{moment(date).format('MMMM Do YYYY, h:mm a')}</span>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </Container>
-                    </ListGroup.Item>,
-                );
-            }
+            const { title, comment, date } = review;
+            list.push(
+                <ListGroup.Item className="list-item" key={review.id}>
+                    <Container fluid className="list-item-container">
+                        <Row className="list-item-container-row">
+                            <Col xs={6} xl={6} className="list-col title mb-3 mb-xl-2">
+                                <div>
+                                    <span>{title}</span>
+                                </div>
+                            </Col>
+                            <Col xs={6} xl={6} className="list-col star-col mb-xl-2">
+                                <StarMaker rating={review.rating || 0} />
+                            </Col>
+                            <Col xs={12} xl={12} className="list-col comment-col mb-3 mb-xl-2">
+                                <Form.Control
+                                    as="textarea"
+                                    rows={4}
+                                    required
+                                    name="specs"
+                                    type="text"
+                                    readOnly
+                                    defaultValue={comment}
+                                    className="comment"
+                                />
+                            </Col>
+                            <Col xs={12} xl={12} className="list-col date-col">
+                                <div>
+                                    <span>{moment(date).format('MMMM Do YYYY, h:mm a')}</span>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Container>
+                </ListGroup.Item>,
+            );
         });
         return list;
     };
@@ -238,19 +218,21 @@ const ProductDetail = (params) => {
                     <Detail />
                 </Col>
             </Row>
-            <Row>
-                <Col
-                    className="reviews-page-col"
-                    xs={{ span: 12, offset: 0 }}
-                    md={{ span: 6, offset: 3 }}
-                    xl={{ span: 6, offset: 3 }}
-                >
-                    <Form.Label>Reviews</Form.Label>
-                    <ListGroup variant="flush">
-                        <Reviews />
-                    </ListGroup>
-                </Col>
-            </Row>
+            {reviews.length === 0 ? null : (
+                <Row>
+                    <Col
+                        className="reviews-page-col"
+                        xs={{ span: 12, offset: 0 }}
+                        md={{ span: 6, offset: 3 }}
+                        xl={{ span: 6, offset: 3 }}
+                    >
+                        <Form.Label>Reviews</Form.Label>
+                        <ListGroup variant="flush">
+                            <Reviews />
+                        </ListGroup>
+                    </Col>
+                </Row>
+            )}
         </Container>
     );
 };

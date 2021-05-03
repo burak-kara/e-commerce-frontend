@@ -8,7 +8,6 @@ import { openAlert, setUser, setUserDetail } from '../../_redux/actions';
 import { Hide, Show } from '../../_utilities/icons';
 import {
     noneError,
-    emailRegex,
     passwordRegex,
     PROFILE,
     TIME_OUT
@@ -27,8 +26,6 @@ const AccountDetailsList = (params) => {
     const [userAddresses, setUserAddresses] = useState([]);
     const [userUpdatedAddresses, setUserUpdatedAddresses] = useState('');
 
-    console.log(user);
-
     const [passwordForm, setPasswordForm] = useState({
         new_password1: '',
         new_password2: '',
@@ -36,7 +33,9 @@ const AccountDetailsList = (params) => {
     });
 
     useEffect(() => {
-        setUserAddresses(user.addresses ? user.addresses.replaceAll("'", '').split(', ') : []);
+        setUserAddresses(user.addresses ? user.addresses
+            .replaceAll("'", '')
+            .split(',') : []);
     }, []);
 
     // possible fix for the Form.Control component losing focus?
@@ -45,11 +44,8 @@ const AccountDetailsList = (params) => {
     // }, [userUpdatedAddresses]);
 
     const [errors, setErrors] = useState({
-        email: noneError,
-        username: noneError,
         first_name: noneError,
         last_name: noneError,
-        phone_number: noneError,
         addresses: noneError
     });
 
@@ -92,28 +88,6 @@ const AccountDetailsList = (params) => {
         else if (userNewSurname.length > 16) errors.last_name = 'Surname is too long!';
         else errors.last_name = noneError;
 
-        // username errors
-        if (!user.username) errors.username = 'Please provide a valid username!';
-        else if (user.username === '' || user.username.length < 5)
-            errors.username = 'Username should be at least 5 characters';
-        else if (user.username.length > 12)
-            errors.username = 'Username should be at max 12 characters!';
-        else
-            errors.username = noneError;
-
-        // email errors
-        if (!user.email || user.email === '')
-            errors.email = 'Please provide a valid email address!';
-        else if (user.email.length > 30) errors.email = 'Email is too long!';
-        else if (!emailRegex.test(user.email)) errors.email = 'Invalid email!';
-        else errors.email = noneError;
-
-        // phone_number errors
-        if (!user.phone_number || user.phone_number === '' || user.phone_number.length !== 13)
-            errors.phone_number = 'Please provide a valid phone number!';
-        else
-            errors.phone_number = noneError;
-
         return errors;
     };
 
@@ -132,22 +106,22 @@ const AccountDetailsList = (params) => {
 
         // password errors
         //  TODO: check the password somewhere else
-        if (!passwordForm.newPassword1 || passwordForm.newPassword1 === '')
-            errors.password = 'Please provide a valid password!';
-        else if (!passwordRegex.test(passwordForm.newPassword1))
-            errors.password =
+        if (!passwordForm.new_password1 || passwordForm.new_password1 === '')
+            passwordErrors.new_password1 = 'Please provide a valid password!';
+        else if (!passwordRegex.test(passwordForm.new_password1))
+            passwordErrors.new_password1 =
                 'Password should contain at least one number and one special character!';
 
-        if (!passwordForm.newPassword2 || passwordForm.newPassword2 === '')
-            errors.password = 'Please provide a valid password!';
-        else if (!passwordRegex.test(passwordForm.newPassword2))
-            errors.password =
+        if (!passwordForm.new_password2 || passwordForm.new_password2 === '')
+            passwordErrors.new_password2 = 'Please provide a valid password!';
+        else if (!passwordRegex.test(passwordForm.new_password2))
+            passwordErrors.new_password2 =
                 'Password should contain at least one number and one special character!';
 
-        if (!passwordForm.oldPassword || passwordForm.oldPassword === '')
-            errors.password = 'Please provide a valid password!';
-        else if (!passwordRegex.test(passwordForm.oldPassword))
-            errors.password =
+        if (!passwordForm.old_password || passwordForm.old_password === '')
+            passwordErrors.old_password = 'Please provide a valid password!';
+        else if (!passwordRegex.test(passwordForm.old_password))
+            passwordErrors.old_password =
                 'Password should contain at least one number and one special character!';
 
         return passwordErrors;
@@ -174,8 +148,9 @@ const AccountDetailsList = (params) => {
         };
 
         Object.keys(serverErrors).forEach((key) => {
-            // eslint-disable-next-line prefer-destructuring
-            newErrors[key] = serverErrors[key][0];
+            Object.keys(serverErrors[key]).forEach((value) => {
+                newErrors[key] = value;
+            });
         });
         return newErrors;
     };
@@ -265,7 +240,7 @@ const AccountDetailsList = (params) => {
         userAddresses[addressName.substr(index, addressName.length)] = updatedAddress;
         let updatedAddresses = '';
         Object.values(userAddresses).forEach((value) => {
-            const currentAddress = `'${value}', `;
+            const currentAddress = `'${value}',`;
             updatedAddresses += currentAddress;
         });
         updatedAddresses = updatedAddresses.substring(0, updatedAddresses.lastIndexOf(`'`) + 1);
@@ -332,13 +307,12 @@ const AccountDetailsList = (params) => {
 
     const ListItems = () => {
         const list = [];
-        let addressIndex = 0;
         if (userAddresses) {
-            userAddresses.forEach((address) => {
+            userAddresses.forEach((address, index) => {
                 list.push(
-                    <ListGroup.Item className="address-textbox" key={addressIndex}>
+                    <ListGroup.Item className="address-textbox" key={`address-${address.length}`}>
                         <Form.Control
-                            name={`address${addressIndex}`}
+                            name={`address${index}`}
                             type="text"
                             placeholder="User Address"
                             defaultValue={address}
@@ -346,12 +320,11 @@ const AccountDetailsList = (params) => {
                         />
                     </ListGroup.Item>,
                 );
-                addressIndex += 1;
             });
             list.push(
-                <ListGroup.Item className="address-textbox" key={addressIndex}>
+                <ListGroup.Item className="address-textbox" key="empty">
                     <Form.Control
-                        name={`address${addressIndex}`}
+                        name="newAddress"
                         type="text"
                         placeholder="Enter new address"
                         defaultValue={userNewAddress}
@@ -391,10 +364,10 @@ const AccountDetailsList = (params) => {
                     <h3>User Details</h3>
                 </Form.Row>
                 <Form.Row className="labels">
-                    <Form.Group as={Row} md="12">
+                    <Form.Group as={Row} md="6">
                         <Form.Label>First Name</Form.Label>
                     </Form.Group>
-                    <Form.Group as={Row} md="12">
+                    <Form.Group as={Row} md="6">
                         <Form.Label>Last Name</Form.Label>
                     </Form.Group>
                 </Form.Row>
