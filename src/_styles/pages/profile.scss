@@ -2,9 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    margin: 5% 0px 5% 0px;
+    height: fit-content;
 
     .page-title {
         display: flex;
@@ -46,7 +45,6 @@
             }
         }
         
-
         .buttons {
             display: flex;
             flex-direction: row;
@@ -124,8 +122,6 @@
         justify-content: center;
         align-items: center;
         height: fit-content;
-        overflow-x: hidden;
-        overflow-y: hidden;
     
         .page-title {
             display: flex;

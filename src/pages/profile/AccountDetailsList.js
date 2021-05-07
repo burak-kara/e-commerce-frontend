@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
 import { Form, Col, InputGroup, ListGroup } from 'react-bootstrap';
-import { ComponentLoading, PageLoading, UserAddresses } from '../../components';
+import { ComponentLoading, UserAddresses } from '../../components';
 import { updateUserInformation, changePassword, getUserDetail } from '../../_requests';
 import { openAlert, setUser, setUserDetail } from '../../_redux/actions';
 import { Hide, Show } from '../../_utilities/icons';
@@ -65,17 +65,19 @@ const AccountDetailsList = (params) => {
     const findErrors = () => {
 
         // first_name errors
-        if (!userNewName || userNewName === '')
+        const userNameToCheck = userNewName === '' ? user.first_name : userNewName;
+        if (!userNameToCheck || userNameToCheck === '')
             errors.first_name = 'Please provide a valid name!';
-        else if (userNewName.length < 2) errors.first_name = 'Name is too short!';
-        else if (userNewName.length > 16) errors.first_name = 'Name is too long!';
+        else if (userNameToCheck.length < 2) errors.first_name = 'Name is too short!';
+        else if (userNameToCheck.length > 16) errors.first_name = 'Name is too long!';
         else errors.first_name = noneError;
 
         // last_name errors
-        if (!userNewSurname || userNewSurname === '')
+        const userSurNameToCheck = userNewSurname === '' ? user.last_name : userNewSurname;
+        if (!userSurNameToCheck || userSurNameToCheck === '')
             errors.last_name = 'Please provide a valid surname!';
-        else if (userNewSurname.length < 2) errors.last_name = 'Surname is too short!';
-        else if (userNewSurname.length > 16) errors.last_name = 'Surname is too long!';
+        else if (userSurNameToCheck.length < 2) errors.last_name = 'Surname is too short!';
+        else if (userSurNameToCheck.length > 16) errors.last_name = 'Surname is too long!';
         else errors.last_name = noneError;
 
         return errors;
@@ -150,8 +152,8 @@ const AccountDetailsList = (params) => {
             username: user.username,
             email: user.email,
             phone_number: user.phone_number,
-            first_name: userNewName,
-            last_name: userNewSurname,
+            first_name: userNewName === '' ? user.first_name : userNewName,
+            last_name: userNewSurname === '' ? user.last_name : userNewSurname,
             addresses: user.addresses
         };
 
@@ -238,20 +240,23 @@ const AccountDetailsList = (params) => {
     }
 
     const updateAddressesWithNewAddress = (newAddress, addressName) => {
-        const index = addressName.lastIndexOf('s') + 1;
-        let updatedAddresses = '';
-        const addressType = addressName.substr(index, addressName.length);
-        if (addressType === 'New') {
-            const newAddressList = userAddresses;
-            newAddressList.push(newAddress);
-            Object.values(newAddressList).forEach((value) => {
-                const currentAddress = `'${value}',`;
-                updatedAddresses += currentAddress;
-            });
-            updatedAddresses = updatedAddresses.substring(0, updatedAddresses.lastIndexOf(`'`) + 1);
+        if (newAddress && newAddress !== '') {
+            const index = addressName.lastIndexOf('s') + 1;
+            let updatedAddresses = '';
+            const addressType = addressName.substr(index, addressName.length);
+            if (addressType === 'New') {
+                const newAddressList = userAddresses;
+                newAddressList.push(newAddress);
+                Object.values(newAddressList).forEach((value) => {
+                    const currentAddress = `'${value}',`;
+                    updatedAddresses += currentAddress;
+                });
+                updatedAddresses = updatedAddresses
+                    .substring(0, updatedAddresses.lastIndexOf(`'`) + 1);
+                setUserUpdatedAddresses(updatedAddresses);
+            }
             setUserUpdatedAddresses(updatedAddresses);
         }
-        setUserUpdatedAddresses(updatedAddresses);
     }
 
     const updateUserAddresses = () => {
@@ -263,8 +268,6 @@ const AccountDetailsList = (params) => {
             last_name: user.last_name,
             addresses: userUpdatedAddresses
         };
-
-        console.log(userAddresses);
 
         //  Use BE to update PW instead of logging it here.
         setLoading(true);
@@ -319,23 +322,25 @@ const AccountDetailsList = (params) => {
         let addressIndex = 0;
         if (userAddresses) {
             userAddresses.forEach((address, index) => {
-                list.push(
-                    <ListGroup.Item
-                        header={`Address ${index + 1}`}
-                        className="address-textbox"
-                        key={`address-${addressIndex}`}
-                    >
-                        <UserAddresses
-                            index={index}
-                            address={address}
-                            updateUserAddress={updateUserAddress}
-                            placeHolder="User Address"
-                            componentIndex={addressIndex}
+                if (address !== '') {
+                    list.push(
+                        <ListGroup.Item
+                            header={`Address ${index + 1}`}
+                            className="address-textbox"
                             key={`address-${addressIndex}`}
-                        />
-                    </ListGroup.Item>
-                );
-                addressIndex += 1;
+                        >
+                            <UserAddresses
+                                index={index}
+                                address={address}
+                                updateUserAddress={updateUserAddress}
+                                placeHolder="User Address"
+                                componentIndex={addressIndex}
+                                key={`address-${addressIndex}`}
+                            />
+                        </ListGroup.Item>
+                    );
+                    addressIndex += 1;
+                }
             });
             list.push(
                 <ListGroup.Item className="address-textbox" key="new-address">
@@ -373,7 +378,14 @@ const AccountDetailsList = (params) => {
     };
 
     const renderAddressesContent = () => userAddresses.length < 1
-        ? <PageLoading /> : <ListAddresses />;
+        ? <UserAddresses
+            index="New"
+            address={userNewAddress}
+            updateUserAddress={updateAddressesWithNewAddress}
+            placeHolder="Enter new address"
+            componentIndex="new"
+            key='address-new'
+        /> : <ListAddresses />;
 
     return (
         <div className="account-info-page" key="profile-page">
