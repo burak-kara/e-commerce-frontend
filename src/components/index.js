@@ -7,6 +7,7 @@ import Alert from './Alert';
 import BasketProductCard from './BasketProductCard';
 import { ComponentLoading, PageLoading } from './Loading';
 import OrderCard from './OrderCard';
+import UserAddresses from './UserAddresses';
 
 export {
     Navigation,
@@ -19,4 +20,5 @@ export {
     BasketProductCard,
     OrderCard,
     ProductCardEmpty,
+    UserAddresses,
 };

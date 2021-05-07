@@ -8,10 +8,10 @@ import { openAlert } from '../../_redux/actions';
 const Profile = () => {
 
     const renderUserInfo = () =>
-        <AccountDetailsList />
+        <AccountDetailsList key="profilePageDetails" />
 
     return (
-        <Container>
+        <Container key="profilePage">
             <Row>
                 <Col>
                     {renderUserInfo()}

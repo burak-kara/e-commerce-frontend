@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
-import { Form, Col, Row, InputGroup, ListGroup } from 'react-bootstrap';
-import { ComponentLoading, PageLoading } from '../../components';
+import { Form, Col, InputGroup, ListGroup } from 'react-bootstrap';
+import { ComponentLoading, PageLoading, UserAddresses } from '../../components';
 import { updateUserInformation, changePassword, getUserDetail } from '../../_requests';
 import { openAlert, setUser, setUserDetail } from '../../_redux/actions';
 import { Hide, Show } from '../../_utilities/icons';
@@ -39,9 +39,9 @@ const AccountDetailsList = (params) => {
     }, []);
 
     // possible fix for the Form.Control component losing focus?
-    // useEffect(() => {
-    //     console.log(userUpdatedAddresses);
-    // }, [userUpdatedAddresses]);
+    useEffect(() => {
+
+    }, [userUpdatedAddresses]);
 
     const [errors, setErrors] = useState({
         first_name: noneError,
@@ -61,16 +61,6 @@ const AccountDetailsList = (params) => {
             [field]: value,
         });
     };
-
-    /*
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
-    */
 
     const findErrors = () => {
 
@@ -162,7 +152,7 @@ const AccountDetailsList = (params) => {
             phone_number: user.phone_number,
             first_name: userNewName,
             last_name: userNewSurname,
-            addresses: userAddresses
+            addresses: user.addresses
         };
 
         //  Use BE to update PW instead of logging it here.
@@ -247,6 +237,23 @@ const AccountDetailsList = (params) => {
         setUserUpdatedAddresses(updatedAddresses);
     }
 
+    const updateAddressesWithNewAddress = (newAddress, addressName) => {
+        const index = addressName.lastIndexOf('s') + 1;
+        let updatedAddresses = '';
+        const addressType = addressName.substr(index, addressName.length);
+        if (addressType === 'New') {
+            const newAddressList = userAddresses;
+            newAddressList.push(newAddress);
+            Object.values(newAddressList).forEach((value) => {
+                const currentAddress = `'${value}',`;
+                updatedAddresses += currentAddress;
+            });
+            updatedAddresses = updatedAddresses.substring(0, updatedAddresses.lastIndexOf(`'`) + 1);
+            setUserUpdatedAddresses(updatedAddresses);
+        }
+        setUserUpdatedAddresses(updatedAddresses);
+    }
+
     const updateUserAddresses = () => {
         const newUserInfo = {
             username: user.username,
@@ -256,6 +263,8 @@ const AccountDetailsList = (params) => {
             last_name: user.last_name,
             addresses: userUpdatedAddresses
         };
+
+        console.log(userAddresses);
 
         //  Use BE to update PW instead of logging it here.
         setLoading(true);
@@ -305,31 +314,46 @@ const AccountDetailsList = (params) => {
         updateUserAddresses();
     }
 
-    const ListItems = () => {
+    const ListAddresses = () => {
         const list = [];
+        let addressIndex = 0;
         if (userAddresses) {
             userAddresses.forEach((address, index) => {
                 list.push(
-                    <ListGroup.Item className="address-textbox" key={`address-${address.length}`}>
-                        <Form.Control
-                            name={`address${index}`}
-                            type="text"
-                            placeholder="User Address"
-                            defaultValue={address}
-                            onChange={(e) => updateUserAddress(e.target.value, e.target.name)}
+                    <ListGroup.Item
+                        header={`Address ${index + 1}`}
+                        className="address-textbox"
+                        key={`address-${addressIndex}`}
+                    >
+                        <UserAddresses
+                            index={index}
+                            address={address}
+                            updateUserAddress={updateUserAddress}
+                            placeHolder="User Address"
+                            componentIndex={addressIndex}
+                            key={`address-${addressIndex}`}
                         />
-                    </ListGroup.Item>,
+                    </ListGroup.Item>
                 );
+                addressIndex += 1;
             });
             list.push(
-                <ListGroup.Item className="address-textbox" key="empty">
-                    <Form.Control
+                <ListGroup.Item className="address-textbox" key="new-address">
+                    <UserAddresses
+                        index="New"
+                        address={userNewAddress}
+                        updateUserAddress={updateAddressesWithNewAddress}
+                        placeHolder="Enter new address"
+                        componentIndex="new"
+                        key={`address-${addressIndex}`}
+                    />
+                    {/* <Form.Control
                         name="newAddress"
                         type="text"
                         placeholder="Enter new address"
                         defaultValue={userNewAddress}
                         onChange={(e) => setUserNewAddress(e.target.value)}
-                    />
+                    /> */}
                 </ListGroup.Item>
             );
         }
@@ -348,14 +372,16 @@ const AccountDetailsList = (params) => {
         setShowOldPassword(!showOldPassword);
     };
 
-    const renderAddressesContent = () => userAddresses.length < 1 ? <PageLoading /> : <ListItems />;
+    const renderAddressesContent = () => userAddresses.length < 1
+        ? <PageLoading /> : <ListAddresses />;
 
     return (
-        <div className="account-info-page">
+        <div className="account-info-page" key="profile-page">
             <Form
                 className="form-container col-lg-3 col-md-6 col-sm-10 col-12"
                 noValidate
                 onSubmit={updateUser}
+                key="profilePageDetailUpdateForm"
             >
                 <Form.Row className="page-title">
                     <h1>Account Information</h1>
@@ -363,17 +389,11 @@ const AccountDetailsList = (params) => {
                 <Form.Row className="page-title">
                     <h3>User Details</h3>
                 </Form.Row>
-                <Form.Row className="labels">
-                    <Form.Group as={Row} md="12">
+                <Form.Row className="input-row">
+                    <Form.Group md="12" controlId="firstNameInput">
                         <Form.Label>First Name</Form.Label>
-                    </Form.Group>
-                    <Form.Group as={Row} md="12">
-                        <Form.Label>Last Name</Form.Label>
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row className="inputs">
-                    <Form.Group as={Row} md="12" controlId="firstNameInput">
                         <Form.Control
+                            className="input-details"
                             name="first_name"
                             type="text"
                             placeholder="Firstname"
@@ -384,8 +404,10 @@ const AccountDetailsList = (params) => {
                             {errors.first_name}
                         </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group as={Row} md="12" controlId="lastNameInput">
+                    <Form.Group md="12" controlId="lastNameInput">
+                        <Form.Label>Last Name</Form.Label>
                         <Form.Control
+                            className="input-details"
                             name="last_name"
                             type="text"
                             placeholder="Lastname"
@@ -397,14 +419,11 @@ const AccountDetailsList = (params) => {
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Form.Row>
-                <Form.Row className="labels">
-                    <Form.Group as={Row} md="12">
+                <Form.Row className="input-row">
+                    <Form.Group md="12" controlId="userNameInput">
                         <Form.Label>Username</Form.Label>
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row className="inputs">
-                    <Form.Group>
                         <Form.Control
+                            className="input-details"
                             disabled
                             name="username"
                             type="text"
@@ -413,14 +432,11 @@ const AccountDetailsList = (params) => {
                         />
                     </Form.Group>
                 </Form.Row>
-                <Form.Row className="labels">
-                    <Form.Group as={Row} md="12">
+                <Form.Row className="input-row">
+                    <Form.Group md="12" className="" controlId="emailAddressInput">
                         <Form.Label>Email Address</Form.Label>
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row className="inputs">
-                    <Form.Group>
                         <Form.Control
+                            className="input-details"
                             disabled
                             name="email_address"
                             type="text"
@@ -429,14 +445,11 @@ const AccountDetailsList = (params) => {
                         />
                     </Form.Group>
                 </Form.Row>
-                <Form.Row className="labels">
-                    <Form.Group as={Row} md="12">
+                <Form.Row className="input-row">
+                    <Form.Group md="12" controlId="phoneNumberInput">
                         <Form.Label>Phone Number</Form.Label>
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row className="inputs">
-                    <Form.Group>
                         <Form.Control
+                            className="input-details"
                             disabled
                             name="phone_number"
                             type="text"
@@ -460,9 +473,7 @@ const AccountDetailsList = (params) => {
                 </Form.Row>
                 <Form.Row className="address-list">
                     <Form.Group as={Col} md="12">
-                        <ListGroup variant="flush" className="address-textbox">
-                            {renderAddressesContent()}
-                        </ListGroup>
+                        <ListGroup variant="flush">{renderAddressesContent()}</ListGroup>
                     </Form.Group>
                 </Form.Row>
                 <Form.Row className="buttons">
@@ -478,7 +489,7 @@ const AccountDetailsList = (params) => {
                 <Form.Row className="page-title">
                     <h3>Password</h3>
                 </Form.Row>
-                <Form.Row className="inputs">
+                <Form.Row className="input-row">
                     <Form.Group as={Col} md="12">
                         <InputGroup className="password-input-group">
                             <Form.Control

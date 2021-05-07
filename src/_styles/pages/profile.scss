@@ -28,16 +28,24 @@
             min-width: fit-content;
         }
 
-        .inputs {
+        .input-row {
             display: flex;
-            flex-direction: row;
             justify-content: space-evenly;
             align-items: center;
+
+            .input-details {
+                display: block;
+                justify-content: center;
+                align-items: center;
+                min-width: 250px;
+                max-width: 250px;
+            }    
 
             .password-input-group {
                 justify-content: center;
             }
         }
+        
 
         .buttons {
             display: flex;
@@ -112,7 +120,6 @@
 
 @media only screen and (max-width: 576px) {
     .account-info-page {
-        margin: 5px auto;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -129,7 +136,7 @@
         .form-container {
             height: fit-content;
             min-width: 70%;
-            padding: 50px;
+            padding: 5px;
             border-radius: 20px;
             background-color: $header-bg;
             box-shadow: 0 0 5px 0 $header-bg-shadow;
@@ -137,11 +144,31 @@
             .labels{
                 display: flex;
                 flex-direction: row;
-                justify-content: space-around;
+                justify-content: space-evenly;
                 align-items: center;
+                min-width: fit-content;
             }
     
-            .name-inputs {
+            .input-row {
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+    
+                .input-details {
+                    display: block;
+                    justify-content: center;
+                    align-items: center;
+                    min-width: 250px;
+                    max-width: 250px;
+                }    
+    
+                .password-input-group {
+                    justify-content: center;
+                }
+            }
+            
+    
+            .buttons {
                 display: flex;
                 flex-direction: row;
                 justify-content: space-around;
@@ -157,10 +184,6 @@
                 .address-textbox {
                     background-color: #f4f4f2;
                 }
-            }
-
-            .password-textbox {
-                min-width: 70%;
             }
     
             .logo-container {
@@ -178,6 +201,11 @@
                         max-height: 100px;
                     }
                 }
+            }
+    
+            .password-textbox {
+                min-width: 250px;
+                max-width: 250px;
             }
     
             .password_btn {
