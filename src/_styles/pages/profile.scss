@@ -9,6 +9,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        text-align: center;
     }
 
     .form-container {
@@ -121,12 +122,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        margin: 5% 0px 5% 0px;
         height: fit-content;
     
         .page-title {
             display: flex;
             justify-content: center;
             align-items: center;
+            text-align: center;
         }
     
         .form-container {
