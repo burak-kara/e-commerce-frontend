@@ -100,7 +100,6 @@ const Signin = (params) => {
                         });
                 })
                 .catch((error) => {
-                    console.log(error.response.data);
                     params.openAlert({
                         message:
                             error && error.response
