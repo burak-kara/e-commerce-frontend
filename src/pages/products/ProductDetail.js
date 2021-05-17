@@ -9,6 +9,7 @@ import { PageLoading } from '../../components';
 import { BasketIcon } from '../../_utilities/icons';
 import StarMaker from '../../components/StarMaker';
 import { logo } from '../../_assets';
+import { REVIEW_APPROVED } from "../../_constants";
 
 const ProductDetail = (params) => {
     const history = useHistory();
@@ -157,39 +158,41 @@ const ProductDetail = (params) => {
         const list = [];
         reviews.forEach((review) => {
             const { title, comment, date } = review;
-            list.push(
-                <ListGroup.Item className="list-item" key={review.id}>
-                    <Container fluid className="list-item-container">
-                        <Row className="list-item-container-row">
-                            <Col xs={6} xl={6} className="list-col title mb-3 mb-xl-2">
-                                <div>
-                                    <span>{title}</span>
-                                </div>
-                            </Col>
-                            <Col xs={6} xl={6} className="list-col star-col mb-xl-2">
-                                <StarMaker rating={review.rating || 0} />
-                            </Col>
-                            <Col xs={12} xl={12} className="list-col comment-col mb-3 mb-xl-2">
-                                <Form.Control
-                                    as="textarea"
-                                    rows={4}
-                                    required
-                                    name="specs"
-                                    type="text"
-                                    readOnly
-                                    defaultValue={comment}
-                                    className="comment"
-                                />
-                            </Col>
-                            <Col xs={12} xl={12} className="list-col date-col">
-                                <div>
-                                    <span>{moment(date).format('MMMM Do YYYY, h:mm a')}</span>
-                                </div>
-                            </Col>
-                        </Row>
-                    </Container>
-                </ListGroup.Item>,
-            );
+            if (review.status === REVIEW_APPROVED) {
+                list.push(
+                    <ListGroup.Item className="list-item" key={review.id}>
+                        <Container fluid className="list-item-container">
+                            <Row className="list-item-container-row">
+                                <Col xs={6} xl={6} className="list-col title mb-3 mb-xl-2">
+                                    <div>
+                                        <span>{title}</span>
+                                    </div>
+                                </Col>
+                                <Col xs={6} xl={6} className="list-col star-col mb-xl-2">
+                                    <StarMaker rating={review.rating || 0} />
+                                </Col>
+                                <Col xs={12} xl={12} className="list-col comment-col mb-3 mb-xl-2">
+                                    <Form.Control
+                                        as="textarea"
+                                        rows={4}
+                                        required
+                                        name="specs"
+                                        type="text"
+                                        readOnly
+                                        defaultValue={comment}
+                                        className="comment"
+                                    />
+                                </Col>
+                                <Col xs={12} xl={12} className="list-col date-col">
+                                    <div>
+                                        <span>{moment(date).format('MMMM Do YYYY, h:mm a')}</span>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </ListGroup.Item>,
+                );
+            }
         });
         return list;
     };
