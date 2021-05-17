@@ -70,6 +70,18 @@ const getUserDetail = () =>
         path: `${API}user/`,
     });
 
+const updateUserInformation = (data) =>
+    putRequest({
+        path: `${API}user/`,
+        data
+    });
+
+const changePassword = (data) =>
+    postRequest({
+        path: `${AUTH}password/change/`,
+        data
+    });
+
 const getItems = () =>
     getRequest({
         path: `${API}items/`,
@@ -205,6 +217,8 @@ export {
     logout,
     getUser,
     getUserDetail,
+    updateUserInformation,
+    changePassword,
     getItems,
     getItemById,
     getItemsByCategory,
