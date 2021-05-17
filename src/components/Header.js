@@ -107,6 +107,17 @@ const Header = () => {
         });
     };
 
+    const Banner = () => {
+        let user_type = "";
+        if (user.is_product_manager) {
+            user_type = "Product Manager";
+        }
+        if (user.is_sales_manager) {
+            user_type = "Sales Manager";
+        }
+        return <div className="banner">{user_type}</div>;
+    };
+
     const RenderCommonMenu = () => (
         <>
             <NavDropdown.Item className="menu-btn" onClick={() => handleAccount()}>
@@ -192,6 +203,9 @@ const Header = () => {
 
     return (
         <div className="header-container">
+            <Container fluid="xl" className="container">
+                <Banner />
+            </Container>
             <Container fluid="xl" className="container">
                 <Navbar collapseOnSelect expand="lg" className="header">
                     <Navbar.Brand

@@ -2,15 +2,15 @@
 - customer
     - customer1
     - burak1*
-- customer
-    - buraknew3
-    - burak1*
+    - bk260597@gmail.com
 -product manager
-    - product2
+    - product
     - burak1*
+    - bk.kaara@gmail.com
 -sales manager
     - sales
     - burak1*
+    - burak.kara@ozu.edu.tr
 
 ======== .env file ========
 if you do not have .env file in your local, create .env file and copy these two lines inside it

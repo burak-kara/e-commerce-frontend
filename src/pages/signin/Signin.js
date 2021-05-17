@@ -99,9 +99,12 @@ const Signin = (params) => {
                             });
                         });
                 })
-                .catch(() => {
+                .catch((error) => {
                     params.openAlert({
-                        message: 'Wrong credentials while logging in!',
+                        message:
+                            error && error.response
+                                ? error.response.data.non_field_errors[0]
+                                : 'Wrong credentials while logging in!',
                         severity: 'error',
                     });
                 });
