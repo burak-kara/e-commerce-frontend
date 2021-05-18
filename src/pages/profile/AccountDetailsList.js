@@ -6,12 +6,7 @@ import { ComponentLoading, UserAddresses } from '../../components';
 import { updateUserInformation, changePassword, getUserDetail } from '../../_requests';
 import { openAlert, setUser, setUserDetail } from '../../_redux/actions';
 import { Hide, Show } from '../../_utilities/icons';
-import {
-    noneError,
-    passwordRegex,
-    PROFILE,
-    TIME_OUT
-} from '../../_constants';
+import { noneError, passwordRegex, PROFILE, TIME_OUT } from '../../_constants';
 
 const AccountDetailsList = (params) => {
     const history = useHistory();
@@ -33,26 +28,22 @@ const AccountDetailsList = (params) => {
     });
 
     useEffect(() => {
-        setUserAddresses(user.addresses ? user.addresses
-            .replaceAll("'", '')
-            .split(',') : []);
+        setUserAddresses(user.addresses ? user.addresses.replaceAll("'", '').split(',') : []);
     }, []);
 
     // possible fix for the Form.Control component losing focus?
-    useEffect(() => {
-
-    }, [userUpdatedAddresses]);
+    useEffect(() => {}, [userUpdatedAddresses]);
 
     const [errors, setErrors] = useState({
         first_name: noneError,
         last_name: noneError,
-        addresses: noneError
+        addresses: noneError,
     });
 
     const [passwordErrors, setPasswordErrors] = useState({
         new_password1: noneError,
         new_password2: noneError,
-        old_password: noneError
+        old_password: noneError,
     });
 
     const setPasswordFormField = (field, value) => {
@@ -63,7 +54,6 @@ const AccountDetailsList = (params) => {
     };
 
     const findErrors = () => {
-
         // first_name errors
         const userNameToCheck = userNewName === '' ? user.first_name : userNewName;
         if (!userNameToCheck || userNameToCheck === '')
@@ -95,7 +85,6 @@ const AccountDetailsList = (params) => {
     };
 
     const findPasswordErrors = () => {
-
         // password errors
         //  TODO: check the password somewhere else
         if (!passwordForm.new_password1 || passwordForm.new_password1 === '')
@@ -117,7 +106,7 @@ const AccountDetailsList = (params) => {
                 'Password should contain at least one number and one special character!';
 
         return passwordErrors;
-    }
+    };
 
     const checkAnyPasswordError = (passwordErrorList) => {
         setPasswordErrors(findPasswordErrors());
@@ -154,7 +143,7 @@ const AccountDetailsList = (params) => {
             phone_number: user.phone_number,
             first_name: userNewName === '' ? user.first_name : userNewName,
             last_name: userNewSurname === '' ? user.last_name : userNewSurname,
-            addresses: user.addresses
+            addresses: user.addresses,
         };
 
         //  Use BE to update PW instead of logging it here.
@@ -184,7 +173,7 @@ const AccountDetailsList = (params) => {
                     setLoading(false);
                 });
         }
-    }
+    };
 
     const onClickUpdateUser = () => {
         updateUser();
@@ -221,11 +210,11 @@ const AccountDetailsList = (params) => {
 
     const onChangeFirstName = (param) => {
         setUserNewName(param);
-    }
+    };
 
     const onChangeLastName = (param) => {
         setUserNewSurname(param);
-    }
+    };
 
     const updateUserAddress = (updatedAddress, addressName) => {
         const index = addressName.lastIndexOf('s') + 1;
@@ -237,7 +226,7 @@ const AccountDetailsList = (params) => {
         });
         updatedAddresses = updatedAddresses.substring(0, updatedAddresses.lastIndexOf(`'`) + 1);
         setUserUpdatedAddresses(updatedAddresses);
-    }
+    };
 
     const updateAddressesWithNewAddress = (newAddress, addressName) => {
         if (newAddress && newAddress !== '') {
@@ -251,13 +240,15 @@ const AccountDetailsList = (params) => {
                     const currentAddress = `'${value}',`;
                     updatedAddresses += currentAddress;
                 });
-                updatedAddresses = updatedAddresses
-                    .substring(0, updatedAddresses.lastIndexOf(`'`) + 1);
+                updatedAddresses = updatedAddresses.substring(
+                    0,
+                    updatedAddresses.lastIndexOf(`'`) + 1,
+                );
                 setUserUpdatedAddresses(updatedAddresses);
             }
             setUserUpdatedAddresses(updatedAddresses);
         }
-    }
+    };
 
     const updateUserAddresses = () => {
         const newUserInfo = {
@@ -266,7 +257,7 @@ const AccountDetailsList = (params) => {
             phone_number: user.phone_number,
             first_name: user.first_name,
             last_name: user.last_name,
-            addresses: userUpdatedAddresses
+            addresses: userUpdatedAddresses,
         };
 
         //  Use BE to update PW instead of logging it here.
@@ -307,7 +298,7 @@ const AccountDetailsList = (params) => {
                 setErrors(serverErrors);
                 setLoading(false);
             });
-    }
+    };
 
     const onClickUpdateAddresses = () => {
         if (userNewAddress && userNewAddress !== '') {
@@ -315,7 +306,7 @@ const AccountDetailsList = (params) => {
         }
         setUserNewAddress('');
         updateUserAddresses();
-    }
+    };
 
     const ListAddresses = () => {
         const list = [];
@@ -337,7 +328,7 @@ const AccountDetailsList = (params) => {
                                 componentIndex={addressIndex}
                                 key={`address-${addressIndex}`}
                             />
-                        </ListGroup.Item>
+                        </ListGroup.Item>,
                     );
                     addressIndex += 1;
                 }
@@ -359,7 +350,7 @@ const AccountDetailsList = (params) => {
                         defaultValue={userNewAddress}
                         onChange={(e) => setUserNewAddress(e.target.value)}
                     /> */}
-                </ListGroup.Item>
+                </ListGroup.Item>,
             );
         }
         return list;
@@ -377,15 +368,19 @@ const AccountDetailsList = (params) => {
         setShowOldPassword(!showOldPassword);
     };
 
-    const renderAddressesContent = () => userAddresses.length < 1
-        ? <UserAddresses
-            index="New"
-            address={userNewAddress}
-            updateUserAddress={updateAddressesWithNewAddress}
-            placeHolder="Enter new address"
-            componentIndex="new"
-            key='address-new'
-        /> : <ListAddresses />;
+    const renderAddressesContent = () =>
+        userAddresses.length < 1 ? (
+            <UserAddresses
+                index="New"
+                address={userNewAddress}
+                updateUserAddress={updateAddressesWithNewAddress}
+                placeHolder="Enter new address"
+                componentIndex="new"
+                key="address-new"
+            />
+        ) : (
+            <ListAddresses />
+        );
 
     return (
         <div className="account-info-page" key="profile-page">
@@ -509,9 +504,10 @@ const AccountDetailsList = (params) => {
                                 name="newPassword1"
                                 type={showNewPassword1 ? 'text' : 'password'}
                                 placeholder="Enter new password"
-                                defaultValue=''
+                                defaultValue=""
                                 onChange={(e) =>
-                                    setPasswordFormField('new_password1', e.target.value)}
+                                    setPasswordFormField('new_password1', e.target.value)
+                                }
                             />
                             <InputGroup.Append>
                                 <button
@@ -519,8 +515,11 @@ const AccountDetailsList = (params) => {
                                     type="button"
                                     onClick={handleNewPassword1Click}
                                 >
-                                    {showNewPassword1 ?
-                                        <Hide color="white" /> : <Show color="white" />}
+                                    {showNewPassword1 ? (
+                                        <Hide color="white" />
+                                    ) : (
+                                        <Show color="white" />
+                                    )}
                                 </button>
                             </InputGroup.Append>
                         </InputGroup>
@@ -531,9 +530,10 @@ const AccountDetailsList = (params) => {
                                 name="newPassword2"
                                 type={showNewPassword2 ? 'text' : 'password'}
                                 placeholder="Enter new password again"
-                                defaultValue=''
+                                defaultValue=""
                                 onChange={(e) =>
-                                    setPasswordFormField('new_password2', e.target.value)}
+                                    setPasswordFormField('new_password2', e.target.value)
+                                }
                             />
                             <InputGroup.Append>
                                 <button
@@ -541,8 +541,11 @@ const AccountDetailsList = (params) => {
                                     type="button"
                                     onClick={handleNewPassword2Click}
                                 >
-                                    {showNewPassword2 ?
-                                        <Hide color="white" /> : <Show color="white" />}
+                                    {showNewPassword2 ? (
+                                        <Hide color="white" />
+                                    ) : (
+                                        <Show color="white" />
+                                    )}
                                 </button>
                             </InputGroup.Append>
                         </InputGroup>
@@ -553,9 +556,10 @@ const AccountDetailsList = (params) => {
                                 name="oldPasword"
                                 type={showOldPassword ? 'text' : 'password'}
                                 placeholder="Enter your current password"
-                                defaultValue=''
+                                defaultValue=""
                                 onChange={(e) =>
-                                    setPasswordFormField('old_password', e.target.value)}
+                                    setPasswordFormField('old_password', e.target.value)
+                                }
                             />
                             <InputGroup.Append>
                                 <button
@@ -563,8 +567,11 @@ const AccountDetailsList = (params) => {
                                     type="button"
                                     onClick={handleOldPasswordClick}
                                 >
-                                    {showOldPassword ?
-                                        <Hide color="white" /> : <Show color="white" />}
+                                    {showOldPassword ? (
+                                        <Hide color="white" />
+                                    ) : (
+                                        <Show color="white" />
+                                    )}
                                 </button>
                             </InputGroup.Append>
                         </InputGroup>
@@ -580,7 +587,6 @@ const AccountDetailsList = (params) => {
                     </button>
                 </Form.Row>
             </Form>
-
         </div>
     );
 };

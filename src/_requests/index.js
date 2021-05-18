@@ -73,13 +73,13 @@ const getUserDetail = () =>
 const updateUserInformation = (data) =>
     putRequest({
         path: `${API}user/`,
-        data
+        data,
     });
 
 const changePassword = (data) =>
     postRequest({
         path: `${AUTH}password/change/`,
-        data
+        data,
     });
 
 const getItems = () =>
