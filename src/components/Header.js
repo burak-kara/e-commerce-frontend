@@ -108,12 +108,12 @@ const Header = () => {
     };
 
     const Banner = () => {
-        let user_type = "";
+        let user_type = '';
         if (user.is_product_manager) {
-            user_type = "Product Manager";
+            user_type = 'Product Manager';
         }
         if (user.is_sales_manager) {
-            user_type = "Sales Manager";
+            user_type = 'Sales Manager';
         }
         return <div className="banner">{user_type}</div>;
     };

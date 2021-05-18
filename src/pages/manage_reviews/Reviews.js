@@ -8,7 +8,7 @@ import { BasketIcon } from '../../_utilities/icons';
 import { getAllReviews, updateReview } from '../../_requests';
 import ReviewCard from '../../components/ReviewCard';
 import { openAlert } from '../../_redux/actions';
-import { REVIEW_APPROVED, REVIEW_REJECTED, REVIEW_WAITING } from "../../_constants";
+import { REVIEW_APPROVED, REVIEW_REJECTED, REVIEW_WAITING } from '../../_constants';
 
 const Reviews = (props) => {
     const [reviews, setReviews] = useState([]);
