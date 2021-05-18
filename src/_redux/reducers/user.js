@@ -22,7 +22,7 @@ const user = (state = initialState, action) => {
                 first_name,
                 last_name,
                 email,
-                phone_number
+                phone_number,
             };
         }
         case SET_USER_DETAIL: {

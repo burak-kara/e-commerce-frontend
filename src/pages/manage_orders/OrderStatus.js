@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Row, Col, Container, ListGroup, Form } from 'react-bootstrap';
+import { PDFExport } from '@progress/kendo-react-pdf';
 import moment from 'moment';
 import { PageLoading } from '../../components';
 import { logo } from '../../_assets';
@@ -13,6 +14,8 @@ const initialForm = {};
 
 const OrderStatus = (props) => {
     const history = useHistory();
+    const pdfExportComponent = useRef(null);
+    const contentArea = useRef(null);
     const [order, setOrder] = useState();
     const [orderID, setOrderID] = useState();
     const [orderItems, setOrderItems] = useState([]);
@@ -93,6 +96,10 @@ const OrderStatus = (props) => {
         setForm(initialForm);
     };
 
+    const onExport = () => {
+        pdfExportComponent.current.save();
+    };
+
     const AddressOptions = () => {
         const options = [
             <option key="default">{order ? order.delivery_address : 'Address'}</option>,
@@ -169,124 +176,169 @@ const OrderStatus = (props) => {
     return loading ? (
         <PageLoading />
     ) : (
-        <Container fluid className="order-details">
-            <Row>
-                <Col
-                    className="detail-col"
-                    xs={{ span: 12, offset: 0 }}
-                    md={{ span: 6, offset: 3 }}
-                    xl={{ span: 6, offset: 3 }}
-                >
-                    <ListGroup variant="flush">
-                        <Content />
-                    </ListGroup>
-                </Col>
-            </Row>
-            <Row>
-                <Col
-                    className="detail-col"
-                    xs={{ span: 12, offset: 0 }}
-                    md={{ span: 6, offset: 3 }}
-                    xl={{ span: 6, offset: 3 }}
-                >
-                    <ListGroup variant="flush">
-                        <ListGroup.Item className="info-list-item">
-                            <Container>
-                                <Row>
-                                    <Col
-                                        xs={{ span: 12, order: 1 }}
-                                        xl={{ span: 4, order: 1 }}
-                                        className="list-col address-col mb-3 mb-xl-0"
-                                    >
-                                        <div className="title">
-                                            <span>Delivery Address</span>
-                                        </div>
-                                        <div className="address">
-                                            <Form.Control
-                                                as="select"
-                                                className="dropdown"
-                                                variant="outline-secondary"
-                                                defaultValue="Choose Address"
-                                                onChange={(e) =>
-                                                    onChange('delivery_address', e.target.value)
-                                                }
-                                                value={form.delivery_address}
+        <PDFExport
+            ref={pdfExportComponent}
+            paperSize="A0"
+            fileName={`order_${order ? order.date : ''}.pdf`}
+            creator="OzU Store"
+        >
+            <Container fluid className="order-details">
+                <div ref={contentArea}>
+                    <Row>
+                        <Col
+                            className="detail-col"
+                            xs={{ span: 12, offset: 0 }}
+                            md={{ span: 6, offset: 3 }}
+                            xl={{ span: 6, offset: 3 }}
+                        >
+                            <ListGroup variant="flush">
+                                <Content />
+                            </ListGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col
+                            className="detail-col"
+                            xs={{ span: 12, offset: 0 }}
+                            md={{ span: 6, offset: 3 }}
+                            xl={{ span: 6, offset: 3 }}
+                        >
+                            <ListGroup variant="flush">
+                                <ListGroup.Item className="info-list-item">
+                                    <Container>
+                                        <Row>
+                                            <Col
+                                                xs={{ span: 12, order: 1 }}
+                                                xl={{ span: 4, order: 1 }}
+                                                className="list-col address-col mb-3 mb-xl-0"
                                             >
-                                                <AddressOptions />
-                                            </Form.Control>
-                                        </div>
-                                    </Col>
-                                    <Col
-                                        xs={{ span: 6, order: 2 }}
-                                        xl={2}
-                                        className="list-col date-col mb-3 mb-xl-0"
-                                    >
-                                        <div className="title">
-                                            <span>Date</span>
-                                        </div>
-                                        <div className="date">
-                                            <span>
-                                                {order
-                                                    ? moment(order.date).format('MMMM Do YYYY')
-                                                    : 'Date'}
-                                            </span>
-                                        </div>
-                                    </Col>
-                                    <Col
-                                        xs={{ span: 12, order: 1 }}
-                                        xl={{ span: 4, order: 1 }}
-                                        className="list-col status-col"
-                                    >
-                                        <div className="title">
-                                            <span>Status</span>
-                                        </div>
-                                        <div className="status">
-                                            <Form.Control
-                                                as="select"
-                                                className="dropdown"
-                                                variant="outline-secondary"
-                                                defaultValue="Choose Status"
-                                                onChange={(e) => onChange('status', e.target.value)}
-                                                value={ORDER_STATUS[form.status]}
+                                                <div className="title">
+                                                    <span>Delivery Address</span>
+                                                </div>
+                                                <div className="address">
+                                                    <Form.Control
+                                                        as="select"
+                                                        className="dropdown"
+                                                        variant="outline-secondary"
+                                                        defaultValue="Choose Address"
+                                                        onChange={(e) =>
+                                                            onChange(
+                                                                'delivery_address',
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        value={form.delivery_address}
+                                                    >
+                                                        <AddressOptions />
+                                                    </Form.Control>
+                                                </div>
+                                            </Col>
+                                            <Col
+                                                xs={{ span: 6, order: 2 }}
+                                                xl={2}
+                                                className="list-col date-col mb-3 mb-xl-0"
                                             >
-                                                <StatusOptions />
-                                            </Form.Control>
-                                        </div>
-                                    </Col>
-                                    <Col xs={{ span: 6, order: 2 }} xl={2} className="list-col">
-                                        <div className="title">
-                                            <span>Total Price</span>
-                                        </div>
-                                        <div className="total-col">
-                                            <div className="total">
-                                                <span>{order ? order.total_price : 'Status'}</span>
-                                            </div>
-                                            <div className="currency ml-1">
-                                                <span>TL</span>
-                                            </div>
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </Container>
-                        </ListGroup.Item>
-                    </ListGroup>
-                </Col>
-            </Row>
-            <Row>
-                <Col
-                    className="detail-col mt-2"
-                    xs={{ span: 12, offset: 0 }}
-                    md={{ span: 6, offset: 3 }}
-                    xl={{ span: 2, offset: 7 }}
-                >
-                    <ListGroup variant="flush">
-                        <button type="button" className="btn btn-primary" onClick={onConfirm}>
-                            Save
-                        </button>
-                    </ListGroup>
-                </Col>
-            </Row>
-        </Container>
+                                                <div className="title">
+                                                    <span>Date</span>
+                                                </div>
+                                                <div className="date">
+                                                    <span>
+                                                        {order
+                                                            ? moment(order.date).format(
+                                                                  'MMMM Do YYYY',
+                                                              )
+                                                            : 'Date'}
+                                                    </span>
+                                                </div>
+                                            </Col>
+                                            <Col
+                                                xs={{ span: 12, order: 1 }}
+                                                xl={{ span: 4, order: 1 }}
+                                                className="list-col status-col"
+                                            >
+                                                <div className="title">
+                                                    <span>Status</span>
+                                                </div>
+                                                <div className="status">
+                                                    <Form.Control
+                                                        as="select"
+                                                        className="dropdown"
+                                                        variant="outline-secondary"
+                                                        defaultValue="Choose Status"
+                                                        onChange={(e) =>
+                                                            onChange('status', e.target.value)
+                                                        }
+                                                        value={ORDER_STATUS[form.status]}
+                                                    >
+                                                        <StatusOptions />
+                                                    </Form.Control>
+                                                </div>
+                                            </Col>
+                                            <Col
+                                                xs={{ span: 6, order: 2 }}
+                                                xl={2}
+                                                className="list-col"
+                                            >
+                                                <div className="title">
+                                                    <span>Total Price</span>
+                                                </div>
+                                                <div className="total-col">
+                                                    <div className="total">
+                                                        <span>
+                                                            {order ? order.total_price : 'Status'}
+                                                        </span>
+                                                    </div>
+                                                    <div className="currency ml-1">
+                                                        <span>TL</span>
+                                                    </div>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                    </Container>
+                                </ListGroup.Item>
+                            </ListGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col
+                            className="detail-col mt-2"
+                            xs={{ span: 12, offset: 0 }}
+                            md={{ span: 6, offset: 3 }}
+                            xl={{ span: 2, offset: 7 }}
+                        >
+                            <ListGroup variant="flush">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary noExport"
+                                    onClick={onConfirm}
+                                >
+                                    Save
+                                </button>
+                            </ListGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col
+                            className="detail-col mt-2"
+                            xs={{ span: 12, offset: 0 }}
+                            md={{ span: 6, offset: 3 }}
+                            xl={{ span: 2, offset: 7 }}
+                        >
+                            <ListGroup variant="flush">
+                                <button
+                                    type="button"
+                                    className="btn export-btn btn-block noExport"
+                                    name="Export PDF"
+                                    onClick={onExport}
+                                >
+                                    Export as PDF
+                                </button>
+                            </ListGroup>
+                        </Col>
+                    </Row>
+                </div>
+            </Container>
+        </PDFExport>
     );
 };
 

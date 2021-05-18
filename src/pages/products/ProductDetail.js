@@ -9,7 +9,7 @@ import { PageLoading } from '../../components';
 import { BasketIcon } from '../../_utilities/icons';
 import StarMaker from '../../components/StarMaker';
 import { logo } from '../../_assets';
-import { REVIEW_APPROVED } from "../../_constants";
+import { REVIEW_APPROVED } from '../../_constants';
 
 const ProductDetail = (params) => {
     const history = useHistory();

@@ -261,6 +261,21 @@
         }
     }
 
+    .export-btn {
+        background-color: $common-btn;
+        color: $card-bg;
+        font-weight: 500;
+
+        &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        &:hover {
+            box-shadow: 0 0 3px 0 $common-btn;
+        }
+    }
+
     .info-list-item {
         padding: 5px 0;
 
@@ -319,5 +334,17 @@
         background-color: $common-btn;
         font-weight: 500;
         color: $header-bg;
+    }
+}
+
+.k-pdf-export {
+    .noExport {
+        display: none !important;
+    }
+
+    .list-item {
+        border: 2px solid $border;
+        box-shadow: none !important;
+        margin-bottom: 10px;
     }
 }

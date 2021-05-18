@@ -108,12 +108,12 @@ const Header = () => {
     };
 
     const Banner = () => {
-        let user_type = "";
+        let user_type = '';
         if (user.is_product_manager) {
-            user_type = "Product Manager";
+            user_type = 'Product Manager';
         }
         if (user.is_sales_manager) {
-            user_type = "Sales Manager";
+            user_type = 'Sales Manager';
         }
         return <div className="banner">{user_type}</div>;
     };
@@ -127,11 +127,7 @@ const Header = () => {
             >
                 Profile
             </NavDropdown.Item>
-            <NavDropdown.Item
-                key="settings"
-                className="menu-btn"
-                onClick={() => handleSettings()}
-            >
+            <NavDropdown.Item key="settings" className="menu-btn" onClick={() => handleSettings()}>
                 Settings
             </NavDropdown.Item>
         </>
@@ -139,11 +135,7 @@ const Header = () => {
 
     const RenderCustomerMenu = () => (
         <>
-            <NavDropdown.Item
-                key="prev-orders"
-                className="menu-btn"
-                onClick={() => handleOrders()}
-            >
+            <NavDropdown.Item key="prev-orders" className="menu-btn" onClick={() => handleOrders()}>
                 Previous Orders
             </NavDropdown.Item>
         </>
@@ -216,18 +208,10 @@ const Header = () => {
         }
         return (
             <>
-                <NavDropdown.Item
-                    key="sign-in"
-                    className="menu-btn"
-                    onClick={() => handleSignIn()}
-                >
+                <NavDropdown.Item key="sign-in" className="menu-btn" onClick={() => handleSignIn()}>
                     Sign in
                 </NavDropdown.Item>
-                <NavDropdown.Item
-                    key="sign-up"
-                    className="menu-btn"
-                    onClick={() => handleSignUp()}
-                >
+                <NavDropdown.Item key="sign-up" className="menu-btn" onClick={() => handleSignUp()}>
                     Sign up
                 </NavDropdown.Item>
             </>

@@ -5,7 +5,7 @@ import { openAlert } from '../_redux/actions';
 
 const UserAddresses = (props) => {
     const { index, address, updateUserAddress, placeHolder } = props;
-    
+
     return (
         <Form.Control
             name={`address${index}`}
@@ -15,6 +15,6 @@ const UserAddresses = (props) => {
             onBlur={(e) => updateUserAddress(e.target.value, e.target.name)}
         />
     );
-}
+};
 
 export default connect(null, { openAlert })(UserAddresses);
