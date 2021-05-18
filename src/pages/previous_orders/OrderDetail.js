@@ -138,7 +138,7 @@ const OrderDetail = (props) => {
                                 <Col xs={6} xl={2} className="list-col btn-col">
                                     <button
                                         type="button"
-                                        className="btn btn-block"
+                                        className="btn btn-block noExport"
                                         onClick={() => {
                                             onChange('item', item.id);
                                             setModal(true);
@@ -261,7 +261,7 @@ const OrderDetail = (props) => {
                             >
                                 <button
                                     type="button"
-                                    className="btn export-btn btn-block"
+                                    className="btn export-btn btn-block noExport"
                                     name="Export PDF"
                                     onClick={onExport}
                                 >
