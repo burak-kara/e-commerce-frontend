@@ -120,10 +120,18 @@ const Header = () => {
 
     const RenderCommonMenu = () => (
         <>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleAccount()}>
+            <NavDropdown.Item
+                key="user-profile"
+                className="menu-btn"
+                onClick={() => handleAccount()}
+            >
                 Profile
             </NavDropdown.Item>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleSettings()}>
+            <NavDropdown.Item
+                key="settings"
+                className="menu-btn"
+                onClick={() => handleSettings()}
+            >
                 Settings
             </NavDropdown.Item>
         </>
@@ -131,7 +139,11 @@ const Header = () => {
 
     const RenderCustomerMenu = () => (
         <>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleOrders()}>
+            <NavDropdown.Item
+                key="prev-orders"
+                className="menu-btn"
+                onClick={() => handleOrders()}
+            >
                 Previous Orders
             </NavDropdown.Item>
         </>
@@ -139,10 +151,18 @@ const Header = () => {
 
     const RenderProductManagerMenu = () => (
         <>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleManageProducts()}>
+            <NavDropdown.Item
+                key="manage-products"
+                className="menu-btn"
+                onClick={() => handleManageProducts()}
+            >
                 Manage Products
             </NavDropdown.Item>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleProductReviews()}>
+            <NavDropdown.Item
+                key="product-reviews"
+                className="menu-btn"
+                onClick={() => handleProductReviews()}
+            >
                 Product Reviews
             </NavDropdown.Item>
         </>
@@ -150,10 +170,18 @@ const Header = () => {
 
     const RenderSalesManagerMenu = () => (
         <>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleManageCampaigns()}>
+            <NavDropdown.Item
+                key="manage-campaigns"
+                className="menu-btn"
+                onClick={() => handleManageCampaigns()}
+            >
                 Manage Campaigns
             </NavDropdown.Item>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleSMOrders()}>
+            <NavDropdown.Item
+                key="manage-orders"
+                className="menu-btn"
+                onClick={() => handleSMOrders()}
+            >
                 Manage Orders
             </NavDropdown.Item>
         </>
@@ -174,7 +202,11 @@ const Header = () => {
             renders.push(
                 <>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item className="menu-btn" onClick={() => handleSignOut()}>
+                    <NavDropdown.Item
+                        key="logout"
+                        className="menu-btn"
+                        onClick={() => handleSignOut()}
+                    >
                         Logout
                     </NavDropdown.Item>
                 </>,
@@ -184,10 +216,18 @@ const Header = () => {
         }
         return (
             <>
-                <NavDropdown.Item className="menu-btn" onClick={() => handleSignIn()}>
+                <NavDropdown.Item
+                    key="sign-in"
+                    className="menu-btn"
+                    onClick={() => handleSignIn()}
+                >
                     Sign in
                 </NavDropdown.Item>
-                <NavDropdown.Item className="menu-btn" onClick={() => handleSignUp()}>
+                <NavDropdown.Item
+                    key="sign-up"
+                    className="menu-btn"
+                    onClick={() => handleSignUp()}
+                >
                     Sign up
                 </NavDropdown.Item>
             </>
@@ -258,7 +298,7 @@ const Header = () => {
                             </NavDropdown>
                         </Nav>
                         <Nav className="ml-auto">
-                            <Nav.Item className="b-item">
+                            <Nav.Item key="basket" className="b-item">
                                 {basket.itemCount === 0 ? (
                                     <div className="badge">{renderBasketButton()}</div>
                                 ) : (
