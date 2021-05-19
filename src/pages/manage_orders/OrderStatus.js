@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Row, Col, Container, ListGroup, Form } from 'react-bootstrap';
 import { PDFExport } from '@progress/kendo-react-pdf';
 import moment from 'moment';
+import firebase from 'firebase';
 import { PageLoading } from '../../components';
 import { logo } from '../../_assets';
 import { getAddressesByUserID, getItemById, getOrderDetail, updateOrder } from '../../_requests';
@@ -23,6 +24,22 @@ const OrderStatus = (props) => {
     const [form, setForm] = useState(initialForm);
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    const fireBaseConfig = {
+        apiKey: "AIzaSyCsVmQ0R8nX7QTZFJxgZNemFT4urDBW7J0",
+        authDomain: "e-commerce-ozu.firebaseapp.com",
+        databaseURL: "https://e-commerce-ozu-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "e-commerce-ozu",
+        storageBucket: "e-commerce-ozu.appspot.com",
+        messagingSenderId: "115048619599",
+        appId: "1:115048619599:web:609b04692351d188f7943a",
+        measurementId: "G-JTW10KDD0C"
+    };
+    if (!firebase.apps.length) {
+        firebase.initializeApp(fireBaseConfig);
+    } else {
+        firebase.app();
+    }
 
     useEffect(() => {
         setLoading(true);
@@ -70,11 +87,23 @@ const OrderStatus = (props) => {
         }
     };
 
+    const sendPushNotification = (orderUpdateData) => {
+        const database = firebase
+                        .database()
+                        .ref()
+                        .child(`/notifications/${order.buyer}/${orderID}`);
+        database.set({
+            order_id: orderID,
+            order_status: parseInt(orderUpdateData.status, 10),
+        });
+    };
+
     const onConfirm = () => {
         const data = {
             id: orderID,
             ...form,
         };
+        sendPushNotification(data);
         updateOrder(data)
             .then(() => {
                 props.openAlert({

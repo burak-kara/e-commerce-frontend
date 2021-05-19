@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Badge } from '@material-ui/core';
+import firebase from 'firebase';
 import { logo } from '../_assets';
 import {
     BASKET,
@@ -22,12 +23,68 @@ import {
 import { Account, BasketIcon, DropDown, Search } from '../_utilities/icons';
 import { openAlert } from '../_redux/actions';
 
-const Header = () => {
+const Header = (props) => {
     const history = useHistory();
     const { basket } = useStore().getState();
     const { user } = useStore().getState();
     const [search, setSearch] = useState('');
 
+    useEffect(() => {
+        Notification.requestPermission();
+    }, []);
+
+    const fireBaseConfig = {
+        apiKey: "AIzaSyCsVmQ0R8nX7QTZFJxgZNemFT4urDBW7J0",
+        authDomain: "e-commerce-ozu.firebaseapp.com",
+        databaseURL: "https://e-commerce-ozu-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "e-commerce-ozu",
+        storageBucket: "e-commerce-ozu.appspot.com",
+        messagingSenderId: "115048619599",
+        appId: "1:115048619599:web:609b04692351d188f7943a",
+        measurementId: "G-JTW10KDD0C"
+    };
+    if (!firebase.apps.length) {
+        firebase.initializeApp(fireBaseConfig);
+    } else {
+        firebase.app();
+    }
+
+    let notify = null;
+    let notification_user_type = 'normal_user';
+
+    if (user.is_product_manager)
+    notification_user_type = 'product_manager';
+    if (user.is_sales_manager)
+    notification_user_type = 'sales_manager';
+        const database = firebase.database().ref().child(`/notifications/${user.pk}`);
+    if (notification_user_type === 'normal_user') {
+        database.once('child_changed', (data) => {
+            if (Notification.permission !== 'default'
+                && Notification.permission !== 'denied'
+                && data.val().order_status >= 0) {
+                notify = new Notification('OzU E-Commerce', {
+                    'body': `Your order with the ID of ${data.val().order_id} has been updated!`,
+                    'image': { logo },
+                    'tag': data.val(),
+                    'requireInteraction': true
+                });
+                notify.onClick = () => {
+                    notify.close();
+                };
+            } else if (Notification.permission !== 'granted') {
+                props.openAlert({
+                    message: 'Please allow us to send you notifications!',
+                    severity: 'error',
+                });
+            } else {
+                props.openAlert({
+                    message: 'Something went wrong with the push notifications!',
+                    severity: 'error',
+                });
+            }
+        });
+    }
+    
     const handleLogo = () => {
         history.push({
             pathname: LANDING,
