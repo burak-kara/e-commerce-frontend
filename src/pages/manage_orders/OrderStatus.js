@@ -26,14 +26,14 @@ const OrderStatus = (props) => {
     const [loading, setLoading] = useState(false);
 
     const fireBaseConfig = {
-        apiKey: "AIzaSyCsVmQ0R8nX7QTZFJxgZNemFT4urDBW7J0",
-        authDomain: "e-commerce-ozu.firebaseapp.com",
-        databaseURL: "https://e-commerce-ozu-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "e-commerce-ozu",
-        storageBucket: "e-commerce-ozu.appspot.com",
-        messagingSenderId: "115048619599",
-        appId: "1:115048619599:web:609b04692351d188f7943a",
-        measurementId: "G-JTW10KDD0C"
+        apiKey: 'AIzaSyCsVmQ0R8nX7QTZFJxgZNemFT4urDBW7J0',
+        authDomain: 'e-commerce-ozu.firebaseapp.com',
+        databaseURL: 'https://e-commerce-ozu-default-rtdb.europe-west1.firebasedatabase.app',
+        projectId: 'e-commerce-ozu',
+        storageBucket: 'e-commerce-ozu.appspot.com',
+        messagingSenderId: '115048619599',
+        appId: '1:115048619599:web:609b04692351d188f7943a',
+        measurementId: 'G-JTW10KDD0C',
     };
     if (!firebase.apps.length) {
         firebase.initializeApp(fireBaseConfig);
@@ -96,8 +96,8 @@ const OrderStatus = (props) => {
             .database()
             .ref()
             .child(`/notifications/${order.buyer}/${orderID}`);
-            // Doesn't correctly get the prev data from firebase, may need a fix.
-            // This is just for keeping data consistent on firebase realtime db.
+        // Doesn't correctly get the prev data from firebase, may need a fix.
+        // This is just for keeping data consistent on firebase realtime db.
         database.once('value', (data) => {
             prevOrderStatus = data.val().order_status;
             prevOrderAddress = data.val().delivery_address;
@@ -291,8 +291,8 @@ const OrderStatus = (props) => {
                                                     <span>
                                                         {order
                                                             ? moment(order.date).format(
-                                                                'MMMM Do YYYY',
-                                                            )
+                                                                  'MMMM Do YYYY',
+                                                              )
                                                             : 'Date'}
                                                     </span>
                                                 </div>

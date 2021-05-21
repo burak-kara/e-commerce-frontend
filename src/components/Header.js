@@ -34,14 +34,14 @@ const Header = (props) => {
     }, []);
 
     const fireBaseConfig = {
-        apiKey: "AIzaSyCsVmQ0R8nX7QTZFJxgZNemFT4urDBW7J0",
-        authDomain: "e-commerce-ozu.firebaseapp.com",
-        databaseURL: "https://e-commerce-ozu-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "e-commerce-ozu",
-        storageBucket: "e-commerce-ozu.appspot.com",
-        messagingSenderId: "115048619599",
-        appId: "1:115048619599:web:609b04692351d188f7943a",
-        measurementId: "G-JTW10KDD0C"
+        apiKey: 'AIzaSyCsVmQ0R8nX7QTZFJxgZNemFT4urDBW7J0',
+        authDomain: 'e-commerce-ozu.firebaseapp.com',
+        databaseURL: 'https://e-commerce-ozu-default-rtdb.europe-west1.firebasedatabase.app',
+        projectId: 'e-commerce-ozu',
+        storageBucket: 'e-commerce-ozu.appspot.com',
+        messagingSenderId: '115048619599',
+        appId: '1:115048619599:web:609b04692351d188f7943a',
+        measurementId: 'G-JTW10KDD0C',
     };
     if (!firebase.apps.length) {
         firebase.initializeApp(fireBaseConfig);
@@ -53,23 +53,22 @@ const Header = (props) => {
         let notify = null;
         let notification_user_type = 'normal_user';
 
-        if (user.is_product_manager)
-            notification_user_type = 'product_manager';
-        if (user.is_sales_manager)
-            notification_user_type = 'sales_manager';
+        if (user.is_product_manager) notification_user_type = 'product_manager';
+        if (user.is_sales_manager) notification_user_type = 'sales_manager';
         const database = firebase.database().ref().child(`/notifications/${user.pk}`);
         if (notification_user_type === 'normal_user') {
             database.once('child_changed', (data) => {
-                if (Notification.permission !== 'default'
-                    && Notification.permission !== 'denied'
-                    && (data.val().order_status >= 0 
-                        || data.val().order_address !== '')) {
+                if (
+                    Notification.permission !== 'default' &&
+                    Notification.permission !== 'denied' &&
+                    (data.val().order_status >= 0 || data.val().order_address !== '')
+                ) {
                     notify = new Notification('OzU E-Commerce', {
-                        'body':`Your order with the ID of ${data.val().order_id} has been updated!`,
-                        'image': logo,
-                        'tag': data.val().order_id,
-                        'requireInteraction': true,
-                        'dir': 'ltr',
+                        body: `Your order with the ID of ${data.val().order_id} has been updated!`,
+                        image: logo,
+                        tag: data.val().order_id,
+                        requireInteraction: true,
+                        dir: 'ltr',
                     });
                     notify.onClick = () => {
                         notify.close();
