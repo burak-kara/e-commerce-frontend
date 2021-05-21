@@ -31,25 +31,28 @@ const Header = (props) => {
     const [search, setSearch] = useState('');
 
     setInterval(() => {
-        let notify = null;
+        // const notify = null;
         const database = firebase.user_db(user.pk);
         if (!user.is_product_manager && !user.is_sales_manager) {
             database.once('child_changed', (data) => {
                 if (
-                    Notification.permission !== 'default' &&
-                    Notification.permission !== 'denied' &&
+                    Notification.permission === 'granted' &&
                     (data.val().order_status >= 0 || data.val().order_address !== '')
                 ) {
-                    notify = new Notification('OzU E-Commerce', {
-                        body: `Your order with the ID of ${data.val().order_id} has been updated!`,
-                        image: logo,
-                        tag: data.val().order_id,
-                        requireInteraction: true,
-                        dir: 'ltr',
+                    navigator.serviceWorker.ready.then((registration) => {
+                        registration.showNotification('OzU E-Commerce', {
+                            body: `Your order with the ID of ${
+                                data.val().order_id
+                            } has been updated!`,
+                            image: logo,
+                            tag: data.val().order_id,
+                            requireInteraction: true,
+                            dir: 'ltr',
+                        });
                     });
-                    notify.onClick = () => {
-                        notify.close();
-                    };
+                    // notify.onClick = () => {
+                    //     notify.close();
+                    // };
                 } else if (Notification.permission !== 'granted') {
                     props.openAlert({
                         message: 'Please allow us to send you notifications!',
