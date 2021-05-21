@@ -16,7 +16,7 @@ class Firebase {
     constructor() {
         app.initializeApp(config);
         this.db = app.database();
-        Notification.requestPermission();
+        // Notification.requestPermission();
     }
 
     order_db = (buyerID, orderID) => this.db.ref().child(`/notifications/${buyerID}/${orderID}`);
