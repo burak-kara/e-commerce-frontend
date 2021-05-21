@@ -12,11 +12,15 @@ const config = {
     measurementId: 'G-JTW10KDD0C',
 };
 
+// eslint-disable-next-line no-return-await
+const askUserPermission = async () => await Notification.requestPermission();
+
 class Firebase {
     constructor() {
         app.initializeApp(config);
         this.db = app.database();
         // Notification.requestPermission();
+        askUserPermission();
     }
 
     order_db = (buyerID, orderID) => this.db.ref().child(`/notifications/${buyerID}/${orderID}`);
