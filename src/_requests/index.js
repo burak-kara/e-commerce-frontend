@@ -93,7 +93,7 @@ const getItemById = (id) =>
     });
 
 const getItemsByCategory = (category) => {
-    const cat = category.replaceAll('-', '');
+    const cat = category.replace(/-/g, '');
     return getRequest({
         path: `${API}items/${cat}/`,
     });
@@ -106,7 +106,7 @@ const getItemsBySearch = (search) =>
 
 const getItemsByCategoryBrandSortSearch = (data) => {
     const { category, brand, ordering, search } = data;
-    const cat = category.replaceAll('-', '');
+    const cat = category.replace(/-/g, '');
     let path = `${API}items/search?`;
     path += cat ? `category=${cat}&` : '';
     path += search ? `search=${search}&` : '';
@@ -205,7 +205,7 @@ const getAddressesByUserID = (id) =>
     });
 
 const getBrandsByCategory = (category) => {
-    const cat = category.replaceAll('-', '');
+    const cat = category.replace(/-/g, '');
     return getRequest({
         path: `${API}brands/${cat}/`,
     });

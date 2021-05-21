@@ -28,7 +28,7 @@ const AccountDetailsList = (params) => {
     });
 
     useEffect(() => {
-        setUserAddresses(user.addresses ? user.addresses.replaceAll("'", '').split(',') : []);
+        setUserAddresses(user.addresses ? user.addresses.replace(/'/g, '').split(',') : []);
     }, []);
 
     // possible fix for the Form.Control component losing focus?

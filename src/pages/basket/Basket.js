@@ -40,7 +40,7 @@ const Basket = (props) => {
     useEffect(() => {
         setLoading(true);
         fetchItems();
-        setAddresses(user.addresses ? user.addresses.replaceAll("'", '').split(',') : []);
+        setAddresses(user.addresses ? user.addresses.replace(/'/g, '').split(',') : []);
     }, [loading]);
 
     useEffect(() => {

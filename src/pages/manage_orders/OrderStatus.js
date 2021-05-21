@@ -45,7 +45,7 @@ const OrderStatus = (props) => {
                         });
                     });
                     getAddressesByUserID(buyer).then((r) => {
-                        setAddresses(r.data.replaceAll("'", '').split(','));
+                        setAddresses(r.data.replace(/'/g, '').split(','));
                     });
                 })
                 .catch(() => {
