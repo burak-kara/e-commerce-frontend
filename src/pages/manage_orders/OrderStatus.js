@@ -9,10 +9,12 @@ import { logo } from '../../_assets';
 import { getAddressesByUserID, getItemById, getOrderDetail, updateOrder } from '../../_requests';
 import { openAlert } from '../../_redux/actions';
 import { ORDER_STATUS, S_M_ORDERS, TIME_OUT } from '../../_constants';
+import { withFirebase } from '../../_firebase';
 
 const initialForm = {};
 
 const OrderStatus = (props) => {
+    const { firebase } = props;
     const history = useHistory();
     const pdfExportComponent = useRef(null);
     const contentArea = useRef(null);
@@ -70,11 +72,38 @@ const OrderStatus = (props) => {
         }
     };
 
+    const sendPushNotification = (orderUpdateData) => {
+        let prevOrderStatus = null;
+        let prevOrderAddress = null;
+        let newOrderStatus = null;
+        let newOrderAddress = null;
+        const database = firebase.order_db(order.buyer, orderID);
+        // Doesn't correctly get the prev data from firebase, may need a fix.
+        // This is just for keeping data consistent on firebase realtime db.
+        database.once('value', (data) => {
+            console.log(data.val());
+            prevOrderStatus = data.val().order_status;
+            prevOrderAddress = data.val().delivery_address;
+        });
+        if (orderUpdateData.status) {
+            newOrderStatus = parseInt(orderUpdateData.status, 10);
+        }
+        if (orderUpdateData.delivery_address) {
+            newOrderAddress = orderUpdateData.delivery_address;
+        }
+        database.set({
+            order_id: orderID,
+            order_status: newOrderStatus !== null ? newOrderStatus : prevOrderStatus,
+            order_address: newOrderAddress !== null ? newOrderAddress : prevOrderAddress,
+        });
+    };
+
     const onConfirm = () => {
         const data = {
             id: orderID,
             ...form,
         };
+        sendPushNotification(data);
         updateOrder(data)
             .then(() => {
                 props.openAlert({
@@ -342,4 +371,4 @@ const OrderStatus = (props) => {
     );
 };
 
-export default connect(null, { openAlert })(OrderStatus);
+export default connect(null, { openAlert })(withFirebase(OrderStatus));
