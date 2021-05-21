@@ -88,13 +88,28 @@ const OrderStatus = (props) => {
     };
 
     const sendPushNotification = (orderUpdateData) => {
+        let prevOrderStatus = null;
+        let prevOrderAddress = null;
+        let newOrderStatus = null;
+        let newOrderAddress = null;
         const database = firebase
-                        .database()
-                        .ref()
-                        .child(`/notifications/${order.buyer}/${orderID}`);
+            .database()
+            .ref()
+            .child(`/notifications/${order.buyer}/${orderID}`);
+        database.once('child_changed', (data) => {
+            prevOrderStatus = data.val().order_status;
+            prevOrderAddress = data.val().delivery_address;
+        });
+        if (orderUpdateData.status) {
+            newOrderStatus = parseInt(orderUpdateData.status, 10);
+        }
+        if (orderUpdateData.delivery_address) {
+            newOrderAddress = orderUpdateData.delivery_address;
+        }
         database.set({
             order_id: orderID,
-            order_status: parseInt(orderUpdateData.status, 10),
+            order_status: newOrderStatus !== null ? newOrderStatus : prevOrderStatus,
+            order_address: newOrderAddress !== '' ? newOrderAddress : prevOrderAddress,
         });
     };
 
@@ -274,8 +289,8 @@ const OrderStatus = (props) => {
                                                     <span>
                                                         {order
                                                             ? moment(order.date).format(
-                                                                  'MMMM Do YYYY',
-                                                              )
+                                                                'MMMM Do YYYY',
+                                                            )
                                                             : 'Date'}
                                                     </span>
                                                 </div>

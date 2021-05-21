@@ -49,42 +49,46 @@ const Header = (props) => {
         firebase.app();
     }
 
-    let notify = null;
-    let notification_user_type = 'normal_user';
+    setInterval(() => {
+        let notify = null;
+        let notification_user_type = 'normal_user';
 
-    if (user.is_product_manager)
-    notification_user_type = 'product_manager';
-    if (user.is_sales_manager)
-    notification_user_type = 'sales_manager';
+        if (user.is_product_manager)
+            notification_user_type = 'product_manager';
+        if (user.is_sales_manager)
+            notification_user_type = 'sales_manager';
         const database = firebase.database().ref().child(`/notifications/${user.pk}`);
-    if (notification_user_type === 'normal_user') {
-        database.once('child_changed', (data) => {
-            if (Notification.permission !== 'default'
-                && Notification.permission !== 'denied'
-                && data.val().order_status >= 0) {
-                notify = new Notification('OzU E-Commerce', {
-                    'body': `Your order with the ID of ${data.val().order_id} has been updated!`,
-                    'image': { logo },
-                    'tag': data.val(),
-                    'requireInteraction': true
-                });
-                notify.onClick = () => {
-                    notify.close();
-                };
-            } else if (Notification.permission !== 'granted') {
-                props.openAlert({
-                    message: 'Please allow us to send you notifications!',
-                    severity: 'error',
-                });
-            } else {
-                props.openAlert({
-                    message: 'Something went wrong with the push notifications!',
-                    severity: 'error',
-                });
-            }
-        });
-    }
-    
+        if (notification_user_type === 'normal_user') {
+            database.once('child_changed', (data) => {
+                if (Notification.permission !== 'default'
+                    && Notification.permission !== 'denied'
+                    && (data.val().order_status >= 0 
+                        || data.val().order_address !== '')) {
+                    notify = new Notification('OzU E-Commerce', {
+                        'body':`Your order with the ID of ${data.val().order_id} has been updated!`,
+                        'image': logo,
+                        'tag': data.val().order_id,
+                        'requireInteraction': true,
+                        'dir': 'ltr',
+                    });
+                    notify.onClick = () => {
+                        notify.close();
+                    };
+                } else if (Notification.permission !== 'granted') {
+                    props.openAlert({
+                        message: 'Please allow us to send you notifications!',
+                        severity: 'error',
+                    });
+                } else {
+                    props.openAlert({
+                        message: 'Something went wrong with the push notifications!',
+                        severity: 'error',
+                    });
+                }
+            });
+        }
+    }, 1000);
+
     const handleLogo = () => {
         history.push({
             pathname: LANDING,
