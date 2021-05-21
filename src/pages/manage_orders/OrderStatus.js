@@ -4,16 +4,17 @@ import { connect } from 'react-redux';
 import { Row, Col, Container, ListGroup, Form } from 'react-bootstrap';
 import { PDFExport } from '@progress/kendo-react-pdf';
 import moment from 'moment';
-import firebase from 'firebase';
 import { PageLoading } from '../../components';
 import { logo } from '../../_assets';
 import { getAddressesByUserID, getItemById, getOrderDetail, updateOrder } from '../../_requests';
 import { openAlert } from '../../_redux/actions';
 import { ORDER_STATUS, S_M_ORDERS, TIME_OUT } from '../../_constants';
+import { withFirebase } from '../../_firebase';
 
 const initialForm = {};
 
 const OrderStatus = (props) => {
+    const { firebase } = props;
     const history = useHistory();
     const pdfExportComponent = useRef(null);
     const contentArea = useRef(null);
@@ -24,22 +25,6 @@ const OrderStatus = (props) => {
     const [form, setForm] = useState(initialForm);
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(false);
-
-    const fireBaseConfig = {
-        apiKey: 'AIzaSyCsVmQ0R8nX7QTZFJxgZNemFT4urDBW7J0',
-        authDomain: 'e-commerce-ozu.firebaseapp.com',
-        databaseURL: 'https://e-commerce-ozu-default-rtdb.europe-west1.firebasedatabase.app',
-        projectId: 'e-commerce-ozu',
-        storageBucket: 'e-commerce-ozu.appspot.com',
-        messagingSenderId: '115048619599',
-        appId: '1:115048619599:web:609b04692351d188f7943a',
-        measurementId: 'G-JTW10KDD0C',
-    };
-    if (!firebase.apps.length) {
-        firebase.initializeApp(fireBaseConfig);
-    } else {
-        firebase.app();
-    }
 
     useEffect(() => {
         setLoading(true);
@@ -92,13 +77,11 @@ const OrderStatus = (props) => {
         let prevOrderAddress = null;
         let newOrderStatus = null;
         let newOrderAddress = null;
-        const database = firebase
-            .database()
-            .ref()
-            .child(`/notifications/${order.buyer}/${orderID}`);
+        const database = firebase.order_db(order.buyer, orderID);
         // Doesn't correctly get the prev data from firebase, may need a fix.
         // This is just for keeping data consistent on firebase realtime db.
         database.once('value', (data) => {
+            console.log(data.val());
             prevOrderStatus = data.val().order_status;
             prevOrderAddress = data.val().delivery_address;
         });
@@ -111,7 +94,7 @@ const OrderStatus = (props) => {
         database.set({
             order_id: orderID,
             order_status: newOrderStatus !== null ? newOrderStatus : prevOrderStatus,
-            order_address: newOrderAddress !== '' ? newOrderAddress : prevOrderAddress,
+            order_address: newOrderAddress !== null ? newOrderAddress : prevOrderAddress,
         });
     };
 
@@ -388,4 +371,4 @@ const OrderStatus = (props) => {
     );
 };
 
-export default connect(null, { openAlert })(OrderStatus);
+export default connect(null, { openAlert })(withFirebase(OrderStatus));

@@ -8,12 +8,15 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import App from './pages/app/App';
 import { store, persistor } from './_redux/store';
 import reportWebVitals from './reportWebVitals';
+import Firebase, { FirebaseContext } from './_firebase';
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-                <App />
+                <FirebaseContext.Provider value={new Firebase()}>
+                    <App />
+                </FirebaseContext.Provider>
             </PersistGate>
         </Provider>
     </React.StrictMode>,
