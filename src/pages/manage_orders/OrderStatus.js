@@ -96,7 +96,9 @@ const OrderStatus = (props) => {
             .database()
             .ref()
             .child(`/notifications/${order.buyer}/${orderID}`);
-        database.once('child_changed', (data) => {
+            // Doesn't correctly get the prev data from firebase, may need a fix.
+            // This is just for keeping data consistent on firebase realtime db.
+        database.once('value', (data) => {
             prevOrderStatus = data.val().order_status;
             prevOrderAddress = data.val().delivery_address;
         });
