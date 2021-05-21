@@ -21,7 +21,12 @@ const PreviewModal = (props) => {
                 <ProductCard {...form} isPreview />
             </Modal.Body>
             <Modal.Footer>
-                <button className="btn btn-success mr-2" type="button" onClick={onConfirm}>
+                <button
+                    className="btn btn-success mr-2"
+                    name="Confirm Product"
+                    type="button"
+                    onClick={onConfirm}
+                >
                     Confirm Product
                 </button>
             </Modal.Footer>

@@ -336,8 +336,9 @@ const OrderStatus = (props) => {
                         >
                             <ListGroup variant="flush">
                                 <button
-                                    type="button"
                                     className="btn btn-primary noExport"
+                                    name="Save"
+                                    type="button"
                                     onClick={onConfirm}
                                 >
                                     Save
@@ -354,9 +355,9 @@ const OrderStatus = (props) => {
                         >
                             <ListGroup variant="flush">
                                 <button
-                                    type="button"
                                     className="btn export-btn btn-block noExport"
                                     name="Export PDF"
+                                    type="button"
                                     onClick={onExport}
                                 >
                                     Export as PDF

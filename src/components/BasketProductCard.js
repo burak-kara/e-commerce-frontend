@@ -33,7 +33,7 @@ const BasketProductCard = (props) => {
                 <Col xs={6} md={12} xl={1} className="action-container left">
                     <Row className="h-100">
                         <Col xs={3} md={4} xl={12} className="icon">
-                            <button className="btn fav" type="button">
+                            <button className="btn fav" name="Add Favorite" type="button">
                                 {/* TODO handle fav click */}
                                 <Favorite size="2em" />
                             </button>
@@ -41,6 +41,7 @@ const BasketProductCard = (props) => {
                         <Col xs={4} md={6} xl={12} className="icon">
                             <button
                                 className="btn"
+                                name="Remove from Basket"
                                 type="button"
                                 onClick={() => {
                                     props.removeFromBasket(id);
@@ -61,6 +62,7 @@ const BasketProductCard = (props) => {
                         <Col xs={4} md={6} xl={12} className="icon">
                             <button
                                 className="btn"
+                                name="Add to Basket"
                                 type="button"
                                 onClick={() => {
                                     props.addToBasket(id);
@@ -79,6 +81,7 @@ const BasketProductCard = (props) => {
                         <Col xs={4} md={6} xl={12} className="icon">
                             <button
                                 className="btn"
+                                name="Delete from Basket"
                                 type="button"
                                 onClick={() => {
                                     props.deleteFromBasket(id);

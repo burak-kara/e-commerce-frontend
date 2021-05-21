@@ -233,6 +233,7 @@ const Header = (props) => {
     const renderBasketButton = () => (
         <button
             className="btn b-btn"
+            name="Go to Basket"
             type="button"
             onClick={() => {
                 history.push({
@@ -274,6 +275,7 @@ const Header = (props) => {
                             <div className="input-group-append">
                                 <button
                                     className="btn btn-dark btn-block h-100 search-btn"
+                                    name="Search"
                                     type="button"
                                     onClick={() => {
                                         history.push({

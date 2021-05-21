@@ -64,6 +64,7 @@ const ProductCard = (props) => {
                 <div className="upper-container">
                     <button
                         className={`btn ${isPM ? 'pm-delete' : 'fav'}`}
+                        name="Favorite or Delete"
                         type="button"
                         onClick={() => handleUpper(id)}
                     >
@@ -80,6 +81,7 @@ const ProductCard = (props) => {
                 <div className="bottom-container">
                     <button
                         className={`btn ${isPM ? 'pm-edit' : 'basket'}`}
+                        name="Edit or Add to Basket"
                         type="button"
                         onClick={() => handleBottom(id)}
                     >

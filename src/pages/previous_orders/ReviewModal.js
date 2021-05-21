@@ -62,10 +62,20 @@ const ReviewModal = (props) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <button className="btn btn-outline-secondary mr-2" type="button" onClick={onHide}>
+                <button
+                    className="btn btn-outline-secondary mr-2"
+                    name="Discard"
+                    type="button"
+                    onClick={onHide}
+                >
                     Discard
                 </button>
-                <button className="btn mr-2 review-btn" type="button" onClick={onReview}>
+                <button
+                    className="btn mr-2 review-btn"
+                    name="Review"
+                    type="button"
+                    onClick={onReview}
+                >
                     Review
                 </button>
             </Modal.Footer>

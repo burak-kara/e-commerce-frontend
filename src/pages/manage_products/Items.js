@@ -99,7 +99,12 @@ const Items = (params) => {
                         md={{ span: 6, offset: 6 }}
                         xl={{ span: 4, offset: 8 }}
                     >
-                        <button className="btn" type="button" onClick={handleAdd}>
+                        <button
+                            className="btn"
+                            name="New Product"
+                            type="button"
+                            onClick={handleAdd}
+                        >
                             <Add />
                             <div className="ml-1">New Product</div>
                         </button>

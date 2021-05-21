@@ -468,6 +468,7 @@ const AccountDetailsList = (params) => {
                 <Form.Row className="buttons">
                     <button
                         className="btn font-weight-bold update-name-surname-btn"
+                        name="Update"
                         type="button"
                         onClick={onClickUpdateUser}
                     >
@@ -486,6 +487,7 @@ const AccountDetailsList = (params) => {
                 <Form.Row className="buttons">
                     <button
                         className="btn font-weight-bold update-name-surname-btn"
+                        name="Update Address"
                         type="button"
                         onClick={onClickUpdateAddresses}
                     >
@@ -512,6 +514,7 @@ const AccountDetailsList = (params) => {
                             <InputGroup.Append>
                                 <button
                                     className="btn password_btn"
+                                    name="Hide Show"
                                     type="button"
                                     onClick={handleNewPassword1Click}
                                 >
@@ -538,6 +541,7 @@ const AccountDetailsList = (params) => {
                             <InputGroup.Append>
                                 <button
                                     className="btn password_btn"
+                                    name="Hide Show"
                                     type="button"
                                     onClick={handleNewPassword2Click}
                                 >

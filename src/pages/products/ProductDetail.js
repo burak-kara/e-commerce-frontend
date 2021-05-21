@@ -106,6 +106,7 @@ const ProductDetail = (params) => {
                                 <Col xs={12} xl={12} className="basket-col">
                                     <button
                                         className="btn b-btn btn-block"
+                                        name="Add to Basket"
                                         type="button"
                                         onClick={addBasket}
                                     >

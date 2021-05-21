@@ -22,11 +22,17 @@ const DiscardModal = (props) => {
                 <p>{body || 'If you go back now, you will lose any changes you have made.'}</p>
             </Modal.Body>
             <Modal.Footer>
-                <button className="btn btn-outline-secondary mr-2" type="button" onClick={onHide}>
+                <button
+                    className="btn btn-outline-secondary mr-2"
+                    name="Cancel"
+                    type="button"
+                    onClick={onHide}
+                >
                     {leftBtnText || 'Cancel'}
                 </button>
                 <button
                     className={`btn mr-2 ${btnColor || 'btn-danger'}`}
+                    name="Discard"
                     type="button"
                     onClick={onDiscard}
                 >

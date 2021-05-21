@@ -137,8 +137,9 @@ const OrderDetail = (props) => {
                                 </Col>
                                 <Col xs={6} xl={2} className="list-col btn-col">
                                     <button
-                                        type="button"
                                         className="btn btn-block noExport"
+                                        name="Review"
+                                        type="button"
                                         onClick={() => {
                                             onChange('item', item.id);
                                             setModal(true);

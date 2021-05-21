@@ -181,6 +181,7 @@ const Basket = (props) => {
                             <Col xl={12}>
                                 <button
                                     className="btn btn-block"
+                                    name="Checkout"
                                     type="button"
                                     onClick={onCheckout}
                                     disabled={!Object.keys(basket.items).length}
