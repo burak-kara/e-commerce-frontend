@@ -1,5 +1,5 @@
-const CACHE_NAME = 'my-site-cache-v1';
-const urlsToCache = ['/', '/index.html'];
+const CACHE_NAME = 'e-commerce-ozu';
+const urlsToCache = ['/'];
 
 // eslint-disable-next-line no-restricted-globals
 self.addEventListener('install', (event) => {
