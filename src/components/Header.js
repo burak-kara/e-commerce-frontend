@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Badge } from '@material-ui/core';
-import { logo } from '../_assets';
+import { favicon, logo } from '../_assets';
 import {
     BASKET,
     LANDING,
@@ -18,6 +18,7 @@ import {
     SIGN_OUT,
     SIGN_UP,
     SEARCH,
+    ORDER_STATUS,
 } from '../_constants';
 import { Account, BasketIcon, DropDown, Search } from '../_utilities/icons';
 import { openAlert } from '../_redux/actions';
@@ -31,28 +32,27 @@ const Header = (props) => {
     const [search, setSearch] = useState('');
 
     setInterval(() => {
-        // const notify = null;
         const database = firebase.user_db(user.pk);
         if (!user.is_product_manager && !user.is_sales_manager) {
-            database.once('child_changed', (data) => {
+            database.once('child_changed', (response) => {
+                const { order_id, order_status, order_address } = response.val();
                 if (
                     Notification.permission === 'granted' &&
-                    (data.val().order_status >= 0 || data.val().order_address !== '')
+                    (order_status >= 0 || order_address !== '')
                 ) {
                     navigator.serviceWorker.ready.then((registration) => {
                         registration.showNotification('OzU E-Commerce', {
-                            body: `Your order with the ID of ${
-                                data.val().order_id
-                            } has been updated!`,
+                            body:
+                                `Your order with the ID of ${order_id} has been updated!\n` +
+                                `${ORDER_STATUS[order_status]}\n` +
+                                `${order_address}`,
                             image: logo,
-                            tag: data.val().order_id,
+                            icon: favicon,
+                            tag: order_id,
                             requireInteraction: true,
-                            dir: 'ltr',
+                            vibrate: [200, 100, 200]
                         });
                     });
-                    // notify.onClick = () => {
-                    //     notify.close();
-                    // };
                 } else if (Notification.permission !== 'granted') {
                     props.openAlert({
                         message: 'Please allow us to send you notifications!',
