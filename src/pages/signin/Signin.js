@@ -8,11 +8,14 @@ import { getUser, getUserDetail, login } from '../../_requests';
 import { Hide, Show } from '../../_utilities/icons';
 import { logo } from '../../_assets';
 import { LANDING, noneError, TOKEN } from '../../_constants';
+import AuthModal from './AuthModal';
 
 const Signin = (params) => {
     const history = useHistory();
     const [showPassword, setPasswordShow] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [code, setCode] = useState();
+    const [modal, setModal] = useState(false);
     const [form, setForm] = useState({
         is_sales_manager: false,
         is_product_manager: false,
@@ -46,6 +49,11 @@ const Signin = (params) => {
         if (!password || password === '') newErrors.password = 'Please provide a valid password!';
 
         return newErrors;
+    };
+
+    const onCode = (e) => {
+        setCode(e.target.value);
+        console.log(code);
     };
 
     const checkAnyError = (stepErrors) => {
@@ -129,73 +137,80 @@ const Signin = (params) => {
     );
 
     return (
-        <div className="signin">
-            <Form
-                className="form-container col-lg-3 col-md-6 col-sm-10 col-12"
-                noValidate
-                onSubmit={handleSubmit}
-            >
-                <div className="form-row logo-container">
-                    <div className="form-group">
-                        <button
-                            className="header-brand"
-                            type="button"
-                            onClick={() => handleLogoClick()}
-                        >
-                            <img className="logo" src={logo} alt="logo" />
-                        </button>
+        <>
+            <div className="signin">
+                <Form
+                    className="form-container col-lg-3 col-md-6 col-sm-10 col-12"
+                    noValidate
+                    onSubmit={handleSubmit}
+                >
+                    <div className="form-row logo-container">
+                        <div className="form-group">
+                            <button
+                                className="header-brand"
+                                type="button"
+                                onClick={() => handleLogoClick()}
+                            >
+                                <img className="logo" src={logo} alt="logo" />
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <Form.Row>
-                    <Form.Group as={Col} md="12" controlId="username">
-                        <Form.Label>Username</Form.Label>
-                        <Form.Control
-                            required
-                            name="username"
-                            type="text"
-                            placeholder="Username"
-                            value={form.username}
-                            onChange={(e) => setField('username', e.target.value)}
-                            isInvalid={!!errors.username && errors.username !== noneError}
-                            isValid={errors.username === noneError}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            {errors.username}
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row>
-                    <Form.Group as={Col} md="12" controlId="password">
-                        <Form.Label>Password</Form.Label>
-                        <InputGroup>
+                    <Form.Row>
+                        <Form.Group as={Col} md="12" controlId="username">
+                            <Form.Label>Username</Form.Label>
                             <Form.Control
                                 required
-                                name="password"
-                                type={showPassword ? 'text' : 'password'}
-                                placeholder="Password"
-                                value={form.password}
-                                onChange={(e) => setField('password', e.target.value)}
-                                isInvalid={!!errors.password && errors.password !== noneError}
-                                isValid={errors.password === noneError}
+                                name="username"
+                                type="text"
+                                placeholder="Username"
+                                value={form.username}
+                                onChange={(e) => setField('username', e.target.value)}
+                                isInvalid={!!errors.username && errors.username !== noneError}
+                                isValid={errors.username === noneError}
                             />
-                            <InputGroup.Append>
-                                <button
-                                    className="btn password_btn"
-                                    type="button"
-                                    onClick={handlePasswordClick}
-                                >
-                                    {showPassword ? <Hide color="white" /> : <Show color="white" />}
-                                </button>
-                            </InputGroup.Append>
                             <Form.Control.Feedback type="invalid">
-                                {errors.password}
+                                {errors.username}
                             </Form.Control.Feedback>
-                        </InputGroup>
-                    </Form.Group>
-                </Form.Row>
-                <div className="form-row btn-container">{renderSubmitButton()}</div>
-            </Form>
-        </div>
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Row>
+                        <Form.Group as={Col} md="12" controlId="password">
+                            <Form.Label>Password</Form.Label>
+                            <InputGroup>
+                                <Form.Control
+                                    required
+                                    name="password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder="Password"
+                                    value={form.password}
+                                    onChange={(e) => setField('password', e.target.value)}
+                                    isInvalid={!!errors.password && errors.password !== noneError}
+                                    isValid={errors.password === noneError}
+                                />
+                                <InputGroup.Append>
+                                    <button
+                                        className="btn password_btn"
+                                        type="button"
+                                        onClick={handlePasswordClick}
+                                    >
+                                        {showPassword ? (
+                                            <Hide color="white" />
+                                        ) : (
+                                            <Show color="white" />
+                                        )}
+                                    </button>
+                                </InputGroup.Append>
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.password}
+                                </Form.Control.Feedback>
+                            </InputGroup>
+                        </Form.Group>
+                    </Form.Row>
+                    <div className="form-row btn-container">{renderSubmitButton()}</div>
+                </Form>
+            </div>
+            <AuthModal onChange={onCode} show={modal} onHide={() => setModal(false)} />
+        </>
     );
 };
 

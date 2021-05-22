@@ -86,7 +86,6 @@ const AccountDetailsList = (params) => {
 
     const findPasswordErrors = () => {
         // password errors
-        //  TODO: check the password somewhere else
         if (!passwordForm.new_password1 || passwordForm.new_password1 === '')
             passwordErrors.new_password1 = 'Please provide a valid password!';
         else if (!passwordRegex.test(passwordForm.new_password1))
@@ -175,10 +174,6 @@ const AccountDetailsList = (params) => {
         }
     };
 
-    const onClickUpdateUser = () => {
-        updateUser();
-    };
-
     const onClickUpdatePassword = () => {
         if (!checkAnyPasswordError(passwordErrors)) {
             setLoading(true);
@@ -206,14 +201,6 @@ const AccountDetailsList = (params) => {
                     setLoading(false);
                 });
         }
-    };
-
-    const onChangeFirstName = (param) => {
-        setUserNewName(param);
-    };
-
-    const onChangeLastName = (param) => {
-        setUserNewSurname(param);
     };
 
     const updateUserAddress = (updatedAddress, addressName) => {
@@ -343,13 +330,6 @@ const AccountDetailsList = (params) => {
                         componentIndex="new"
                         key={`address-${addressIndex}`}
                     />
-                    {/* <Form.Control
-                        name="newAddress"
-                        type="text"
-                        placeholder="Enter new address"
-                        defaultValue={userNewAddress}
-                        onChange={(e) => setUserNewAddress(e.target.value)}
-                    /> */}
                 </ListGroup.Item>,
             );
         }
@@ -383,215 +363,189 @@ const AccountDetailsList = (params) => {
         );
 
     return (
-        <div className="account-info-page" key="profile-page">
-            <Form
-                className="form-container col-lg-3 col-md-6 col-sm-10 col-12"
-                noValidate
-                onSubmit={updateUser}
-                key="profilePageDetailUpdateForm"
-            >
-                <Form.Row className="page-title">
-                    <h1>Account Information</h1>
-                </Form.Row>
-                <Form.Row className="page-title">
-                    <h3>User Details</h3>
-                </Form.Row>
-                <Form.Row className="input-row">
-                    <Form.Group md="12" controlId="firstNameInput">
-                        <Form.Label>First Name</Form.Label>
+        <Form
+            className="form-container"
+            noValidate
+            onSubmit={updateUser}
+            key="profilePageDetailUpdateForm"
+        >
+            <Form.Row className="page-title">
+                <h1>Account Information</h1>
+            </Form.Row>
+            <Form.Row className="page-title">
+                <h3>User Details</h3>
+            </Form.Row>
+            <Form.Row className="input-row">
+                <Form.Group as={Col} xl={5} xs={12} controlId="firstNameInput">
+                    <Form.Label>First Name</Form.Label>
+                    <Form.Control
+                        className="input-details"
+                        name="first_name"
+                        type="text"
+                        placeholder="Firstname"
+                        defaultValue={user.first_name}
+                        onChange={(e) => setUserNewName(e.target.value)}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.first_name}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} xl={5} xs={12} controlId="lastNameInput">
+                    <Form.Label>Last Name</Form.Label>
+                    <Form.Control
+                        className="input-details"
+                        name="last_name"
+                        type="text"
+                        placeholder="Surname"
+                        defaultValue={user.last_name}
+                        onChange={(e) => setUserNewSurname(e.target.value)}
+                    />
+                    <Form.Control.Feedback type="invalid">{errors.last_name}</Form.Control.Feedback>
+                </Form.Group>
+            </Form.Row>
+            <Form.Row className="input-row">
+                <Form.Group as={Col} xl={3} xs={12} controlId="userNameInput">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                        className="input-details"
+                        disabled
+                        name="username"
+                        type="text"
+                        placeholder="Username"
+                        defaultValue={user.username}
+                    />
+                </Form.Group>
+                <Form.Group as={Col} xl={3} xs={12} className="" controlId="emailAddressInput">
+                    <Form.Label>Email Address</Form.Label>
+                    <Form.Control
+                        className="input-details"
+                        disabled
+                        name="email_address"
+                        type="text"
+                        placeholder="***@***.***"
+                        defaultValue={user.email}
+                    />
+                </Form.Group>
+                <Form.Group as={Col} xl={3} xs={12} controlId="phoneNumberInput">
+                    <Form.Label>Phone Number</Form.Label>
+                    <Form.Control
+                        className="input-details"
+                        disabled
+                        name="phone_number"
+                        type="text"
+                        placeholder="### ### ####"
+                        defaultValue={user.phone_number}
+                    />
+                </Form.Group>
+            </Form.Row>
+            <Form.Row className="buttons">
+                <button
+                    className="btn font-weight-bold update-name-surname-btn"
+                    name="Update"
+                    type="button"
+                    onClick={updateUser}
+                >
+                    {loading ? <ComponentLoading /> : 'Update'}
+                </button>
+            </Form.Row>
+            <Form.Group />
+            <Form.Row className="page-title">
+                <h3>User Account Addresses</h3>
+            </Form.Row>
+            <Form.Row className="address-list">
+                <Form.Group as={Col} md="12">
+                    <ListGroup variant="flush">{renderAddressesContent()}</ListGroup>
+                </Form.Group>
+            </Form.Row>
+            <Form.Row className="buttons">
+                <button
+                    className="btn font-weight-bold update-name-surname-btn"
+                    name="Update Address"
+                    type="button"
+                    onClick={onClickUpdateAddresses}
+                >
+                    {loading ? <ComponentLoading /> : 'Update Addresses'}
+                </button>
+            </Form.Row>
+            <Form.Group />
+            <Form.Row className="page-title">
+                <h3>Password</h3>
+            </Form.Row>
+            <Form.Row className="input-row">
+                <Form.Group as={Col} md="12">
+                    <InputGroup className="password-input-group">
                         <Form.Control
-                            className="input-details"
-                            name="first_name"
-                            type="text"
-                            placeholder="Firstname"
-                            defaultValue={user.first_name}
-                            onChange={(e) => onChangeFirstName(e.target.value)}
+                            className="password-textbox"
+                            name="newPassword1"
+                            type={showNewPassword1 ? 'text' : 'password'}
+                            placeholder="Enter new password"
+                            defaultValue=""
+                            onChange={(e) => setPasswordFormField('new_password1', e.target.value)}
                         />
-                        <Form.Control.Feedback type="invalid">
-                            {errors.first_name}
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group md="12" controlId="lastNameInput">
-                        <Form.Label>Last Name</Form.Label>
+                        <InputGroup.Append>
+                            <button
+                                className="btn password_btn"
+                                name="Hide Show"
+                                type="button"
+                                onClick={handleNewPassword1Click}
+                            >
+                                {showNewPassword1 ? <Hide color="white" /> : <Show color="white" />}
+                            </button>
+                        </InputGroup.Append>
+                    </InputGroup>
+                    <Form.Group />
+                    <InputGroup className="password-input-group">
                         <Form.Control
-                            className="input-details"
-                            name="last_name"
-                            type="text"
-                            placeholder="Lastname"
-                            defaultValue={user.last_name}
-                            onChange={(e) => onChangeLastName(e.target.value)}
+                            className="password-textbox"
+                            name="newPassword2"
+                            type={showNewPassword2 ? 'text' : 'password'}
+                            placeholder="Enter new password again"
+                            defaultValue=""
+                            onChange={(e) => setPasswordFormField('new_password2', e.target.value)}
                         />
-                        <Form.Control.Feedback type="invalid">
-                            {errors.last_name}
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row className="input-row">
-                    <Form.Group md="12" controlId="userNameInput">
-                        <Form.Label>Username</Form.Label>
+                        <InputGroup.Append>
+                            <button
+                                className="btn password_btn"
+                                name="Hide Show"
+                                type="button"
+                                onClick={handleNewPassword2Click}
+                            >
+                                {showNewPassword2 ? <Hide color="white" /> : <Show color="white" />}
+                            </button>
+                        </InputGroup.Append>
+                    </InputGroup>
+                    <Form.Group />
+                    <InputGroup className="password-input-group">
                         <Form.Control
-                            className="input-details"
-                            disabled
-                            name="username"
-                            type="text"
-                            placeholder="Username"
-                            defaultValue={user.username}
+                            className="password-textbox"
+                            name="oldPasword"
+                            type={showOldPassword ? 'text' : 'password'}
+                            placeholder="Enter your current password"
+                            defaultValue=""
+                            onChange={(e) => setPasswordFormField('old_password', e.target.value)}
                         />
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row className="input-row">
-                    <Form.Group md="12" className="" controlId="emailAddressInput">
-                        <Form.Label>Email Address</Form.Label>
-                        <Form.Control
-                            className="input-details"
-                            disabled
-                            name="email_address"
-                            type="text"
-                            placeholder="***@***.***"
-                            defaultValue={user.email}
-                        />
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row className="input-row">
-                    <Form.Group md="12" controlId="phoneNumberInput">
-                        <Form.Label>Phone Number</Form.Label>
-                        <Form.Control
-                            className="input-details"
-                            disabled
-                            name="phone_number"
-                            type="text"
-                            placeholder="### ### ####"
-                            defaultValue={user.phone_number}
-                        />
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row className="buttons">
-                    <button
-                        className="btn font-weight-bold update-name-surname-btn"
-                        name="Update"
-                        type="button"
-                        onClick={onClickUpdateUser}
-                    >
-                        {loading ? <ComponentLoading /> : 'Update'}
-                    </button>
-                </Form.Row>
-                <Form.Group />
-                <Form.Row className="page-title">
-                    <h3>User Account Addresses</h3>
-                </Form.Row>
-                <Form.Row className="address-list">
-                    <Form.Group as={Col} md="12">
-                        <ListGroup variant="flush">{renderAddressesContent()}</ListGroup>
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row className="buttons">
-                    <button
-                        className="btn font-weight-bold update-name-surname-btn"
-                        name="Update Address"
-                        type="button"
-                        onClick={onClickUpdateAddresses}
-                    >
-                        {loading ? <ComponentLoading /> : 'Update Addresses'}
-                    </button>
-                </Form.Row>
-                <Form.Group />
-                <Form.Row className="page-title">
-                    <h3>Password</h3>
-                </Form.Row>
-                <Form.Row className="input-row">
-                    <Form.Group as={Col} md="12">
-                        <InputGroup className="password-input-group">
-                            <Form.Control
-                                className="password-textbox"
-                                name="newPassword1"
-                                type={showNewPassword1 ? 'text' : 'password'}
-                                placeholder="Enter new password"
-                                defaultValue=""
-                                onChange={(e) =>
-                                    setPasswordFormField('new_password1', e.target.value)
-                                }
-                            />
-                            <InputGroup.Append>
-                                <button
-                                    className="btn password_btn"
-                                    name="Hide Show"
-                                    type="button"
-                                    onClick={handleNewPassword1Click}
-                                >
-                                    {showNewPassword1 ? (
-                                        <Hide color="white" />
-                                    ) : (
-                                        <Show color="white" />
-                                    )}
-                                </button>
-                            </InputGroup.Append>
-                        </InputGroup>
-                        <Form.Group />
-                        <InputGroup className="password-input-group">
-                            <Form.Control
-                                className="password-textbox"
-                                name="newPassword2"
-                                type={showNewPassword2 ? 'text' : 'password'}
-                                placeholder="Enter new password again"
-                                defaultValue=""
-                                onChange={(e) =>
-                                    setPasswordFormField('new_password2', e.target.value)
-                                }
-                            />
-                            <InputGroup.Append>
-                                <button
-                                    className="btn password_btn"
-                                    name="Hide Show"
-                                    type="button"
-                                    onClick={handleNewPassword2Click}
-                                >
-                                    {showNewPassword2 ? (
-                                        <Hide color="white" />
-                                    ) : (
-                                        <Show color="white" />
-                                    )}
-                                </button>
-                            </InputGroup.Append>
-                        </InputGroup>
-                        <Form.Group />
-                        <InputGroup className="password-input-group">
-                            <Form.Control
-                                className="password-textbox"
-                                name="oldPasword"
-                                type={showOldPassword ? 'text' : 'password'}
-                                placeholder="Enter your current password"
-                                defaultValue=""
-                                onChange={(e) =>
-                                    setPasswordFormField('old_password', e.target.value)
-                                }
-                            />
-                            <InputGroup.Append>
-                                <button
-                                    className="btn password_btn"
-                                    type="button"
-                                    onClick={handleOldPasswordClick}
-                                >
-                                    {showOldPassword ? (
-                                        <Hide color="white" />
-                                    ) : (
-                                        <Show color="white" />
-                                    )}
-                                </button>
-                            </InputGroup.Append>
-                        </InputGroup>
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row className="buttons">
-                    <button
-                        className="btn font-weight-bold update-name-surname-btn"
-                        type="button"
-                        onClick={onClickUpdatePassword}
-                    >
-                        {loading ? <ComponentLoading /> : 'Update Password'}
-                    </button>
-                </Form.Row>
-            </Form>
-        </div>
+                        <InputGroup.Append>
+                            <button
+                                className="btn password_btn"
+                                type="button"
+                                onClick={handleOldPasswordClick}
+                            >
+                                {showOldPassword ? <Hide color="white" /> : <Show color="white" />}
+                            </button>
+                        </InputGroup.Append>
+                    </InputGroup>
+                </Form.Group>
+            </Form.Row>
+            <Form.Row className="buttons">
+                <button
+                    className="btn font-weight-bold update-name-surname-btn"
+                    type="button"
+                    onClick={onClickUpdatePassword}
+                >
+                    {loading ? <ComponentLoading /> : 'Update Password'}
+                </button>
+            </Form.Row>
+        </Form>
     );
 };
 

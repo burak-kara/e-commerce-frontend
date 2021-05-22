@@ -1,19 +1,13 @@
 import React from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import AccountDetailsList from './AccountDetailsList';
 import { openAlert } from '../../_redux/actions';
 
-const Profile = () => {
-    const renderUserInfo = () => <AccountDetailsList key="profilePageDetails" />;
-
-    return (
-        <Container key="profilePage">
-            <Row>
-                <Col>{renderUserInfo()}</Col>
-            </Row>
-        </Container>
-    );
-};
+const Profile = () => (
+    <Container fluid className="account-info-page bg-dark">
+        <AccountDetailsList />
+    </Container>
+);
 
 export default connect(null, { openAlert })(Profile);

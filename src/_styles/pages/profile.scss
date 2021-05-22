@@ -1,24 +1,19 @@
 .account-info-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 5% 0px 5% 0px;
-    height: fit-content;
-
-    .page-title {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-    }
+    padding: 10px 500px;
 
     .form-container {
-        height: fit-content;
-        min-width: 70%;
-        padding: 50px;
+        padding-bottom: 10px;
+        width: 100%;
         border-radius: 20px;
         background-color: $header-bg;
         box-shadow: 0 0 5px 0 $header-bg-shadow;
+
+        .page-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
 
         .labels {
             display: flex;
@@ -30,16 +25,8 @@
 
         .input-row {
             display: flex;
-            justify-content: space-evenly;
+            justify-content: space-around;
             align-items: center;
-
-            .input-details {
-                display: block;
-                justify-content: center;
-                align-items: center;
-                min-width: 250px;
-                max-width: 250px;
-            }
 
             .password-input-group {
                 justify-content: center;
@@ -119,122 +106,6 @@
 
 @media only screen and (max-width: 576px) {
     .account-info-page {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 5% 0px 5% 0px;
-        height: fit-content;
-
-        .page-title {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .form-container {
-            height: fit-content;
-            min-width: 70%;
-            padding: 5px;
-            border-radius: 20px;
-            background-color: $header-bg;
-            box-shadow: 0 0 5px 0 $header-bg-shadow;
-
-            .labels {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-evenly;
-                align-items: center;
-                min-width: fit-content;
-            }
-
-            .input-row {
-                display: flex;
-                justify-content: space-evenly;
-                align-items: center;
-
-                .input-details {
-                    display: block;
-                    justify-content: center;
-                    align-items: center;
-                    min-width: 250px;
-                    max-width: 250px;
-                }
-
-                .password-input-group {
-                    justify-content: center;
-                }
-            }
-
-            .buttons {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-around;
-                align-items: center;
-            }
-
-            .address-list {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-evenly;
-                align-items: center;
-
-                .address-textbox {
-                    background-color: #f4f4f2;
-                }
-            }
-
-            .logo-container {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 80px;
-
-                .header-brand {
-                    border: none !important;
-                    background-color: $transparent;
-                    margin-bottom: 30px;
-
-                    .logo {
-                        max-width: 200px;
-                        max-height: 100px;
-                    }
-                }
-            }
-
-            .password-textbox {
-                min-width: 250px;
-                max-width: 250px;
-            }
-
-            .password_btn {
-                background-color: $a-btn;
-
-                &:focus {
-                    outline: none !important;
-                    box-shadow: none !important;
-                }
-            }
-
-            .update-name-surname-btn {
-                color: $nav-btn-hover;
-                background-color: $common-btn;
-                min-width: 50%;
-
-                &:focus {
-                    outline: none !important;
-                    box-shadow: none !important;
-                }
-            }
-
-            .btn-container {
-                display: flex;
-                justify-content: center;
-
-                .btn {
-                    height: 38px;
-                    width: 100px;
-                }
-            }
-        }
+        padding: 10px 10px !important;
     }
 }

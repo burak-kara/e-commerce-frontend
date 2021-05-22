@@ -9,7 +9,6 @@ import SalesManagerRoute from './SalesManagerRoute';
 import NotFoundRoute from './NotFoundRoute';
 import {
     Home,
-    Settings,
     Signin,
     Signout,
     Signup,
@@ -25,7 +24,6 @@ import {
     P_M_NEW_ITEM,
     P_M_EDIT_ITEM,
     PROFILE,
-    SETTINGS,
     SIGN_IN,
     SIGN_OUT,
     SIGN_UP,
@@ -109,7 +107,6 @@ const Routes = () => {
 
                 {/* Common Routes for logged in users */}
                 <AuthenticatedRoute exact path={PROFILE} component={Profile} />
-                <AuthenticatedRoute exact path={SETTINGS} component={Settings} />
                 <AuthenticatedRoute exact path={SIGN_OUT} component={Signout} />
 
                 {/* Routes for customers */}
