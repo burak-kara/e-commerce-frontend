@@ -26,9 +26,10 @@ export const P_M_EDIT_ITEM = `${P_M_ITEMS}/edit`;
 export const P_M_REVIEWS = '/reviews';
 
 // Sales Manager Routes
-export const S_M_ORDERS = '/all-orders';
-export const S_M_ORDER_STATUS = '/order-status';
-export const S_M_CAMPAIGNS = '/all-campaigns';
+export const SM_ORDERS = '/all-orders';
+export const SM_ORDER_STATUS = '/order-status';
+export const SM_CAMPAIGNS = '/all-campaigns';
+export const SM_SALES_ANALYSIS = '/sales-analysis';
 
 // Categories
 export const CAT_ELECTRONICS = '/electronics';

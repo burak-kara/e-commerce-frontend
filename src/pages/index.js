@@ -14,6 +14,7 @@ import Reviews from './manage_reviews/Reviews';
 import ManageCampaigns from './manage_campaigns/ManageCampaigns';
 import ManageOrders from './manage_orders/ManageOrders';
 import OrderStatus from './manage_orders/OrderStatus';
+import SalesAnalysis from './sales_analysis/SalesAnalysis';
 import NotFound from './commons/NotFound';
 import UnAuthorized from './commons/UnAuthorized';
 import UnAuthenticated from './commons/UnAuthenticated';
@@ -34,6 +35,7 @@ export {
     ManageOrders,
     OrderStatus,
     ProductDetail,
+    SalesAnalysis,
     ManageCampaigns,
     UnAuthenticated,
     UnAuthorized,

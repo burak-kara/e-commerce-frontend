@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Row, Col, Container, ListGroup } from 'react-bootstrap';
 import { getAllOrders } from '../../_requests';
-import { S_M_ORDER_STATUS } from '../../_constants';
+import { SM_ORDER_STATUS } from '../../_constants';
 import { OrderCard, PageLoading } from '../../components';
 import { BasketIcon } from '../../_utilities/icons';
 import { openAlert } from '../../_redux/actions';
@@ -31,7 +31,7 @@ const ManageOrders = (props) => {
 
     const handleClick = (id) => {
         history.push({
-            pathname: S_M_ORDER_STATUS,
+            pathname: SM_ORDER_STATUS,
             state: { id },
         });
     };
