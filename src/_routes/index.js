@@ -7,15 +7,7 @@ import AuthenticatedRoute from './AuthenticatedRoute';
 import UnAuthenticatedRoute from './UnAuthenticatedRoute';
 import SalesManagerRoute from './SalesManagerRoute';
 import NotFoundRoute from './NotFoundRoute';
-import {
-    Home,
-    Signin,
-    Signout,
-    Signup,
-    UnAuthorized,
-    UnAuthenticated,
-    NotFound,
-} from '../pages';
+import { Home, Signin, Signout, Signup, UnAuthorized, UnAuthenticated, NotFound } from '../pages';
 import {
     BASKET,
     LANDING,

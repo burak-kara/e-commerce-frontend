@@ -2,16 +2,16 @@ import React from 'react';
 import { Modal, Form, Col } from 'react-bootstrap';
 
 const AuthModal = (props) => {
-    const { show, onHide, onChange } = props;
+    const { show, onHide, onChange, isInvalid } = props;
 
     return (
         <Modal
             show={show}
             onHide={onHide}
-            size="lg"
+            size="md"
             aria-labelledby="contained-modal-title-vcenter"
             centered
-            dialogClassName="review-modal"
+            dialogClassName="code-modal"
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">2FA Code</Modal.Title>
@@ -27,7 +27,12 @@ const AuthModal = (props) => {
                                 type="number"
                                 placeholder="Google Auth Code"
                                 onChange={onChange}
+                                isInvalid={isInvalid}
+                                isValid={!isInvalid}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                Wrong Authentication Code
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Form.Row>
                 </Form>

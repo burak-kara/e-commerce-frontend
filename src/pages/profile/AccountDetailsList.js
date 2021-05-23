@@ -455,12 +455,7 @@ const AccountDetailsList = (params) => {
                 )}
             </Form.Row>
             <Form.Row className="buttons">
-                <button
-                    className="btn save-btn"
-                    name="Update"
-                    type="button"
-                    onClick={updateUser}
-                >
+                <button className="btn save-btn" name="Update" type="button" onClick={updateUser}>
                     {loading ? <ComponentLoading /> : 'Save'}
                 </button>
             </Form.Row>
@@ -555,11 +550,7 @@ const AccountDetailsList = (params) => {
                 </Form.Group>
             </Form.Row>
             <Form.Row className="buttons">
-                <button
-                    className="btn save-btn"
-                    type="button"
-                    onClick={onClickUpdatePassword}
-                >
+                <button className="btn save-btn" type="button" onClick={onClickUpdatePassword}>
                     {loading ? <ComponentLoading /> : 'Update'}
                 </button>
             </Form.Row>

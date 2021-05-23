@@ -4,18 +4,18 @@ import { connect } from 'react-redux';
 import { Form, Col, InputGroup } from 'react-bootstrap';
 import { openAlert, setToken, setUser, setUserDetail } from '../../_redux/actions';
 import { ComponentLoading } from '../../components';
-import { getUser, getUserDetail, login } from '../../_requests';
+import { getUser, getUserDetail, login, verify2FA } from '../../_requests';
 import { Hide, Show } from '../../_utilities/icons';
 import { logo } from '../../_assets';
-import { LANDING, noneError, TOKEN } from '../../_constants';
+import { LANDING, noneError, SIGN_OUT, TIME_OUT, TOKEN } from "../../_constants";
 import AuthModal from './AuthModal';
 
 const Signin = (params) => {
     const history = useHistory();
     const [showPassword, setPasswordShow] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [code, setCode] = useState();
     const [modal, setModal] = useState(false);
+    const [isInvalid, setIsInvalid] = useState(false);
     const [form, setForm] = useState({
         is_sales_manager: false,
         is_product_manager: false,
@@ -52,8 +52,20 @@ const Signin = (params) => {
     };
 
     const onCode = (e) => {
-        setCode(e.target.value);
-        console.log(code);
+        if (e.target.value && e.target.value.length === 6) {
+            verify2FA(e.target.value).then((response) => {
+                if (response.data) {
+                    setIsInvalid(false);
+                    setTimeout(() => {
+                        history.push({
+                            pathname: LANDING,
+                        });
+                    }, TIME_OUT);
+                } else {
+                    setIsInvalid(true);
+                }
+            });
+        }
     };
 
     const checkAnyError = (stepErrors) => {
@@ -88,9 +100,13 @@ const Signin = (params) => {
                             getUserDetail()
                                 .then((detail) => {
                                     params.setUserDetail(detail.data);
-                                    history.push({
-                                        pathname: LANDING,
-                                    });
+                                    if (detail.data.twoFA_enabled) {
+                                        setModal(true);
+                                    } else {
+                                        history.push({
+                                            pathname: LANDING,
+                                        });
+                                    }
                                 })
                                 .catch(() => {
                                     params.openAlert({
@@ -209,7 +225,17 @@ const Signin = (params) => {
                     <div className="form-row btn-container">{renderSubmitButton()}</div>
                 </Form>
             </div>
-            <AuthModal onChange={onCode} show={modal} onHide={() => setModal(false)} />
+            <AuthModal
+                onChange={onCode}
+                show={modal}
+                isInvalid={isInvalid}
+                onHide={() => {
+                    setModal(false);
+                    history.push({
+                        pathname: SIGN_OUT,
+                    });
+                }}
+            />
         </>
     );
 };
