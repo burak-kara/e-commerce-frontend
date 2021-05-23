@@ -5,7 +5,7 @@ import AccountDetailsList from './AccountDetailsList';
 import { openAlert } from '../../_redux/actions';
 
 const Profile = () => (
-    <Container fluid className="account-info-page bg-dark">
+    <Container fluid className="account-info-page">
         <AccountDetailsList />
     </Container>
 );

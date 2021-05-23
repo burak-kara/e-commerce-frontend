@@ -1,18 +1,21 @@
 .account-info-page {
-    padding: 10px 500px;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
 
     .form-container {
-        padding-bottom: 10px;
-        width: 100%;
+        padding: 10px 5px;
+        width: 50%;
         border-radius: 20px;
         background-color: $header-bg;
-        box-shadow: 0 0 5px 0 $header-bg-shadow;
+        box-shadow: 0 0 2px 0 $header-bg-shadow;
 
         .page-title {
             display: flex;
             justify-content: center;
-            align-items: center;
-            text-align: center;
+            font-style: normal;
+            font-family: -apple-system, 'SFProText', system-ui, Helvetica Neue, sans-serif;
+            font-weight: 600;
         }
 
         .labels {
@@ -24,10 +27,6 @@
         }
 
         .input-row {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-
             .password-input-group {
                 justify-content: center;
             }
@@ -35,9 +34,7 @@
 
         .buttons {
             display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
+            justify-content: center;
         }
 
         .address-list {
@@ -81,10 +78,12 @@
             }
         }
 
-        .update-name-surname-btn {
+        .save-btn {
             color: $nav-btn-hover;
             background-color: $common-btn;
-            min-width: 50%;
+            //min-width: 50%;
+            width: 120px;
+            font-weight: 500;
 
             &:focus {
                 outline: none !important;
@@ -101,11 +100,89 @@
                 width: 100px;
             }
         }
+
+        .switch-container {
+            height: 38px !important;
+            padding-top: 6.5px;
+
+            /* The switch - the box around the slider */
+            .switch {
+                //margin-top: 6px;
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 25px;
+            }
+
+            /* Hide default HTML checkbox */
+            .switch input {
+                display: none;
+            }
+
+            /* The slider */
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: $light-gray;
+                -webkit-transition: 0.4s;
+                transition: 0.4s;
+            }
+
+            .slider:before {
+                position: absolute;
+                content: '';
+                height: 18px;
+                width: 18px;
+                left: 4px;
+                top: 4px;
+                bottom: 4px;
+                background-color: $common-btn;
+                -webkit-transition: 0.4s;
+                transition: 0.4s;
+            }
+
+            input.primary:checked + .slider {
+                background-color: $btn-second;
+            }
+
+            input:focus + .slider {
+                box-shadow: 0 0 $common-btn;
+            }
+
+            input:checked + .slider:before {
+                -webkit-transform: translateX(34px);
+                -ms-transform: translateX(34px);
+                transform: translateX(34px);
+            }
+
+            /* Rounded sliders */
+            .slider.round {
+                border-radius: 36px;
+            }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+        }
+
+        .qr-group {
+            display: flex;
+            justify-content: center;
+        }
     }
 }
 
 @media only screen and (max-width: 576px) {
     .account-info-page {
-        padding: 10px 10px !important;
+        padding: 10px 0 !important;
+
+        .form-container {
+            padding: 10px 5px;
+            width: 95%;
+        }
     }
 }

@@ -9,6 +9,7 @@ const token = localStorage.getItem(TOKEN);
 
 const API = 'api/';
 const AUTH = 'rest-auth/';
+const TOTP = 'totp/';
 
 axios.defaults.headers.common.Accept = '*/*';
 if (token) {
@@ -211,6 +212,16 @@ const getBrandsByCategory = (category) => {
     });
 };
 
+const getQRLink = () =>
+    getRequest({
+        path: `${TOTP}create/`,
+    });
+
+const verify2FA = (code) =>
+    postRequest({
+        path: `${TOTP}login/${code}/`,
+    });
+
 export {
     register,
     login,
@@ -240,4 +251,6 @@ export {
     getItemsBySearch,
     getBrandsByCategory,
     getItemsByCategoryBrandSortSearch,
+    getQRLink,
+    verify2FA,
 };
