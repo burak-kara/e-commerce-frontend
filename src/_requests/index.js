@@ -222,6 +222,12 @@ const verify2FA = (code) =>
         path: `${TOTP}login/${code}/`,
     });
 
+const retrieveRating = (data) =>
+    postRequest({
+        path: `${API}rating-from-comment/`,
+        data,
+    });
+
 export {
     register,
     login,
@@ -253,4 +259,5 @@ export {
     getItemsByCategoryBrandSortSearch,
     getQRLink,
     verify2FA,
+    retrieveRating,
 };
