@@ -13,7 +13,6 @@ import {
     PROFILE,
     S_M_CAMPAIGNS,
     S_M_ORDERS,
-    SETTINGS,
     SIGN_IN,
     SIGN_OUT,
     SIGN_UP,
@@ -50,7 +49,7 @@ const Header = (props) => {
                             icon: favicon,
                             tag: order_id,
                             requireInteraction: true,
-                            vibrate: [200, 100, 200]
+                            vibrate: [200, 100, 200],
                         });
                     });
                 } else if (Notification.permission !== 'granted') {
@@ -80,30 +79,17 @@ const Header = (props) => {
     };
 
     const RenderCommonMenu = () => (
-        <>
-            <NavDropdown.Item
-                key="user-profile"
-                className="menu-btn"
-                onClick={() => {
-                    history.push({
-                        pathname: PROFILE,
-                    });
-                }}
-            >
-                Profile
-            </NavDropdown.Item>
-            <NavDropdown.Item
-                key="settings"
-                className="menu-btn"
-                onClick={() => {
-                    history.push({
-                        pathname: SETTINGS,
-                    });
-                }}
-            >
-                Settings
-            </NavDropdown.Item>
-        </>
+        <NavDropdown.Item
+            key="user-profile"
+            className="menu-btn"
+            onClick={() => {
+                history.push({
+                    pathname: PROFILE,
+                });
+            }}
+        >
+            Profile
+        </NavDropdown.Item>
     );
 
     const RenderCustomerMenu = () => (

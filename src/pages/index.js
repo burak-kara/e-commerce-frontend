@@ -1,7 +1,6 @@
 import Profile from './profile/Profile';
 import Orders from './previous_orders/Orders';
 import OrderDetail from './previous_orders/OrderDetail';
-import Settings from './profile/Settings';
 import Signup from './signup/Signup';
 import Signout from './signout/Signout';
 import Signin from './signin/Signin';
@@ -23,7 +22,6 @@ export {
     Profile,
     Orders,
     OrderDetail,
-    Settings,
     Signup,
     Signout,
     Signin,
