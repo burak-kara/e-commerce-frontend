@@ -17,8 +17,9 @@ import {
     SIGN_OUT,
     SIGN_UP,
     SEARCH,
-    ORDER_STATUS, SM_SALES_ANALYSIS
-} from "../_constants";
+    ORDER_STATUS,
+    SM_SALES_ANALYSIS,
+} from '../_constants';
 import { Account, BasketIcon, DropDown, Search } from '../_utilities/icons';
 import { openAlert } from '../_redux/actions';
 import { withFirebase } from '../_firebase';
