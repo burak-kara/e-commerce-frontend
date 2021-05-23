@@ -5,7 +5,7 @@ import { Row, Col, Container, ListGroup } from 'react-bootstrap';
 import { PDFExport } from '@progress/kendo-react-pdf';
 import { PageLoading } from '../../components';
 import { logo } from '../../_assets';
-import { getItemById, getOrderDetail, newReview } from '../../_requests';
+import { getItemById, getOrderDetail, newReview, retrieveRating } from '../../_requests';
 import { openAlert } from '../../_redux/actions';
 import ReviewModal from './ReviewModal';
 import { ORDER_STATUS } from '../../_constants';
@@ -28,6 +28,7 @@ const OrderDetail = (props) => {
     const [itemCounts, setItemCounts] = useState(false);
     const [modal, setModal] = useState(false);
     const [form, setForm] = useState(initialForm);
+    const [rating, setRating] = useState(5);
 
     useEffect(() => {
         if (history.location.state) {
@@ -61,6 +62,27 @@ const OrderDetail = (props) => {
             ...form,
             [field]: value,
         });
+        if (field === 'rating') {
+            setRating(value);
+        }
+    };
+
+    const onRetrieveRating = () => {
+        const { comment } = form;
+        retrieveRating({ comment })
+            .then((response) => {
+                setForm({
+                    ...form,
+                    rating: response.data.retrieved_rating,
+                });
+                setRating(response.data.retrieved_rating);
+            })
+            .catch(() => {
+                props.openAlert({
+                    message: 'Error while getting rating!',
+                    severity: 'error',
+                });
+            });
     };
 
     const onConfirm = () => {
@@ -275,9 +297,11 @@ const OrderDetail = (props) => {
             </PDFExport>
             <ReviewModal
                 show={modal}
+                rating={rating}
                 onHide={() => setModal(false)}
                 onReview={onConfirm}
                 onChange={onChange}
+                retrieveRating={onRetrieveRating}
             />
         </>
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Form, Col } from 'react-bootstrap';
 
 const ReviewModal = (props) => {
-    const { show, onHide, onReview, onChange } = props;
+    const { show, onHide, onReview, onChange, rating, retrieveRating } = props;
 
     return (
         <Modal
@@ -37,6 +37,7 @@ const ReviewModal = (props) => {
                                 className="dropdown"
                                 variant="outline-secondary"
                                 defaultValue="5"
+                                value={rating}
                                 onChange={(e) => onChange('rating', e.target.value)}
                             >
                                 <option key="1">1</option>
@@ -69,6 +70,14 @@ const ReviewModal = (props) => {
                     onClick={onHide}
                 >
                     Discard
+                </button>
+                <button
+                    className="btn mr-2 retrieve-btn"
+                    name="Review"
+                    type="button"
+                    onClick={retrieveRating}
+                >
+                    Retrieve Rating
                 </button>
                 <button
                     className="btn mr-2 review-btn"

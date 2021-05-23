@@ -334,6 +334,22 @@
         background-color: $common-btn;
         font-weight: 500;
         color: $header-bg;
+
+        &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+    }
+
+    .retrieve-btn {
+        background-color: $btn-second;
+        color: $common-btn;
+        font-weight: 500;
+
+        &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
     }
 }
 
