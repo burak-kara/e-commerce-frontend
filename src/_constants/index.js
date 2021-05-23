@@ -18,6 +18,9 @@ export const SETTINGS = '/settings';
 export const PRODUCT_DETAIL = '/product-details';
 export const SEARCH = '/search';
 
+// Admin routes
+export const ADMIN = '/admin-console';
+
 // Product manager routes
 export const P_M_ITEMS = '/product-manager-products';
 export const P_M_ITEM_DETAILS = `${P_M_ITEMS}/details`;

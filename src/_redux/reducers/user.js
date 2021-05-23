@@ -9,6 +9,7 @@ const initialState = {
     addresses: '',
     is_product_manager: false,
     is_sales_manager: false,
+    is_admin: false,
 };
 
 const user = (state = initialState, action) => {
@@ -29,6 +30,7 @@ const user = (state = initialState, action) => {
             const {
                 is_product_manager,
                 is_sales_manager,
+                is_admin,
                 phone_number,
                 addresses,
             } = action.payload;
@@ -36,6 +38,7 @@ const user = (state = initialState, action) => {
                 ...state,
                 is_product_manager,
                 is_sales_manager,
+                is_admin,
                 phone_number,
                 addresses,
             };
@@ -49,6 +52,7 @@ const user = (state = initialState, action) => {
                 phone_number: '',
                 is_product_manager: false,
                 is_sales_manager: false,
+                is_admin: false,
             };
         }
         default:

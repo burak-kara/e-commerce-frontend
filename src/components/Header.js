@@ -18,6 +18,7 @@ import {
     SIGN_OUT,
     SIGN_UP,
     SEARCH,
+    ADMIN,
 } from '../_constants';
 import { Account, BasketIcon, DropDown, Search } from '../_utilities/icons';
 import { openAlert } from '../_redux/actions';
@@ -82,6 +83,12 @@ const Header = () => {
             pathname: S_M_ORDERS,
         });
     };
+
+    const handleAdminConsole = () => {
+        history.push({
+            pathname: ADMIN,
+        });
+    }
 
     const handleSignIn = () => {
         history.push({
@@ -179,6 +186,18 @@ const Header = () => {
         </>
     );
 
+    const RenderAdminMenu = () => (
+        <>
+            <NavDropdown.Item
+                key="admin-console"
+                className="menu-btn"
+                onClick={() => handleAdminConsole()}
+            >
+                Admin Console
+            </NavDropdown.Item>
+        </>
+    );
+
     const renderMenu = () => {
         if (user && user.first_name) {
             const renders = [<RenderCommonMenu key="0" />];
@@ -188,8 +207,11 @@ const Header = () => {
             if (user.is_sales_manager) {
                 renders.push(<RenderSalesManagerMenu key="3" />);
             }
-            if (!user.is_product_manager && !user.is_sales_manager) {
+            if (!user.is_product_manager && !user.is_sales_manager && !user.is_admin) {
                 renders.push(<RenderCustomerMenu key="1" />);
+            }
+            if (user.is_admin) {
+                renders.push(<RenderAdminMenu key="4" />);
             }
             renders.push(
                 <>

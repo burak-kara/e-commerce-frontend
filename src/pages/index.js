@@ -1,5 +1,6 @@
 import Profile from './profile/Profile';
 import Orders from './previous_orders/Orders';
+import Admin from './admin/Admin';
 import OrderDetail from './previous_orders/OrderDetail';
 import Settings from './profile/Settings';
 import Signup from './signup/Signup';
@@ -22,6 +23,7 @@ import UnAuthenticated from './commons/UnAuthenticated';
 export {
     Profile,
     Orders,
+    Admin,
     OrderDetail,
     Settings,
     Signup,
