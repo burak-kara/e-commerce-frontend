@@ -1,0 +1,46 @@
+.sales-analysis {
+    .analysis-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 5px;
+        padding: 0 5px;
+    }
+
+    .chart-col {
+        box-shadow: 0 0 2px 0 $header-bg-shadow;
+        border-radius: 10px;
+    }
+
+    .desc-col {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: $black;
+        font-weight: 600;
+        font-style: normal;
+        font-family: -apple-system, 'SFProText', system-ui, Helvetica Neue, sans-serif;
+    }
+
+    .btn-col {
+        display: flex;
+        justify-content: flex-end;
+
+        .btn {
+            background-color: $btn-second;
+            color: $common-btn;
+            width: 140px;
+            font-weight: 600;
+            font-style: normal;
+            font-family: -apple-system, 'SFProText', system-ui, Helvetica Neue, sans-serif;
+
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+
+            &:hover {
+                box-shadow: 0 0 3px 0 $common-btn;
+            }
+        }
+    }
+}

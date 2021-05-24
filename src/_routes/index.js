@@ -7,7 +7,15 @@ import AuthenticatedRoute from './AuthenticatedRoute';
 import UnAuthenticatedRoute from './UnAuthenticatedRoute';
 import SalesManagerRoute from './SalesManagerRoute';
 import NotFoundRoute from './NotFoundRoute';
-import { UnAuthorized, UnAuthenticated, NotFound } from '../pages';
+import {
+    UnAuthorized,
+    UnAuthenticated,
+    NotFound,
+    DayByDayRevenue,
+    Top5SoldAllTime,
+    Top5SoldAllTimeShare,
+    TotalSoldByDay,
+} from '../pages';
 import {
     BASKET,
     LANDING,
@@ -35,9 +43,13 @@ import {
     SM_ORDERS,
     SM_CAMPAIGNS,
     SM_ORDER_STATUS,
-    SM_SALES_ANALYSIS,
+    SM_ANALYSIS,
     PRODUCT_DETAIL,
     SEARCH,
+    SM_ANALYSIS_DAY_BY_DAY,
+    SM_ANALYSIS_SOLD,
+    SM_ANALYSIS_SOLD_SHARE,
+    SM_ANALYSIS_TOTAL_SOLD,
 } from '../_constants';
 
 const Header = loadable(() => import('../components/Header'));
@@ -122,7 +134,19 @@ const Routes = () => {
                 <SalesManagerRoute exact path={SM_ORDERS} component={ManageOrders} />
                 <SalesManagerRoute exact path={SM_ORDER_STATUS} component={OrderStatus} />
                 <SalesManagerRoute exact path={SM_CAMPAIGNS} component={ManageCampaigns} />
-                <SalesManagerRoute exact path={SM_SALES_ANALYSIS} component={SalesAnalysis} />
+                <SalesManagerRoute exact path={SM_ANALYSIS} component={SalesAnalysis} />
+                <SalesManagerRoute
+                    exact
+                    path={SM_ANALYSIS_DAY_BY_DAY}
+                    component={DayByDayRevenue}
+                />
+                <SalesManagerRoute exact path={SM_ANALYSIS_SOLD} component={Top5SoldAllTime} />
+                <SalesManagerRoute
+                    exact
+                    path={SM_ANALYSIS_SOLD_SHARE}
+                    component={Top5SoldAllTimeShare}
+                />
+                <SalesManagerRoute exact path={SM_ANALYSIS_TOTAL_SOLD} component={TotalSoldByDay} />
 
                 {/* Common Routes for all users */}
                 {/* Categories */}

@@ -18,7 +18,7 @@ import {
     SIGN_UP,
     SEARCH,
     ORDER_STATUS,
-    SM_SALES_ANALYSIS,
+    SM_ANALYSIS,
 } from '../_constants';
 import { Account, BasketIcon, DropDown, Search } from '../_utilities/icons';
 import { openAlert } from '../_redux/actions';
@@ -163,7 +163,7 @@ const Header = (props) => {
                 className="menu-btn"
                 onClick={() => {
                     history.push({
-                        pathname: SM_SALES_ANALYSIS,
+                        pathname: SM_ANALYSIS,
                     });
                 }}
             >
