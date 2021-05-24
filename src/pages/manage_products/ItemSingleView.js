@@ -429,12 +429,18 @@ const ItemSingleView = (params) => {
                         <Form.Group as={Col} sm="12" controlId="buttons" className="btn-col">
                             <button
                                 className="btn btn-outline-secondary mr-2"
+                                name="Cancel"
                                 type="button"
                                 onClick={() => setConfirmModal(true)}
                             >
                                 Cancel
                             </button>
-                            <button className="btn btn-success" type="button" onClick={onPreview}>
+                            <button
+                                className="btn btn-success"
+                                name="Preview"
+                                type="button"
+                                onClick={onPreview}
+                            >
                                 Preview
                             </button>
                         </Form.Group>

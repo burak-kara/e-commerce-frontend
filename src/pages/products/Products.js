@@ -268,7 +268,12 @@ const Products = (params) => {
                         </Form.Control>
                     </Col>
                     <Col xs={12} xl={4} className="btn-col mb-2 mb-xl-0">
-                        <button type="button" className="btn btn-block" onClick={handleFilter}>
+                        <button
+                            className="btn btn-block"
+                            name="Filter"
+                            type="button"
+                            onClick={handleFilter}
+                        >
                             Filter
                         </button>
                     </Col>

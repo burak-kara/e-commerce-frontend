@@ -20,6 +20,7 @@ const NotFound = () => {
                 <div className="col-12 btn-container">
                     <button
                         className="btn font-weight-bold"
+                        name="Home"
                         type="button"
                         onClick={() =>
                             history.push({

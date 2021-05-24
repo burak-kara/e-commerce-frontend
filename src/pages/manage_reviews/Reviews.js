@@ -8,6 +8,7 @@ import { BasketIcon } from '../../_utilities/icons';
 import { getAllReviews, updateReview } from '../../_requests';
 import ReviewCard from '../../components/ReviewCard';
 import { openAlert } from '../../_redux/actions';
+import { REVIEW_APPROVED, REVIEW_REJECTED, REVIEW_WAITING } from '../../_constants';
 
 const Reviews = (props) => {
     const [reviews, setReviews] = useState([]);
@@ -37,7 +38,7 @@ const Reviews = (props) => {
     const handleReject = (id) => {
         const data = {
             id,
-            status: 2,
+            status: REVIEW_REJECTED,
         };
         updateReview(data).then(() => {
             props.openAlert({
@@ -51,7 +52,7 @@ const Reviews = (props) => {
     const handleApprove = (id) => {
         const data = {
             id,
-            status: 1,
+            status: REVIEW_APPROVED,
         };
         updateReview(data).then(() => {
             props.openAlert({
@@ -106,7 +107,7 @@ const Reviews = (props) => {
             (a, b) => moment(b.date).format('YYYYMMDD') - moment(a.date).format('YYYYMMDD'),
         );
         reviews.forEach((item) => {
-            if (item.status === 0) {
+            if (item.status === REVIEW_WAITING) {
                 list.push(pushable('primary', 'New', item));
             } else {
                 list.push(

@@ -9,6 +9,7 @@ const token = localStorage.getItem(TOKEN);
 
 const API = 'api/';
 const AUTH = 'rest-auth/';
+const TOTP = 'totp/';
 
 axios.defaults.headers.common.Accept = '*/*';
 if (token) {
@@ -70,6 +71,18 @@ const getUserDetail = () =>
         path: `${API}user/`,
     });
 
+const updateUserInformation = (data) =>
+    putRequest({
+        path: `${API}user/`,
+        data,
+    });
+
+const changePassword = (data) =>
+    postRequest({
+        path: `${AUTH}password/change/`,
+        data,
+    });
+
 const getItems = () =>
     getRequest({
         path: `${API}items/`,
@@ -81,7 +94,7 @@ const getItemById = (id) =>
     });
 
 const getItemsByCategory = (category) => {
-    const cat = category.replaceAll('-', '');
+    const cat = category.replace(/-/g, '');
     return getRequest({
         path: `${API}items/${cat}/`,
     });
@@ -94,7 +107,7 @@ const getItemsBySearch = (search) =>
 
 const getItemsByCategoryBrandSortSearch = (data) => {
     const { category, brand, ordering, search } = data;
-    const cat = category.replaceAll('-', '');
+    const cat = category.replace(/-/g, '');
     let path = `${API}items/search?`;
     path += cat ? `category=${cat}&` : '';
     path += search ? `search=${search}&` : '';
@@ -193,11 +206,27 @@ const getAddressesByUserID = (id) =>
     });
 
 const getBrandsByCategory = (category) => {
-    const cat = category.replaceAll('-', '');
+    const cat = category.replace(/-/g, '');
     return getRequest({
         path: `${API}brands/${cat}/`,
     });
 };
+
+const getQRLink = () =>
+    getRequest({
+        path: `${TOTP}create/`,
+    });
+
+const verify2FA = (code) =>
+    postRequest({
+        path: `${TOTP}login/${code}/`,
+    });
+
+const retrieveRating = (data) =>
+    postRequest({
+        path: `${API}rating-from-comment/`,
+        data,
+    });
 
 export {
     register,
@@ -205,6 +234,8 @@ export {
     logout,
     getUser,
     getUserDetail,
+    updateUserInformation,
+    changePassword,
     getItems,
     getItemById,
     getItemsByCategory,
@@ -226,4 +257,7 @@ export {
     getItemsBySearch,
     getBrandsByCategory,
     getItemsByCategoryBrandSortSearch,
+    getQRLink,
+    verify2FA,
+    retrieveRating,
 };

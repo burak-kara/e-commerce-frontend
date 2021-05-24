@@ -2,6 +2,12 @@
     border-bottom: 5px solid $header-border;
     background-color: $header-bg;
 
+    .banner {
+        background-color: $header-bg;
+        color: $a-btn;
+        font-weight: 500;
+    }
+
     .container {
         padding-left: 0 !important;
         padding-right: 0 !important;

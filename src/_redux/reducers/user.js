@@ -9,12 +9,23 @@ const initialState = {
     addresses: '',
     is_product_manager: false,
     is_sales_manager: false,
+    is_admin: false,
+    twoFA_enabled: false,
 };
 
 const user = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER: {
-            const { pk, username, first_name, last_name, email } = action.payload;
+            const {
+                pk,
+                username,
+                first_name,
+                last_name,
+                email,
+                phone_number,
+                is_admin,
+                twoFA_enabled,
+            } = action.payload;
             return {
                 ...state,
                 pk,
@@ -22,6 +33,9 @@ const user = (state = initialState, action) => {
                 first_name,
                 last_name,
                 email,
+                phone_number,
+                is_admin,
+                twoFA_enabled,
             };
         }
         case SET_USER_DETAIL: {
@@ -30,6 +44,8 @@ const user = (state = initialState, action) => {
                 is_sales_manager,
                 phone_number,
                 addresses,
+                is_admin,
+                twoFA_enabled,
             } = action.payload;
             return {
                 ...state,
@@ -37,6 +53,8 @@ const user = (state = initialState, action) => {
                 is_sales_manager,
                 phone_number,
                 addresses,
+                is_admin,
+                twoFA_enabled,
             };
         }
         case REMOVE_USER: {
@@ -48,6 +66,8 @@ const user = (state = initialState, action) => {
                 phone_number: '',
                 is_product_manager: false,
                 is_sales_manager: false,
+                is_admin: false,
+                twoFA_enabled: false,
             };
         }
         default:

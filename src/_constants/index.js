@@ -60,6 +60,10 @@ export const ORDER_STATUS = {
     6: 'Order is rejected',
 };
 
+export const REVIEW_WAITING = 0;
+export const REVIEW_APPROVED = 1;
+export const REVIEW_REJECTED = 2;
+
 // Regexes
 export const emailRegex = new RegExp(
     '^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}' +

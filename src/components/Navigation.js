@@ -34,7 +34,7 @@ const Navigation = () => {
         });
     };
 
-    const getName = (name) => name.toLowerCase().replaceAll('/', '').replaceAll('-', ' ');
+    const getName = (name) => name.replace(/\//g, '').replace(/-/g, ' ').toLowerCase();
 
     const Navs = () => {
         const navs = [];

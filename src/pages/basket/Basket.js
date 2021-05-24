@@ -40,7 +40,7 @@ const Basket = (props) => {
     useEffect(() => {
         setLoading(true);
         fetchItems();
-        setAddresses(user.addresses ? user.addresses.replaceAll("'", '').split(',') : []);
+        setAddresses(user.addresses ? user.addresses.replace(/'/g, '').split(',') : []);
     }, [loading]);
 
     useEffect(() => {
@@ -181,6 +181,7 @@ const Basket = (props) => {
                             <Col xl={12}>
                                 <button
                                     className="btn btn-block"
+                                    name="Checkout"
                                     type="button"
                                     onClick={onCheckout}
                                     disabled={!Object.keys(basket.items).length}

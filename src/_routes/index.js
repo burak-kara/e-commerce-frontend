@@ -1,33 +1,13 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
-import { Header, Navigation } from '../components';
+import loadable from '@loadable/component';
 import ProductManagerRoute from './ProductManagerRoute';
 import CustomerRoute from './CustomerRoute';
 import AuthenticatedRoute from './AuthenticatedRoute';
 import UnAuthenticatedRoute from './UnAuthenticatedRoute';
+import SalesManagerRoute from './SalesManagerRoute';
 import NotFoundRoute from './NotFoundRoute';
-import {
-    Basket,
-    Home,
-    Items,
-    ItemSingleView,
-    Orders,
-    Profile,
-    Settings,
-    Signin,
-    Signout,
-    Signup,
-    Products,
-    UnAuthorized,
-    UnAuthenticated,
-    NotFound,
-    OrderDetail,
-    Reviews,
-    ManageCampaigns,
-    ManageOrders,
-    OrderStatus,
-    ProductDetail,
-} from '../pages';
+import { Home, Signin, Signout, Signup, UnAuthorized, UnAuthenticated, NotFound } from '../pages';
 import {
     BASKET,
     LANDING,
@@ -36,7 +16,6 @@ import {
     P_M_NEW_ITEM,
     P_M_EDIT_ITEM,
     PROFILE,
-    SETTINGS,
     SIGN_IN,
     SIGN_OUT,
     SIGN_UP,
@@ -59,7 +38,22 @@ import {
     PRODUCT_DETAIL,
     SEARCH,
 } from '../_constants';
-import SalesManagerRoute from './SalesManagerRoute';
+
+const Header = loadable(() => import('../components/Header'));
+const Navigation = loadable(() => import('../components/Navigation'));
+
+const Basket = loadable(() => import('../pages/basket/Basket'));
+const ManageCampaigns = loadable(() => import('../pages/manage_campaigns/ManageCampaigns'));
+const ManageOrders = loadable(() => import('../pages/manage_orders/ManageOrders'));
+const OrderStatus = loadable(() => import('../pages/manage_orders/OrderStatus'));
+const Items = loadable(() => import('../pages/manage_products/Items'));
+const ItemSingleView = loadable(() => import('../pages/manage_products/ItemSingleView'));
+const Reviews = loadable(() => import('../pages/manage_reviews/Reviews'));
+const Orders = loadable(() => import('../pages/previous_orders/Orders'));
+const OrderDetail = loadable(() => import('../pages/previous_orders/OrderDetail'));
+const ProductDetail = loadable(() => import('../pages/products/ProductDetail'));
+const Products = loadable(() => import('../pages/products/Products'));
+const Profile = loadable(() => import('../pages/profile/Profile'));
 
 const Routes = () => {
     const history = useHistory();
@@ -105,7 +99,6 @@ const Routes = () => {
 
                 {/* Common Routes for logged in users */}
                 <AuthenticatedRoute exact path={PROFILE} component={Profile} />
-                <AuthenticatedRoute exact path={SETTINGS} component={Settings} />
                 <AuthenticatedRoute exact path={SIGN_OUT} component={Signout} />
 
                 {/* Routes for customers */}

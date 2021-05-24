@@ -113,7 +113,12 @@ const OrderCard = (props) => {
                     </div>
                 </Col>
                 <Col xs={6} xl={2} className="list-col btn-col">
-                    <button type="button" className="btn btn-block" onClick={() => onClick(id)}>
+                    <button
+                        type="button"
+                        className="btn btn-block"
+                        name="Details"
+                        onClick={() => onClick(id)}
+                    >
                         Details
                     </button>
                 </Col>

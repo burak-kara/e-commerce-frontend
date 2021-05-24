@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Badge } from '@material-ui/core';
-import { logo } from '../_assets';
+import { favicon, logo } from '../_assets';
 import {
     BASKET,
     LANDING,
@@ -13,125 +13,121 @@ import {
     PROFILE,
     S_M_CAMPAIGNS,
     S_M_ORDERS,
-    SETTINGS,
     SIGN_IN,
     SIGN_OUT,
     SIGN_UP,
     SEARCH,
+    ORDER_STATUS,
 } from '../_constants';
 import { Account, BasketIcon, DropDown, Search } from '../_utilities/icons';
 import { openAlert } from '../_redux/actions';
+import { withFirebase } from '../_firebase';
 
-const Header = () => {
+const Header = (props) => {
+    const { firebase } = props;
     const history = useHistory();
     const { basket } = useStore().getState();
     const { user } = useStore().getState();
     const [search, setSearch] = useState('');
 
-    const handleLogo = () => {
-        history.push({
-            pathname: LANDING,
-        });
-    };
+    setInterval(() => {
+        const database = firebase.user_db(user.pk);
+        if (!user.is_product_manager && !user.is_sales_manager) {
+            database.once('child_changed', (response) => {
+                const { order_id, order_status, order_address } = response.val();
+                if (
+                    Notification.permission === 'granted' &&
+                    (order_status >= 0 || order_address !== '')
+                ) {
+                    navigator.serviceWorker.ready.then((registration) => {
+                        registration.showNotification('OzU E-Commerce', {
+                            body:
+                                `Your order with the ID of ${order_id} has been updated!\n` +
+                                `${ORDER_STATUS[order_status]}\n` +
+                                `${order_address}`,
+                            image: logo,
+                            icon: favicon,
+                            tag: order_id,
+                            requireInteraction: true,
+                            vibrate: [200, 100, 200],
+                        });
+                    });
+                } else if (Notification.permission !== 'granted') {
+                    props.openAlert({
+                        message: 'Please allow us to send you notifications!',
+                        severity: 'error',
+                    });
+                } else {
+                    props.openAlert({
+                        message: 'Something went wrong with the push notifications!',
+                        severity: 'error',
+                    });
+                }
+            });
+        }
+    }, 1000);
 
-    const handleSearch = () => {
-        history.push({
-            pathname: `${SEARCH}/${search}`,
-            state: { search },
-        });
-    };
-
-    const handleAccount = () => {
-        history.push({
-            pathname: PROFILE,
-        });
-    };
-
-    const handleOrders = () => {
-        history.push({
-            pathname: ORDERS,
-        });
-    };
-
-    const handleSettings = () => {
-        history.push({
-            pathname: SETTINGS,
-        });
-    };
-
-    const handleManageProducts = () => {
-        history.push({
-            pathname: P_M_ITEMS,
-        });
-    };
-
-    const handleProductReviews = () => {
-        history.push({
-            pathname: P_M_REVIEWS,
-        });
-    };
-
-    const handleManageCampaigns = () => {
-        history.push({
-            pathname: S_M_CAMPAIGNS,
-        });
-    };
-
-    const handleSMOrders = () => {
-        history.push({
-            pathname: S_M_ORDERS,
-        });
-    };
-
-    const handleSignIn = () => {
-        history.push({
-            pathname: SIGN_IN,
-        });
-    };
-
-    const handleSignUp = () => {
-        history.push({
-            pathname: SIGN_UP,
-        });
-    };
-
-    const handleSignOut = () => {
-        history.push({
-            pathname: SIGN_OUT,
-        });
-    };
-
-    const handleBasket = () => {
-        history.push({
-            pathname: BASKET,
-        });
+    const Banner = () => {
+        let user_type = '';
+        if (user.is_product_manager) {
+            user_type = 'Product Manager';
+        }
+        if (user.is_sales_manager) {
+            user_type = 'Sales Manager';
+        }
+        return <div className="banner">{user_type}</div>;
     };
 
     const RenderCommonMenu = () => (
-        <>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleAccount()}>
-                Profile
-            </NavDropdown.Item>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleSettings()}>
-                Settings
-            </NavDropdown.Item>
-        </>
+        <NavDropdown.Item
+            key="user-profile"
+            className="menu-btn"
+            onClick={() => {
+                history.push({
+                    pathname: PROFILE,
+                });
+            }}
+        >
+            Profile
+        </NavDropdown.Item>
     );
 
     const RenderCustomerMenu = () => (
-        <>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleOrders()}>
-                Previous Orders
-            </NavDropdown.Item>
-        </>
+        <NavDropdown.Item
+            key="prev-orders"
+            className="menu-btn"
+            onClick={() => {
+                history.push({
+                    pathname: ORDERS,
+                });
+            }}
+        >
+            Previous Orders
+        </NavDropdown.Item>
     );
 
     const RenderProductManagerMenu = () => (
         <>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleManageProducts()}>
+            <NavDropdown.Item
+                key="manage-products"
+                className="menu-btn"
+                onClick={() => {
+                    history.push({
+                        pathname: P_M_ITEMS,
+                    });
+                }}
+            >
                 Manage Products
             </NavDropdown.Item>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleProductReviews()}>
+            <NavDropdown.Item
+                key="product-reviews"
+                className="menu-btn"
+                onClick={() => {
+                    history.push({
+                        pathname: P_M_REVIEWS,
+                    });
+                }}
+            >
                 Product Reviews
             </NavDropdown.Item>
         </>
@@ -139,10 +135,26 @@ const Header = () => {
 
     const RenderSalesManagerMenu = () => (
         <>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleManageCampaigns()}>
+            <NavDropdown.Item
+                key="manage-campaigns"
+                className="menu-btn"
+                onClick={() => {
+                    history.push({
+                        pathname: S_M_CAMPAIGNS,
+                    });
+                }}
+            >
                 Manage Campaigns
             </NavDropdown.Item>
-            <NavDropdown.Item className="menu-btn" onClick={() => handleSMOrders()}>
+            <NavDropdown.Item
+                key="manage-orders"
+                className="menu-btn"
+                onClick={() => {
+                    history.push({
+                        pathname: S_M_ORDERS,
+                    });
+                }}
+            >
                 Manage Orders
             </NavDropdown.Item>
         </>
@@ -163,7 +175,15 @@ const Header = () => {
             renders.push(
                 <>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item className="menu-btn" onClick={() => handleSignOut()}>
+                    <NavDropdown.Item
+                        key="logout"
+                        className="menu-btn"
+                        onClick={() => {
+                            history.push({
+                                pathname: SIGN_OUT,
+                            });
+                        }}
+                    >
                         Logout
                     </NavDropdown.Item>
                 </>,
@@ -173,10 +193,26 @@ const Header = () => {
         }
         return (
             <>
-                <NavDropdown.Item className="menu-btn" onClick={() => handleSignIn()}>
+                <NavDropdown.Item
+                    key="sign-in"
+                    className="menu-btn"
+                    onClick={() => {
+                        history.push({
+                            pathname: SIGN_IN,
+                        });
+                    }}
+                >
                     Sign in
                 </NavDropdown.Item>
-                <NavDropdown.Item className="menu-btn" onClick={() => handleSignUp()}>
+                <NavDropdown.Item
+                    key="sign-up"
+                    className="menu-btn"
+                    onClick={() => {
+                        history.push({
+                            pathname: SIGN_UP,
+                        });
+                    }}
+                >
                     Sign up
                 </NavDropdown.Item>
             </>
@@ -184,7 +220,16 @@ const Header = () => {
     };
 
     const renderBasketButton = () => (
-        <button className="btn b-btn" type="button" onClick={() => handleBasket()}>
+        <button
+            className="btn b-btn"
+            name="Go to Basket"
+            type="button"
+            onClick={() => {
+                history.push({
+                    pathname: BASKET,
+                });
+            }}
+        >
             <BasketIcon />
             <div className="ml-1">Basket</div>
         </button>
@@ -193,10 +238,17 @@ const Header = () => {
     return (
         <div className="header-container">
             <Container fluid="xl" className="container">
+                <Banner />
+            </Container>
+            <Container fluid="xl" className="container">
                 <Navbar collapseOnSelect expand="lg" className="header">
                     <Navbar.Brand
                         className="header-brand mb-1 mb-xl-0"
-                        onClick={() => handleLogo()}
+                        onClick={() => {
+                            history.push({
+                                pathname: LANDING,
+                            });
+                        }}
                     >
                         <img className="logo" src={logo} alt="logo" />
                     </Navbar.Brand>
@@ -212,8 +264,14 @@ const Header = () => {
                             <div className="input-group-append">
                                 <button
                                     className="btn btn-dark btn-block h-100 search-btn"
+                                    name="Search"
                                     type="button"
-                                    onClick={() => handleSearch()}
+                                    onClick={() => {
+                                        history.push({
+                                            pathname: `${SEARCH}/${search}`,
+                                            state: { search },
+                                        });
+                                    }}
                                 >
                                     <Search />
                                     <div className="ml-1">Search</div>
@@ -244,7 +302,7 @@ const Header = () => {
                             </NavDropdown>
                         </Nav>
                         <Nav className="ml-auto">
-                            <Nav.Item className="b-item">
+                            <Nav.Item key="basket" className="b-item">
                                 {basket.itemCount === 0 ? (
                                     <div className="badge">{renderBasketButton()}</div>
                                 ) : (
@@ -269,4 +327,4 @@ const Header = () => {
 
 const mapStateToProps = (state) => state.basket;
 
-export default connect(mapStateToProps, { openAlert })(Header);
+export default connect(mapStateToProps, { openAlert })(withFirebase(Header));

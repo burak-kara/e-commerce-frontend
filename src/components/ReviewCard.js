@@ -45,8 +45,9 @@ const ReviewCard = (props) => {
                     className="list-col btn-col mr-3 mr-xl-0"
                 >
                     <button
-                        type="button"
                         className="btn btn-block reject"
+                        name="Reject"
+                        type="button"
                         onClick={() => handleReject(id)}
                     >
                         Reject
@@ -58,8 +59,9 @@ const ReviewCard = (props) => {
                     className="list-col btn-col"
                 >
                     <button
-                        type="button"
                         className="btn btn-block approve"
+                        name="Approve"
+                        type="button"
                         onClick={() => handleApprove(id)}
                     >
                         Approve
