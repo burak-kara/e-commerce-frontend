@@ -36,16 +36,16 @@ const Top5SoldAllTimeShare = () => {
     console.log('Top5SoldAllTimeShare');
 
     return (
-        <Container fluid className="mt-2 mb-2">
-            <Row>
-                <Col xl={6}>
+        <Container fluid className="sales-analysis mt-2 mb-2">
+            <Row className="analysis-row">
+                <Col xs={12} xl={8} className="chart-col">
                     <div className="k-card">
                         <Chart
                             style={{
                                 height: 350,
                             }}
                         >
-                            <ChartTitle text="Top 5 Sold Product Ratios" />
+                            <ChartTitle text="Top 5 Products - All Time - Shares" />
                             <ChartLegend position="top" orientation="horizontal" />
                             <ChartSeries>
                                 <ChartSeriesItem

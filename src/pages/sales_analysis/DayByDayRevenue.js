@@ -23,16 +23,16 @@ const DayByDayRevenue = () => {
     console.log('DayByDayRevenue');
 
     return (
-        <Container fluid className="mt-2 mb-2">
-            <Row>
-                <Col xl={6}>
-                    <div className="k-card">
+        <Container fluid className="sales-analysis mt-2 mb-2">
+            <Row className="analysis-row">
+                <Col xs={12} xl={8} className="chart-col">
+                    <div className="k-card bg-dark">
                         <Chart
                             style={{
                                 height: 350,
                             }}
                         >
-                            <ChartTitle text="Day by Day Revenue" />
+                            <ChartTitle text="Daily Revenue - Last 5 Days" />
                             <ChartLegend position="top" orientation="horizontal" />
                             <ChartCategoryAxis>
                                 <ChartCategoryAxisItem categories={days} startAngle={45} />

@@ -20,7 +20,7 @@ const items = [
 ];
 const top5SoldAllTime = [
     {
-        name: 'Total Sold Count',
+        name: 'Total Sales',
         data: [40, 35, 20, 15, 12],
     },
 ];
@@ -29,16 +29,16 @@ const Top5SoldAllTime = () => {
     console.log('Top5SoldAllTime');
 
     return (
-        <Container fluid className="mt-2 mb-2">
-            <Row>
-                <Col xl={6}>
+        <Container fluid className="sales-analysis mt-2 mb-2">
+            <Row className="analysis-row">
+                <Col xs={12} xl={8} className="chart-col">
                     <div className="k-card">
                         <Chart
                             style={{
                                 height: 350,
                             }}
                         >
-                            <ChartTitle text="Top 5 Sold Product Count" />
+                            <ChartTitle text="Top 5 Products - All Time" />
                             <ChartLegend position="top" orientation="horizontal" />
                             <ChartCategoryAxis>
                                 <ChartCategoryAxisItem categories={items} startAngle={45} />

@@ -14,7 +14,7 @@ import {
 const categories = ['20.05.2021', '21.05.2021', '22.05.2021'];
 const totalSoldByDay = [
     {
-        name: 'Total Sold Count',
+        name: 'Total Sales',
         data: [40, 20, 90],
     },
 ];
@@ -23,16 +23,16 @@ const TotalSoldByDay = () => {
     console.log('TotalSoldByDay');
 
     return (
-        <Container fluid className="mt-2 mb-2">
-            <Row>
-                <Col xl={6}>
+        <Container fluid className="sales-analysis mt-2 mb-2">
+            <Row className="analysis-row">
+                <Col xs={12} xl={8} className="chart-col">
                     <div className="k-card">
                         <Chart
                             style={{
                                 height: 350,
                             }}
                         >
-                            <ChartTitle text="Total Sold Count by Day" />
+                            <ChartTitle text="Daily Sales - Last 5 Days" />
                             <ChartLegend position="top" orientation="horizontal" />
                             <ChartCategoryAxis>
                                 <ChartCategoryAxisItem categories={categories} startAngle={45} />
