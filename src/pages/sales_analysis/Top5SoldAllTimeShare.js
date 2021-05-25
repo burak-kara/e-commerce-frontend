@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import {
     Chart,
     ChartSeries,
@@ -7,35 +8,37 @@ import {
     ChartTitle,
     ChartLegend,
 } from '@progress/kendo-react-charts';
+import { getStats } from '../../_requests';
+import { openAlert } from '../../_redux/actions';
+import { PageLoading } from '../../components';
 
-// TODO delete
-const top5SoldAllTimePie = [
-    {
-        name: 'Iphone 11 64GB',
-        share: 0.2,
-    },
-    {
-        name: 'Full HD Smart LED TV',
-        share: 0.25,
-    },
-    {
-        name: 'Montag FORTALEZA 250g',
-        share: 0.15,
-    },
-    {
-        name: 'Yetişkin Kuru Köpek Maması',
-        share: 0.3,
-    },
-    {
-        name: 'CanEm Vinç Oyuncak Iş Makinesi',
-        share: 0.1,
-    },
-];
+const Top5SoldAllTimeShare = (params) => {
+    const [data, setData] = useState();
+    const [loading, setLoading] = useState(false);
 
-const Top5SoldAllTimeShare = () => {
-    console.log('Top5SoldAllTimeShare');
+    const fetchData = () => {
+        getStats()
+            .then((response) => {
+                setData(response.data.top_5_sold_products_all_time_shares);
+                setLoading(false);
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while fetching stats!',
+                    severity: 'error',
+                });
+                setLoading(false);
+            });
+    };
 
-    return (
+    useEffect(() => {
+        setLoading(true);
+        fetchData();
+    }, []);
+
+    return loading ? (
+        <PageLoading />
+    ) : (
         <Container fluid className="sales-analysis mt-2 mb-2">
             <Row className="analysis-row">
                 <Col xs={12} xl={8} className="chart-col">
@@ -56,7 +59,7 @@ const Top5SoldAllTimeShare = () => {
                                     tooltip={{
                                         visible: true,
                                     }}
-                                    data={top5SoldAllTimePie}
+                                    data={data}
                                     categoryField="name"
                                     field="share"
                                 />
@@ -69,4 +72,4 @@ const Top5SoldAllTimeShare = () => {
     );
 };
 
-export default Top5SoldAllTimeShare;
+export default connect(null, { openAlert })(Top5SoldAllTimeShare);

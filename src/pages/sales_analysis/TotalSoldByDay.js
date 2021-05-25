@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import {
     Chart,
     ChartSeries,
@@ -9,20 +10,37 @@ import {
     ChartTitle,
     ChartLegend,
 } from '@progress/kendo-react-charts';
+import { getStats } from "../../_requests";
+import { PageLoading } from "../../components";
+import { openAlert } from "../../_redux/actions";
 
-// TODO delete
-const categories = ['20.05.2021', '21.05.2021', '22.05.2021'];
-const totalSoldByDay = [
-    {
-        name: 'Total Sales',
-        data: [40, 20, 90],
-    },
-];
+const TotalSoldByDay = (params) => {
+    const [counts, setCounts] = useState();
+    const [days, setDays] = useState();
+    const [loading, setLoading] = useState(false);
 
-const TotalSoldByDay = () => {
-    console.log('TotalSoldByDay');
+    const fetchData = () => {
+        getStats().then((response) => {
+            setCounts(response.data.total_sold_product_counts_5_days.revenue);
+            setDays(response.data.total_sold_product_counts_5_days.days);
+            setLoading(false);
+        }).catch(()=> {
+            params.openAlert({
+                message: 'Something went wrong while fetching stats!',
+                severity: 'error',
+            });
+            setLoading(false);
+        });
+    };
 
-    return (
+    useEffect(() => {
+        setLoading(true);
+        fetchData();
+    }, []);
+
+    return loading ? (
+        <PageLoading />
+    ) : (
         <Container fluid className="sales-analysis mt-2 mb-2">
             <Row className="analysis-row">
                 <Col xs={12} xl={8} className="chart-col">
@@ -35,20 +53,17 @@ const TotalSoldByDay = () => {
                             <ChartTitle text="Daily Sales - Last 5 Days" />
                             <ChartLegend position="top" orientation="horizontal" />
                             <ChartCategoryAxis>
-                                <ChartCategoryAxisItem categories={categories} startAngle={45} />
+                                <ChartCategoryAxisItem categories={days} startAngle={45} />
                             </ChartCategoryAxis>
                             <ChartSeries>
-                                {totalSoldByDay.map((item, idx) => (
-                                    <ChartSeriesItem
-                                        key={idx} // eslint-disable-line react/no-array-index-key
+                                <ChartSeriesItem
                                         type="column"
                                         tooltip={{
                                             visible: true,
                                         }}
-                                        data={item.data}
-                                        name={item.name}
+                                        data={counts ? counts.data : null}
+                                        name={counts ? counts.name : null }
                                     />
-                                ))}
                             </ChartSeries>
                         </Chart>
                     </div>
@@ -58,4 +73,4 @@ const TotalSoldByDay = () => {
     );
 };
 
-export default TotalSoldByDay;
+export default connect(null, { openAlert })(TotalSoldByDay);

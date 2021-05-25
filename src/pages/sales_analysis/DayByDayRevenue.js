@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import moment from 'moment';
 import {
     Chart,
     ChartSeries,
@@ -9,20 +11,44 @@ import {
     ChartTitle,
     ChartLegend,
 } from '@progress/kendo-react-charts';
+import { getStats } from '../../_requests';
+import { PageLoading } from '../../components';
+import { openAlert } from '../../_redux/actions';
 
-// TODO delete
-const days = ['20.05.2021', '21.05.2021', '22.05.2021'];
-const revenues = [
-    {
-        name: 'Total Revenue',
-        data: [1500, 2000, 1600],
-    },
-];
+const DayByDayRevenue = (params) => {
+    const [revenues, setRevenues] = useState();
+    const [days, setDays] = useState();
+    const [loading, setLoading] = useState(false);
 
-const DayByDayRevenue = () => {
-    console.log('DayByDayRevenue');
+    const fetchData = () => {
+        getStats()
+            .then((response) => {
+                const data = response.data.last_5_total_revenue;
+                setRevenues(data.revenue);
+                setDays(
+                    data.days.map((day) =>
+                        moment(new Date(day), 'YYYY-MM-DD HH:mm:ss').format('dddd'),
+                    ),
+                );
+                setLoading(false);
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while fetching stats!',
+                    severity: 'error',
+                });
+                setLoading(false);
+            });
+    };
 
-    return (
+    useEffect(() => {
+        setLoading(true);
+        fetchData();
+    }, []);
+
+    return loading ? (
+        <PageLoading />
+    ) : (
         <Container fluid className="sales-analysis mt-2 mb-2">
             <Row className="analysis-row">
                 <Col xs={12} xl={8} className="chart-col">
@@ -35,20 +61,21 @@ const DayByDayRevenue = () => {
                             <ChartTitle text="Daily Revenue - Last 5 Days" />
                             <ChartLegend position="top" orientation="horizontal" />
                             <ChartCategoryAxis>
-                                <ChartCategoryAxisItem categories={days} startAngle={45} />
+                                <ChartCategoryAxisItem
+                                    categories={days}
+                                    startAngle={45}
+                                    baseUnit="days"
+                                />
                             </ChartCategoryAxis>
                             <ChartSeries>
-                                {revenues.map((item, idx) => (
-                                    <ChartSeriesItem
-                                        key={idx} // eslint-disable-line react/no-array-index-key
-                                        type="column"
-                                        tooltip={{
-                                            visible: true,
-                                        }}
-                                        data={item.data}
-                                        name={item.name}
-                                    />
-                                ))}
+                                <ChartSeriesItem
+                                    type="column"
+                                    tooltip={{
+                                        visible: true,
+                                    }}
+                                    data={revenues ? revenues.data : null}
+                                    name={revenues ? revenues.name : null}
+                                />
                             </ChartSeries>
                         </Chart>
                     </div>
@@ -58,4 +85,4 @@ const DayByDayRevenue = () => {
     );
 };
 
-export default DayByDayRevenue;
+export default connect(null, { openAlert })(DayByDayRevenue);

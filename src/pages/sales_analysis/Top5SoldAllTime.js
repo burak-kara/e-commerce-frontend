@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import {
     Chart,
     ChartSeries,
@@ -9,26 +10,39 @@ import {
     ChartTitle,
     ChartLegend,
 } from '@progress/kendo-react-charts';
+import { getStats } from '../../_requests';
+import { PageLoading } from '../../components';
+import { openAlert } from '../../_redux/actions';
 
-// TODO delete
-const items = [
-    'Iphone 11 64GB',
-    'Full HD Smart LED TV',
-    'Montag FORTALEZA 250g',
-    'Yetişkin Kuru Köpek Maması',
-    'CanEm Vinç Oyuncak Iş Makinesi',
-];
-const top5SoldAllTime = [
-    {
-        name: 'Total Sales',
-        data: [40, 35, 20, 15, 12],
-    },
-];
+const Top5SoldAllTime = (params) => {
+    const [counts, setCounts] = useState();
+    const [products, setProducts] = useState();
+    const [loading, setLoading] = useState(false);
 
-const Top5SoldAllTime = () => {
-    console.log('Top5SoldAllTime');
+    const fetchData = () => {
+        getStats()
+            .then((response) => {
+                setCounts(response.data.top_5_sold_products_all_time.counts);
+                setProducts(response.data.top_5_sold_products_all_time.products);
+                setLoading(false);
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while fetching stats!',
+                    severity: 'error',
+                });
+                setLoading(false);
+            });
+    };
 
-    return (
+    useEffect(() => {
+        setLoading(true);
+        fetchData();
+    }, []);
+
+    return loading ? (
+        <PageLoading />
+    ) : (
         <Container fluid className="sales-analysis mt-2 mb-2">
             <Row className="analysis-row">
                 <Col xs={12} xl={8} className="chart-col">
@@ -41,20 +55,17 @@ const Top5SoldAllTime = () => {
                             <ChartTitle text="Top 5 Products - All Time" />
                             <ChartLegend position="top" orientation="horizontal" />
                             <ChartCategoryAxis>
-                                <ChartCategoryAxisItem categories={items} startAngle={45} />
+                                <ChartCategoryAxisItem categories={products} startAngle={45} />
                             </ChartCategoryAxis>
                             <ChartSeries>
-                                {top5SoldAllTime.map((item, idx) => (
-                                    <ChartSeriesItem
-                                        key={idx} // eslint-disable-line react/no-array-index-key
-                                        type="column"
+                                <ChartSeriesItem
+                                type="column"
                                         tooltip={{
                                             visible: true,
                                         }}
-                                        data={item.data}
-                                        name={item.name}
+                                        data={counts ? counts.data : null}
+                                        name={counts ? counts.name : null }
                                     />
-                                ))}
                             </ChartSeries>
                         </Chart>
                     </div>
@@ -64,4 +75,4 @@ const Top5SoldAllTime = () => {
     );
 };
 
-export default Top5SoldAllTime;
+export default connect(null, { openAlert })(Top5SoldAllTime);

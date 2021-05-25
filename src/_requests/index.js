@@ -228,6 +228,11 @@ const retrieveRating = (data) =>
         data,
     });
 
+const getStats = () =>
+    getRequest({
+        path: `${API}stats/`,
+    });
+
 export {
     register,
     login,
@@ -260,4 +265,5 @@ export {
     getQRLink,
     verify2FA,
     retrieveRating,
+    getStats,
 };
