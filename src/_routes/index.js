@@ -7,7 +7,15 @@ import AuthenticatedRoute from './AuthenticatedRoute';
 import UnAuthenticatedRoute from './UnAuthenticatedRoute';
 import SalesManagerRoute from './SalesManagerRoute';
 import NotFoundRoute from './NotFoundRoute';
-import { Home, Signin, Signout, Signup, UnAuthorized, UnAuthenticated, NotFound } from '../pages';
+import {
+    UnAuthorized,
+    UnAuthenticated,
+    NotFound,
+    DayByDayRevenue,
+    Top5SoldAllTime,
+    Top5SoldAllTimeShare,
+    TotalSoldByDay,
+} from '../pages';
 import {
     BASKET,
     LANDING,
@@ -32,16 +40,22 @@ import {
     NOT_FOUND,
     ORDER_DETAIL,
     P_M_REVIEWS,
-    S_M_ORDERS,
-    S_M_CAMPAIGNS,
-    S_M_ORDER_STATUS,
+    SM_ORDERS,
+    SM_CAMPAIGNS,
+    SM_ORDER_STATUS,
+    SM_ANALYSIS,
     PRODUCT_DETAIL,
     SEARCH,
+    SM_ANALYSIS_DAY_BY_DAY,
+    SM_ANALYSIS_SOLD,
+    SM_ANALYSIS_SOLD_SHARE,
+    SM_ANALYSIS_TOTAL_SOLD,
 } from '../_constants';
 
 const Header = loadable(() => import('../components/Header'));
 const Navigation = loadable(() => import('../components/Navigation'));
 
+const Home = loadable(() => import('../pages/home/Home'));
 const Basket = loadable(() => import('../pages/basket/Basket'));
 const ManageCampaigns = loadable(() => import('../pages/manage_campaigns/ManageCampaigns'));
 const ManageOrders = loadable(() => import('../pages/manage_orders/ManageOrders'));
@@ -54,6 +68,11 @@ const OrderDetail = loadable(() => import('../pages/previous_orders/OrderDetail'
 const ProductDetail = loadable(() => import('../pages/products/ProductDetail'));
 const Products = loadable(() => import('../pages/products/Products'));
 const Profile = loadable(() => import('../pages/profile/Profile'));
+const SalesAnalysis = loadable(() => import('../pages/sales_analysis/SalesAnalysis'));
+
+const Signin = loadable(() => import('../pages/signin/Signin'));
+const Signup = loadable(() => import('../pages/signup/Signup'));
+const Signout = loadable(() => import('../pages/signout/Signout'));
 
 const Routes = () => {
     const history = useHistory();
@@ -112,9 +131,22 @@ const Routes = () => {
                 <ProductManagerRoute exact path={P_M_REVIEWS} component={Reviews} />
 
                 {/* Routes for sales managers */}
-                <SalesManagerRoute exact path={S_M_ORDERS} component={ManageOrders} />
-                <SalesManagerRoute exact path={S_M_ORDER_STATUS} component={OrderStatus} />
-                <SalesManagerRoute exact path={S_M_CAMPAIGNS} component={ManageCampaigns} />
+                <SalesManagerRoute exact path={SM_ORDERS} component={ManageOrders} />
+                <SalesManagerRoute exact path={SM_ORDER_STATUS} component={OrderStatus} />
+                <SalesManagerRoute exact path={SM_CAMPAIGNS} component={ManageCampaigns} />
+                <SalesManagerRoute exact path={SM_ANALYSIS} component={SalesAnalysis} />
+                <SalesManagerRoute
+                    exact
+                    path={SM_ANALYSIS_DAY_BY_DAY}
+                    component={DayByDayRevenue}
+                />
+                <SalesManagerRoute exact path={SM_ANALYSIS_SOLD} component={Top5SoldAllTime} />
+                <SalesManagerRoute
+                    exact
+                    path={SM_ANALYSIS_SOLD_SHARE}
+                    component={Top5SoldAllTimeShare}
+                />
+                <SalesManagerRoute exact path={SM_ANALYSIS_TOTAL_SOLD} component={TotalSoldByDay} />
 
                 {/* Common Routes for all users */}
                 {/* Categories */}
