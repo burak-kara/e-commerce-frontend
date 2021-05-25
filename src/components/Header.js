@@ -122,6 +122,9 @@ const Header = () => {
         if (user.is_sales_manager) {
             user_type = 'Sales Manager';
         }
+        if (user.is_admin) {
+            user_type = 'Admin';
+        }
         return <div className="banner">{user_type}</div>;
     };
 

@@ -65,7 +65,7 @@ const AllUsersList = (params) => {
 
     const findErrors = (updatedUser) => {
         // first_name errors
-        const userNameToCheck = updatedUser.userNewName;
+        const userNameToCheck = updatedUser.first_name;
         if (!userNameToCheck || userNameToCheck === '')
             errors.first_name = 'Please provide a valid name!';
         else if (userNameToCheck.length < 2) errors.first_name = 'Name is too short!';
@@ -73,7 +73,7 @@ const AllUsersList = (params) => {
         else errors.first_name = noneError;
 
         // last_name errors
-        const userSurNameToCheck = updatedUser.userNewLastname;
+        const userSurNameToCheck = updatedUser.last_name;
         if (!userSurNameToCheck || userSurNameToCheck === '')
             errors.last_name = 'Please provide a valid surname!';
         else if (userSurNameToCheck.length < 2) errors.last_name = 'Surname is too short!';
@@ -180,6 +180,7 @@ const AllUsersList = (params) => {
                     currentUser = user;
                     currentUser.is_sales_manager = false;
                     currentUser.is_product_manager = false;
+                    updateUser(currentUser);
                     newUserList.push(currentUser);
                 } else {
                     newUserList.push(user);
@@ -198,6 +199,7 @@ const AllUsersList = (params) => {
                     currentUser = user;
                     currentUser.is_sales_manager = true;
                     currentUser.is_product_manager = false;
+                    updateUser(currentUser);
                     newUserList.push(currentUser);
                 } else {
                     newUserList.push(user);
@@ -216,6 +218,7 @@ const AllUsersList = (params) => {
                     currentUser = user;
                     currentUser.is_sales_manager = false;
                     currentUser.is_product_manager = true;
+                    updateUser(currentUser);
                     newUserList.push(currentUser);
                 } else {
                     newUserList.push(user);
