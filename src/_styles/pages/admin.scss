@@ -27,7 +27,7 @@
             text-align: center;
             flex-direction: row;
             direction: ltr;
-            max-width: 60%;
+            max-width: 70%;
     
             .user-list-header {
                 display: flex;
@@ -54,6 +54,7 @@
                 justify-content: space-evenly;
                 align-items: center;
                 text-align: center;
+                padding: 0px;
                 min-width: 50%;
                 max-width: 100%;
                 background-color: transparent;
@@ -158,15 +159,17 @@
                 align-items: flex-start;
                 text-align: center;
                 flex-direction: row;
-                max-width: 1000%;
+                max-width: 100%;
+                flex-wrap: nowrap;
         
                 .user-list-header {
                     display: flex;
                     justify-content: space-evenly;
                     align-items: flex-start;
-                    text-align: left;
                     flex-direction: row;
-                    min-width: fit-content;
+                    min-width: 20px;
+                    max-height: fit-content;
+                    flex-shrink: 2;
                 }
             }
         

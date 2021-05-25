@@ -65,6 +65,13 @@ const getUser = (tt) => {
     });
 };
 
+const getAllUsers = (tt) => {
+    axios.defaults.headers.common.Authorization = `Token ${tt}`;
+    return getRequest({
+        path: `${API}getall/`,
+    });
+};
+
 const getUserDetail = () =>
     getRequest({
         path: `${API}user/`,
@@ -216,6 +223,7 @@ export {
     login,
     logout,
     getUser,
+    getAllUsers,
     getUserDetail,
     updateUserInformation,
     changePassword,

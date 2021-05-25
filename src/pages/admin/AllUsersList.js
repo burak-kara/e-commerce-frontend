@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ButtonGroup, Button, FormLabel } from '@material-ui/core';
 import { Form, /* Col, */ Row, ListGroup } from 'react-bootstrap';
 import { ComponentLoading } from '../../components';
-import { updateUserInformation, getUserDetail } from '../../_requests';
+import { updateUserInformation, getUserDetail, getAllUsers } from '../../_requests';
 import { openAlert, setUser, setUserDetail } from '../../_redux/actions';
 import { noneError, ADMIN, TIME_OUT } from '../../_constants';
 
@@ -14,7 +14,7 @@ const AllUsersList = (params) => {
     const [allUsersList, setAllUsersList] = useState([
         {
             id: 1,
-            username: 'johndoeeee',
+            username: 'johndoe',
             email: 'john.doe@gmail.com',
             phone_number: '539-456-12-45',
             first_name: 'John',
@@ -37,6 +37,22 @@ const AllUsersList = (params) => {
             is_admin: false,
         }
     ]);
+
+    useEffect(() => {
+        setLoading(true);
+        getAllUsers()
+            .then((response) => {
+                setAllUsersList(response.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Error while getting users!',
+                    severity: 'error',
+                });
+                setLoading(false);
+            });
+    }, []);
 
     const [errors, setErrors] = useState({
         first_name: noneError,
@@ -269,7 +285,12 @@ const AllUsersList = (params) => {
                             <ButtonGroup
                                 size="small"
                                 aria-label="user-role-button-group"
-                                className="update-user-role-button-group"
+                                className="update-user-role-button-group 
+                                    col-lg-4
+                                    col-md-9
+                                    col-sm-9
+                                    col-xs-9
+                                    col-9"
                             >
                                 {loading ? (<ComponentLoading />) :
                                     (<Button
