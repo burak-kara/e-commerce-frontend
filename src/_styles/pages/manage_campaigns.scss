@@ -1,0 +1,54 @@
+.campaign-management-page {
+    padding: 10px 5px;
+    display: flex;
+    justify-content: center;
+    
+    .form-container {
+        width: 50%;
+        border-radius: 20px;
+        background-color: $header-bg;
+        box-shadow: 0 0 2px 0 $header-bg-shadow;
+
+        .page-title {
+            text-align: center;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        .campaign-list {
+            justify-content: center;
+            flex-shrink: 1;
+            background-color: transparent;
+
+            .campaign-card {
+                text-align: left;
+            }
+
+            .campaign {
+                flex-shrink: 1;
+            }
+
+            .campaign-details {
+
+            }
+        }
+
+        .buttons {
+            justify-content: center;
+
+            .save-campaigns-button {
+                    color: $nav-btn-hover;
+                    background-color: $common-btn;
+                    //min-width: 50%;
+                    width: 120px;
+                    font-weight: 500;
+                    text-transform: none;
+
+                    &:focus {
+                        outline: none !important;
+                        box-shadow: none !important;
+                    }
+            }
+        }
+    }
+}

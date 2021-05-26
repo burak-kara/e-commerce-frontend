@@ -159,7 +159,7 @@ const Header = (props) => {
                 Manage Orders
             </NavDropdown.Item>
             <NavDropdown.Item
-                key="manage-orders"
+                key="analysis"
                 className="menu-btn"
                 onClick={() => {
                     history.push({

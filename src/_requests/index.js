@@ -233,6 +233,11 @@ const getStats = () =>
         path: `${API}stats/`,
     });
 
+const getAllCampaigns = () =>
+    getRequest({
+        path: `${API}campaign/`
+    });
+
 export {
     register,
     login,
@@ -266,4 +271,5 @@ export {
     verify2FA,
     retrieveRating,
     getStats,
+    getAllCampaigns,
 };
