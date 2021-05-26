@@ -7,7 +7,7 @@ import { ComponentLoading } from '../../components';
 import { getUser, getUserDetail, login, verify2FA } from '../../_requests';
 import { Hide, Show } from '../../_utilities/icons';
 import { logo } from '../../_assets';
-import { LANDING, noneError, SIGN_OUT, TIME_OUT, TOKEN } from "../../_constants";
+import { LANDING, noneError, SIGN_OUT, TIME_OUT, TOKEN } from '../../_constants';
 import AuthModal from './AuthModal';
 
 const Signin = (params) => {

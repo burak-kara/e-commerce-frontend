@@ -8,7 +8,7 @@ import { PageLoading } from '../../components';
 import { logo } from '../../_assets';
 import { getAddressesByUserID, getItemById, getOrderDetail, updateOrder } from '../../_requests';
 import { openAlert } from '../../_redux/actions';
-import { ORDER_STATUS, S_M_ORDERS, TIME_OUT } from '../../_constants';
+import { ORDER_STATUS, SM_ORDERS, TIME_OUT } from '../../_constants';
 import { withFirebase } from '../../_firebase';
 
 const initialForm = {};
@@ -111,7 +111,7 @@ const OrderStatus = (props) => {
                 });
                 setTimeout(() => {
                     history.push({
-                        pathname: S_M_ORDERS,
+                        pathname: SM_ORDERS,
                     });
                 }, TIME_OUT);
             })

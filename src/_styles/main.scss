@@ -15,6 +15,7 @@ code {
 }
 
 @import '~bootstrap/scss/bootstrap';
+//@import '~@progress/kendo-theme-bootstrap/dist/all.scss';
 
 @import '../_utilities/colors';
 @import '../_utilities/sizes';
@@ -29,6 +30,7 @@ code {
 @import 'pages/orders';
 @import 'pages/reviews';
 @import 'pages/product_detail';
+@import 'pages/sales_analysis';
 
 @import 'components/navigation';
 @import 'components/header';

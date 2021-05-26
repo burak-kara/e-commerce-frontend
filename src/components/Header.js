@@ -11,13 +11,14 @@ import {
     P_M_ITEMS,
     P_M_REVIEWS,
     PROFILE,
-    S_M_CAMPAIGNS,
-    S_M_ORDERS,
+    SM_CAMPAIGNS,
+    SM_ORDERS,
     SIGN_IN,
     SIGN_OUT,
     SIGN_UP,
     SEARCH,
     ORDER_STATUS,
+    SM_ANALYSIS,
 } from '../_constants';
 import { Account, BasketIcon, DropDown, Search } from '../_utilities/icons';
 import { openAlert } from '../_redux/actions';
@@ -140,7 +141,7 @@ const Header = (props) => {
                 className="menu-btn"
                 onClick={() => {
                     history.push({
-                        pathname: S_M_CAMPAIGNS,
+                        pathname: SM_CAMPAIGNS,
                     });
                 }}
             >
@@ -151,11 +152,22 @@ const Header = (props) => {
                 className="menu-btn"
                 onClick={() => {
                     history.push({
-                        pathname: S_M_ORDERS,
+                        pathname: SM_ORDERS,
                     });
                 }}
             >
                 Manage Orders
+            </NavDropdown.Item>
+            <NavDropdown.Item
+                key="manage-orders"
+                className="menu-btn"
+                onClick={() => {
+                    history.push({
+                        pathname: SM_ANALYSIS,
+                    });
+                }}
+            >
+                Sales Analysis
             </NavDropdown.Item>
         </>
     );
