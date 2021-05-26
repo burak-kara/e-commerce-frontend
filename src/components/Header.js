@@ -84,12 +84,6 @@ const Header = () => {
         });
     };
 
-    const handleAdminConsole = () => {
-        history.push({
-            pathname: ADMIN,
-        });
-    }
-
     const handleSignIn = () => {
         history.push({
             pathname: SIGN_IN,
@@ -194,7 +188,11 @@ const Header = () => {
             <NavDropdown.Item
                 key="admin-console"
                 className="menu-btn"
-                onClick={() => handleAdminConsole()}
+                onClick={() => {
+                    history.push({
+                        pathname: ADMIN,
+                    });
+                }}
             >
                 Admin Console
             </NavDropdown.Item>

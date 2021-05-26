@@ -3,7 +3,7 @@ import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { Header, Navigation } from '../components';
 import ProductManagerRoute from './ProductManagerRoute';
 import CustomerRoute from './CustomerRoute';
-import AdminRoute from './AdminRoute';
+// import AdminRoute from './AdminRoute';
 import AuthenticatedRoute from './AuthenticatedRoute';
 import UnAuthenticatedRoute from './UnAuthenticatedRoute';
 import NotFoundRoute from './NotFoundRoute';
@@ -13,7 +13,6 @@ import {
     Items,
     ItemSingleView,
     Orders,
-    Admin,
     Profile,
     Settings,
     Signin,
@@ -34,7 +33,7 @@ import {
     BASKET,
     LANDING,
     ORDERS,
-    ADMIN,
+    // ADMIN,
     P_M_ITEMS,
     P_M_NEW_ITEM,
     P_M_EDIT_ITEM,
@@ -116,7 +115,7 @@ const Routes = () => {
                 <CustomerRoute exact path={ORDER_DETAIL} component={OrderDetail} />
 
                 {/* Routes for admins */}
-                <AdminRoute exact path={ADMIN} component={Admin} />
+                {/* <AdminRoute exact path={ADMIN} component={Admin} /> */}
 
                 {/* Routes for product managers */}
                 <ProductManagerRoute exact path={P_M_ITEMS} component={Items} />
