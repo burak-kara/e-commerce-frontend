@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, /* Form */ } from 'react-bootstrap';
 import { DiscardModal, PageLoading, ProductCard } from '../../components';
-import { deleteItem, getItems } from '../../_requests';
+import { deleteItem, getItems, getLeftAd, getRightAd } from '../../_requests';
 import { openAlert, addToBasket } from '../../_redux/actions';
 import { P_M_EDIT_ITEM, PRODUCT_DETAIL } from '../../_constants';
 
@@ -15,6 +15,8 @@ const Home = (params) => {
     const [chosenId, setId] = useState('');
     const [confirmModal, setConfirmModal] = useState(false);
     const [deleteId, setDeleteId] = useState('');
+    const [leftAd, setLeftAd] = useState();
+    const [rightAd, setRightAd] = useState();
 
     const fetchItems = () => {
         getItems()
@@ -30,6 +32,13 @@ const Home = (params) => {
                 setLoading(false);
             });
     };
+
+    useEffect(() => {
+        setLeftAd('');
+        setRightAd('');
+        setLeftAd(getLeftAd(user.username));
+        setRightAd(getRightAd(user.username));
+    }, []);
 
     useEffect(() => {
         setLoading(true);
@@ -124,13 +133,59 @@ const Home = (params) => {
         return itemsCol;
     };
 
+    const getLeftBannerAd = () => {
+        const leftBannerAd = [];
+        const img = <img src={leftAd.getSource()} alt="ad"/>;
+        leftBannerAd.push(
+            <Col className="banner-ad-left">
+                <div className="image-container">
+                    <div 
+                        className="image"
+                        role="button"
+                        tabIndex="0"
+                        onClick={() => handleCard(leftAd.getID())}
+                        onKeyDown={() => {}}>
+                        {img}
+                    </div>
+                </div>
+            </Col>
+        );
+        return leftBannerAd;
+    }
+
+    const getRightBannerAd = () => {
+        const rightBannerAd = [];
+        const img = <img src={rightAd.getSource()} alt="ad"/>;
+        rightBannerAd.push(
+            <Col className="banner-ad-right">
+                <div className="image-container">
+                    <div
+                        className="image"
+                        role="button" 
+                        tabIndex="0"
+                        onClick={() => handleCard(rightAd.getID())}
+                        onKeyDown={() => {}} >
+                            {img}
+                    </div>
+                </div>
+            </Col>
+        );
+        return rightBannerAd;
+    }
+
     return loading ? (
         <PageLoading />
     ) : (
         <>
-            <Container fluid="lg" className="pm-item-list">
-                <Row className="row">{items ? renderItems() : null}</Row>
-            </Container>
+            <div className="home-page">
+                {getLeftBannerAd()}
+                <Container fluid="md" className="pm-item-list">
+                    <Row className="row">
+                        {items ? renderItems() : null}
+                    </Row>
+                </Container>
+                {getRightBannerAd()}
+            </div>
             <DiscardModal
                 show={confirmModal}
                 onHide={() => setConfirmModal(false)}

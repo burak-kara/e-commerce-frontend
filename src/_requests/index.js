@@ -233,6 +233,18 @@ const getStats = () =>
         path: `${API}stats/`,
     });
 
+const getLeftAd = (data) =>
+    getRequest({
+        path: `${API}left-ad/`,
+        data,
+    });
+
+const getRightAd = (data) =>
+getRequest({
+    path: `${API}right-ad/`,
+    data,
+});
+
 export {
     register,
     login,
@@ -266,4 +278,6 @@ export {
     verify2FA,
     retrieveRating,
     getStats,
+    getLeftAd,
+    getRightAd,
 };
