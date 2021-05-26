@@ -9,6 +9,7 @@ import {
     getItemsByCategory,
     getItemsByCategoryBrandSortSearch,
     getItemsBySearch,
+    getAd,
 } from '../../_requests';
 import { openAlert, addToBasket } from '../../_redux/actions';
 import { P_M_EDIT_ITEM, PRODUCT_DETAIL } from '../../_constants';
@@ -221,75 +222,133 @@ const Products = (params) => {
         return options;
     };
 
+    const getLeftBannerAd = () => {
+        let adUrl = '';
+        const leftBannerAd = [];
+        getAd()
+            .then((response) => {
+                adUrl = response.data;
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while getting ad.',
+                    severity: 'error',
+                });
+            });
+        leftBannerAd.push(
+            <Col className="banner-ad-left">
+                <div className="image-container">
+                    <img
+                        alt="ad"
+                        className="image"
+                        src={adUrl}
+                    />
+                </div>
+            </Col>
+        );
+        return leftBannerAd;
+    }
+
+    const getRightBannerAd = () => {
+        let adUrl = '';
+        const rightBannerAd = [];
+        getAd()
+            .then((response) => {
+                adUrl = response.data;
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while getting ad.',
+                    severity: 'error',
+                });
+            });
+        rightBannerAd.push(
+            <Col className="banner-ad-right">
+                <div className="image-container">
+                    <img
+                        alt="ad"
+                        className="image"
+                        src={adUrl}
+                    />
+                </div>
+            </Col>
+        );
+        return rightBannerAd;
+    }
+
     return loading ? (
         <PageLoading />
     ) : (
         <>
-            <Container fluid="lg" className="pm-item-list">
-                <Row className="filter-row row">
-                    <Col xs={12} xl={4} className="mb-2 mb-xl-0">
-                        <Form.Label>Sort Products</Form.Label>
-                        <Form.Control
-                            as="select"
-                            className="dropdown"
-                            variant="outline-secondary"
-                            defaultValue="Sort by.."
-                            onChange={(e) => setOrdering(e.target.value)}
-                            value={ordering}
-                        >
-                            <option key="default" value="">
-                                Sort by..
+            <div className="home-page">
+                {getLeftBannerAd()}
+                <Container fluid="lg" className="pm-item-list">
+                    <Row className="filter-row row">
+                        <Col xs={12} xl={4} className="mb-2 mb-xl-0">
+                            <Form.Label>Sort Products</Form.Label>
+                            <Form.Control
+                                as="select"
+                                className="dropdown"
+                                variant="outline-secondary"
+                                defaultValue="Sort by.."
+                                onChange={(e) => setOrdering(e.target.value)}
+                                value={ordering}
+                            >
+                                <option key="default" value="">
+                                    Sort by..
                             </option>
-                            <option key="-price" value="price">
-                                Lowest Price
+                                <option key="-price" value="price">
+                                    Lowest Price
                             </option>
-                            <option key="price" value="-price">
-                                Highest Price
+                                <option key="price" value="-price">
+                                    Highest Price
                             </option>
-                            <option key="-name" value="name">
-                                A-Z
+                                <option key="-name" value="name">
+                                    A-Z
                             </option>
-                            <option key="name" value="-name">
-                                Z-A
+                                <option key="name" value="-name">
+                                    Z-A
                             </option>
-                        </Form.Control>
-                    </Col>
-                    <Col xs={12} xl={4} className="mb-3 mb-xl-0">
-                        <Form.Label>Filter Brands</Form.Label>
-                        <Form.Control
-                            as="select"
-                            className="dropdown"
-                            variant="outline-secondary"
-                            defaultValue="Brands"
-                            onChange={(e) => setBrand(e.target.value)}
-                            value={brand}
-                        >
-                            <BrandOptions />
-                        </Form.Control>
-                    </Col>
-                    <Col xs={12} xl={4} className="btn-col mb-2 mb-xl-0">
-                        <button
-                            className="btn btn-block"
-                            name="Filter"
-                            type="button"
-                            onClick={handleFilter}
-                        >
-                            Filter
+                            </Form.Control>
+                        </Col>
+                        <Col xs={12} xl={4} className="mb-3 mb-xl-0">
+                            <Form.Label>Filter Brands</Form.Label>
+                            <Form.Control
+                                as="select"
+                                className="dropdown"
+                                variant="outline-secondary"
+                                defaultValue="Brands"
+                                onChange={(e) => setBrand(e.target.value)}
+                                value={brand}
+                            >
+                                <BrandOptions />
+                            </Form.Control>
+                        </Col>
+                        <Col xs={12} xl={4} className="btn-col mb-2 mb-xl-0">
+                            <button
+                                className="btn btn-block"
+                                name="Filter"
+                                type="button"
+                                onClick={handleFilter}
+                            >
+                                Filter
                         </button>
-                    </Col>
-                </Row>
-                <Row className="row">
-                    <Items />
-                </Row>
-            </Container>
-            <DiscardModal
-                show={confirmModal}
-                onHide={() => setConfirmModal(false)}
-                onDiscard={onDelete}
-                header="Delete the Product?"
-                body="If you delete this product now, you will lose it permanently."
-                buttonText="Delete"
-            />
+                        </Col>
+                    </Row>
+                    <Row className="row">
+                        <Items />
+                    </Row>
+                </Container>
+                <DiscardModal
+                    show={confirmModal}
+                    onHide={() => setConfirmModal(false)}
+                    onDiscard={onDelete}
+                    header="Delete the Product?"
+                    body="If you delete this product now, you will lose it permanently."
+                    buttonText="Delete"
+                />
+                {getRightBannerAd()}
+            </div>
         </>
     );
 };

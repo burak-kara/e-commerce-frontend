@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
 import { Container, Row, Col, /* Form */ } from 'react-bootstrap';
 import { DiscardModal, PageLoading, ProductCard } from '../../components';
-import { deleteItem, getItems, getLeftAd, getRightAd } from '../../_requests';
+import { deleteItem, getItems, getAd } from '../../_requests';
 import { openAlert, addToBasket } from '../../_redux/actions';
 import { P_M_EDIT_ITEM, PRODUCT_DETAIL } from '../../_constants';
 
@@ -15,8 +15,6 @@ const Home = (params) => {
     const [chosenId, setId] = useState('');
     const [confirmModal, setConfirmModal] = useState(false);
     const [deleteId, setDeleteId] = useState('');
-    const [leftAd, setLeftAd] = useState();
-    const [rightAd, setRightAd] = useState();
 
     const fetchItems = () => {
         getItems()
@@ -32,13 +30,6 @@ const Home = (params) => {
                 setLoading(false);
             });
     };
-
-    useEffect(() => {
-        setLeftAd('');
-        setRightAd('');
-        setLeftAd(getLeftAd(user.username));
-        setRightAd(getRightAd(user.username));
-    }, []);
 
     useEffect(() => {
         setLoading(true);
@@ -134,19 +125,26 @@ const Home = (params) => {
     };
 
     const getLeftBannerAd = () => {
+        let adUrl = '';
         const leftBannerAd = [];
-        const img = <img src={leftAd.getSource()} alt="ad"/>;
+        getAd()
+            .then((response) => {
+                adUrl = response.data;
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while getting ad.',
+                    severity: 'error',
+                });
+            });
         leftBannerAd.push(
             <Col className="banner-ad-left">
                 <div className="image-container">
-                    <div 
+                    <img
+                        alt="ad"
                         className="image"
-                        role="button"
-                        tabIndex="0"
-                        onClick={() => handleCard(leftAd.getID())}
-                        onKeyDown={() => {}}>
-                        {img}
-                    </div>
+                        src={adUrl}
+                    />
                 </div>
             </Col>
         );
@@ -154,19 +152,26 @@ const Home = (params) => {
     }
 
     const getRightBannerAd = () => {
+        let adUrl = '';
         const rightBannerAd = [];
-        const img = <img src={rightAd.getSource()} alt="ad"/>;
-        rightBannerAd.push(
+        getAd()
+            .then((response) => {
+                adUrl = response.data;
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while getting ad.',
+                    severity: 'error',
+                });
+            });
+            rightBannerAd.push(
             <Col className="banner-ad-right">
                 <div className="image-container">
-                    <div
+                    <img
+                        alt="ad"
                         className="image"
-                        role="button" 
-                        tabIndex="0"
-                        onClick={() => handleCard(rightAd.getID())}
-                        onKeyDown={() => {}} >
-                            {img}
-                    </div>
+                        src={adUrl}
+                    />
                 </div>
             </Col>
         );

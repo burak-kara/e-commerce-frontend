@@ -233,17 +233,10 @@ const getStats = () =>
         path: `${API}stats/`,
     });
 
-const getLeftAd = (data) =>
+const getAd = () =>
     getRequest({
-        path: `${API}left-ad/`,
-        data,
+        path: `${API}ad/`,
     });
-
-const getRightAd = (data) =>
-getRequest({
-    path: `${API}right-ad/`,
-    data,
-});
 
 export {
     register,
@@ -278,6 +271,5 @@ export {
     verify2FA,
     retrieveRating,
     getStats,
-    getLeftAd,
-    getRightAd,
+    getAd,
 };
