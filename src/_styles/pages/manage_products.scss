@@ -10,6 +10,8 @@
     }
 
     .filter-row {
+        margin-bottom: 10px;
+
         .col {
             padding-top: 0;
             display: flex;
@@ -31,6 +33,29 @@
                 outline: none !important;
                 box-shadow: none !important;
             }
+        }
+
+        .price-col {
+            display: flex;
+            flex-direction: column;
+
+            .inner-price-row {
+                display: flex;
+                justify-content: space-between;
+
+                .min-col {
+                    padding-right: 0 !important;
+                }
+
+                .max-col {
+                    padding-right: 0 !important;
+                }
+            }
+        }
+        .range-col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .btn-col {
@@ -128,6 +153,25 @@
             &:focus {
                 outline: none !important;
                 box-shadow: none !important;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .pm-item-list {
+        .filter-row {
+            .price-col {
+                .inner-price-row {
+                    .min-col {
+                        padding-right: 7.5px !important;
+                    }
+
+                    .max-col {
+                        padding-left: 7.5px !important;
+                        padding-right: 15px !important;
+                    }
+                }
             }
         }
     }
