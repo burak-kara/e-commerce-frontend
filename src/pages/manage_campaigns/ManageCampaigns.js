@@ -58,7 +58,6 @@ const ManageCampaigns = (params) => {
     const ListAllCampaigns = () => {
         const list = [];
         let campaignIndex = 0;
-        console.log('current camps:', allCurrentCampaigns);
         if (allCurrentCampaigns) {
             allCurrentCampaigns.forEach((campaign, index) => {
                 if (campaign !== '') {
@@ -68,7 +67,7 @@ const ManageCampaigns = (params) => {
                             className="campaign-card"
                             key={`campaign-${campaignIndex}`}
                         >
-                            <FormLabel>
+                            <FormLabel as={Col} lg={2} xs={6}>
                                 Campaign {campaignIndex + 1}
                             </FormLabel>
                             <CampaignCard
@@ -91,7 +90,7 @@ const ManageCampaigns = (params) => {
                 }
             });
             list.push(
-                <ListGroup.Item className="campaign" key="new-campaign">
+                <ListGroup.Item className="campaign-card" key="new-campaign">
                     <CampaignCard
                         index="New"
                         campaign={newCampaign}
@@ -106,7 +105,7 @@ const ManageCampaigns = (params) => {
                         componentIndex="new"
                         key={`campaign-${campaignIndex}`}
                     />
-                </ListGroup.Item>,
+                </ListGroup.Item>
             );
         }
         return list;
@@ -134,7 +133,7 @@ const ManageCampaigns = (params) => {
         <Container fluid className="campaign-management-page">
             <Container className="form-container">
                 <Col>
-                    <h3 className="page-title">Account Details</h3>
+                    <h3 className="page-title">Campaign Management</h3>
                     <ListGroup variant="flush" className="campaign-list">
                         <Campaigns />
                     </ListGroup>

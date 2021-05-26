@@ -19,7 +19,7 @@ const CampaignCard = (props) => {
     return (
         campaign ? (
             <>
-                <Form.Group as={Col} xl={14}>
+                <Form.Group as={Col} xl={12}>
                     <FormLabel>
                         Expiration Date
                     </FormLabel>
@@ -33,9 +33,9 @@ const CampaignCard = (props) => {
                     />
                 </Form.Group>
                 <div className="campaign-details">
-                    <Form.Group as={Col}  xl={6} xs={12}>
+                    <Form.Group as={Col} xl={6} xs={12}>
                         <FormLabel>
-                            First Product Amount
+                            First Product Count
                         </FormLabel>
                         <Form.Control
                             name={`campaignFirstProduct${index}`}
@@ -47,7 +47,7 @@ const CampaignCard = (props) => {
                     </Form.Group>
                     <Form.Group as={Col} xl={6} xs={12}>
                         <FormLabel>
-                            Second Product Amount
+                            Second Product Count
                         </FormLabel>
                         <Form.Control
                             name={`campaignSecondProduct${index}`}
@@ -57,16 +57,18 @@ const CampaignCard = (props) => {
                             onBlur={(e) => updateCampaignDetailY(e.target.value, e.target.name)}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group as={Col} xl={12} xs={12}>
                         <FormLabel>
-                            Campaign Sales Amount
+                            Discount Amount (%)
                         </FormLabel>
                         <Form.Control
                             name={`campaignAmount${index}`}
                             type="text"
                             placeholder={campaignAmountPlaceHolder}
                             defaultValue={campaign.campaign_amount}
-                            onBlur={(e) => updateCampaignDetailAmount(e.target.value, e.target.name)}
+                            onBlur={
+                                (e) => updateCampaignDetailAmount(e.target.value, e.target.name)
+                            }
                         />
                     </Form.Group>
                 </div>
