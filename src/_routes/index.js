@@ -3,6 +3,7 @@ import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import loadable from '@loadable/component';
 import ProductManagerRoute from './ProductManagerRoute';
 import CustomerRoute from './CustomerRoute';
+// import AdminRoute from './AdminRoute';
 import AuthenticatedRoute from './AuthenticatedRoute';
 import UnAuthenticatedRoute from './UnAuthenticatedRoute';
 import SalesManagerRoute from './SalesManagerRoute';
@@ -20,6 +21,7 @@ import {
     BASKET,
     LANDING,
     ORDERS,
+    // ADMIN,
     P_M_ITEMS,
     P_M_NEW_ITEM,
     P_M_EDIT_ITEM,
@@ -123,6 +125,9 @@ const Routes = () => {
                 {/* Routes for customers */}
                 <CustomerRoute exact path={ORDERS} component={Orders} />
                 <CustomerRoute exact path={ORDER_DETAIL} component={OrderDetail} />
+
+                {/* Routes for admins */}
+                {/* <AdminRoute exact path={ADMIN} component={Admin} /> */}
 
                 {/* Routes for product managers */}
                 <ProductManagerRoute exact path={P_M_ITEMS} component={Items} />
