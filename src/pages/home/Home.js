@@ -15,6 +15,7 @@ const Home = (params) => {
     const [chosenId, setId] = useState('');
     const [confirmModal, setConfirmModal] = useState(false);
     const [deleteId, setDeleteId] = useState('');
+    const [ads, setAds] = useState([]);
 
     const fetchItems = () => {
         getItems()
@@ -34,6 +35,60 @@ const Home = (params) => {
     useEffect(() => {
         setLoading(true);
         fetchItems();
+    }, []);
+
+    const getLeftAd = (adList) => {
+        getAd()
+            .then((response) => {
+                adList.push(
+                    <div className="image-container">
+                        <img
+                            alt="ad"
+                            className="image"
+                            src={response.data.img}
+                        />
+                    </div>
+                );
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while getting ad.',
+                    severity: 'error',
+                });
+            });
+    };
+
+    const getRightAd = (adList) => {
+        getAd()
+            .then((response) => {
+                adList.push(
+                    <div className="image-container">
+                        <img
+                            alt="ad"
+                            className="image"
+                            src={response.data.img}
+                        />
+                    </div>
+                );
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while getting ad.',
+                    severity: 'error',
+                });
+            });
+    };
+
+    const fetchAds = () => {
+        const adList = [];
+        getLeftAd(adList);
+        getRightAd(adList);
+        setAds(adList);
+    };
+
+    useEffect(() => {
+        setLoading(true);
+        fetchAds();
     }, []);
 
     const handleAddFav = (id) => {
@@ -125,56 +180,22 @@ const Home = (params) => {
     };
 
     const getLeftBannerAd = () => {
-        let adUrl = '';
-        const leftBannerAd = [];
-        getAd()
-            .then((response) => {
-                adUrl = response.data;
-            })
-            .catch(() => {
-                params.openAlert({
-                    message: 'Something went wrong while getting ad.',
-                    severity: 'error',
-                });
-            });
-        leftBannerAd.push(
-            <Col className="banner-ad-left">
-                <div className="image-container">
-                    <img
-                        alt="ad"
-                        className="image"
-                        src={adUrl}
-                    />
-                </div>
-            </Col>
-        );
+        let leftBannerAd = '';
+        ads.forEach((ad, index) => {
+            if (index === 0) {
+                leftBannerAd = (ad);
+            }
+        });
         return leftBannerAd;
     }
 
     const getRightBannerAd = () => {
-        let adUrl = '';
-        const rightBannerAd = [];
-        getAd()
-            .then((response) => {
-                adUrl = response.data;
-            })
-            .catch(() => {
-                params.openAlert({
-                    message: 'Something went wrong while getting ad.',
-                    severity: 'error',
-                });
-            });
-            rightBannerAd.push(
-            <Col className="banner-ad-right">
-                <div className="image-container">
-                    <img
-                        alt="ad"
-                        className="image"
-                        src={adUrl}
-                    />
-                </div>
-            </Col>
-        );
+        let rightBannerAd = '';
+        ads.forEach((ad, index) => {
+            if (index === 1) {
+                rightBannerAd = (ad);
+            }
+        });
         return rightBannerAd;
     }
 
@@ -183,13 +204,17 @@ const Home = (params) => {
     ) : (
         <>
             <div className="home-page">
-                {getLeftBannerAd()}
+                <Col className="banner-ad-left">
+                    {getLeftBannerAd()}
+                </Col>
                 <Container fluid="md" className="pm-item-list">
                     <Row className="row">
                         {items ? renderItems() : null}
                     </Row>
                 </Container>
-                {getRightBannerAd()}
+                <Col className="banner-ad-right">
+                    {getRightBannerAd()}
+                </Col>
             </div>
             <DiscardModal
                 show={confirmModal}

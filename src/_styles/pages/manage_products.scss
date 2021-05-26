@@ -102,21 +102,23 @@
             position: fixed;
             width: 370px;
             height: 370px;
-            border-radius: 20px 20px 0 0 !important;
+            border-radius: 10px 10px 0 0 !important;
             box-shadow: 0 0 3px 0 $header-bg-shadow;
             min-height: 700px;
             max-height: 700px;
 
             .image {
-                height: 370px;
+                height: 700px;
                 width: 370px;
                 border-radius: 20px 20px 0 0 !important;
+                object-fit: fill;
             }
         }
     }
 
     .banner-ad-right {
         padding-top: 20px;
+        padding-left: 100px;
         margin-left: 0px;
         display: flex;
         justify-content: flex-end;
@@ -129,15 +131,16 @@
             position: fixed;
             width: 370px;
             height: 370px;
-            border-radius: 20px 20px 0 0 !important;
+            border-radius: 10px 10px 0 0 !important;
             box-shadow: 0 0 3px 0 $header-bg-shadow;
             min-height: 700px;
             max-height: 700px;
 
             .image {
-                height: 370px;
+                height: 700px;
                 width: 370px;
                 border-radius: 20px 20px 0 0 !important;
+                object-fit: fill;
             }
         }
     }

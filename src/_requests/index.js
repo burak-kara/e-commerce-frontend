@@ -234,8 +234,8 @@ const getStats = () =>
     });
 
 const getAd = () =>
-    getRequest({
-        path: `${API}ad/`,
+    postRequest({
+        path: `${API}recommended-adds/`,
     });
 
 export {
