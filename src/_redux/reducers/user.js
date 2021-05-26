@@ -30,7 +30,6 @@ const user = (state = initialState, action) => {
             const {
                 is_product_manager,
                 is_sales_manager,
-                is_admin,
                 phone_number,
                 addresses,
             } = action.payload;
@@ -38,7 +37,6 @@ const user = (state = initialState, action) => {
                 ...state,
                 is_product_manager,
                 is_sales_manager,
-                is_admin,
                 phone_number,
                 addresses,
             };
