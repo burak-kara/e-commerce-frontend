@@ -10,6 +10,8 @@
     }
 
     .filter-row {
+        margin-bottom: 10px;
+
         .col {
             padding-top: 0;
             display: flex;
@@ -30,6 +32,47 @@
             &:focus {
                 outline: none !important;
                 box-shadow: none !important;
+            }
+        }
+
+        .price-col {
+            display: flex;
+            flex-direction: column;
+
+            .inner-price-row {
+                display: flex;
+                justify-content: space-between;
+
+                .min-col {
+                    padding-right: 2.5px !important;
+                }
+
+                .max-col {
+                    padding-left: 7.5px !important;
+                    padding-right: 0 !important;
+                }
+            }
+        }
+
+        .rating-col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            .row {
+                padding-left: 0 !important;
+
+                .col {
+                    display: flex;
+                    justify-content: flex-start;
+                    padding-left: 10px !important;
+
+                    .k-rating {
+                        .k-rating-container {
+                            margin: 0 !important;
+                        }
+                    }
+                }
             }
         }
 
@@ -128,6 +171,29 @@
             &:focus {
                 outline: none !important;
                 box-shadow: none !important;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .pm-item-list {
+        .filter-row {
+            .price-col {
+                .inner-price-row {
+                    .min-col {
+                        padding-right: 7.5px !important;
+                    }
+
+                    .max-col {
+                        padding-left: 7.5px !important;
+                        padding-right: 15px !important;
+                    }
+                }
+            }
+
+            .btn-col {
+                padding-left: 10px !important;
             }
         }
     }
