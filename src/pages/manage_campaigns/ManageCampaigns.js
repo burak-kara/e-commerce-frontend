@@ -98,17 +98,7 @@ const ManageCampaigns = (params) => {
         return list;
     };
 
-    const Campaigns = () =>
-        allCurrentCampaigns.length < 1 ? (
-            <CampaignCard
-                index="New"
-                placeHolder="New campaign"
-                componentIndex="new"
-                key="campaign-new"
-            />
-        ) : (
-            <ListAllCampaigns />
-        );
+    const Campaigns = () => <ListAllCampaigns />;
 
     const saveAllCampaigns = () => {
         console.log('all campaigns saved and firebase is updated here.');
