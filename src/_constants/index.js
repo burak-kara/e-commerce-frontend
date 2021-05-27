@@ -34,6 +34,7 @@ export const SM_ANALYSIS_DAY_BY_DAY = `${SM_ANALYSIS}/day-by-day-revenue`;
 export const SM_ANALYSIS_SOLD = `${SM_ANALYSIS}/top-5-sold`;
 export const SM_ANALYSIS_SOLD_SHARE = `${SM_ANALYSIS}/top-5-sold-share`;
 export const SM_ANALYSIS_TOTAL_SOLD = `${SM_ANALYSIS}/total-sold`;
+export const SM_CREATE_CAMPAIGN = `/create-campaign`;
 
 // Categories
 export const CAT_ELECTRONICS = '/electronics';
