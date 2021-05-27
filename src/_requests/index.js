@@ -68,7 +68,7 @@ const getUser = (tt) => {
 
 const getAllUsers = () =>
     getRequest({
-        path: `${API}getAll/`,
+        path: `${API}getAllUsers/`,
     });
 
 const getUserDetail = () =>

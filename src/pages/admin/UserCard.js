@@ -35,7 +35,7 @@ const UserCard = (params) => {
                     <Form.Check
                         type="radio"
                         name={`radio-${user.pk}`}
-                        id="cm"
+                        id={`cm-${user.pk}`}
                         defaultChecked={!(sm && pm)}
                         onChange={() => onChange(user.pk, 'cm')}
                     />
@@ -44,7 +44,7 @@ const UserCard = (params) => {
                     <Form.Check
                         type="radio"
                         name={`radio-${user.pk}`}
-                        id="sm"
+                        id={`sm-${user.pk}`}
                         defaultChecked={sm}
                         onChange={() => onChange(user.pk, 'sm')}
                     />
@@ -53,7 +53,7 @@ const UserCard = (params) => {
                     <Form.Check
                         type="radio"
                         name={`radio-${user.pk}`}
-                        id="pm"
+                        id={`pm-${user.pk}`}
                         defaultChecked={pm}
                         onChange={() => onChange(user.pk, 'pm')}
                     />
