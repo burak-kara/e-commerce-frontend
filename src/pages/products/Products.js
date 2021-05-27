@@ -28,6 +28,61 @@ const Products = (params) => {
     const [brand, setBrand] = useState('');
     const [ordering, setOrdering] = useState('');
     const [search, setSearch] = useState('');
+    const [ads, setAds] = useState([]);
+
+    const getLeftAd = (adList) => {
+        getAd()
+            .then((response) => {
+                adList.push(
+                    <div className="image-container">
+                        <img
+                            alt="ad"
+                            className="image"
+                            src={response.data.img}
+                        />
+                    </div>
+                );
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while getting ad.',
+                    severity: 'error',
+                });
+            });
+    };
+
+    const getRightAd = (adList) => {
+        getAd()
+            .then((response) => {
+                adList.push(
+                    <div className="image-container">
+                        <img
+                            alt="ad"
+                            className="image"
+                            src={response.data.img}
+                        />
+                    </div>
+                );
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while getting ad.',
+                    severity: 'error',
+                });
+            });
+    };
+
+    const fetchAds = () => {
+        const adList = [];
+        getLeftAd(adList);
+        getRightAd(adList);
+        setAds(adList);
+    };
+
+    useEffect(() => {
+        setLoading(true);
+        fetchAds();
+    }, []);
 
     const fetchBrands = (cat) => {
         setBrands([]);
@@ -223,56 +278,22 @@ const Products = (params) => {
     };
 
     const getLeftBannerAd = () => {
-        let adUrl = '';
-        const leftBannerAd = [];
-        getAd()
-            .then((response) => {
-                adUrl = response.data;
-            })
-            .catch(() => {
-                params.openAlert({
-                    message: 'Something went wrong while getting ad.',
-                    severity: 'error',
-                });
-            });
-        leftBannerAd.push(
-            <Col className="banner-ad-left">
-                <div className="image-container">
-                    <img
-                        alt="ad"
-                        className="image"
-                        src={adUrl}
-                    />
-                </div>
-            </Col>
-        );
+        let leftBannerAd = '';
+        ads.forEach((ad, index) => {
+            if (index === 0) {
+                leftBannerAd = (ad);
+            }
+        });
         return leftBannerAd;
     }
 
     const getRightBannerAd = () => {
-        let adUrl = '';
-        const rightBannerAd = [];
-        getAd()
-            .then((response) => {
-                adUrl = response.data;
-            })
-            .catch(() => {
-                params.openAlert({
-                    message: 'Something went wrong while getting ad.',
-                    severity: 'error',
-                });
-            });
-        rightBannerAd.push(
-            <Col className="banner-ad-right">
-                <div className="image-container">
-                    <img
-                        alt="ad"
-                        className="image"
-                        src={adUrl}
-                    />
-                </div>
-            </Col>
-        );
+        let rightBannerAd = '';
+        ads.forEach((ad, index) => {
+            if (index === 1) {
+                rightBannerAd = (ad);
+            }
+        });
         return rightBannerAd;
     }
 
@@ -281,7 +302,9 @@ const Products = (params) => {
     ) : (
         <>
             <div className="home-page">
-                {getLeftBannerAd()}
+                <Col className="banner-ad-left">
+                    {getLeftBannerAd()}
+                </Col>
                 <Container fluid="lg" className="pm-item-list">
                     <Row className="filter-row row">
                         <Col xs={12} xl={4} className="mb-2 mb-xl-0">
@@ -347,7 +370,9 @@ const Products = (params) => {
                     body="If you delete this product now, you will lose it permanently."
                     buttonText="Delete"
                 />
-                {getRightBannerAd()}
+                <Col className="banner-ad-right">
+                    {getRightBannerAd()}
+                </Col>
             </div>
         </>
     );
