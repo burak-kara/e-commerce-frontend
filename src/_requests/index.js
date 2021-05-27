@@ -84,7 +84,7 @@ const updateCurrentUser = (data) =>
 
 const updateUserByID = (data, id) =>
     putRequest({
-        path: `${API}user/${id}/`,
+        path: `${API}admin-user-update/${id}/`,
         data,
     });
 
