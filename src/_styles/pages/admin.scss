@@ -19,7 +19,7 @@
             align-items: flex-start;
             text-align: center;
         }
-    
+
         .user-list-headers {
             display: flex;
             justify-content: flex-start;
@@ -28,7 +28,7 @@
             flex-direction: row;
             direction: ltr;
             max-width: 70%;
-    
+
             .user-list-header {
                 display: flex;
                 justify-content: center;
@@ -40,7 +40,7 @@
                 flex-wrap: wrap;
             }
         }
-    
+
         .admin-console-user-list {
             display: flex;
             justify-content: flex-start;
@@ -48,7 +48,7 @@
             text-align: center;
             min-width: 100%;
             white-space: nowrap;
-    
+
             .admin-console-user-row {
                 display: flex;
                 justify-content: space-around;
@@ -58,7 +58,7 @@
                 min-width: 50%;
                 max-width: 100%;
                 background-color: transparent;
-                
+
                 .user-detail-label {
                     justify-content: center;
                     text-align: center;
@@ -136,7 +136,7 @@
         align-items: flex-start;
         margin: 5% 0px 5% 0px;
         height: fit-content;
-    
+
         .form-container {
             height: fit-content;
             justify-content: center;
@@ -146,14 +146,14 @@
             border-radius: 20px;
             background-color: $header-bg;
             box-shadow: 0 0 5px 0 $header-bg-shadow;
-    
+
             .page-title {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 text-align: center;
             }
-        
+
             .user-list-headers {
                 display: flex;
                 justify-content: flex-start;
@@ -162,7 +162,7 @@
                 flex-direction: row;
                 max-width: 100%;
                 flex-wrap: nowrap;
-        
+
                 .user-list-header {
                     display: flex;
                     justify-content: space-evenly;
@@ -173,7 +173,7 @@
                     flex-shrink: 2;
                 }
             }
-        
+
             .admin-console-user-list {
                 display: flex;
                 justify-content: center;
@@ -181,7 +181,7 @@
                 text-align: center;
                 min-width: 90%;
                 max-width: 100%;
-        
+
                 .admin-console-user-row {
                     display: flex;
                     justify-content: space-evenly;
@@ -203,7 +203,7 @@
                     }
                 }
             }
-    
+
             .update-user-role-button-group {
                 max-width: 100%;
 
@@ -212,7 +212,7 @@
                     background-color: $common-btn;
                     min-width: 36%;
                     max-width: 100%;
-        
+
                     &:focus {
                         outline: none !important;
                         box-shadow: none !important;
@@ -224,36 +224,36 @@
                     }
                 }
             }
-    
+
             .logo-container {
                 display: flex;
                 justify-content: center;
                 margin-bottom: 80px;
-    
+
                 .header-brand {
                     border: none !important;
                     background-color: $transparent;
                     margin-bottom: 30px;
-    
+
                     .logo {
                         max-width: 200px;
                         max-height: 100px;
                     }
                 }
             }
-    
+
             .update-users-button-section {
                 display: flex;
                 flex-direction: row;
                 justify-content: space-around;
                 align-items: center;
-    
+
                 .update-all-users-button {
                     color: $nav-btn-hover;
                     background-color: $common-btn;
                     min-width: 30%;
                     text-transform: none;
-    
+
                     &:focus {
                         outline: none !important;
                         box-shadow: none !important;

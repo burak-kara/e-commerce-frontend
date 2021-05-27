@@ -35,7 +35,7 @@ const AllUsersList = (params) => {
             is_sales_manager: false,
             is_product_manager: false,
             is_admin: false,
-        }
+        },
     ]);
 
     useEffect(() => {
@@ -169,7 +169,7 @@ const AllUsersList = (params) => {
                 updateUser(user);
             });
         }
-    }
+    };
 
     const setUserAsNormalUser = (userID) => {
         const newUserList = [];
@@ -188,7 +188,7 @@ const AllUsersList = (params) => {
             });
         }
         setAllUsersList(newUserList);
-    }
+    };
 
     const setUserAsSalesManager = (userID) => {
         const newUserList = [];
@@ -207,7 +207,7 @@ const AllUsersList = (params) => {
             });
         }
         setAllUsersList(newUserList);
-    }
+    };
 
     const setUserAsProductManager = (userID) => {
         const newUserList = [];
@@ -226,7 +226,7 @@ const AllUsersList = (params) => {
             });
         }
         setAllUsersList(newUserList);
-    }
+    };
 
     const populateAllUsers = () => {
         const list = [];
@@ -246,42 +246,50 @@ const AllUsersList = (params) => {
                             key={`user-${userIndex}`}
                         >
                             <Form.Group>
-                                <FormLabel className="user-detail-label 
+                                <FormLabel
+                                    className="user-detail-label 
                                         col-lg-1 
                                         col-md-9 
                                         col-sm-6 
                                         col-xs-4 
-                                        col-1">
+                                        col-1"
+                                >
                                     {index + 1}
                                 </FormLabel>
                             </Form.Group>
                             <Form.Group>
-                                <FormLabel className="user-detail-label 
+                                <FormLabel
+                                    className="user-detail-label 
                                         col-lg-1 
                                         col-md-9 
                                         col-sm-6 
                                         col-xs-4 
-                                        col-1">
+                                        col-1"
+                                >
                                     {user.username}
                                 </FormLabel>
                             </Form.Group>
                             <Form.Group>
-                                <FormLabel className="user-detail-label 
+                                <FormLabel
+                                    className="user-detail-label 
                                         col-lg-1 
                                         col-md-9 
                                         col-sm-6 
                                         col-xs-4 
-                                        col-1">
+                                        col-1"
+                                >
                                     {user.first_name}
                                 </FormLabel>
                             </Form.Group>
                             <Form.Group>
-                                <FormLabel className="user-detail-label 
+                                <FormLabel
+                                    className="user-detail-label 
                                         col-lg-1 
                                         col-md-9 
                                         col-sm-6 
                                         col-xs-4 
-                                        col-1">
+                                        col-1"
+                                >
                                     {user.last_name}
                                 </FormLabel>
                             </Form.Group>
@@ -295,8 +303,10 @@ const AllUsersList = (params) => {
                                     col-xs-9
                                     col-9"
                             >
-                                {loading ? (<ComponentLoading />) :
-                                    (<Button
+                                {loading ? (
+                                    <ComponentLoading />
+                                ) : (
+                                    <Button
                                         className="update-user-role-button 
                                             col-lg-1 
                                             col-md-3 
@@ -304,18 +314,17 @@ const AllUsersList = (params) => {
                                             col-xs-3 
                                             col-3"
                                         disabled={
-                                            (!user.is_product_manager
-                                                && !user.is_sales_manager)
+                                            !user.is_product_manager && !user.is_sales_manager
                                         }
                                         onClick={() => setUserAsNormalUser(user.id)}
-
                                     >
                                         Customer
                                     </Button>
-                                    )
-                                }
-                                {loading ? (<ComponentLoading />) :
-                                    (<Button
+                                )}
+                                {loading ? (
+                                    <ComponentLoading />
+                                ) : (
+                                    <Button
                                         className="update-user-role-button 
                                             col-lg-1 
                                             col-md-3 
@@ -327,10 +336,11 @@ const AllUsersList = (params) => {
                                     >
                                         Sales Manager
                                     </Button>
-                                    )
-                                }
-                                {loading ? (<ComponentLoading />) :
-                                    (<Button
+                                )}
+                                {loading ? (
+                                    <ComponentLoading />
+                                ) : (
+                                    <Button
                                         className="update-user-role-button 
                                             col-lg-1 
                                             col-md-3 
@@ -342,17 +352,16 @@ const AllUsersList = (params) => {
                                     >
                                         Product Manager
                                     </Button>
-                                    )
-                                }
+                                )}
                             </ButtonGroup>
-                        </ListGroup.Item>
+                        </ListGroup.Item>,
                     );
                     userIndex += 1;
                 }
             });
         }
         return list;
-    }
+    };
 
     return (
         <div className="admin-console-page" key="admin-console-page">
@@ -361,52 +370,50 @@ const AllUsersList = (params) => {
                 noValidate
                 key="adminConsole"
             >
-                <Form.Row
-                    className="user-list-headers"
-                >
-                    <Form.Group className="user-list-header 
+                <Form.Row className="user-list-headers">
+                    <Form.Group
+                        className="user-list-header 
                                 col-xl-1
                                 col-lg-1 
                                 col-md-1 
                                 col-sm-1 
                                 col-xs-1
-                                col-1">
-                        <Form.Label>
-                            #
-                        </Form.Label>
+                                col-1"
+                    >
+                        <Form.Label>#</Form.Label>
                     </Form.Group>
-                    <Form.Group className="user-list-header 
+                    <Form.Group
+                        className="user-list-header 
                                 col-xl-1
                                 col-lg-1 
                                 col-md-1 
                                 col-sm-1 
                                 col-xs-1
-                                col-1">
-                        <Form.Label>
-                            Username
-                        </Form.Label>
+                                col-1"
+                    >
+                        <Form.Label>Username</Form.Label>
                     </Form.Group>
-                    <Form.Group className="user-list-header 
+                    <Form.Group
+                        className="user-list-header 
                                 col-xl-1 
                                 col-lg-1 
                                 col-md-1 
                                 col-sm-1 
                                 col-xs-1
-                                col-1">
-                        <Form.Label>
-                            First Name
-                        </Form.Label>
+                                col-1"
+                    >
+                        <Form.Label>First Name</Form.Label>
                     </Form.Group>
-                    <Form.Group className="user-list-header 
+                    <Form.Group
+                        className="user-list-header 
                                 col-xl-1 
                                 col-lg-1 
                                 col-md-1 
                                 col-sm-1 
                                 col-xs-1
-                                col-1">
-                        <Form.Label>
-                            Last Name
-                        </Form.Label>
+                                col-1"
+                    >
+                        <Form.Label>Last Name</Form.Label>
                     </Form.Group>
                 </Form.Row>
                 <Form.Group as={Row} className="admin-console-user-list">

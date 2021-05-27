@@ -59,13 +59,13 @@ const Top5SoldAllTime = (params) => {
                             </ChartCategoryAxis>
                             <ChartSeries>
                                 <ChartSeriesItem
-                                type="column"
-                                        tooltip={{
-                                            visible: true,
-                                        }}
-                                        data={counts ? counts.data : null}
-                                        name={counts ? counts.name : null }
-                                    />
+                                    type="column"
+                                    tooltip={{
+                                        visible: true,
+                                    }}
+                                    data={counts ? counts.data : null}
+                                    name={counts ? counts.name : null}
+                                />
                             </ChartSeries>
                         </Chart>
                     </div>
