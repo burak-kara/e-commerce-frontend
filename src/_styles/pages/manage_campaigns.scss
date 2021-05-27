@@ -13,17 +13,37 @@
             margin-top: 10px;
             text-align: center;
             font-weight: bold;
-            text-transform: capitalize;
         }
 
         .campaign-list {
-            justify-content: center;
-            flex-shrink: 1;
+            justify-content: space-evenly;
 
             .campaign-card {
                 text-align: left;
                 margin-top: 20px;
                 background-color: transparent;
+
+                .delete-campaign-button-group {
+                    display: flex;
+                    justify-content: space-evenly;
+                    text-align: center;
+
+                    .delete-campaign-button{
+                        color: $nav-btn-hover;
+                        background-color: $delete;
+                        min-width: 20%;
+                        max-width: 20%;
+                        font-weight: 500;
+                        text-transform: none;
+                        margin-bottom: 20px;
+                        white-space: nowrap;
+
+                        &:focus {
+                            outline: none !important;
+                            box-shadow: none !important;
+                        }
+                    }
+                }
             }
 
             .campaign-details {
@@ -95,7 +115,6 @@
                 margin-top: 10px;
                 text-align: center;
                 font-weight: bold;
-                text-transform: capitalize;
             }
     
             .campaign-list {
@@ -106,6 +125,27 @@
                     text-align: left;
                     margin-top: 20px;
                     background-color: transparent;
+
+                    .delete-campaign-button-group {
+                        text-align: center;
+                        justify-content: center;
+
+                        .delete-campaign-button{
+                            color: $nav-btn-hover;
+                            background-color: $delete;
+                            min-width: 20%;
+                            max-width: 20%;
+                            font-weight: 500;
+                            text-transform: none;
+                            margin-bottom: 20px;
+                            white-space: nowrap;
+
+                            &:focus {
+                                outline: none !important;
+                                box-shadow: none !important;
+                            }
+                        }
+                    }
                 }
     
                 .campaign-details {
@@ -146,7 +186,7 @@
         
                     .create-campaign-button {
                         color: $nav-btn-hover;
-                        background-color: $common-btn;
+                        background-color: $delete;
                         //min-width: 50%;
                         min-width: 50%;
                         max-width: fit-content;

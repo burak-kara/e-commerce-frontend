@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { connect, /* useStore, */ } from 'react-redux';
+import { connect, } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Form, FormLabel, Container, /* Row, */ Col, ListGroup } from 'react-bootstrap';
+import { Form, FormLabel, Container, Col, ListGroup } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
-import { getAllCampaigns } from '../../_requests';
+import { getAllCampaigns, deleteCampaignByID } from '../../_requests';
 import { ComponentLoading, PageLoading, CampaignCard } from '../../components';
 import { openAlert } from '../../_redux/actions';
 import {
@@ -28,6 +28,7 @@ const ManageCampaigns = (params) => {
         setLoading(true);
         getAllCampaigns()
             .then((response) => {
+                console.log(response.data);
                 setAllCurrentCampaigns(response.data);
                 setLoading(false);
             })
@@ -60,6 +61,10 @@ const ManageCampaigns = (params) => {
         setNewCampaign(newCampaign);
     };
 
+    const deleteCampaign = (param) => {
+        deleteCampaignByID(param);
+    };
+
     const ListAllCampaigns = () => {
         const list = [];
         let campaignIndex = 0;
@@ -70,7 +75,7 @@ const ManageCampaigns = (params) => {
                         <ListGroup.Item
                             header={`Campaign ${index + 1}`}
                             className="campaign-card"
-                            key={`campaign-${campaignIndex}`}
+                            key={campaign.id}
                         >
                             <FormLabel as={Col} lg={2} xs={6}>
                                 Campaign {campaignIndex + 1}
@@ -89,6 +94,16 @@ const ManageCampaigns = (params) => {
                                 componentIndex={campaignIndex}
                                 key={`campaign-${campaignIndex}`}
                             />
+                            <Col lg={12} xs={12} className="delete-campaign-button-group">
+                                <Button
+                                    name="SaveCampaigns"
+                                    type="button"
+                                    className="btn delete-campaign-button"
+                                    onClick={() => deleteCampaign(campaign.id)}
+                                >
+                                    {loading ? <ComponentLoading /> : 'Delete'}
+                                </Button>
+                            </Col>
                         </ListGroup.Item>
                     );
                     campaignIndex += 1;
