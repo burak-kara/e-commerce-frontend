@@ -40,6 +40,7 @@ const CampaignCard = (props) => {
                         <Form.Control
                             name={`campaignFirstProduct${index}`}
                             type="text"
+                            disabled
                             placeholder={firstProductPlaceHolder}
                             defaultValue={campaign.campaign_x}
                             onBlur={(e) => updateCampaignDetailX(e.target.value, e.target.name)}
@@ -52,6 +53,7 @@ const CampaignCard = (props) => {
                         <Form.Control
                             name={`campaignSecondProduct${index}`}
                             type="text"
+                            disabled
                             placeholder={secondProductPlaceHolder}
                             defaultValue={campaign.campaign_x}
                             onBlur={(e) => updateCampaignDetailY(e.target.value, e.target.name)}
@@ -64,6 +66,7 @@ const CampaignCard = (props) => {
                         <Form.Control
                             name={`campaignAmount${index}`}
                             type="text"
+                            disabled
                             placeholder={campaignAmountPlaceHolder}
                             defaultValue={campaign.campaign_amount}
                             onBlur={
