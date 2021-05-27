@@ -98,6 +98,13 @@
         }
     }
 
+    .add-container {
+        .image {
+            max-width: 300px;
+            border-radius: 10px 10px 0 0 !important;
+        }
+    }
+
     .add-row {
         .add-col {
             display: flex;
@@ -195,6 +202,10 @@
             .btn-col {
                 padding-left: 10px !important;
             }
+        }
+
+        .add-container {
+            display: none;
         }
     }
 }

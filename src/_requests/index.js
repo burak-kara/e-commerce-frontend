@@ -244,6 +244,11 @@ const getStats = () =>
         path: `${API}stats/`,
     });
 
+const getAd = () =>
+    postRequest({
+        path: `${API}recommended-adds/`,
+    });
+
 export {
     register,
     login,
@@ -279,4 +284,5 @@ export {
     verify2FA,
     retrieveRating,
     getStats,
+    getAd,
 };

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
-import { Container, Row, Col } from 'react-bootstrap';
-import { DiscardModal, PageLoading, ProductCard } from '../../components';
-import { deleteItem, getItems } from '../../_requests';
+import { Container, Row, Col /* Form */ } from 'react-bootstrap';
+import { ComponentLoading, DiscardModal, PageLoading, ProductCard } from '../../components';
+import { deleteItem, getItems, getAd } from '../../_requests';
 import { openAlert, addToBasket } from '../../_redux/actions';
 import { P_M_EDIT_ITEM, PRODUCT_DETAIL } from '../../_constants';
 
@@ -15,6 +15,8 @@ const Home = (params) => {
     const [chosenId, setId] = useState('');
     const [confirmModal, setConfirmModal] = useState(false);
     const [deleteId, setDeleteId] = useState('');
+    const [leftAdd, setLeftAdd] = useState();
+    const [rightAdd, setRightAdd] = useState();
 
     const fetchItems = () => {
         getItems()
@@ -34,6 +36,50 @@ const Home = (params) => {
     useEffect(() => {
         setLoading(true);
         fetchItems();
+    }, []);
+
+    const fetchLeftAdd = () => {
+        getAd()
+            .then((response) => {
+                setLeftAdd(
+                    <div className="add-container">
+                        <img alt="ad" className="image" src={response.data.img} />
+                    </div>,
+                );
+                setLoading(false);
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while getting ad.',
+                    severity: 'error',
+                });
+                setLoading(false);
+            });
+    };
+
+    const fetchRightAdd = () => {
+        getAd()
+            .then((response) => {
+                setRightAdd(
+                    <div className="add-container">
+                        <img alt="ad" className="image" src={response.data.img} />
+                    </div>,
+                );
+                setLoading(false);
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while getting ad.',
+                    severity: 'error',
+                });
+                setLoading(false);
+            });
+    };
+
+    useEffect(() => {
+        setLoading(true);
+        fetchLeftAdd();
+        fetchRightAdd();
     }, []);
 
     const handleAddFav = (id) => {
@@ -105,7 +151,7 @@ const Home = (params) => {
         handleBottom = handleAddBasket;
     }
 
-    const renderItems = () => {
+    const Items = () => {
         const itemsCol = [];
         if (items.length !== 0) {
             items.forEach((item) => {
@@ -128,8 +174,14 @@ const Home = (params) => {
         <PageLoading />
     ) : (
         <>
-            <Container fluid="lg" className="pm-item-list">
-                <Row className="row">{items ? renderItems() : null}</Row>
+            <Container fluid className="pm-item-list">
+                <Row>
+                    <Col xl={2}>{leftAdd || <ComponentLoading />}</Col>
+                    <Col xl={8}>
+                        <Row className="row">{items ? <Items /> : null}</Row>
+                    </Col>
+                    <Col xl={2}>{rightAdd || <ComponentLoading />}</Col>
+                </Row>
             </Container>
             <DiscardModal
                 show={confirmModal}

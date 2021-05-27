@@ -3,13 +3,20 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import { Rating } from '@progress/kendo-react-inputs';
-import { DiscardModal, PageLoading, ProductCard, ProductCardEmpty } from '../../components';
+import {
+    ComponentLoading,
+    DiscardModal,
+    PageLoading,
+    ProductCard,
+    ProductCardEmpty,
+} from '../../components';
 import {
     deleteItem,
     getBrandsByCategory,
     getItemsByCategory,
     getItemsByCategoryBrandSortSearch,
     getItemsBySearch,
+    getAd,
 } from '../../_requests';
 import { openAlert, addToBasket } from '../../_redux/actions';
 import { P_M_EDIT_ITEM, PRODUCT_DETAIL } from '../../_constants';
@@ -28,6 +35,8 @@ const Products = (params) => {
     const [brand, setBrand] = useState('');
     const [ordering, setOrdering] = useState('');
     const [search, setSearch] = useState('');
+    const [leftAdd, setLeftAdd] = useState();
+    const [rightAdd, setRightAdd] = useState();
     const [rating, setRating] = useState(0);
     // TODO  init with data from BE
     // TODO delete
@@ -36,6 +45,50 @@ const Products = (params) => {
     // TODO delete
     // eslint-disable-next-line no-unused-vars
     const [priceEnd, setPriceEnd] = useState(100);
+
+    const fetchLeftAdd = () => {
+        getAd()
+            .then((response) => {
+                setLeftAdd(
+                    <div className="add-container">
+                        <img alt="ad" className="image" src={response.data.img} />
+                    </div>,
+                );
+                setLoading(false);
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while getting ad.',
+                    severity: 'error',
+                });
+                setLoading(false);
+            });
+    };
+
+    const fetchRightAdd = () => {
+        getAd()
+            .then((response) => {
+                setRightAdd(
+                    <div className="add-container">
+                        <img alt="ad" className="image" src={response.data.img} />
+                    </div>,
+                );
+                setLoading(false);
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while getting ad.',
+                    severity: 'error',
+                });
+                setLoading(false);
+            });
+    };
+
+    useEffect(() => {
+        setLoading(true);
+        fetchLeftAdd();
+        fetchRightAdd();
+    }, []);
 
     const fetchBrands = (cat) => {
         setBrands([]);
@@ -234,103 +287,109 @@ const Products = (params) => {
         <PageLoading />
     ) : (
         <>
-            <Container fluid="lg" className="pm-item-list">
-                <Row className="filter-row row">
-                    <Col xs={6} xl={2} className="mb-2 mb-xl-0">
-                        <Form.Label>Sort Products</Form.Label>
-                        <Form.Control
-                            as="select"
-                            className="dropdown"
-                            variant="outline-secondary"
-                            defaultValue="Sort by.."
-                            onChange={(e) => setOrdering(e.target.value)}
-                            value={ordering}
-                        >
-                            <option key="default" value="">
-                                Sort by..
-                            </option>
-                            <option key="-price" value="price">
-                                Lowest Price
-                            </option>
-                            <option key="price" value="-price">
-                                Highest Price
-                            </option>
-                            <option key="-name" value="name">
-                                A-Z
-                            </option>
-                            <option key="name" value="-name">
-                                Z-A
-                            </option>
-                        </Form.Control>
-                    </Col>
-                    <Col xs={6} xl={2} className="mb-3 mb-xl-0">
-                        <Form.Label>Brands</Form.Label>
-                        <Form.Control
-                            as="select"
-                            className="dropdown"
-                            variant="outline-secondary"
-                            defaultValue="Brands"
-                            onChange={(e) => setBrand(e.target.value)}
-                            value={brand}
-                        >
-                            <BrandOptions />
-                        </Form.Control>
-                    </Col>
-                    <Col xs={12} xl={3} className="price-col mb-3 mb-xl-0">
-                        <Form.Label>Price</Form.Label>
-                        <Row className="inner-price-row">
-                            <Col xs={6} className="min-col">
+            <Container fluid className="pm-item-list">
+                <Row>
+                    <Col xl={2}>{leftAdd || <ComponentLoading />}</Col>
+                    <Col xl={8}>
+                        <Row className="filter-row row">
+                            <Col xs={6} xl={2} className="mb-2 mb-xl-0">
+                                <Form.Label>Sort Products</Form.Label>
                                 <Form.Control
-                                    required
-                                    className="price"
-                                    name="minPrice"
-                                    type="number"
-                                    placeholder="Min"
-                                    onChange={(e) => {
-                                        setPriceStart(e.target.value);
-                                    }}
-                                />
+                                    as="select"
+                                    className="dropdown"
+                                    variant="outline-secondary"
+                                    defaultValue="Sort by.."
+                                    onChange={(e) => setOrdering(e.target.value)}
+                                    value={ordering}
+                                >
+                                    <option key="default" value="">
+                                        Sort by..
+                                    </option>
+                                    <option key="-price" value="price">
+                                        Lowest Price
+                                    </option>
+                                    <option key="price" value="-price">
+                                        Highest Price
+                                    </option>
+                                    <option key="-name" value="name">
+                                        A-Z
+                                    </option>
+                                    <option key="name" value="-name">
+                                        Z-A
+                                    </option>
+                                </Form.Control>
                             </Col>
-                            <Col xs={6} className="max-col">
+                            <Col xs={6} xl={2} className="mb-3 mb-xl-0">
+                                <Form.Label>Brands</Form.Label>
                                 <Form.Control
-                                    required
-                                    className="price"
-                                    name="maxPrice"
-                                    type="number"
-                                    placeholder="Max"
-                                    onChange={(e) => {
-                                        setPriceEnd(e.target.value);
-                                    }}
-                                />
+                                    as="select"
+                                    className="dropdown"
+                                    variant="outline-secondary"
+                                    defaultValue="Brands"
+                                    onChange={(e) => setBrand(e.target.value)}
+                                    value={brand}
+                                >
+                                    <BrandOptions />
+                                </Form.Control>
+                            </Col>
+                            <Col xs={12} xl={3} className="price-col mb-3 mb-xl-0">
+                                <Form.Label>Price</Form.Label>
+                                <Row className="inner-price-row">
+                                    <Col xs={6} className="min-col">
+                                        <Form.Control
+                                            required
+                                            className="price"
+                                            name="minPrice"
+                                            type="number"
+                                            placeholder="Min"
+                                            onChange={(e) => {
+                                                setPriceStart(e.target.value);
+                                            }}
+                                        />
+                                    </Col>
+                                    <Col xs={6} className="max-col">
+                                        <Form.Control
+                                            required
+                                            className="price"
+                                            name="maxPrice"
+                                            type="number"
+                                            placeholder="Max"
+                                            onChange={(e) => {
+                                                setPriceEnd(e.target.value);
+                                            }}
+                                        />
+                                    </Col>
+                                </Row>
+                            </Col>
+                            <Col xs={6} xl={2} className="rating-col mb-3 mb-xl-0">
+                                <Form.Label>Rating</Form.Label>
+                                <Row>
+                                    <Col>
+                                        <Rating
+                                            value={rating}
+                                            onChange={(e) => {
+                                                setRating(e.target.value);
+                                            }}
+                                        />
+                                    </Col>
+                                </Row>
+                            </Col>
+                            <Col xs={6} xl={3} className="btn-col mb-2 mb-xl-0">
+                                <button
+                                    className="btn btn-block"
+                                    name="Filter"
+                                    type="button"
+                                    onClick={handleFilter}
+                                >
+                                    Filter
+                                </button>
                             </Col>
                         </Row>
-                    </Col>
-                    <Col xs={6} xl={2} className="rating-col mb-3 mb-xl-0">
-                        <Form.Label>Rating</Form.Label>
-                        <Row>
-                            <Col>
-                                <Rating
-                                    value={rating}
-                                    onChange={(e) => {
-                                        setRating(e.target.value);
-                                    }}
-                                />
-                            </Col>
+                        <Row className="row">
+                            <Items />
                         </Row>
                     </Col>
-                    <Col xs={6} xl={3} className="btn-col mb-2 mb-xl-0">
-                        <button
-                            className="btn btn-block"
-                            name="Filter"
-                            type="button"
-                            onClick={handleFilter}
-                        >
-                            Filter
-                        </button>
-                    </Col>
-                </Row>
-                <Row className="row">
-                    <Items />
+                    <Col xl={2}>{rightAdd || <ComponentLoading />}</Col>
                 </Row>
             </Container>
             <DiscardModal
