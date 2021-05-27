@@ -123,7 +123,7 @@ const Admin = (params) => {
                     </Col>
                     <Col xs={12} xl={3}>
                         <div>
-                            <span>username</span>
+                            <span>Username</span>
                         </div>
                     </Col>
                     <Col xs={12} xl={3}>

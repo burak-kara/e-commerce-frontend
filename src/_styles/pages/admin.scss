@@ -2,6 +2,9 @@
     padding: 10px 0;
     display: flex;
     justify-content: center;
+    font-family: -apple-system, 'SFProText', system-ui, Helvetica Neue, sans-serif;
+    color: $a-btn;
+    font-weight: 700;
 
     .form-container {
         padding: 10px 5px;
@@ -12,6 +15,7 @@
 
         .headers {
             margin: 0;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.125);
 
             .col {
                 display: flex;
@@ -27,9 +31,9 @@
 
         .list-item {
             border-radius: 10px !important;
-            box-shadow: 0 0 3px 0 $header-bg-shadow;
             margin-bottom: 10px;
             padding: 5px 0;
+            font-weight: 500;
 
             .col {
                 display: flex;
