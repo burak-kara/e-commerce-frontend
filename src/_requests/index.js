@@ -66,14 +66,25 @@ const getUser = (tt) => {
     });
 };
 
+const getAllUsers = () =>
+    getRequest({
+        path: `${API}getAll/`,
+    });
+
 const getUserDetail = () =>
     getRequest({
         path: `${API}user/`,
     });
 
-const updateUserInformation = (data) =>
+const updateCurrentUser = (data) =>
     putRequest({
         path: `${API}user/`,
+        data,
+    });
+
+const updateUserByID = (data, id) =>
+    putRequest({
+        path: `${API}user/${id}/`,
         data,
     });
 
@@ -243,8 +254,10 @@ export {
     login,
     logout,
     getUser,
+    getAllUsers,
     getUserDetail,
-    updateUserInformation,
+    updateCurrentUser,
+    updateUserByID,
     changePassword,
     getItems,
     getItemById,
