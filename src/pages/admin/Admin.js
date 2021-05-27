@@ -9,44 +9,7 @@ import UserCard from './UserCard';
 const Admin = (params) => {
     const [loading, setLoading] = useState(false);
     // TODO get from BE
-    const [users, setUsers] = useState([
-        {
-            pk: 1,
-            username: 'johndoe',
-            email: 'john.doe@gmail.com',
-            phone_number: '539-456-12-45',
-            first_name: 'John',
-            last_name: 'Doe',
-            addresses: ['Mint Street No.1', 'Address2'],
-            is_sales_manager: false,
-            is_product_manager: false,
-            is_admin: false,
-        },
-        {
-            pk: 2,
-            username: 'AliVeli',
-            email: 'ali.veli@gmail.com',
-            phone_number: '539-789-56-23',
-            first_name: 'Ali',
-            last_name: 'Veli',
-            addresses: ['Mint Street No.2', 'Address5'],
-            is_sales_manager: true,
-            is_product_manager: false,
-            is_admin: false,
-        },
-        {
-            pk: 3,
-            username: 'test',
-            email: 'ali.veli@gmail.com',
-            phone_number: '539-789-56-23',
-            first_name: 'test',
-            last_name: 'test',
-            addresses: ['Mint Street No.2', 'Address5'],
-            is_sales_manager: false,
-            is_product_manager: true,
-            is_admin: false,
-        },
-    ]);
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         setLoading(true);
