@@ -238,11 +238,16 @@ const getAllCampaigns = () =>
         path: `${API}campaign/`
     });
 
-const deleteCampaignByID = (campaignId) => {
-    deleteRequest({
-        path: `${API}campaign/${campaignId}/`,
+const createNewCampaign = (data) => 
+    postRequest({
+        path: `${API}campaign/`,
+        data
     });
-}
+
+const deleteCampaignByID = (id) => 
+    deleteRequest({
+        path: `${API}campaign/${id}/`,
+    })
 
 export {
     register,
@@ -278,5 +283,6 @@ export {
     retrieveRating,
     getStats,
     getAllCampaigns,
+    createNewCampaign,
     deleteCampaignByID,
 };

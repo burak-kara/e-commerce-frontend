@@ -1,39 +1,78 @@
 import React, { useState } from 'react';
-import { connect, /* useStore, */ } from 'react-redux';
-import { Form, /* FormLabel, */ Container, /* Row, Col, */ } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Form, Container, Col, } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
-import { /* ComponentLoading, */ PageLoading, CampaignCard } from '../../components';
+import { createNewCampaign } from '../../_requests';
+import { ComponentLoading, PageLoading, CampaignForm } from '../../components';
 import { openAlert } from '../../_redux/actions';
+import { SM_CAMPAIGNS, TIME_OUT } from '../../_constants';
 
-const CreateCampaign = () => {
+const CreateCampaign = (params) => {
+    const history = useHistory();
     const [loading, setLoading] = useState(false);
+    const [campaign, setCampaign] = useState({
+        valid_until: '',
+        campaign_x: 0,
+        campaign_y: 0,
+        campaign_amount: 0,
+    });
 
-    const createCampaign = (data) => {
+    const createCampaign = () => {
         setLoading(true);
-        console.log(data);
-        setLoading(false);
+        createNewCampaign(campaign)
+            .then((response) => {
+                setCampaign(response.data);
+                params.openAlert({
+                    message: 'Successfully created campaign!',
+                    severity: 'success',
+                });
+                setTimeout(() => {
+                    history.push({
+                        pathname: SM_CAMPAIGNS,
+                    });
+                }, TIME_OUT);
+                setLoading(false);
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while creating campaign!',
+                    severity: 'error',
+                });
+                setLoading(false);
+            });
     };
 
     return loading ? (
         <PageLoading />
     ) : (
-        <div className="create-campaign-page">
-            <Container fluid className="campaign-management-page">
-                <Form>
-                    <CampaignCard
-                        index="New"
-                        placeHolder="New campaign"
-                        componentIndex="new"
-                        key="campaign-new"
-                    />
-                    <Form.Group className="create-campaign-button-group">
-                        <Button onClick={createCampaign} type="submit">
-                            Create Campaign
+        <Container fluid className="create-campaign-page">
+            <Form className="form-container"
+                noValidate
+                key="campaignCreationPageForm"
+            >
+                <h3 className="page-title">Campaign Creation</h3>
+                <Form.Row>
+                    <Form.Group as={Col} xl={6} xs={12} className="campaign-details-group">
+                        <CampaignForm
+                            index="New"
+                            campaign={campaign}
+                            componentIndex="new"
+                            key="campaign-new"
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} xl={12} xs={12} className="create-campaign-button-group">
+                        <Button
+                            type="button"
+                            className="create-campaign-button"
+                            onClick={() => createCampaign()}
+                        >
+                            {loading ? <ComponentLoading /> : 'Create Campaign'}
                         </Button>
                     </Form.Group>
-                </Form>
-            </Container>
-        </div>
+                </Form.Row>
+            </Form>
+        </Container>
     );
 };
 

@@ -8,7 +8,7 @@ import BasketProductCard from './BasketProductCard';
 import { ComponentLoading, PageLoading } from './Loading';
 import OrderCard from './OrderCard';
 import UserAddresses from './UserAddresses';
-import CampaignCard from './CampaignCard';
+import CampaignForm from './CampaignForm';
 
 export {
     Navigation,
@@ -22,5 +22,5 @@ export {
     OrderCard,
     ProductCardEmpty,
     UserAddresses,
-    CampaignCard,
+    CampaignForm,
 };
