@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
 import { Container, Row, Col, Form } from 'react-bootstrap';
-import { Rating } from "@progress/kendo-react-inputs";
+import { Rating } from '@progress/kendo-react-inputs';
 import { DiscardModal, PageLoading, ProductCard, ProductCardEmpty } from '../../components';
 import {
     deleteItem,
@@ -28,8 +28,7 @@ const Products = (params) => {
     const [brand, setBrand] = useState('');
     const [ordering, setOrdering] = useState('');
     const [search, setSearch] = useState('');
-    // const [ratingStart, setRatingStart] = useState(1);
-    // const [ratingEnd, setRatingEnd] = useState(5);
+    const [rating, setRating] = useState(0);
     const [priceStart, setPriceStart] = useState(0);
     const [priceEnd, setPriceEnd] = useState(100);
 
@@ -272,7 +271,7 @@ const Products = (params) => {
                             <BrandOptions />
                         </Form.Control>
                     </Col>
-                    <Col xs={6} xl={3} className="price-col mb-3 mb-xl-0">
+                    <Col xs={12} xl={3} className="price-col mb-3 mb-xl-0">
                         <Form.Label>Price</Form.Label>
                         <Row className="inner-price-row">
                             <Col xs={6} className="min-col">
@@ -303,11 +302,20 @@ const Products = (params) => {
                             </Col>
                         </Row>
                     </Col>
-                    <Col xs={6} xl={3} className="range-col mb-3 mb-xl-0">
+                    <Col xs={6} xl={2} className="rating-col mb-3 mb-xl-0">
                         <Form.Label>Rating</Form.Label>
-                        <Rating />
+                        <Row>
+                            <Col>
+                                <Rating
+                                    value={rating}
+                                    onChange={(e) => {
+                                        setRating(e.target.value);
+                                    }}
+                                />
+                            </Col>
+                        </Row>
                     </Col>
-                    <Col xs={12} xl={2} className="btn-col mb-2 mb-xl-0">
+                    <Col xs={6} xl={3} className="btn-col mb-2 mb-xl-0">
                         <button
                             className="btn btn-block"
                             name="Filter"
