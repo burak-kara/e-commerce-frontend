@@ -30,18 +30,22 @@ const Products = (params) => {
     const [ordering, setOrdering] = useState('');
     const [search, setSearch] = useState('');
     const [ads, setAds] = useState([]);
+    const [rating, setRating] = useState(0);
+    // TODO  init with data from BE
+    // TODO delete
+    // eslint-disable-next-line no-unused-vars
+    const [priceStart, setPriceStart] = useState(0);
+    // TODO delete
+    // eslint-disable-next-line no-unused-vars
+    const [priceEnd, setPriceEnd] = useState(100);
 
     const getLeftAd = (adList) => {
         getAd()
             .then((response) => {
                 adList.push(
                     <div className="image-container">
-                        <img
-                            alt="ad"
-                            className="image"
-                            src={response.data.img}
-                        />
-                    </div>
+                        <img alt="ad" className="image" src={response.data.img} />
+                    </div>,
                 );
             })
             .catch(() => {
@@ -57,12 +61,8 @@ const Products = (params) => {
             .then((response) => {
                 adList.push(
                     <div className="image-container">
-                        <img
-                            alt="ad"
-                            className="image"
-                            src={response.data.img}
-                        />
-                    </div>
+                        <img alt="ad" className="image" src={response.data.img} />
+                    </div>,
                 );
             })
             .catch(() => {
@@ -84,14 +84,6 @@ const Products = (params) => {
         setLoading(true);
         fetchAds();
     }, []);
-    const [rating, setRating] = useState(0);
-    // TODO  init with data from BE
-    // TODO delete
-    // eslint-disable-next-line no-unused-vars
-    const [priceStart, setPriceStart] = useState(0);
-    // TODO delete
-    // eslint-disable-next-line no-unused-vars
-    const [priceEnd, setPriceEnd] = useState(100);
 
     const fetchBrands = (cat) => {
         setBrands([]);
@@ -286,25 +278,25 @@ const Products = (params) => {
         return options;
     };
 
-    const getLeftBannerAd = () => {
+    const LeftAddBanner = () => {
         let leftBannerAd = '';
         ads.forEach((ad, index) => {
             if (index === 0) {
-                leftBannerAd = (ad);
+                leftBannerAd = ad;
             }
         });
         return leftBannerAd;
-    }
+    };
 
-    const getRightBannerAd = () => {
+    const RightAddBanner = () => {
         let rightBannerAd = '';
         ads.forEach((ad, index) => {
             if (index === 1) {
-                rightBannerAd = (ad);
+                rightBannerAd = ad;
             }
         });
         return rightBannerAd;
-    }
+    };
 
     return loading ? (
         <PageLoading />
@@ -312,7 +304,7 @@ const Products = (params) => {
         <>
             <div className="home-page">
                 <Col className="banner-ad-left">
-                    {getLeftBannerAd()}
+                    <LeftAddBanner />
                 </Col>
                 <Container fluid="lg" className="pm-item-list">
                     <Row className="filter-row row">
@@ -328,19 +320,19 @@ const Products = (params) => {
                             >
                                 <option key="default" value="">
                                     Sort by..
-                            </option>
+                                </option>
                                 <option key="-price" value="price">
                                     Lowest Price
-                            </option>
+                                </option>
                                 <option key="price" value="-price">
                                     Highest Price
-                            </option>
+                                </option>
                                 <option key="-name" value="name">
                                     A-Z
-                            </option>
+                                </option>
                                 <option key="name" value="-name">
                                     Z-A
-                            </option>
+                                </option>
                             </Form.Control>
                         </Col>
                         <Col xs={6} xl={2} className="mb-3 mb-xl-0">
@@ -406,7 +398,7 @@ const Products = (params) => {
                                 onClick={handleFilter}
                             >
                                 Filter
-                        </button>
+                            </button>
                         </Col>
                     </Row>
                     <Row className="row">
@@ -422,7 +414,7 @@ const Products = (params) => {
                     buttonText="Delete"
                 />
                 <Col className="banner-ad-right">
-                    {getRightBannerAd()}
+                    <RightAddBanner />
                 </Col>
             </div>
         </>

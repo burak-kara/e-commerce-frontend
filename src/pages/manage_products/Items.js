@@ -90,7 +90,7 @@ const Items = (params) => {
     return loading ? (
         <PageLoading />
     ) : (
-        <>
+        <div className="home-page">
             <Container fluid="lg" className="pm-item-list">
                 <Row className="add-row">
                     <Col
@@ -120,7 +120,7 @@ const Items = (params) => {
                 body="If you delete this product now, you will lose it permanently."
                 buttonText="Delete"
             />
-        </>
+        </div>
     );
 };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
-import { Container, Row, Col, /* Form */ } from 'react-bootstrap';
+import { Container, Row, Col /* Form */ } from 'react-bootstrap';
 import { DiscardModal, PageLoading, ProductCard } from '../../components';
 import { deleteItem, getItems, getAd } from '../../_requests';
 import { openAlert, addToBasket } from '../../_redux/actions';
@@ -42,12 +42,8 @@ const Home = (params) => {
             .then((response) => {
                 adList.push(
                     <div className="image-container">
-                        <img
-                            alt="ad"
-                            className="image"
-                            src={response.data.img}
-                        />
-                    </div>
+                        <img alt="ad" className="image" src={response.data.img} />
+                    </div>,
                 );
             })
             .catch(() => {
@@ -63,12 +59,8 @@ const Home = (params) => {
             .then((response) => {
                 adList.push(
                     <div className="image-container">
-                        <img
-                            alt="ad"
-                            className="image"
-                            src={response.data.img}
-                        />
-                    </div>
+                        <img alt="ad" className="image" src={response.data.img} />
+                    </div>,
                 );
             })
             .catch(() => {
@@ -183,38 +175,32 @@ const Home = (params) => {
         let leftBannerAd = '';
         ads.forEach((ad, index) => {
             if (index === 0) {
-                leftBannerAd = (ad);
+                leftBannerAd = ad;
             }
         });
         return leftBannerAd;
-    }
+    };
 
     const getRightBannerAd = () => {
         let rightBannerAd = '';
         ads.forEach((ad, index) => {
             if (index === 1) {
-                rightBannerAd = (ad);
+                rightBannerAd = ad;
             }
         });
         return rightBannerAd;
-    }
+    };
 
     return loading ? (
         <PageLoading />
     ) : (
         <>
             <div className="home-page">
-                <Col className="banner-ad-left">
-                    {getLeftBannerAd()}
-                </Col>
+                <Col className="banner-ad-left">{getLeftBannerAd()}</Col>
                 <Container fluid="md" className="pm-item-list">
-                    <Row className="row">
-                        {items ? renderItems() : null}
-                    </Row>
+                    <Row className="row">{items ? renderItems() : null}</Row>
                 </Container>
-                <Col className="banner-ad-right">
-                    {getRightBannerAd()}
-                </Col>
+                <Col className="banner-ad-right">{getRightBannerAd()}</Col>
             </div>
             <DiscardModal
                 show={confirmModal}
