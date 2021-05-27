@@ -29,6 +29,7 @@ const Products = (params) => {
     const [ordering, setOrdering] = useState('');
     const [search, setSearch] = useState('');
     const [rating, setRating] = useState(0);
+    // TODO  init with data from BE
     const [priceStart, setPriceStart] = useState(0);
     const [priceEnd, setPriceEnd] = useState(100);
 

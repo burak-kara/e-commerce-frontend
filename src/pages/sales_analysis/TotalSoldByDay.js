@@ -10,9 +10,9 @@ import {
     ChartTitle,
     ChartLegend,
 } from '@progress/kendo-react-charts';
-import { getStats } from "../../_requests";
-import { PageLoading } from "../../components";
-import { openAlert } from "../../_redux/actions";
+import { getStats } from '../../_requests';
+import { PageLoading } from '../../components';
+import { openAlert } from '../../_redux/actions';
 
 const TotalSoldByDay = (params) => {
     const [counts, setCounts] = useState();
@@ -20,17 +20,19 @@ const TotalSoldByDay = (params) => {
     const [loading, setLoading] = useState(false);
 
     const fetchData = () => {
-        getStats().then((response) => {
-            setCounts(response.data.total_sold_product_counts_5_days.revenue);
-            setDays(response.data.total_sold_product_counts_5_days.days);
-            setLoading(false);
-        }).catch(()=> {
-            params.openAlert({
-                message: 'Something went wrong while fetching stats!',
-                severity: 'error',
+        getStats()
+            .then((response) => {
+                setCounts(response.data.total_sold_product_counts_5_days.revenue);
+                setDays(response.data.total_sold_product_counts_5_days.days);
+                setLoading(false);
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Something went wrong while fetching stats!',
+                    severity: 'error',
+                });
+                setLoading(false);
             });
-            setLoading(false);
-        });
     };
 
     useEffect(() => {
@@ -57,13 +59,13 @@ const TotalSoldByDay = (params) => {
                             </ChartCategoryAxis>
                             <ChartSeries>
                                 <ChartSeriesItem
-                                        type="column"
-                                        tooltip={{
-                                            visible: true,
-                                        }}
-                                        data={counts ? counts.data : null}
-                                        name={counts ? counts.name : null }
-                                    />
+                                    type="column"
+                                    tooltip={{
+                                        visible: true,
+                                    }}
+                                    data={counts ? counts.data : null}
+                                    name={counts ? counts.name : null}
+                                />
                             </ChartSeries>
                         </Chart>
                     </div>
