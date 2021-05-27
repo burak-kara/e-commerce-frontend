@@ -5,8 +5,8 @@ import {
     SM_ANALYSIS_DAY_BY_DAY,
     SM_ANALYSIS_SOLD,
     SM_ANALYSIS_SOLD_SHARE,
-    SM_ANALYSIS_TOTAL_SOLD
-} from "../../_constants";
+    SM_ANALYSIS_TOTAL_SOLD,
+} from '../../_constants';
 
 const charts = {
     'Day by Day Revenue': SM_ANALYSIS_DAY_BY_DAY,
