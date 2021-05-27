@@ -30,7 +30,11 @@ const Products = (params) => {
     const [search, setSearch] = useState('');
     const [rating, setRating] = useState(0);
     // TODO  init with data from BE
+    // TODO delete
+    // eslint-disable-next-line no-unused-vars
     const [priceStart, setPriceStart] = useState(0);
+    // TODO delete
+    // eslint-disable-next-line no-unused-vars
     const [priceEnd, setPriceEnd] = useState(100);
 
     const fetchBrands = (cat) => {
@@ -284,7 +288,6 @@ const Products = (params) => {
                                     placeholder="Min"
                                     onChange={(e) => {
                                         setPriceStart(e.target.value);
-                                        console.log(priceStart); // TODO delete
                                     }}
                                 />
                             </Col>
@@ -297,7 +300,6 @@ const Products = (params) => {
                                     placeholder="Max"
                                     onChange={(e) => {
                                         setPriceEnd(e.target.value);
-                                        console.log(priceEnd); // TODO delete
                                     }}
                                 />
                             </Col>
