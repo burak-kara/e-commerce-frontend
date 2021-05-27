@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
 import { Container, Row, Col /* Form */ } from 'react-bootstrap';
-import { DiscardModal, PageLoading, ProductCard } from '../../components';
+import { ComponentLoading, DiscardModal, PageLoading, ProductCard } from '../../components';
 import { deleteItem, getItems, getAd } from '../../_requests';
 import { openAlert, addToBasket } from '../../_redux/actions';
 import { P_M_EDIT_ITEM, PRODUCT_DETAIL } from '../../_constants';
@@ -15,7 +15,8 @@ const Home = (params) => {
     const [chosenId, setId] = useState('');
     const [confirmModal, setConfirmModal] = useState(false);
     const [deleteId, setDeleteId] = useState('');
-    const [ads, setAds] = useState([]);
+    const [leftAdd, setLeftAdd] = useState();
+    const [rightAdd, setRightAdd] = useState();
 
     const fetchItems = () => {
         getItems()
@@ -37,50 +38,48 @@ const Home = (params) => {
         fetchItems();
     }, []);
 
-    const getLeftAd = (adList) => {
+    const fetchLeftAdd = () => {
         getAd()
             .then((response) => {
-                adList.push(
-                    <div className="image-container">
+                setLeftAdd(
+                    <div className="add-container">
                         <img alt="ad" className="image" src={response.data.img} />
                     </div>,
                 );
+                setLoading(false);
             })
             .catch(() => {
                 params.openAlert({
                     message: 'Something went wrong while getting ad.',
                     severity: 'error',
                 });
+                setLoading(false);
             });
     };
 
-    const getRightAd = (adList) => {
+    const fetchRightAdd = () => {
         getAd()
             .then((response) => {
-                adList.push(
-                    <div className="image-container">
+                setRightAdd(
+                    <div className="add-container">
                         <img alt="ad" className="image" src={response.data.img} />
                     </div>,
                 );
+                setLoading(false);
             })
             .catch(() => {
                 params.openAlert({
                     message: 'Something went wrong while getting ad.',
                     severity: 'error',
                 });
+                setLoading(false);
             });
-    };
-
-    const fetchAds = () => {
-        const adList = [];
-        getLeftAd(adList);
-        getRightAd(adList);
-        setAds(adList);
     };
 
     useEffect(() => {
         setLoading(true);
-        fetchAds();
+        fetchLeftAdd();
+        fetchRightAdd();
     }, []);
 
     const handleAddFav = (id) => {
@@ -152,7 +151,7 @@ const Home = (params) => {
         handleBottom = handleAddBasket;
     }
 
-    const renderItems = () => {
+    const Items = () => {
         const itemsCol = [];
         if (items.length !== 0) {
             items.forEach((item) => {
@@ -171,37 +170,19 @@ const Home = (params) => {
         return itemsCol;
     };
 
-    const getLeftBannerAd = () => {
-        let leftBannerAd = '';
-        ads.forEach((ad, index) => {
-            if (index === 0) {
-                leftBannerAd = ad;
-            }
-        });
-        return leftBannerAd;
-    };
-
-    const getRightBannerAd = () => {
-        let rightBannerAd = '';
-        ads.forEach((ad, index) => {
-            if (index === 1) {
-                rightBannerAd = ad;
-            }
-        });
-        return rightBannerAd;
-    };
-
     return loading ? (
         <PageLoading />
     ) : (
         <>
-            <div className="home-page">
-                <Col className="banner-ad-left">{getLeftBannerAd()}</Col>
-                <Container fluid="md" className="pm-item-list">
-                    <Row className="row">{items ? renderItems() : null}</Row>
-                </Container>
-                <Col className="banner-ad-right">{getRightBannerAd()}</Col>
-            </div>
+            <Container fluid className="pm-item-list">
+                <Row>
+                    <Col xl={2}>{leftAdd || <ComponentLoading />}</Col>
+                    <Col xl={8}>
+                        <Row className="row">{items ? <Items /> : null}</Row>
+                    </Col>
+                    <Col xl={2}>{rightAdd || <ComponentLoading />}</Col>
+                </Row>
+            </Container>
             <DiscardModal
                 show={confirmModal}
                 onHide={() => setConfirmModal(false)}

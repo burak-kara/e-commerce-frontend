@@ -6,7 +6,7 @@
         background-color: $header-bg;
         color: $a-btn;
         font-weight: 500;
-        height: 20px;
+        max-height: $banner-size;
     }
 
     .container {

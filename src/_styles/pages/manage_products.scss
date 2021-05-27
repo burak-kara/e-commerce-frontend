@@ -1,180 +1,90 @@
-.home-page {
-    display: flex;
+.pm-item-list {
+    padding-top: 10px;
 
-    .banner-ad-left {
-        padding-top: 10px;
-        padding-left: 10px;
-        margin-left: 0;
-        display: flex;
-        justify-content: flex-start;
-        text-align: left;
-        max-width: 20%;
-        position: relative;
-        min-height: 700px;
-        max-height: 700px;
-
-        .image-container {
-            position: fixed;
-            width: 370px;
-            height: 370px;
-            border-radius: 10px 10px 0 0 !important;
-            box-shadow: 0 0 3px 0 $header-bg-shadow;
-            min-height: 700px;
-            max-height: 700px;
-
-            .image {
-                height: 700px;
-                width: 370px;
-                border-radius: 20px 20px 0 0 !important;
-                object-fit: fill;
-            }
+    .row {
+        .col {
+            padding-top: 10px;
+            display: flex;
+            justify-content: center;
         }
     }
 
-    .banner-ad-right {
-        padding-top: 20px;
-        padding-left: 0;
-        margin-left: 0;
-        display: flex;
-        justify-content: flex-end;
-        text-align: right;
-        max-width: 20%;
-        min-height: 700px;
-        max-height: 700px;
+    .filter-row {
+        margin-bottom: 10px;
 
-        .image-container {
-            position: fixed;
-            width: 370px;
-            height: 370px;
-            border-radius: 10px 10px 0 0 !important;
-            box-shadow: 0 0 3px 0 $header-bg-shadow;
-            min-height: 700px;
-            max-height: 700px;
-
-            .image {
-                height: 700px;
-                width: 370px;
-                border-radius: 20px 20px 0 0 !important;
-                object-fit: fill;
-            }
+        .col {
+            padding-top: 0;
+            display: flex;
+            justify-content: center;
         }
-    }
 
-    .pm-item-list {
-        padding-top: 10px;
+        .form-label {
+            color: $black;
+            font-size: 15px;
+            font-weight: 500;
+        }
 
-        .row {
-            .col {
-                padding-top: 10px;
-                display: flex;
-                justify-content: center;
+        .dropdown {
+            color: $black;
+            font-size: 15px;
+            font-weight: 300;
+
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
             }
         }
 
-        .filter-row {
-            margin-bottom: 10px;
+        .price-col {
+            display: flex;
+            flex-direction: column;
 
-            .col {
-                padding-top: 0;
+            .inner-price-row {
                 display: flex;
-                justify-content: center;
-            }
+                justify-content: space-between;
 
-            .form-label {
-                color: $black;
-                font-size: 15px;
-                font-weight: 500;
-            }
+                .min-col {
+                    padding-right: 2.5px !important;
+                }
 
-            .dropdown {
-                color: $black;
-                font-size: 15px;
-                font-weight: 300;
-
-                &:focus {
-                    outline: none !important;
-                    box-shadow: none !important;
+                .max-col {
+                    padding-left: 7.5px !important;
+                    padding-right: 0 !important;
                 }
             }
+        }
 
-            .price-col {
-                display: flex;
-                flex-direction: column;
+        .rating-col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
 
-                .inner-price-row {
+            .row {
+                padding-left: 0 !important;
+
+                .col {
                     display: flex;
-                    justify-content: space-between;
+                    justify-content: flex-start;
+                    padding-left: 10px !important;
 
-                    .min-col {
-                        padding-right: 2.5px !important;
-                    }
-
-                    .max-col {
-                        padding-left: 7.5px !important;
-                        padding-right: 0 !important;
-                    }
-                }
-            }
-
-            .rating-col {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-
-                .row {
-                    padding-left: 0 !important;
-
-                    .col {
-                        display: flex;
-                        justify-content: flex-start;
-                        padding-left: 10px !important;
-
-                        .k-rating {
-                            .k-rating-container {
-                                margin: 0 !important;
-                            }
+                    .k-rating {
+                        .k-rating-container {
+                            margin: 0 !important;
                         }
                     }
                 }
             }
-
-            .btn-col {
-                display: flex;
-                align-items: flex-end;
-
-                .btn {
-                    border-radius: 4px !important;
-                    border: 1px solid $header-border2;
-                    background-color: $header-bg;
-                    color: $a-btn;
-
-                    &:focus {
-                        outline: none !important;
-                        box-shadow: none !important;
-                    }
-
-                    &:hover {
-                        box-shadow: 0 0 3px 0 $header-border2;
-                    }
-                }
-            }
         }
 
-        .add-row {
-            .add-col {
-                display: flex;
-                justify-content: center;
-            }
+        .btn-col {
+            display: flex;
+            align-items: flex-end;
 
             .btn {
-                width: 370px;
-                display: flex;
-                justify-content: center;
                 border-radius: 4px !important;
+                border: 1px solid $header-border2;
                 background-color: $header-bg;
                 color: $a-btn;
-                box-shadow: 0 0 3px 0 $header-bg-shadow;
-                font-size: 16px;
 
                 &:focus {
                     outline: none !important;
@@ -182,8 +92,42 @@
                 }
 
                 &:hover {
-                    box-shadow: 0 0 5px 0 $header-bg-shadow;
+                    box-shadow: 0 0 3px 0 $header-border2;
                 }
+            }
+        }
+    }
+
+    .add-container {
+        .image {
+            max-width: 300px;
+            border-radius: 10px 10px 0 0 !important;
+        }
+    }
+
+    .add-row {
+        .add-col {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn {
+            width: 370px;
+            display: flex;
+            justify-content: center;
+            border-radius: 4px !important;
+            background-color: $header-bg;
+            color: $a-btn;
+            box-shadow: 0 0 3px 0 $header-bg-shadow;
+            font-size: 16px;
+
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+
+            &:hover {
+                box-shadow: 0 0 5px 0 $header-bg-shadow;
             }
         }
     }
@@ -240,34 +184,28 @@
 }
 
 @media only screen and (max-width: 576px) {
-    .home-page {
-        .pm-item-list {
-            .filter-row {
-                .price-col {
-                    .inner-price-row {
-                        .min-col {
-                            padding-right: 7.5px !important;
-                        }
+    .pm-item-list {
+        .filter-row {
+            .price-col {
+                .inner-price-row {
+                    .min-col {
+                        padding-right: 7.5px !important;
+                    }
 
-                        .max-col {
-                            padding-left: 7.5px !important;
-                            padding-right: 15px !important;
-                        }
+                    .max-col {
+                        padding-left: 7.5px !important;
+                        padding-right: 15px !important;
                     }
                 }
+            }
 
-                .btn-col {
-                    padding-left: 10px !important;
-                }
+            .btn-col {
+                padding-left: 10px !important;
             }
         }
 
-        .banner-ad-left {
-            visibility: hidden;
-        }
-
-        .banner-ad-right {
-            visibility: hidden;
+        .add-container {
+            display: none;
         }
     }
 }
