@@ -6,11 +6,7 @@ import * as moment from 'moment';
 import { openAlert } from '../_redux/actions';
 
 const CampaignForm = (props) => {
-    const {
-        index,
-        campaign,
-        disabled,
-    } = props;
+    const { index, campaign, disabled } = props;
 
     const parseNewDate = (new_valid_until) => {
         const momentDate = moment(new_valid_until);
@@ -37,23 +33,19 @@ const CampaignForm = (props) => {
     return (
         <>
             <Form.Group as={Col} xl={12}>
-                <FormLabel>
-                    Expiration Date
-                </FormLabel>
+                <FormLabel>Expiration Date</FormLabel>
                 <DateTimePicker
                     parseFormats="yyyy-MM-ddTHH:MM:SSZ"
                     timeFormat="HH:mm:ss"
                     defaultValue={new Date()}
                     onChange={(e) => setCampaignExpirationDate(e.target.value)}
-                    className='form-control'
+                    className="form-control"
                     disabled={disabled}
                 />
             </Form.Group>
             <div className="campaign-details">
                 <Form.Group as={Col} xl={6} xs={12}>
-                    <FormLabel>
-                        First Product Count
-                        </FormLabel>
+                    <FormLabel>First Product Count</FormLabel>
                     <Form.Control
                         name={`campaignFirstProduct${index}`}
                         type="text"
@@ -64,9 +56,7 @@ const CampaignForm = (props) => {
                     />
                 </Form.Group>
                 <Form.Group as={Col} xl={6} xs={12}>
-                    <FormLabel>
-                        Second Product Count
-                        </FormLabel>
+                    <FormLabel>Second Product Count</FormLabel>
                     <Form.Control
                         name={`campaignSecondProduct${index}`}
                         type="text"
@@ -77,9 +67,7 @@ const CampaignForm = (props) => {
                     />
                 </Form.Group>
                 <Form.Group as={Col} xl={12} xs={12}>
-                    <FormLabel>
-                        Discount Amount (%)
-                        </FormLabel>
+                    <FormLabel>Discount Amount (%)</FormLabel>
                     <Form.Control
                         name={`campaignAmount${index}`}
                         type="text"
