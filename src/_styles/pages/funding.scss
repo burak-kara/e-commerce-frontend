@@ -1,7 +1,7 @@
 .funding-page {
+    padding: 10px 0;
     display: flex;
     justify-content: center;
-    text-align: center;
 
     .form-container {
         padding: 10px 5px;
@@ -9,6 +9,7 @@
         border-radius: 20px;
         background-color: $header-bg;
         box-shadow: 0 0 2px 0 $header-bg-shadow;
+        text-align: center;
 
         .fund-fields {
             text-align: left;
