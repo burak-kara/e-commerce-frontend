@@ -68,6 +68,43 @@ const Header = (props) => {
         }
     }, 1000);
 
+    setInterval(() => {
+        const database = firebase.campaign_db_for_users();
+        if (!user.is_product_manager && !user.is_sales_manager) {
+            database.once('child_changed', (response) => {
+                const { id, valid_until, campaign_x, campaign_y, campaign_amount } = response.val();
+                if (
+                    Notification.permission === 'granted' &&
+                    (campaign_x >= 1 || campaign_y >= 1)
+                ) {
+                    navigator.serviceWorker.ready.then((registration) => {
+                        registration.showNotification('OzU E-Commerce', {
+                            body:
+                                `Buy ${campaign_x} get ${campaign_y} campaign has begun!\n` +
+                                `including a hefty ${campaign_amount}% discount!\n` +
+                                `This campaign is valid until ${valid_until}`,
+                            image: logo,
+                            icon: favicon,
+                            tag: id,
+                            requireInteraction: true,
+                            vibrate: [200, 100, 200],
+                        });
+                    });
+                } else if (Notification.permission !== 'granted') {
+                    props.openAlert({
+                        message: 'Please allow us to send you notifications!',
+                        severity: 'error',
+                    });
+                } else {
+                    props.openAlert({
+                        message: 'Something went wrong with the push notifications!',
+                        severity: 'error',
+                    });
+                }
+            });
+        }
+    }, 1000);
+
     const Banner = () => {
         let user_type = '';
         if (user.is_product_manager) {

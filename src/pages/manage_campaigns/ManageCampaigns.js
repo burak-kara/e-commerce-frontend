@@ -41,10 +41,10 @@ const ManageCampaigns = (params) => {
     const deleteCampaign = (param) => {
         setLoading(true);
         deleteCampaignByID(param)
-            .then((response) => {
+            .then(() => {
                 fetchCampaigns();
                 params.openAlert({
-                    message: `Successfully deleted campaign with id ${response.data}!`,
+                    message: `Successfully deleted campaign with id ${param}!`,
                     severity: 'success',
                 });
                 setTimeout(() => {

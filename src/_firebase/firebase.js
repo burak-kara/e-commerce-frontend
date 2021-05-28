@@ -24,6 +24,10 @@ class Firebase {
     }
 
     order_db = (buyerID, orderID) => this.db.ref().child(`/notifications/${buyerID}/${orderID}`);
+    
+    campaign_db = (campaignID) => this.db.ref().child(`/campaigns/${campaignID}`);
+
+    campaign_db_for_users = () => this.db.ref().child('/campaigns');
 
     user_db = (userPK) => this.db.ref().child(`/notifications/${userPK}`);
 }

@@ -7,9 +7,11 @@ import { createNewCampaign } from '../../_requests';
 import { ComponentLoading, PageLoading, CampaignForm } from '../../components';
 import { openAlert } from '../../_redux/actions';
 import { SM_CAMPAIGNS, TIME_OUT } from '../../_constants';
+import { withFirebase } from '../../_firebase';
 
 const CreateCampaign = (params) => {
     const history = useHistory();
+    const { firebase } = params;
     const [loading, setLoading] = useState(false);
     const [campaign, setCampaign] = useState({
         valid_until: '',
@@ -18,11 +20,25 @@ const CreateCampaign = (params) => {
         campaign_amount: 0,
     });
 
+    const sendPushNotification = (campaign_details) => {
+        const database = firebase.campaign_db(campaign_details.id);
+        // Doesn't correctly get the prev data from firebase, may need a fix.
+        // This is just for keeping data consistent on firebase realtime db.
+        database.set({
+            id: campaign_details.id,
+            valid_until: campaign_details.valid_until,
+            campaign_x: campaign_details.campaign_x,
+            campaign_y: campaign_details.campaign_y,
+            campaign_amount: campaign_details.campaign_amount,
+        });
+    };
+
     const createCampaign = () => {
         setLoading(true);
         createNewCampaign(campaign)
             .then((response) => {
                 setCampaign(response.data);
+                sendPushNotification(response.data);
                 params.openAlert({
                     message: 'Successfully created campaign!',
                     severity: 'success',
@@ -76,4 +92,4 @@ const CreateCampaign = (params) => {
     );
 };
 
-export default connect(null, { openAlert })(CreateCampaign);
+export default connect(null, { openAlert })(withFirebase(CreateCampaign));
