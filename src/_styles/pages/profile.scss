@@ -91,6 +91,20 @@
             }
         }
 
+        .funding-btn {
+            color: $nav-btn-hover;
+            background-color: $common-btn;
+            min-width: 50%;
+            max-width: 50%;
+            font-weight: 500;
+            margin-top: 10px;
+
+            &:focus {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+        }
+
         .btn-container {
             display: flex;
             justify-content: center;

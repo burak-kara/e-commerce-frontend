@@ -249,6 +249,17 @@ const getAd = () =>
         path: `${API}recommended-adds/`,
     });
 
+const getCurrentFunds = () => 
+    getRequest({
+        path: `${API}funding/`,
+    });
+
+const addFundsToUser = (data) =>
+    postRequest({
+        path: `${API}funding/`,
+        data
+    });
+
 export {
     register,
     login,
@@ -285,4 +296,6 @@ export {
     retrieveRating,
     getStats,
     getAd,
+    getCurrentFunds,
+    addFundsToUser,
 };

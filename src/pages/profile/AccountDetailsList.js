@@ -7,7 +7,7 @@ import { ComponentLoading, UserAddresses } from '../../components';
 import { updateCurrentUser, changePassword, getUserDetail, getQRLink } from '../../_requests';
 import { openAlert, setUser, setUserDetail } from '../../_redux/actions';
 import { Hide, Show } from '../../_utilities/icons';
-import { noneError, passwordRegex, PROFILE, TIME_OUT } from '../../_constants';
+import { noneError, passwordRegex, PROFILE, TIME_OUT, FUNDING } from '../../_constants';
 
 const AccountDetailsList = (params) => {
     const history = useHistory();
@@ -361,6 +361,14 @@ const AccountDetailsList = (params) => {
             <ListAddresses />
         );
 
+    const rerouteToFundingPage = () => {
+        setTimeout(() => {
+            history.push({
+                pathname: FUNDING,
+            })
+        }, TIME_OUT);
+    }
+
     return (
         <Form
             className="form-container"
@@ -553,6 +561,11 @@ const AccountDetailsList = (params) => {
                 <button className="btn save-btn" type="button" onClick={onClickUpdatePassword}>
                     {loading ? <ComponentLoading /> : 'Update'}
                 </button>
+            </Form.Row>
+            <Form.Row className="buttons">
+                <button type="button" onClick={rerouteToFundingPage} className="btn funding-btn">
+                        {loading ? <ComponentLoading /> : 'Funding'}
+                    </button>
             </Form.Row>
         </Form>
     );
