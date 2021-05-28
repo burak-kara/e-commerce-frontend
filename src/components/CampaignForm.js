@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, FormLabel, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { DateTimePicker } from '@progress/kendo-react-dateinputs';
+import * as moment from 'moment';
 import { openAlert } from '../_redux/actions';
 
 const CampaignForm = (props) => {
@@ -11,79 +12,10 @@ const CampaignForm = (props) => {
         disabled,
     } = props;
 
-    const getExpirationDate = (date) => {
-        let parseDate = date;
-        let year = '';
-        let month = '';
-        let day = '';
-        let hour = '';
-        let minute = '';
-        let second = '';
-        if (date !== '') {
-            year = parseDate.substring(0, parseDate.indexOf('-'));
-            parseDate = parseDate.substring(parseDate.indexOf('-') + 1, parseDate.length);
-            month = parseDate.substring(0, parseDate.indexOf('-'));
-            parseDate = parseDate.substring(parseDate.indexOf('-') + 1, parseDate.length);
-            day = parseDate.substring(0, parseDate.indexOf('T'));
-            parseDate = parseDate.substring(parseDate.indexOf('T') + 1, parseDate.length);
-            hour = parseDate.substring(0, parseDate.indexOf(':'));
-            parseDate = parseDate.substring(parseDate.indexOf(':') + 1, parseDate.length);
-            minute = parseDate.substring(0, parseDate.indexOf(':'));
-            parseDate = parseDate.substring(parseDate.indexOf(':') + 1, parseDate.length);
-            second = parseDate.substring(0, parseDate.indexOf('Z'));
-        }
-        return new Date(year, month, day, hour, minute, second, 0);
-    };
-
-    //  Thu Jun 24 2021 00:00:00 GMT+0300 (GMT+03:00)
     const parseNewDate = (new_valid_until) => {
-        let parseDate = new_valid_until.toString();
-        let year = '';
-        let month = '';
-        let day = '';
-        let hour = '';
-        let minute = '';
-        let second = '';
-        if (parseDate) {
-            parseDate = parseDate.substring(parseDate.indexOf(' ') + 1, parseDate.length);
-            month = parseDate.substring(0, parseDate.indexOf(' '));
-            if (month === 'Jan') {
-                month = 1;
-            } else if (month === 'Feb') {
-                month = 2;
-            } else if (month === 'Mar') {
-                month = 3;
-            } else if (month === 'Apr') {
-                month = 4;
-            } else if (month === 'May') {
-                month = 5;
-            } else if (month === 'Jun') {
-                month = 6;
-            } else if (month === 'Jul') {
-                month = 7;
-            } else if (month === 'Aug') {
-                month = 8;
-            } else if (month === 'Sep') {
-                month = 9;
-            } else if (month === 'Oct') {
-                month = 10;
-            } else if (month === 'Nov') {
-                month = 11;
-            } else if (month === 'Dec') {
-                month = 12;
-            }
-            parseDate = parseDate.substring(parseDate.indexOf(' ') + 1, parseDate.length);
-            day = parseDate.substring(0, parseDate.indexOf(' '));
-            parseDate = parseDate.substring(parseDate.indexOf(' ') + 1, parseDate.length);
-            year = parseDate.substring(0, parseDate.indexOf(' '));
-            parseDate = parseDate.substring(parseDate.indexOf(' ') + 1, parseDate.length);
-            hour = parseDate.substring(0, parseDate.indexOf(':'));
-            parseDate = parseDate.substring(parseDate.indexOf(':') + 1, parseDate.length);
-            minute = parseDate.substring(0, parseDate.indexOf(':'));
-            parseDate = parseDate.substring(parseDate.indexOf(':') + 1, parseDate.length);
-            second = parseDate.substring(0, parseDate.indexOf(' '));
-        }
-        return `${year}-${month}-${day}T${hour}:${minute}:${second}Z`;
+        const momentDate = moment(new_valid_until);
+        const selectedDate = momentDate.format('yyyy-MM-DDTHH:mm:ss');
+        return selectedDate;
     };
 
     const setCampaignExpirationDate = (new_valid_until) => {
@@ -109,8 +41,9 @@ const CampaignForm = (props) => {
                     Expiration Date
                 </FormLabel>
                 <DateTimePicker
-                    format="yyyy-MM-dd hh:mm:ss"
-                    defaultValue={getExpirationDate(campaign.valid_until)}
+                    parseFormats="yyyy-MM-ddTHH:MM:SSZ"
+                    timeFormat="HH:mm:ss"
+                    defaultValue={new Date()}
                     onChange={(e) => setCampaignExpirationDate(e.target.value)}
                     className='form-control'
                     disabled={disabled}
