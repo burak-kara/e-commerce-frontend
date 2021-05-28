@@ -1,0 +1,53 @@
+.create-campaign-page {
+    padding: 10px 5px;
+    display: flex;
+    justify-content: center;
+    
+    .form-container {
+        min-width: 50%;
+        border-radius: 20px;
+        background-color: $header-bg;
+        box-shadow: 0 0 2px 0 $header-bg-shadow;
+
+        .page-title {
+            margin-top: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .campaign-details-group {
+            min-width: 100%;
+            justify-content: space-evenly;
+
+            .campaign-details {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                align-items: center;
+                min-width: fit-content;
+                flex-wrap: wrap;
+            }
+        }
+
+        .create-campaign-button-group {
+            text-align: center;
+            justify-content: center;
+
+            .create-campaign-button {
+                color: $nav-btn-hover;
+                background-color: $common-btn;
+                min-width: 20%;
+                max-width: 50%;
+                font-weight: 500;
+                text-transform: none;
+                margin-bottom: 20px;
+                white-space: nowrap;
+
+                &:focus {
+                    outline: none !important;
+                    box-shadow: none !important;
+                }
+            }
+        }
+    }
+}

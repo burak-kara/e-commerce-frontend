@@ -249,6 +249,22 @@ const getAd = () =>
         path: `${API}recommended-adds/`,
     });
 
+const getAllCampaigns = () =>
+    getRequest({
+        path: `${API}campaign/`
+    });
+
+const createNewCampaign = (data) => 
+    postRequest({
+        path: `${API}campaign/`,
+        data
+    });
+
+const deleteCampaignByID = (id) => 
+    deleteRequest({
+        path: `${API}campaign/${id}/`,
+    })
+
 export {
     register,
     login,
@@ -285,4 +301,7 @@ export {
     retrieveRating,
     getStats,
     getAd,
+    getAllCampaigns,
+    createNewCampaign,
+    deleteCampaignByID,
 };
