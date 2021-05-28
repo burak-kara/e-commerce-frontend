@@ -37,7 +37,7 @@ const CampaignForm = (props) => {
                 <DateTimePicker
                     parseFormats="yyyy-MM-ddTHH:MM:SSZ"
                     timeFormat="HH:mm:ss"
-                    defaultValue={new Date()}
+                    defaultValue={campaign.valid_until !== '' ? new Date(campaign.valid_until) : new Date()}
                     onChange={(e) => setCampaignExpirationDate(e.target.value)}
                     className="form-control"
                     disabled={disabled}
