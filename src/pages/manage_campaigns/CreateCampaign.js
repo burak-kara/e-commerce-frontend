@@ -20,7 +20,7 @@ const CreateCampaign = (params) => {
     });
 
     const sendPushNotification = (campaign_details) => {
-        const database = firebase.campaign_db(campaign_details.id);
+        const database = firebase.campaign_db('new_campaign');
         // Doesn't correctly get the prev data from firebase, may need a fix.
         // This is just for keeping data consistent on firebase realtime db.
         database.set({
@@ -29,6 +29,7 @@ const CreateCampaign = (params) => {
             campaign_x: campaign_details.campaign_x,
             campaign_y: campaign_details.campaign_y,
             campaign_amount: campaign_details.campaign_amount,
+            notified_users: '',
         });
     };
 
