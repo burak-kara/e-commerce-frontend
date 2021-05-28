@@ -24,7 +24,6 @@
         }
 
         .button-group {
-            
             .fund-user-button {
                 color: $nav-btn-hover;
                 background-color: $common-btn;
@@ -45,10 +44,7 @@
 
 @media only screen and (max-width: 576px) {
     .funding-page {
-        padding: 10px 0 !important;
-
         .form-container {
-            padding: 10px 5px;
             width: 95%;
         }
     }

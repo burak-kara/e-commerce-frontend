@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Container, Col, FormLabel } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Button } from '@material-ui/core';
-import { ComponentLoading, PageLoading } from '../../components';
+import {  PageLoading } from '../../components';
 import { openAlert } from '../../_redux/actions';
 import { getCurrentFunds, addFundsToUser } from '../../_requests';
 import { PROFILE, TIME_OUT } from '../../_constants';
@@ -70,44 +69,30 @@ const Funding = (params) => {
     return loading ? (
         <PageLoading />
     ) : (
-        <>
-            <Container fluid className='funding-page'>
-                <Form className='form-container'>
-                    <h3 className='page-title'>Funding</h3>
-                    <Form.Row>
-                        <Form.Group as={Col} xl={12} xs={12} className="fund-fields">
-                            <FormLabel>
-                                Current Funds
-                            </FormLabel>
-                            <Form.Control
-                                type="text"
-                                defaultValue={userFunds}
-                                disabled
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col} xl={12} xs={12} className="fund-fields">
-                            <FormLabel>
-                                Funds Requested
-                            </FormLabel>
-                            <Form.Control
-                                type="text"
-                                defaultValue={0}
-                                onChange={(e) => setCurrentlyRequestedFunds(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col} xl={12} xs={12} className='button-group'>
-                            <Button
-                                type="button"
-                                onClick={fundUser}
-                                className="fund-user-button"
-                            >
-                                {loading ? <ComponentLoading /> : `Send Funds To Account`}
-                            </Button>
-                        </Form.Group>
-                    </Form.Row>
-                </Form>
-            </Container>
-        </>
+        <Container fluid className="funding-page">
+            <Form className="form-container">
+                <h3 className="page-title">Funding</h3>
+                <Form.Row>
+                    <Form.Group as={Col} xl={12} xs={12} className="fund-fields">
+                        <FormLabel>Current Funds</FormLabel>
+                        <Form.Control type="text" defaultValue={userFunds} disabled />
+                    </Form.Group>
+                    <Form.Group as={Col} xl={12} xs={12} className="fund-fields">
+                        <FormLabel>Funds Requested</FormLabel>
+                        <Form.Control
+                            type="text"
+                            defaultValue={0}
+                            onChange={(e) => setCurrentlyRequestedFunds(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} xl={12} xs={12} className="button-group">
+                        <button type="button" onClick={fundUser} className="btn fund-user-button">
+                            Send Funds To Account
+                        </button>
+                    </Form.Group>
+                </Form.Row>
+            </Form>
+        </Container>
     );
 };
 

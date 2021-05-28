@@ -361,13 +361,13 @@ const AccountDetailsList = (params) => {
             <ListAddresses />
         );
 
-    const rerouteToFundingPage = () => {
+    const redirectToFunding = () => {
         setTimeout(() => {
             history.push({
                 pathname: FUNDING,
-            })
+            });
         }, TIME_OUT);
-    }
+    };
 
     return (
         <Form
@@ -563,9 +563,9 @@ const AccountDetailsList = (params) => {
                 </button>
             </Form.Row>
             <Form.Row className="buttons">
-                <button type="button" onClick={rerouteToFundingPage} className="btn funding-btn">
-                        {loading ? <ComponentLoading /> : 'Funding'}
-                    </button>
+                <button type="button" onClick={redirectToFunding} className="btn funding-btn">
+                    Funding
+                </button>
             </Form.Row>
         </Form>
     );
