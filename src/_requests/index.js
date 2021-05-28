@@ -265,6 +265,17 @@ const deleteCampaignByID = (id) =>
         path: `${API}campaign/${id}/`,
     })
 
+const getCurrentFunds = () =>
+    getRequest({
+        path: `${API}funding/`,
+    });
+
+const addFundsToUser = (data) =>
+    postRequest({
+        path: `${API}funding/`,
+        data,
+    });
+
 export {
     register,
     login,
@@ -304,4 +315,6 @@ export {
     getAllCampaigns,
     createNewCampaign,
     deleteCampaignByID,
+    getCurrentFunds,
+    addFundsToUser,
 };

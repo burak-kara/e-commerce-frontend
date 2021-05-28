@@ -12,6 +12,7 @@ export const NOT_FOUND = '/not-found';
 
 export const BASKET = '/basket';
 export const PROFILE = '/account';
+export const FUNDING = '/funding';
 export const ORDERS = '/orders';
 export const ORDER_DETAIL = '/order-detail';
 export const SETTINGS = '/settings';

@@ -26,6 +26,7 @@ import {
     P_M_NEW_ITEM,
     P_M_EDIT_ITEM,
     PROFILE,
+    FUNDING,
     SIGN_IN,
     SIGN_OUT,
     SIGN_UP,
@@ -74,6 +75,7 @@ const Products = loadable(() => import('../pages/products/Products'));
 const Profile = loadable(() => import('../pages/profile/Profile'));
 const SalesAnalysis = loadable(() => import('../pages/sales_analysis/SalesAnalysis'));
 const Admin = loadable(() => import('../pages/admin/Admin'));
+const Funding = loadable(() => import('../pages/funding/Funding'));
 
 const Signin = loadable(() => import('../pages/signin/Signin'));
 const Signup = loadable(() => import('../pages/signup/Signup'));
@@ -124,6 +126,7 @@ const Routes = () => {
                 {/* Common Routes for logged in users */}
                 <AuthenticatedRoute exact path={PROFILE} component={Profile} />
                 <AuthenticatedRoute exact path={SIGN_OUT} component={Signout} />
+                <AuthenticatedRoute exact path={FUNDING} component={Funding} />
 
                 {/* Routes for customers */}
                 <CustomerRoute exact path={ORDERS} component={Orders} />
