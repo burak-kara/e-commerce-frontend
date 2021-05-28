@@ -74,10 +74,7 @@ const Header = (props) => {
         if (!user.is_product_manager && !user.is_sales_manager) {
             database.once('child_changed', (response) => {
                 const { id, valid_until, campaign_x, campaign_y, campaign_amount } = response.val();
-                if (
-                    Notification.permission === 'granted' &&
-                    (campaign_x >= 1 || campaign_y >= 1)
-                ) {
+                if (Notification.permission === 'granted' && (campaign_x >= 1 || campaign_y >= 1)) {
                     navigator.serviceWorker.ready.then((registration) => {
                         registration.showNotification('OzU E-Commerce', {
                             body:

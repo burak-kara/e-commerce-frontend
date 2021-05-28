@@ -2,7 +2,7 @@
     padding: 10px 5px;
     display: flex;
     justify-content: center;
-    
+
     .form-container {
         min-width: 50%;
         border-radius: 20px;
@@ -28,7 +28,7 @@
                     justify-content: space-evenly;
                     text-align: center;
 
-                    .delete-campaign-button{
+                    .delete-campaign-button {
                         color: $nav-btn-hover;
                         background-color: $delete;
                         min-width: 20%;
@@ -104,23 +104,23 @@
         padding: 10px 5px;
         display: flex;
         justify-content: center;
-        
+
         .form-container {
             min-width: 50%;
             border-radius: 20px;
             background-color: $header-bg;
             box-shadow: 0 0 2px 0 $header-bg-shadow;
-    
+
             .page-title {
                 margin-top: 10px;
                 text-align: center;
                 font-weight: bold;
             }
-    
+
             .campaign-list {
                 justify-content: center;
                 flex-shrink: 1;
-    
+
                 .campaign-card {
                     text-align: left;
                     margin-top: 20px;
@@ -130,7 +130,7 @@
                         text-align: center;
                         justify-content: center;
 
-                        .delete-campaign-button{
+                        .delete-campaign-button {
                             color: $nav-btn-hover;
                             background-color: $delete;
                             min-width: 20%;
@@ -147,7 +147,7 @@
                         }
                     }
                 }
-    
+
                 .campaign-details {
                     display: flex;
                     flex-direction: row;
@@ -157,7 +157,7 @@
                     flex-wrap: wrap;
                 }
             }
-    
+
             .buttons {
                 display: flex;
                 flex-direction: column;
@@ -177,13 +177,13 @@
                         font-weight: 500;
                         text-transform: none;
                         white-space: nowrap;
-        
+
                         &:focus {
                             outline: none !important;
                             box-shadow: none !important;
                         }
                     }
-        
+
                     .create-campaign-button {
                         color: $nav-btn-hover;
                         background-color: $delete;
@@ -193,7 +193,7 @@
                         font-weight: 500;
                         text-transform: none;
                         white-space: nowrap;
-        
+
                         &:focus {
                             outline: none !important;
                             box-shadow: none !important;

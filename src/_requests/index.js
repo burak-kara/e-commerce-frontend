@@ -251,19 +251,19 @@ const getAd = () =>
 
 const getAllCampaigns = () =>
     getRequest({
-        path: `${API}campaign/`
+        path: `${API}campaign/`,
     });
 
-const createNewCampaign = (data) => 
+const createNewCampaign = (data) =>
     postRequest({
         path: `${API}campaign/`,
-        data
+        data,
     });
 
-const deleteCampaignByID = (id) => 
+const deleteCampaignByID = (id) =>
     deleteRequest({
         path: `${API}campaign/${id}/`,
-    })
+    });
 
 const getCurrentFunds = () =>
     getRequest({

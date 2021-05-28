@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { connect, } from 'react-redux';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Form, FormLabel, Container, Row, Col, ListGroup } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 import { getAllCampaigns, deleteCampaignByID } from '../../_requests';
 import { ComponentLoading, PageLoading, CampaignForm } from '../../components';
 import { openAlert } from '../../_redux/actions';
-import {
-    SM_CREATE_CAMPAIGN,
-    SM_CAMPAIGNS,
-    TIME_OUT,
-} from '../../_constants';
+import { SM_CREATE_CAMPAIGN, SM_CAMPAIGNS, TIME_OUT } from '../../_constants';
 
 const ManageCampaigns = (params) => {
     const history = useHistory();
@@ -29,7 +25,7 @@ const ManageCampaigns = (params) => {
                     severity: 'error',
                 });
                 setLoading(false);
-            })
+            });
     };
 
     useEffect(() => {
@@ -97,7 +93,7 @@ const ManageCampaigns = (params) => {
                                     {loading ? <ComponentLoading /> : 'Delete'}
                                 </Button>
                             </Col>
-                        </ListGroup.Item>
+                        </ListGroup.Item>,
                     );
                     campaignIndex += 1;
                 }
@@ -142,6 +138,6 @@ const ManageCampaigns = (params) => {
             </Container>
         </Container>
     );
-}
+};
 
 export default connect(null, { openAlert })(ManageCampaigns);
