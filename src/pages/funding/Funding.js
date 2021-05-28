@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Container, Col, FormLabel } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {  PageLoading } from '../../components';
+import { PageLoading } from '../../components';
 import { openAlert } from '../../_redux/actions';
 import { getCurrentFunds, addFundsToUser } from '../../_requests';
 import { PROFILE, TIME_OUT } from '../../_constants';

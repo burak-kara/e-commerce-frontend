@@ -53,6 +53,7 @@ import {
     SM_ANALYSIS_SOLD,
     SM_ANALYSIS_SOLD_SHARE,
     SM_ANALYSIS_TOTAL_SOLD,
+    SM_CREATE_CAMPAIGN,
 } from '../_constants';
 
 const Header = loadable(() => import('../components/Header'));
@@ -61,6 +62,7 @@ const Navigation = loadable(() => import('../components/Navigation'));
 const Home = loadable(() => import('../pages/home/Home'));
 const Basket = loadable(() => import('../pages/basket/Basket'));
 const ManageCampaigns = loadable(() => import('../pages/manage_campaigns/ManageCampaigns'));
+const CreateCampaign = loadable(() => import('../pages/manage_campaigns/CreateCampaign'));
 const ManageOrders = loadable(() => import('../pages/manage_orders/ManageOrders'));
 const OrderStatus = loadable(() => import('../pages/manage_orders/OrderStatus'));
 const Items = loadable(() => import('../pages/manage_products/Items'));
@@ -143,6 +145,7 @@ const Routes = () => {
                 <SalesManagerRoute exact path={SM_ORDERS} component={ManageOrders} />
                 <SalesManagerRoute exact path={SM_ORDER_STATUS} component={OrderStatus} />
                 <SalesManagerRoute exact path={SM_CAMPAIGNS} component={ManageCampaigns} />
+                <SalesManagerRoute exact path={SM_CREATE_CAMPAIGN} component={CreateCampaign} />
                 <SalesManagerRoute exact path={SM_ANALYSIS} component={SalesAnalysis} />
                 <SalesManagerRoute
                     exact
