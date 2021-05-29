@@ -19,8 +19,8 @@ import {
     SEARCH,
     ORDER_STATUS,
     SM_ANALYSIS,
-    ADMIN,
-} from '../_constants';
+    ADMIN, FUNDING
+} from "../_constants";
 import { Account, BasketIcon, DropDown, Search } from '../_utilities/icons';
 import { openAlert } from '../_redux/actions';
 import { withFirebase } from '../_firebase';
@@ -134,6 +134,7 @@ const Header = (props) => {
     };
 
     const CommonMenu = () => (
+        <>
         <NavDropdown.Item
             key="user-profile"
             className="menu-btn"
@@ -145,6 +146,18 @@ const Header = (props) => {
         >
             Profile
         </NavDropdown.Item>
+            <NavDropdown.Item
+                key="user-profile"
+                className="menu-btn"
+                onClick={() => {
+                    history.push({
+                        pathname: FUNDING,
+                    });
+                }}
+            >
+                My Wallet
+            </NavDropdown.Item>
+        </>
     );
 
     const CustomerMenu = () => (
