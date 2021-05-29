@@ -156,7 +156,7 @@ const Home = (params) => {
         if (items.length !== 0) {
             items.forEach((item) => {
                 itemsCol.push(
-                    <Col xs={12} md={6} xl={4} className="col" key={item.id}>
+                    <Col xs={12} md={6} lg={6} xl={4} className="col card-col" key={item.id}>
                         <ProductCard
                             handleUpper={handleUpper}
                             handleBottom={handleBottom}

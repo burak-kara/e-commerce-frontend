@@ -251,7 +251,7 @@ const Products = (params) => {
         if (items.length !== 0) {
             items.forEach((item) => {
                 itemsCol.push(
-                    <Col xs={12} md={6} xl={4} className="col" key={item.id}>
+                    <Col xs={12} md={6} lg={6} xl={4} className="col card-col" key={item.id}>
                         <ProductCard
                             handleUpper={handleUpper}
                             handleBottom={handleBottom}
@@ -289,10 +289,12 @@ const Products = (params) => {
         <>
             <Container fluid className="pm-item-list">
                 <Row>
-                    <Col xl={2}>{leftAdd || <ComponentLoading />}</Col>
+                    <Col md={1} xl={2}>
+                        {leftAdd || <ComponentLoading />}
+                    </Col>
                     <Col xl={8}>
                         <Row className="filter-row row">
-                            <Col xs={6} xl={2} className="mb-2 mb-xl-0">
+                            <Col xs={6} lg={3} xl={2} className="mb-2 mb-xl-0 filter-col">
                                 <Form.Label>Sort Products</Form.Label>
                                 <Form.Control
                                     as="select"
@@ -319,7 +321,7 @@ const Products = (params) => {
                                     </option>
                                 </Form.Control>
                             </Col>
-                            <Col xs={6} xl={2} className="mb-3 mb-xl-0">
+                            <Col xs={6} lg={3} xl={2} className="mb-3 mb-xl-0 filter-col">
                                 <Form.Label>Brands</Form.Label>
                                 <Form.Control
                                     as="select"
@@ -332,7 +334,12 @@ const Products = (params) => {
                                     <BrandOptions />
                                 </Form.Control>
                             </Col>
-                            <Col xs={12} xl={3} className="price-col mb-3 mb-xl-0">
+                            <Col
+                                xs={12}
+                                lg={3}
+                                xl={3}
+                                className="price-col mb-3 mb-xl-0 filter-col"
+                            >
                                 <Form.Label>Price</Form.Label>
                                 <Row className="inner-price-row">
                                     <Col xs={6} className="min-col">
@@ -361,7 +368,12 @@ const Products = (params) => {
                                     </Col>
                                 </Row>
                             </Col>
-                            <Col xs={6} xl={2} className="rating-col mb-3 mb-xl-0">
+                            <Col
+                                xs={6}
+                                lg={3}
+                                xl={3}
+                                className="rating-col mb-3 mb-xl-0 filter-col"
+                            >
                                 <Form.Label>Rating</Form.Label>
                                 <Row>
                                     <Col>
@@ -374,7 +386,7 @@ const Products = (params) => {
                                     </Col>
                                 </Row>
                             </Col>
-                            <Col xs={6} xl={3} className="btn-col mb-2 mb-xl-0">
+                            <Col xs={6} lg={12} xl={2} className="btn-col mb-2 mb-xl-0 filter-col">
                                 <button
                                     className="btn btn-block"
                                     name="Filter"
