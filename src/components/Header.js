@@ -19,8 +19,8 @@ import {
     SEARCH,
     ORDER_STATUS,
     SM_ANALYSIS,
-    ADMIN,
-} from '../_constants';
+    ADMIN, FUNDING
+} from "../_constants";
 import { Account, BasketIcon, DropDown, Search } from '../_utilities/icons';
 import { openAlert } from '../_redux/actions';
 import { withFirebase } from '../_firebase';
@@ -128,12 +128,13 @@ const Header = (props) => {
             user_type = 'Sales Manager';
         }
         if (user.is_admin) {
-            user_type = 'Admin';
+            user_type = 'User Manager';
         }
         return <div className="banner">{user_type}</div>;
     };
 
-    const RenderCommonMenu = () => (
+    const CommonMenu = () => (
+        <>
         <NavDropdown.Item
             key="user-profile"
             className="menu-btn"
@@ -145,9 +146,21 @@ const Header = (props) => {
         >
             Profile
         </NavDropdown.Item>
+            <NavDropdown.Item
+                key="user-profile"
+                className="menu-btn"
+                onClick={() => {
+                    history.push({
+                        pathname: FUNDING,
+                    });
+                }}
+            >
+                My Wallet
+            </NavDropdown.Item>
+        </>
     );
 
-    const RenderCustomerMenu = () => (
+    const CustomerMenu = () => (
         <NavDropdown.Item
             key="prev-orders"
             className="menu-btn"
@@ -161,7 +174,7 @@ const Header = (props) => {
         </NavDropdown.Item>
     );
 
-    const RenderProductManagerMenu = () => (
+    const ProductManagerMenu = () => (
         <>
             <NavDropdown.Item
                 key="manage-products"
@@ -188,7 +201,7 @@ const Header = (props) => {
         </>
     );
 
-    const RenderSalesManagerMenu = () => (
+    const SalesManagerMenu = () => (
         <>
             <NavDropdown.Item
                 key="manage-campaigns"
@@ -226,36 +239,34 @@ const Header = (props) => {
         </>
     );
 
-    const RenderAdminMenu = () => (
-        <>
-            <NavDropdown.Item
-                key="admin-console"
-                className="menu-btn"
-                onClick={() => {
-                    history.push({
-                        pathname: ADMIN,
-                    });
-                }}
-            >
-                Admin Console
-            </NavDropdown.Item>
-        </>
+    const AdminMenu = () => (
+        <NavDropdown.Item
+            key="admin-console"
+            className="menu-btn"
+            onClick={() => {
+                history.push({
+                    pathname: ADMIN,
+                });
+            }}
+        >
+            Admin Console
+        </NavDropdown.Item>
     );
 
-    const renderMenu = () => {
+    const Menu = () => {
         if (user && user.first_name) {
-            const renders = [<RenderCommonMenu key="0" />];
+            const renders = [<CommonMenu key="0" />];
             if (user.is_product_manager) {
-                renders.push(<RenderProductManagerMenu key="2" />);
+                renders.push(<ProductManagerMenu key="2" />);
             }
             if (user.is_sales_manager) {
-                renders.push(<RenderSalesManagerMenu key="3" />);
+                renders.push(<SalesManagerMenu key="3" />);
             }
             if (!user.is_product_manager && !user.is_sales_manager && !user.is_admin) {
-                renders.push(<RenderCustomerMenu key="1" />);
+                renders.push(<CustomerMenu key="1" />);
             }
             if (user.is_admin) {
-                renders.push(<RenderAdminMenu key="4" />);
+                renders.push(<AdminMenu key="4" />);
             }
             renders.push(
                 <>
@@ -304,7 +315,7 @@ const Header = (props) => {
         );
     };
 
-    const renderBasketButton = () => (
+    const BasketButton = () => (
         <button
             className="btn b-btn"
             name="Go to Basket"
@@ -383,13 +394,15 @@ const Header = (props) => {
                                 id="collasible-nav-dropdown"
                                 className="a-btn"
                             >
-                                {renderMenu()}
+                                <Menu />
                             </NavDropdown>
                         </Nav>
                         <Nav className="ml-auto">
                             <Nav.Item key="basket" className="b-item">
                                 {basket.itemCount === 0 ? (
-                                    <div className="badge">{renderBasketButton()}</div>
+                                    <div className="badge">
+                                        <BasketButton />
+                                    </div>
                                 ) : (
                                     <Badge
                                         max={10}
@@ -398,7 +411,7 @@ const Header = (props) => {
                                         color="primary"
                                         overlap="circle"
                                     >
-                                        {renderBasketButton()}
+                                        <BasketButton />
                                     </Badge>
                                 )}
                             </Nav.Item>
