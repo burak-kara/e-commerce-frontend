@@ -1,0 +1,62 @@
+.admin-console-page {
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    font-family: -apple-system, 'SFProText', system-ui, Helvetica Neue, sans-serif;
+    color: $a-btn;
+    font-weight: 700;
+
+    .form-container {
+        padding: 10px 5px;
+        width: 60%;
+        border-radius: 20px;
+        background-color: $header-bg;
+        box-shadow: 0 0 2px 0 $header-bg-shadow;
+
+        .headers {
+            margin: 0;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.125);
+
+            .col {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .radio-cols {
+                display: flex;
+                justify-content: center;
+            }
+        }
+
+        .list-item {
+            border-radius: 10px !important;
+            margin-bottom: 10px;
+            padding: 5px 0;
+            font-weight: 500;
+
+            .col {
+                display: flex;
+                justify-content: center;
+            }
+
+            .radio-cols {
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .admin-console-page {
+        .form-container {
+            width: 100%;
+        }
+
+        .radio-cols {
+            display: flex;
+            align-items: center;
+        }
+    }
+}

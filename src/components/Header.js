@@ -19,7 +19,8 @@ import {
     SEARCH,
     ORDER_STATUS,
     SM_ANALYSIS,
-} from '../_constants';
+    ADMIN, FUNDING
+} from "../_constants";
 import { Account, BasketIcon, DropDown, Search } from '../_utilities/icons';
 import { openAlert } from '../_redux/actions';
 import { withFirebase } from '../_firebase';
@@ -31,42 +32,92 @@ const Header = (props) => {
     const { user } = useStore().getState();
     const [search, setSearch] = useState('');
 
-    setInterval(() => {
-        const database = firebase.user_db(user.pk);
-        if (!user.is_product_manager && !user.is_sales_manager) {
-            database.once('child_changed', (response) => {
-                const { order_id, order_status, order_address } = response.val();
-                if (
-                    Notification.permission === 'granted' &&
-                    (order_status >= 0 || order_address !== '')
-                ) {
-                    navigator.serviceWorker.ready.then((registration) => {
-                        registration.showNotification('OzU E-Commerce', {
-                            body:
-                                `Your order with the ID of ${order_id} has been updated!\n` +
-                                `${ORDER_STATUS[order_status]}\n` +
-                                `${order_address}`,
-                            image: logo,
-                            icon: favicon,
-                            tag: order_id,
-                            requireInteraction: true,
-                            vibrate: [200, 100, 200],
-                        });
+    const database = firebase.user_db(user.pk);
+    if (!user.is_product_manager && !user.is_sales_manager) {
+        database.on('child_changed', (response) => {
+            const { order_id, order_status, order_address } = response.val();
+            if (
+                Notification.permission === 'granted' &&
+                (order_status >= 0 || order_address !== '')
+            ) {
+                navigator.serviceWorker.ready.then((registration) => {
+                    registration.showNotification('OzU E-Commerce', {
+                        body:
+                            `Your order with the ID of ${order_id} has been updated!\n` +
+                            `${ORDER_STATUS[order_status]}\n` +
+                            `${order_address}`,
+                        image: logo,
+                        icon: favicon,
+                        tag: order_id,
+                        requireInteraction: true,
+                        vibrate: [200, 100, 200],
                     });
-                } else if (Notification.permission !== 'granted') {
-                    props.openAlert({
-                        message: 'Please allow us to send you notifications!',
-                        severity: 'error',
+                });
+            } else if (Notification.permission !== 'granted') {
+                props.openAlert({
+                    message: 'Please allow us to send you notifications!',
+                    severity: 'error',
+                });
+            } else {
+                props.openAlert({
+                    message: 'Something went wrong with the push notifications!',
+                    severity: 'error',
+                });
+            }
+        });
+    }
+
+    const userCampiagnDatabaseRef = firebase.campaign_db_for_users();
+    if (!user.is_product_manager && !user.is_sales_manager) {
+        userCampiagnDatabaseRef.on('child_changed', (response) => {
+            const {
+                id,
+                valid_until,
+                campaign_x,
+                campaign_y,
+                campaign_amount,
+                notified_users,
+            } = response.val();
+            if (
+                Notification.permission === 'granted' &&
+                (campaign_x >= 1 || campaign_y >= 1) &&
+                !notified_users.includes(user.pk)
+            ) {
+                navigator.serviceWorker.ready.then((registration) => {
+                    registration.showNotification('OzU E-Commerce', {
+                        body:
+                            `Buy ${campaign_x} get ${campaign_y} campaign has begun!\n` +
+                            `With a hefty ${campaign_amount}% discount!\n` +
+                            `This campaign is valid until ${valid_until}`,
+                        image: logo,
+                        icon: favicon,
+                        tag: id,
+                        requireInteraction: true,
+                        vibrate: [200, 100, 200],
                     });
-                } else {
-                    props.openAlert({
-                        message: 'Something went wrong with the push notifications!',
-                        severity: 'error',
-                    });
-                }
-            });
-        }
-    }, 1000);
+                });
+                const campaignUserDatabaseUpdateRef = firebase.campaign_db('new_campaign');
+                campaignUserDatabaseUpdateRef.set({
+                    id,
+                    valid_until,
+                    campaign_x,
+                    campaign_y,
+                    campaign_amount,
+                    notified_users: `${notified_users}-${user.pk}`,
+                });
+            } else if (Notification.permission !== 'granted') {
+                props.openAlert({
+                    message: 'Please allow us to send you notifications!',
+                    severity: 'error',
+                });
+            } else {
+                props.openAlert({
+                    message: 'Something went wrong with the push notifications!',
+                    severity: 'error',
+                });
+            }
+        });
+    }
 
     const Banner = () => {
         let user_type = '';
@@ -76,10 +127,14 @@ const Header = (props) => {
         if (user.is_sales_manager) {
             user_type = 'Sales Manager';
         }
+        if (user.is_admin) {
+            user_type = 'User Manager';
+        }
         return <div className="banner">{user_type}</div>;
     };
 
-    const RenderCommonMenu = () => (
+    const CommonMenu = () => (
+        <>
         <NavDropdown.Item
             key="user-profile"
             className="menu-btn"
@@ -91,9 +146,21 @@ const Header = (props) => {
         >
             Profile
         </NavDropdown.Item>
+            <NavDropdown.Item
+                key="user-profile"
+                className="menu-btn"
+                onClick={() => {
+                    history.push({
+                        pathname: FUNDING,
+                    });
+                }}
+            >
+                My Wallet
+            </NavDropdown.Item>
+        </>
     );
 
-    const RenderCustomerMenu = () => (
+    const CustomerMenu = () => (
         <NavDropdown.Item
             key="prev-orders"
             className="menu-btn"
@@ -107,7 +174,7 @@ const Header = (props) => {
         </NavDropdown.Item>
     );
 
-    const RenderProductManagerMenu = () => (
+    const ProductManagerMenu = () => (
         <>
             <NavDropdown.Item
                 key="manage-products"
@@ -134,7 +201,7 @@ const Header = (props) => {
         </>
     );
 
-    const RenderSalesManagerMenu = () => (
+    const SalesManagerMenu = () => (
         <>
             <NavDropdown.Item
                 key="manage-campaigns"
@@ -159,7 +226,7 @@ const Header = (props) => {
                 Manage Orders
             </NavDropdown.Item>
             <NavDropdown.Item
-                key="manage-orders"
+                key="analysis"
                 className="menu-btn"
                 onClick={() => {
                     history.push({
@@ -172,17 +239,34 @@ const Header = (props) => {
         </>
     );
 
-    const renderMenu = () => {
+    const AdminMenu = () => (
+        <NavDropdown.Item
+            key="admin-console"
+            className="menu-btn"
+            onClick={() => {
+                history.push({
+                    pathname: ADMIN,
+                });
+            }}
+        >
+            Admin Console
+        </NavDropdown.Item>
+    );
+
+    const Menu = () => {
         if (user && user.first_name) {
-            const renders = [<RenderCommonMenu key="0" />];
+            const renders = [<CommonMenu key="0" />];
             if (user.is_product_manager) {
-                renders.push(<RenderProductManagerMenu key="2" />);
+                renders.push(<ProductManagerMenu key="2" />);
             }
             if (user.is_sales_manager) {
-                renders.push(<RenderSalesManagerMenu key="3" />);
+                renders.push(<SalesManagerMenu key="3" />);
             }
-            if (!user.is_product_manager && !user.is_sales_manager) {
-                renders.push(<RenderCustomerMenu key="1" />);
+            if (!user.is_product_manager && !user.is_sales_manager && !user.is_admin) {
+                renders.push(<CustomerMenu key="1" />);
+            }
+            if (user.is_admin) {
+                renders.push(<AdminMenu key="4" />);
             }
             renders.push(
                 <>
@@ -231,7 +315,7 @@ const Header = (props) => {
         );
     };
 
-    const renderBasketButton = () => (
+    const BasketButton = () => (
         <button
             className="btn b-btn"
             name="Go to Basket"
@@ -310,13 +394,15 @@ const Header = (props) => {
                                 id="collasible-nav-dropdown"
                                 className="a-btn"
                             >
-                                {renderMenu()}
+                                <Menu />
                             </NavDropdown>
                         </Nav>
                         <Nav className="ml-auto">
                             <Nav.Item key="basket" className="b-item">
                                 {basket.itemCount === 0 ? (
-                                    <div className="badge">{renderBasketButton()}</div>
+                                    <div className="badge">
+                                        <BasketButton />
+                                    </div>
                                 ) : (
                                     <Badge
                                         max={10}
@@ -325,7 +411,7 @@ const Header = (props) => {
                                         color="primary"
                                         overlap="circle"
                                     >
-                                        {renderBasketButton()}
+                                        <BasketButton />
                                     </Badge>
                                 )}
                             </Nav.Item>

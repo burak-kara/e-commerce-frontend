@@ -3,6 +3,7 @@ import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import loadable from '@loadable/component';
 import ProductManagerRoute from './ProductManagerRoute';
 import CustomerRoute from './CustomerRoute';
+import AdminRoute from './AdminRoute';
 import AuthenticatedRoute from './AuthenticatedRoute';
 import UnAuthenticatedRoute from './UnAuthenticatedRoute';
 import SalesManagerRoute from './SalesManagerRoute';
@@ -20,10 +21,12 @@ import {
     BASKET,
     LANDING,
     ORDERS,
+    ADMIN,
     P_M_ITEMS,
     P_M_NEW_ITEM,
     P_M_EDIT_ITEM,
     PROFILE,
+    FUNDING,
     SIGN_IN,
     SIGN_OUT,
     SIGN_UP,
@@ -50,6 +53,7 @@ import {
     SM_ANALYSIS_SOLD,
     SM_ANALYSIS_SOLD_SHARE,
     SM_ANALYSIS_TOTAL_SOLD,
+    SM_CREATE_CAMPAIGN,
 } from '../_constants';
 
 const Header = loadable(() => import('../components/Header'));
@@ -58,6 +62,7 @@ const Navigation = loadable(() => import('../components/Navigation'));
 const Home = loadable(() => import('../pages/home/Home'));
 const Basket = loadable(() => import('../pages/basket/Basket'));
 const ManageCampaigns = loadable(() => import('../pages/manage_campaigns/ManageCampaigns'));
+const CreateCampaign = loadable(() => import('../pages/manage_campaigns/CreateCampaign'));
 const ManageOrders = loadable(() => import('../pages/manage_orders/ManageOrders'));
 const OrderStatus = loadable(() => import('../pages/manage_orders/OrderStatus'));
 const Items = loadable(() => import('../pages/manage_products/Items'));
@@ -69,6 +74,8 @@ const ProductDetail = loadable(() => import('../pages/products/ProductDetail'));
 const Products = loadable(() => import('../pages/products/Products'));
 const Profile = loadable(() => import('../pages/profile/Profile'));
 const SalesAnalysis = loadable(() => import('../pages/sales_analysis/SalesAnalysis'));
+const Admin = loadable(() => import('../pages/admin/Admin'));
+const Funding = loadable(() => import('../pages/funding/Funding'));
 
 const Signin = loadable(() => import('../pages/signin/Signin'));
 const Signup = loadable(() => import('../pages/signup/Signup'));
@@ -119,10 +126,14 @@ const Routes = () => {
                 {/* Common Routes for logged in users */}
                 <AuthenticatedRoute exact path={PROFILE} component={Profile} />
                 <AuthenticatedRoute exact path={SIGN_OUT} component={Signout} />
+                <AuthenticatedRoute exact path={FUNDING} component={Funding} />
 
                 {/* Routes for customers */}
                 <CustomerRoute exact path={ORDERS} component={Orders} />
                 <CustomerRoute exact path={ORDER_DETAIL} component={OrderDetail} />
+
+                {/* Routes for admins */}
+                <AdminRoute exact path={ADMIN} component={Admin} />
 
                 {/* Routes for product managers */}
                 <ProductManagerRoute exact path={P_M_ITEMS} component={Items} />
@@ -134,6 +145,7 @@ const Routes = () => {
                 <SalesManagerRoute exact path={SM_ORDERS} component={ManageOrders} />
                 <SalesManagerRoute exact path={SM_ORDER_STATUS} component={OrderStatus} />
                 <SalesManagerRoute exact path={SM_CAMPAIGNS} component={ManageCampaigns} />
+                <SalesManagerRoute exact path={SM_CREATE_CAMPAIGN} component={CreateCampaign} />
                 <SalesManagerRoute exact path={SM_ANALYSIS} component={SalesAnalysis} />
                 <SalesManagerRoute
                     exact

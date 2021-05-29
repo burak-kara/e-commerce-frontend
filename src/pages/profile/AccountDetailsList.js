@@ -4,10 +4,10 @@ import { connect, useStore } from 'react-redux';
 import { Form, Col, InputGroup, ListGroup, NavDropdown } from 'react-bootstrap';
 import { QRCode } from '@progress/kendo-barcodes-react-wrapper';
 import { ComponentLoading, UserAddresses } from '../../components';
-import { updateUserInformation, changePassword, getUserDetail, getQRLink } from '../../_requests';
+import { updateCurrentUser, changePassword, getUserDetail, getQRLink } from '../../_requests';
 import { openAlert, setUser, setUserDetail } from '../../_redux/actions';
 import { Hide, Show } from '../../_utilities/icons';
-import { noneError, passwordRegex, PROFILE, TIME_OUT } from '../../_constants';
+import { noneError, passwordRegex, PROFILE, TIME_OUT, FUNDING } from '../../_constants';
 
 const AccountDetailsList = (params) => {
     const history = useHistory();
@@ -159,7 +159,7 @@ const AccountDetailsList = (params) => {
         //  Use BE to update PW instead of logging it here.
         if (!checkAnyError(errors)) {
             setLoading(true);
-            updateUserInformation(newUserInfo)
+            updateCurrentUser(newUserInfo)
                 .then((response) => {
                     params.openAlert({
                         message: 'Account information successfully updated.',
@@ -260,7 +260,7 @@ const AccountDetailsList = (params) => {
 
         //  Use BE to update PW instead of logging it here.
         setLoading(true);
-        updateUserInformation(newUserInfo)
+        updateCurrentUser(newUserInfo)
             .then((response) => {
                 params.openAlert({
                     message: 'Account address information successfully updated.',
@@ -360,6 +360,14 @@ const AccountDetailsList = (params) => {
         ) : (
             <ListAddresses />
         );
+
+    const redirectToFunding = () => {
+        setTimeout(() => {
+            history.push({
+                pathname: FUNDING,
+            });
+        }, TIME_OUT);
+    };
 
     return (
         <Form
@@ -552,6 +560,11 @@ const AccountDetailsList = (params) => {
             <Form.Row className="buttons">
                 <button className="btn save-btn" type="button" onClick={onClickUpdatePassword}>
                     {loading ? <ComponentLoading /> : 'Update'}
+                </button>
+            </Form.Row>
+            <Form.Row className="buttons">
+                <button type="button" onClick={redirectToFunding} className="btn funding-btn">
+                    Funding
                 </button>
             </Form.Row>
         </Form>

@@ -1,5 +1,6 @@
 import Profile from './profile/Profile';
 import Orders from './previous_orders/Orders';
+import Admin from './admin/Admin';
 import OrderDetail from './previous_orders/OrderDetail';
 import Signup from './signup/Signup';
 import Signout from './signout/Signout';
@@ -22,10 +23,12 @@ import TotalSoldByDay from './sales_analysis/TotalSoldByDay';
 import NotFound from './commons/NotFound';
 import UnAuthorized from './commons/UnAuthorized';
 import UnAuthenticated from './commons/UnAuthenticated';
+import CreateCampaign from './manage_campaigns/CreateCampaign';
 
 export {
     Profile,
     Orders,
+    Admin,
     OrderDetail,
     Signup,
     Signout,
@@ -48,4 +51,5 @@ export {
     UnAuthenticated,
     UnAuthorized,
     NotFound,
+    CreateCampaign,
 };

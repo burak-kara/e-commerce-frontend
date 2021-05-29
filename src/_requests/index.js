@@ -66,14 +66,25 @@ const getUser = (tt) => {
     });
 };
 
+const getAllUsers = () =>
+    getRequest({
+        path: `${API}getAllUsers/`,
+    });
+
 const getUserDetail = () =>
     getRequest({
         path: `${API}user/`,
     });
 
-const updateUserInformation = (data) =>
+const updateCurrentUser = (data) =>
     putRequest({
         path: `${API}user/`,
+        data,
+    });
+
+const updateUserByID = (data, id) =>
+    putRequest({
+        path: `${API}admin-user-update/${id}/`,
         data,
     });
 
@@ -233,13 +244,47 @@ const getStats = () =>
         path: `${API}stats/`,
     });
 
+const getAd = () =>
+    postRequest({
+        path: `${API}recommended-adds/`,
+    });
+
+const getAllCampaigns = () =>
+    getRequest({
+        path: `${API}campaign/`,
+    });
+
+const createNewCampaign = (data) =>
+    postRequest({
+        path: `${API}campaign/`,
+        data,
+    });
+
+const deleteCampaignByID = (id) =>
+    deleteRequest({
+        path: `${API}campaign/${id}/`,
+    });
+
+const getCurrentFunds = () =>
+    getRequest({
+        path: `${API}funding/`,
+    });
+
+const addFundsToUser = (data) =>
+    postRequest({
+        path: `${API}funding/`,
+        data,
+    });
+
 export {
     register,
     login,
     logout,
     getUser,
+    getAllUsers,
     getUserDetail,
-    updateUserInformation,
+    updateCurrentUser,
+    updateUserByID,
     changePassword,
     getItems,
     getItemById,
@@ -266,4 +311,10 @@ export {
     verify2FA,
     retrieveRating,
     getStats,
+    getAd,
+    getAllCampaigns,
+    createNewCampaign,
+    deleteCampaignByID,
+    getCurrentFunds,
+    addFundsToUser,
 };

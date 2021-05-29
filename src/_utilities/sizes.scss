@@ -1,3 +1,4 @@
 $header-size: 64px;
+$banner-size: 24px;
 $nav-size: 56px;
-$total-header: calc(#{$header-size} + #{$nav-size});
+$total-header: calc(#{$header-size} + #{$nav-size} + #{$banner-size});
