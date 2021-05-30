@@ -111,7 +111,7 @@ const Header = (props) => {
                     message: 'Please allow us to send you notifications!',
                     severity: 'error',
                 });
-            } else {
+            } else if (!notified_users.includes(user.pk)) {
                 props.openAlert({
                     message: 'Something went wrong with the push notifications!',
                     severity: 'error',
