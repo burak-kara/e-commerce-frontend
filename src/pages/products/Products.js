@@ -35,16 +35,11 @@ const Products = (params) => {
     const [brand, setBrand] = useState('');
     const [ordering, setOrdering] = useState('');
     const [search, setSearch] = useState('');
+    const [rating, setRating] = useState('');
+    const [priceStart, setPriceStart] = useState('');
+    const [priceEnd, setPriceEnd] = useState('');
     const [leftAdd, setLeftAdd] = useState();
     const [rightAdd, setRightAdd] = useState();
-    const [rating, setRating] = useState(0);
-    // TODO  init with data from BE
-    // TODO delete
-    // eslint-disable-next-line no-unused-vars
-    const [priceStart, setPriceStart] = useState(0);
-    // TODO delete
-    // eslint-disable-next-line no-unused-vars
-    const [priceEnd, setPriceEnd] = useState(100);
 
     const fetchLeftAdd = () => {
         getAd()
@@ -147,6 +142,9 @@ const Products = (params) => {
             setBrand('');
             setOrdering('');
             setSearch('');
+            setRating('');
+            setPriceEnd('');
+            setPriceStart('');
             fetchByCategory(cat);
         } else if (params && params.location) {
             setLoading(true);
@@ -155,11 +153,22 @@ const Products = (params) => {
             setCategory('');
             setBrand('');
             setOrdering('');
+            setRating('');
+            setPriceEnd('');
+            setPriceStart('');
         }
     }, [location]);
 
     const handleFilter = () => {
-        const data = { category, brand, ordering, search };
+        const data = {
+            category,
+            brand,
+            ordering,
+            search,
+            rating_gt: rating,
+            price_gt: priceStart,
+            price_lt: priceEnd,
+        };
         setLoading(true);
         getItemsByCategoryBrandSortSearch(data)
             .then((response) => {
@@ -340,7 +349,7 @@ const Products = (params) => {
                                 xl={3}
                                 className="price-col mb-3 mb-xl-0 filter-col"
                             >
-                                <Form.Label>Price</Form.Label>
+                                <Form.Label>Price Range</Form.Label>
                                 <Row className="inner-price-row">
                                     <Col xs={6} className="min-col">
                                         <Form.Control
@@ -349,6 +358,7 @@ const Products = (params) => {
                                             name="minPrice"
                                             type="number"
                                             placeholder="Min"
+                                            value={priceStart}
                                             onChange={(e) => {
                                                 setPriceStart(e.target.value);
                                             }}
@@ -361,6 +371,7 @@ const Products = (params) => {
                                             name="maxPrice"
                                             type="number"
                                             placeholder="Max"
+                                            value={priceEnd}
                                             onChange={(e) => {
                                                 setPriceEnd(e.target.value);
                                             }}
@@ -374,13 +385,13 @@ const Products = (params) => {
                                 xl={3}
                                 className="rating-col mb-3 mb-xl-0 filter-col"
                             >
-                                <Form.Label>Rating</Form.Label>
+                                <Form.Label>Minimum Rating</Form.Label>
                                 <Row>
                                     <Col>
                                         <Rating
                                             value={rating}
                                             onChange={(e) => {
-                                                setRating(e.target.value);
+                                                setRating(e.value);
                                             }}
                                         />
                                     </Col>

@@ -117,13 +117,16 @@ const getItemsBySearch = (search) =>
     });
 
 const getItemsByCategoryBrandSortSearch = (data) => {
-    const { category, brand, ordering, search } = data;
+    const { category, brand, ordering, search, rating_gt, price_gt, price_lt } = data;
     const cat = category.replace(/-/g, '');
     let path = `${API}items/search?`;
     path += cat ? `category=${cat}&` : '';
     path += search ? `search=${search}&` : '';
     path += brand ? `brand=${brand}&` : '';
     path += ordering ? `ordering=${ordering}&` : '';
+    path += rating_gt ? `rating_gt=${rating_gt}&` : '';
+    path += price_gt ? `price_gt=${price_gt}&` : '';
+    path += price_lt ? `price_lt=${price_lt}&` : '';
     return getRequest({
         path,
     });
