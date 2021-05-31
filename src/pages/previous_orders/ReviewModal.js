@@ -1,8 +1,9 @@
 import React from 'react';
 import { Modal, Form, Col } from 'react-bootstrap';
+import { ComponentLoading } from '../../components';
 
 const ReviewModal = (props) => {
-    const { show, onHide, onReview, onChange, rating, retrieveRating } = props;
+    const { show, onHide, onReview, onChange, rating, retrieveRating, loading } = props;
 
     return (
         <Modal
@@ -76,14 +77,16 @@ const ReviewModal = (props) => {
                     name="Review"
                     type="button"
                     onClick={retrieveRating}
+                    disabled={loading}
                 >
-                    Retrieve Rating
+                    {loading ? <ComponentLoading /> : 'Retrieve Rating'}
                 </button>
                 <button
                     className="btn mr-2 review-btn"
                     name="Review"
                     type="button"
                     onClick={onReview}
+                    disabled={loading}
                 >
                     Review
                 </button>
