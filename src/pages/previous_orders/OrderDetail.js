@@ -25,6 +25,7 @@ const OrderDetail = (props) => {
     const [orderItems, setOrderItems] = useState([]);
     const [order, setOrder] = useState();
     const [loading, setLoading] = useState(false);
+    const [retrieveLoading, setRetrieveLoading] = useState(false);
     const [itemCounts, setItemCounts] = useState(false);
     const [modal, setModal] = useState(false);
     const [form, setForm] = useState(initialForm);
@@ -69,6 +70,7 @@ const OrderDetail = (props) => {
 
     const onRetrieveRating = () => {
         const { comment } = form;
+        setRetrieveLoading(true);
         retrieveRating({ comment })
             .then((response) => {
                 setForm({
@@ -76,12 +78,14 @@ const OrderDetail = (props) => {
                     rating: response.data.retrieved_rating,
                 });
                 setRating(response.data.retrieved_rating);
+                setRetrieveLoading(false);
             })
             .catch(() => {
                 props.openAlert({
-                    message: 'Error while getting rating!',
+                    message: 'Error while retrieving rating!',
                     severity: 'error',
                 });
+                setRetrieveLoading(false);
             });
     };
 
@@ -302,6 +306,7 @@ const OrderDetail = (props) => {
                 onReview={onConfirm}
                 onChange={onChange}
                 retrieveRating={onRetrieveRating}
+                loading={retrieveLoading}
             />
         </>
     );
