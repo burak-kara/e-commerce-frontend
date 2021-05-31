@@ -67,18 +67,18 @@ const Basket = (props) => {
         const body = { items: basket.items, delivery_address: address };
         props.removeBasket();
         newOrder(body)
-            .then((response) => {
-                console.log(response);
-                console.log(response.data);
+            .then(() => {
                 props.openAlert({
-                    message: 'Order is created',
+                    message: 'Order is successfully created!',
                     severity: 'success',
                 });
                 setModal(false);
             })
             .catch((error) => {
-                console.log(error.data);
-                if (error.status === 400 && error.data.total_price > error.data.wallet_balance) {
+                if (
+                    error.response.status === 400 &&
+                    error.response.data.total_price > error.response.data.wallet_balance
+                ) {
                     setModal(false);
                     props.openAlert({
                         message: 'Insufficient funds in your wallet! Unable to place the order!',
@@ -87,7 +87,7 @@ const Basket = (props) => {
                 } else {
                     setModal(false);
                     props.openAlert({
-                        message: 'Error during checkout',
+                        message: 'Error during checkout!',
                         severity: 'error',
                     });
                 }
