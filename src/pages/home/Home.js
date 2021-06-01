@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
 import { Container, Row, Col /* Form */ } from 'react-bootstrap';
 import { ComponentLoading, DiscardModal, PageLoading, ProductCard } from '../../components';
-import { deleteItem, getItems, getAd } from '../../_requests';
+import { deleteItem, getItems, getAd, getRecommendedProducts, getItemById } from '../../_requests';
 import { openAlert, addToBasket } from '../../_redux/actions';
 import { P_M_EDIT_ITEM, PRODUCT_DETAIL } from '../../_constants';
 
@@ -11,6 +11,7 @@ const Home = (params) => {
     const history = useHistory();
     const { user } = useStore().getState();
     const [items, setItems] = useState();
+    const [recommendedProducts, setRecommendedProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [chosenId, setId] = useState('');
     const [confirmModal, setConfirmModal] = useState(false);
@@ -33,8 +34,36 @@ const Home = (params) => {
             });
     };
 
-    useEffect(() => {
+    const fetchRecommendedItems = async (productCount) => {
         setLoading(true);
+        const productList = [];
+        const response = await getRecommendedProducts(productCount);
+        response.data.recommended_product_ids.forEach((id) => {
+            getItemById(id)
+                .then(async (prodResponse) => {
+                    productList.push(prodResponse.data);
+                })
+                .catch(() => {
+                    params.openAlert({
+                        message: 'Error while fetching recommended products!',
+                        severity: 'error',
+                    });
+                    setLoading(false);
+                });
+        });
+        setRecommendedProducts(productList);
+        setLoading(false);
+    };
+
+    useEffect(async () => {
+        setLoading(true);
+        if (
+            user.username !== '' &&
+            !user.is_product_manager &&
+            !user.is_sales_manager &&
+            !user.is_admin
+        )
+            await fetchRecommendedItems(3);
         fetchItems();
     }, []);
 
@@ -151,8 +180,58 @@ const Home = (params) => {
         handleBottom = handleAddBasket;
     }
 
+    const RecommendedItems = () => {
+        const recommendedItemsCol = [];
+        if (
+            user.username !== '' &&
+            !user.is_admin &&
+            !user.is_product_manager &&
+            !user.is_sales_manager
+        ) {
+            recommendedItemsCol.push(
+                <Col xl={12} className="title-row">
+                    <h3 className="recommended-title">Recommended Products</h3>
+                </Col>,
+            );
+            if (recommendedProducts.length !== 0) {
+                recommendedProducts.forEach((item) => {
+                    recommendedItemsCol.push(
+                        <Col
+                            xs={12}
+                            md={6}
+                            lg={6}
+                            xl={4}
+                            className="col card-col"
+                            key={item.id}
+                        >
+                            <ProductCard
+                                handleUpper={handleUpper}
+                                handleBottom={handleBottom}
+                                handleCard={handleCard}
+                                {...item}
+                            />
+                        </Col>,
+                    );
+                });
+            }
+        }
+        return recommendedItemsCol;
+    };
+
     const Items = () => {
         const itemsCol = [];
+        if (
+            user.username !== '' &&
+            !user.is_admin &&
+            !user.is_product_manager &&
+            !user.is_sales_manager
+        ) {
+            itemsCol.push(
+                <Col xl={12} className="title-row">
+                    <h3 className="recommended-title">All Products</h3>
+                </Col>,
+            );
+        }
         if (items.length !== 0) {
             items.forEach((item) => {
                 itemsCol.push(
@@ -178,6 +257,9 @@ const Home = (params) => {
                 <Row>
                     <Col xl={2}>{leftAdd || <ComponentLoading />}</Col>
                     <Col xl={8}>
+                        <Row className="row">
+                            {recommendedProducts ? <RecommendedItems /> : null}
+                        </Row>
                         <Row className="row">{items ? <Items /> : null}</Row>
                     </Col>
                     <Col xl={2}>{rightAdd || <ComponentLoading />}</Col>

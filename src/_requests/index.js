@@ -279,6 +279,11 @@ const addFundsToUser = (data) =>
         data,
     });
 
+const getRecommendedProducts = (count) =>
+    postRequest({
+        path: `${API}get-recomended-products/${count}/`,
+    });
+
 export {
     register,
     login,
@@ -320,4 +325,5 @@ export {
     deleteCampaignByID,
     getCurrentFunds,
     addFundsToUser,
+    getRecommendedProducts,
 };
