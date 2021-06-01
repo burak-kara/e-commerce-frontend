@@ -57,7 +57,13 @@ const Home = (params) => {
 
     useEffect(async () => {
         setLoading(true);
-        if (user.username !== '') await fetchRecommendedItems(3);
+        if (
+            user.username !== '' &&
+            !user.is_product_manager &&
+            !user.is_sales_manager &&
+            !user.is_admin
+        )
+            await fetchRecommendedItems(3);
         fetchItems();
     }, []);
 
@@ -176,34 +182,58 @@ const Home = (params) => {
 
     const RecommendedItems = () => {
         const recommendedItemsCol = [];
-        let listIndex = 0;
-        if (recommendedProductList.length !== 0) {
-            recommendedProductList.forEach((recommendedProduct) => {
-                recommendedItemsCol.push(
-                    <Col
-                        xs={12}
-                        md={6}
-                        lg={6}
-                        xl={4}
-                        className="col card-col"
-                        key={`recommended-product${listIndex}`}
-                    >
-                        <ProductCard
-                            handleUpper={handleUpper}
-                            handleBottom={handleBottom}
-                            handleCard={handleCard}
-                            {...recommendedProduct}
-                        />
-                    </Col>,
-                );
-                listIndex += 1;
-            });
+        if (
+            user.username !== '' &&
+            !user.is_admin &&
+            !user.is_product_manager &&
+            !user.is_sales_manager
+        ) {
+            recommendedItemsCol.push(
+                <Col xl={12} className="title-row">
+                    <h3 className="recommended-title">Recommended Products</h3>
+                </Col>,
+            );
+            let listIndex = 0;
+            if (recommendedProductList.length !== 0) {
+                recommendedProductList.forEach((recommendedProduct) => {
+                    recommendedItemsCol.push(
+                        <Col
+                            xs={12}
+                            md={6}
+                            lg={6}
+                            xl={4}
+                            className="col card-col"
+                            key={`recommended-product${listIndex}`}
+                        >
+                            <ProductCard
+                                handleUpper={handleUpper}
+                                handleBottom={handleBottom}
+                                handleCard={handleCard}
+                                {...recommendedProduct}
+                            />
+                        </Col>,
+                    );
+                    listIndex += 1;
+                });
+            }
         }
         return recommendedItemsCol;
     };
 
     const Items = () => {
         const itemsCol = [];
+        if (
+            user.username !== '' &&
+            !user.is_admin &&
+            !user.is_product_manager &&
+            !user.is_sales_manager
+        ) {
+            itemsCol.push(
+                <Col xl={12} className="title-row">
+                    <h3 className="recommended-title">All Products</h3>
+                </Col>,
+            );
+        }
         if (items.length !== 0) {
             items.forEach((item) => {
                 itemsCol.push(
@@ -229,24 +259,10 @@ const Home = (params) => {
                 <Row>
                     <Col xl={2}>{leftAdd || <ComponentLoading />}</Col>
                     <Col xl={8}>
-                        {user.username !== '' ? (
-                            <Col xl={12}>
-                                <Row className="title-row">
-                                    <h3 className="recommended-title">Recommended Products</h3>
-                                </Row>
-                                <Row className="row">{items ? <RecommendedItems /> : null}</Row>
-                            </Col>
-                        ) : null}
-                        <Col>
-                            <Col xl={12}>
-                                <Row className="title-row">
-                                    {user.username !== '' ? (
-                                        <h3 className="recommended-title">All Products</h3>
-                                    ) : null}
-                                </Row>
-                                <Row className="row">{items ? <Items /> : null}</Row>
-                            </Col>
-                        </Col>
+                        <Row className="row">
+                            {recommendedProductList ? <RecommendedItems /> : null}
+                        </Row>
+                        <Row className="row">{items ? <Items /> : null}</Row>
                     </Col>
                     <Col xl={2}>{rightAdd || <ComponentLoading />}</Col>
                 </Row>
