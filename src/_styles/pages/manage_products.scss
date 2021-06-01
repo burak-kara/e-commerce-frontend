@@ -7,6 +7,16 @@
             display: flex;
             justify-content: center;
         }
+
+        .title-row {
+            min-width: 100%;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .recommended-title {
+            font-weight: bold;
+        }
     }
 
     .filter-row {

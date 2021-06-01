@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { connect, useStore } from 'react-redux';
 import { Container, Row, Col /* Form */ } from 'react-bootstrap';
 import { ComponentLoading, DiscardModal, PageLoading, ProductCard } from '../../components';
-import { deleteItem, getItems, getAd } from '../../_requests';
+import { deleteItem, getItems, getAd, getRecommendedProducts, getItemById } from '../../_requests';
 import { openAlert, addToBasket } from '../../_redux/actions';
 import { P_M_EDIT_ITEM, PRODUCT_DETAIL } from '../../_constants';
 
@@ -11,6 +11,7 @@ const Home = (params) => {
     const history = useHistory();
     const { user } = useStore().getState();
     const [items, setItems] = useState();
+    const [recommendedProductList, setRecommendedProductList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [chosenId, setId] = useState('');
     const [confirmModal, setConfirmModal] = useState(false);
@@ -33,8 +34,30 @@ const Home = (params) => {
             });
     };
 
-    useEffect(() => {
+    const fetchRecommendedItems = async (productCount) => {
         setLoading(true);
+        const productList = [];
+        const response = await getRecommendedProducts(productCount);
+        response.data.recommended_product_ids.forEach((id) => {
+            getItemById(id)
+                .then(async (prodResponse) => {
+                    productList.push(prodResponse.data);
+                })
+                .catch(() => {
+                    params.openAlert({
+                        message: 'Error while fetching recommended products!',
+                        severity: 'error',
+                    });
+                    setLoading(false);
+                });
+        });
+        setRecommendedProductList(productList);
+        setLoading(false);
+    };
+
+    useEffect(async () => {
+        setLoading(true);
+        if (user.username !== '') await fetchRecommendedItems(3);
         fetchItems();
     }, []);
 
@@ -151,6 +174,34 @@ const Home = (params) => {
         handleBottom = handleAddBasket;
     }
 
+    const RecommendedItems = () => {
+        const recommendedItemsCol = [];
+        let listIndex = 0;
+        if (recommendedProductList.length !== 0) {
+            recommendedProductList.forEach((recommendedProduct) => {
+                recommendedItemsCol.push(
+                    <Col
+                        xs={12}
+                        md={6}
+                        lg={6}
+                        xl={4}
+                        className="col card-col"
+                        key={`recommended-product${listIndex}`}
+                    >
+                        <ProductCard
+                            handleUpper={handleUpper}
+                            handleBottom={handleBottom}
+                            handleCard={handleCard}
+                            {...recommendedProduct}
+                        />
+                    </Col>,
+                );
+                listIndex += 1;
+            });
+        }
+        return recommendedItemsCol;
+    };
+
     const Items = () => {
         const itemsCol = [];
         if (items.length !== 0) {
@@ -178,7 +229,24 @@ const Home = (params) => {
                 <Row>
                     <Col xl={2}>{leftAdd || <ComponentLoading />}</Col>
                     <Col xl={8}>
-                        <Row className="row">{items ? <Items /> : null}</Row>
+                        {user.username !== '' ? (
+                            <Col xl={12}>
+                                <Row className="title-row">
+                                    <h3 className="recommended-title">Recommended Products</h3>
+                                </Row>
+                                <Row className="row">{items ? <RecommendedItems /> : null}</Row>
+                            </Col>
+                        ) : null}
+                        <Col>
+                            <Col xl={12}>
+                                <Row className="title-row">
+                                    {user.username !== '' ? (
+                                        <h3 className="recommended-title">All Products</h3>
+                                    ) : null}
+                                </Row>
+                                <Row className="row">{items ? <Items /> : null}</Row>
+                            </Col>
+                        </Col>
                     </Col>
                     <Col xl={2}>{rightAdd || <ComponentLoading />}</Col>
                 </Row>
