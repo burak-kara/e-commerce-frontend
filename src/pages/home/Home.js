@@ -11,7 +11,7 @@ const Home = (params) => {
     const history = useHistory();
     const { user } = useStore().getState();
     const [items, setItems] = useState();
-    const [recommendedProductList, setRecommendedProductList] = useState([]);
+    const [recommendedProducts, setRecommendedProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [chosenId, setId] = useState('');
     const [confirmModal, setConfirmModal] = useState(false);
@@ -51,7 +51,7 @@ const Home = (params) => {
                     setLoading(false);
                 });
         });
-        setRecommendedProductList(productList);
+        setRecommendedProducts(productList);
         setLoading(false);
     };
 
@@ -193,9 +193,8 @@ const Home = (params) => {
                     <h3 className="recommended-title">Recommended Products</h3>
                 </Col>,
             );
-            let listIndex = 0;
-            if (recommendedProductList.length !== 0) {
-                recommendedProductList.forEach((recommendedProduct) => {
+            if (recommendedProducts.length !== 0) {
+                recommendedProducts.forEach((item) => {
                     recommendedItemsCol.push(
                         <Col
                             xs={12}
@@ -203,17 +202,16 @@ const Home = (params) => {
                             lg={6}
                             xl={4}
                             className="col card-col"
-                            key={`recommended-product${listIndex}`}
+                            key={item.id}
                         >
                             <ProductCard
                                 handleUpper={handleUpper}
                                 handleBottom={handleBottom}
                                 handleCard={handleCard}
-                                {...recommendedProduct}
+                                {...item}
                             />
                         </Col>,
                     );
-                    listIndex += 1;
                 });
             }
         }
@@ -260,7 +258,7 @@ const Home = (params) => {
                     <Col xl={2}>{leftAdd || <ComponentLoading />}</Col>
                     <Col xl={8}>
                         <Row className="row">
-                            {recommendedProductList ? <RecommendedItems /> : null}
+                            {recommendedProducts ? <RecommendedItems /> : null}
                         </Row>
                         <Row className="row">{items ? <Items /> : null}</Row>
                     </Col>
