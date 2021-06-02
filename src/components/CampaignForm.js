@@ -6,12 +6,16 @@ import * as moment from 'moment';
 import { openAlert } from '../_redux/actions';
 
 const CampaignForm = (props) => {
-    const { index, campaign, disabled } = props;
+    const { index, campaign, disabled, createCalled } = props;
 
     const parseNewDate = (new_valid_until) => {
         const momentDate = moment(new_valid_until);
         const selectedDate = momentDate.format('yyyy-MM-DDTHH:mm:ss');
         return selectedDate;
+    };
+
+    const setCampaignName = (camp_name) => {
+        campaign.name = camp_name;
     };
 
     const setCampaignExpirationDate = (new_valid_until) => {
@@ -30,8 +34,25 @@ const CampaignForm = (props) => {
         campaign.campaign_amount = sale_amount;
     };
 
+    const setCampaignDescription = (camp_desc) => {
+        campaign.description = camp_desc;
+    };
+
     return (
         <>
+            {createCalled ? null : (
+                <Form.Group as={Col} xl={12}>
+                    <FormLabel>Campaign Name</FormLabel>
+                    <Form.Control
+                        name={`campaignName${index}`}
+                        type="text"
+                        disabled={disabled}
+                        placeholder={campaign.name}
+                        defaultValue={campaign.name}
+                        onChange={(e) => setCampaignName(e.target.value)}
+                    />
+                </Form.Group>
+            )}
             <Form.Group as={Col} xl={12}>
                 <FormLabel>Expiration Date</FormLabel>
                 <DateTimePicker
@@ -47,7 +68,7 @@ const CampaignForm = (props) => {
             </Form.Group>
             <div className="campaign-details">
                 <Form.Group as={Col} xl={6} xs={12}>
-                    <FormLabel>First Product Count</FormLabel>
+                    <FormLabel>Purchased Product Count</FormLabel>
                     <Form.Control
                         name={`campaignFirstProduct${index}`}
                         type="text"
@@ -58,7 +79,7 @@ const CampaignForm = (props) => {
                     />
                 </Form.Group>
                 <Form.Group as={Col} xl={6} xs={12}>
-                    <FormLabel>Second Product Count</FormLabel>
+                    <FormLabel>Giveaway Product Count</FormLabel>
                     <Form.Control
                         name={`campaignSecondProduct${index}`}
                         type="text"
@@ -79,6 +100,21 @@ const CampaignForm = (props) => {
                         onChange={(e) => setCampaignSaleAmount(e.target.value)}
                     />
                 </Form.Group>
+                {createCalled ? null : (
+                    <Form.Group as={Col} xl={12}>
+                        <FormLabel>Campaign Description</FormLabel>
+                        <Form.Control
+                            name={`campaignDesc${index}`}
+                            type="text"
+                            as="textarea"
+                            rows={3}
+                            disabled={disabled}
+                            placeholder={campaign.description}
+                            defaultValue={campaign.description}
+                            onChange={(e) => setCampaignDescription(e.target.value)}
+                        />
+                    </Form.Group>
+                )}
             </div>
         </>
     );

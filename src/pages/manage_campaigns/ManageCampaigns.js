@@ -104,9 +104,10 @@ const ManageCampaigns = (params) => {
 
     const Campaigns = () => <ListAllCampaigns />;
 
-    const rerouteToCreateCampaignPage = () => {
+    const rerouteToCreateCampaignPage = (data) => {
         history.push({
             pathname: SM_CREATE_CAMPAIGN,
+            data,
         });
     };
 
@@ -127,7 +128,7 @@ const ManageCampaigns = (params) => {
                                     name="CreateNewCampaigns"
                                     type="button"
                                     className="btn create-campaign-button"
-                                    onClick={() => rerouteToCreateCampaignPage()}
+                                    onClick={() => rerouteToCreateCampaignPage(true)}
                                 >
                                     {loading ? <ComponentLoading /> : 'New Campaign'}
                                 </Button>

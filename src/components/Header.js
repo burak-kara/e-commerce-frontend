@@ -150,7 +150,7 @@ const Header = (props) => {
                 Profile
             </NavDropdown.Item>
             <NavDropdown.Item
-                key="user-profile"
+                key="user-profile-funding"
                 className="menu-btn"
                 onClick={() => {
                     history.push({
