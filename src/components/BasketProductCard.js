@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Container } from 'react-bootstrap';
 import { logo } from '../_assets';
-import { Minus, Plus, Delete, Favorite } from '../_utilities/icons';
+import { Minus, Plus, Delete } from '../_utilities/icons';
 import { addToBasket, openAlert, deleteFromBasket, removeFromBasket } from '../_redux/actions';
 
 const BasketProductCard = (props) => {
@@ -30,36 +30,9 @@ const BasketProductCard = (props) => {
                         </Col>
                     </Row>
                 </Col>
-                <Col xs={6} md={12} xl={1} className="action-container left">
+                <Col xs={12} md={12} xl={{ span: 1, offset: 1 }} className="action-container">
                     <Row className="h-100">
-                        <Col xs={3} md={4} xl={12} className="icon">
-                            <button className="btn fav" name="Add Favorite" type="button">
-                                {/* TODO handle fav click */}
-                                <Favorite size="2em" />
-                            </button>
-                        </Col>
-                        <Col xs={4} md={6} xl={12} className="icon">
-                            <button
-                                className="btn"
-                                name="Remove from Basket"
-                                type="button"
-                                onClick={() => {
-                                    props.removeFromBasket(id);
-                                    onDelete(items[id]);
-                                    props.openAlert({
-                                        message: 'Product is removed successfully!',
-                                        severity: 'success',
-                                    });
-                                }}
-                            >
-                                <Delete size="2em" />
-                            </button>
-                        </Col>
-                    </Row>
-                </Col>
-                <Col xs={6} md={12} xl={1} className="action-container">
-                    <Row className="h-100">
-                        <Col xs={4} md={6} xl={12} className="icon">
+                        <Col xs={4} md={4} xl={12} className="icon">
                             <button
                                 className="btn"
                                 name="Add to Basket"
@@ -75,10 +48,10 @@ const BasketProductCard = (props) => {
                                 <Plus size="2em" />
                             </button>
                         </Col>
-                        <Col xs={4} md={6} xl={12} className="icon">
+                        <Col xs={4} md={4} xl={12} className="icon">
                             <div className="count">{items[id]}</div>
                         </Col>
-                        <Col xs={4} md={6} xl={12} className="icon">
+                        <Col xs={4} md={4} xl={12} className="icon">
                             <button
                                 className="btn"
                                 name="Delete from Basket"

@@ -196,14 +196,7 @@ const Home = (params) => {
             if (recommendedProducts.length !== 0) {
                 recommendedProducts.forEach((item) => {
                     recommendedItemsCol.push(
-                        <Col
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            xl={4}
-                            className="col card-col"
-                            key={item.id}
-                        >
+                        <Col xs={12} md={6} lg={6} xl={4} className="col card-col" key={item.id}>
                             <ProductCard
                                 handleUpper={handleUpper}
                                 handleBottom={handleBottom}
