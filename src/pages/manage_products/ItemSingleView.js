@@ -39,6 +39,7 @@ const ItemSingleView = (params) => {
         description: '',
         specs: '',
         campaigns: [],
+        mean_rating: '',
     });
     const [errors, setErrors] = useState({
         image: '',
@@ -186,6 +187,9 @@ const ItemSingleView = (params) => {
     };
 
     const onConfirm = () => {
+        if (form.mean_rating === null) {
+            form.mean_rating = 0;
+        }
         if (editId) {
             editItem(form)
                 .then(() => {
