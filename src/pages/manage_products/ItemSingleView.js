@@ -38,7 +38,7 @@ const ItemSingleView = (params) => {
         stock: '',
         description: '',
         specs: '',
-        campaigns: [],
+        campaign: [],
         mean_rating: '',
     });
     const [errors, setErrors] = useState({
@@ -50,7 +50,7 @@ const ItemSingleView = (params) => {
         stock: '',
         description: '',
         specs: '',
-        campaigns: '',
+        campaign: '',
     });
 
     useEffect(() => {
@@ -125,7 +125,7 @@ const ItemSingleView = (params) => {
             stock: noneError,
             description: noneError,
             specs: noneError,
-            campaigns: noneError,
+            campaign: noneError,
         };
 
         // image errors
@@ -182,6 +182,7 @@ const ItemSingleView = (params) => {
     };
 
     const onPreview = (event) => {
+        console.log(form);
         event.preventDefault();
         const tempErrors = findErrors();
         setErrors(tempErrors);
@@ -259,7 +260,7 @@ const ItemSingleView = (params) => {
                 optionValue.substring(optionValue.indexOf('-') + 1, optionValue.length),
             );
         });
-        setField('campaigns', selectedCampaigns);
+        setField('campaign', selectedCampaigns);
     };
 
     return (
@@ -411,8 +412,8 @@ const ItemSingleView = (params) => {
                                     variant="outline-secondary"
                                     defaultValue={['Choose Campaign']}
                                     onChange={(e) => setCampaignsField(e.target.selectedOptions)}
-                                    isInvalid={!!errors.campaigns && errors.campaigns !== noneError}
-                                    isValid={errors.campaigns === noneError}
+                                    isInvalid={!!errors.campaign && errors.campaign !== noneError}
+                                    isValid={errors.campaign === noneError}
                                 >
                                     {renderCampaigns()}
                                 </Form.Control>
