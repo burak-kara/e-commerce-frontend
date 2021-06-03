@@ -10,7 +10,7 @@ import { withFirebase } from '../../_firebase';
 
 const CreateCampaign = (params) => {
     const history = useHistory();
-    const { firebase } = params;
+    const { firebase, createCalled } = params;
     const [loading, setLoading] = useState(false);
     const [campaign, setCampaign] = useState({
         valid_until: '',
@@ -69,6 +69,7 @@ const CreateCampaign = (params) => {
                     <Form.Group as={Col} xl={6} xs={12} className="campaign-details-group">
                         <CampaignForm
                             index="New"
+                            createCalled
                             campaign={campaign}
                             componentIndex="new"
                             key="campaign-new"
@@ -77,8 +78,8 @@ const CreateCampaign = (params) => {
                     <Form.Group as={Col} xl={12} xs={12} className="create-campaign-button-group">
                         <button
                             type="button"
-                            className="create-campaign-button"
-                            onClick={createCampaign}
+                            className="btn create-campaign-button"
+                            onClick={() => createCampaign(createCalled)}
                         >
                             Create Campaign
                         </button>

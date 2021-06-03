@@ -5,14 +5,20 @@ import { connect } from 'react-redux';
 import PreviewModal from './PreviewModal';
 import { ComponentLoading, DiscardModal } from '../../components';
 import { noneError, P_M_ITEMS, TIME_OUT } from '../../_constants';
-import { getCategories, postNewItem, editItem, getItemById } from '../../_requests';
+import {
+    getCategories,
+    postNewItem,
+    editItem,
+    getItemById,
+    getAllCampaigns,
+} from '../../_requests';
 import { openAlert } from '../../_redux/actions';
 
 // TODO delete after BE implementation
-const camps = [
-    '24 saatte kargoda',
-    "Süpermarket Alışverişine Solo Tuvalet Kağıdı 32'li %20 indirimli",
-];
+// const camps = [
+//     '24 saatte kargoda',
+//     "Süpermarket Alışverişine Solo Tuvalet Kağıdı 32'li %20 indirimli",
+// ];
 
 const ItemSingleView = (params) => {
     const history = useHistory();
@@ -21,6 +27,7 @@ const ItemSingleView = (params) => {
     const [confirmModal, setConfirmModal] = useState(false);
     const [categories, setCategories] = useState();
     const [loading, setLoading] = useState(false);
+    const [campaigns, setCampaigns] = useState([]);
     const [form, setForm] = useState({
         seller: '2',
         image: '',
@@ -31,7 +38,8 @@ const ItemSingleView = (params) => {
         stock: '',
         description: '',
         specs: '',
-        campaign: '',
+        campaigns: [],
+        mean_rating: '',
     });
     const [errors, setErrors] = useState({
         image: '',
@@ -42,7 +50,7 @@ const ItemSingleView = (params) => {
         stock: '',
         description: '',
         specs: '',
-        campaign: '',
+        campaigns: '',
     });
 
     useEffect(() => {
@@ -80,6 +88,21 @@ const ItemSingleView = (params) => {
             });
     }, []);
 
+    useEffect(() => {
+        setLoading(true);
+        getAllCampaigns()
+            .then((response) => {
+                setCampaigns(response.data);
+            })
+            .catch(() => {
+                params.openAlert({
+                    message: 'Error while fetching campaigns!',
+                    severity: 'error',
+                });
+                setLoading(false);
+            });
+    }, []);
+
     const setField = (field, value) => {
         setForm({
             ...form,
@@ -98,7 +121,7 @@ const ItemSingleView = (params) => {
             stock: noneError,
             description: noneError,
             specs: noneError,
-            campaign: noneError,
+            campaigns: noneError,
         };
 
         // image errors
@@ -164,6 +187,9 @@ const ItemSingleView = (params) => {
     };
 
     const onConfirm = () => {
+        if (form.mean_rating === null) {
+            form.mean_rating = 0;
+        }
         if (editId) {
             editItem(form)
                 .then(() => {
@@ -206,7 +232,7 @@ const ItemSingleView = (params) => {
     };
 
     const renderCategories = () => {
-        const cats = [<option key="default">Choose category</option>];
+        const cats = [<option key="default">Choose Category</option>];
         categories.forEach((category) => {
             cats.push(<option key={category.name}>{category.name}</option>);
         });
@@ -214,11 +240,22 @@ const ItemSingleView = (params) => {
     };
 
     const renderCampaigns = () => {
-        const campaigns = [<option key="default">Choose campaign</option>];
-        camps.forEach((camp) => {
-            campaigns.push(<option key={camp}>{camp}</option>);
+        const campaignOptions = [<option key="default">Choose Campaign</option>];
+        campaigns.forEach((camp) => {
+            campaignOptions.push(<option key={camp.id}>{`${camp.name}-${camp.id}`}</option>);
         });
-        return campaigns;
+        return campaignOptions;
+    };
+
+    const setCampaignsField = (options) => {
+        const selectedCampaigns = [];
+        Array.from(options).forEach((option) => {
+            const optionValue = option.value;
+            selectedCampaigns.push(
+                optionValue.substring(optionValue.indexOf('-') + 1, optionValue.length),
+            );
+        });
+        setField('campaigns', selectedCampaigns);
     };
 
     return (
@@ -235,7 +272,7 @@ const ItemSingleView = (params) => {
                                     required
                                     name="image"
                                     type="url"
-                                    placeholder="Image link"
+                                    placeholder="Image Link"
                                     onChange={(e) => setField('image', e.target.value)}
                                     isInvalid={!!errors.image && errors.image !== noneError}
                                     isValid={errors.image === noneError}
@@ -247,7 +284,7 @@ const ItemSingleView = (params) => {
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} xl="4" lg="4" md="6" sm="6" controlId="name">
-                            <Form.Label>Product name</Form.Label>
+                            <Form.Label>Product Name</Form.Label>
                             {editId && loading ? (
                                 <ComponentLoading />
                             ) : (
@@ -267,7 +304,7 @@ const ItemSingleView = (params) => {
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} xl="4" lg="4" md="6" sm="6" controlId="brand">
-                            <Form.Label>Product brand</Form.Label>
+                            <Form.Label>Product Brand</Form.Label>
                             {editId && loading ? (
                                 <ComponentLoading />
                             ) : (
@@ -288,8 +325,8 @@ const ItemSingleView = (params) => {
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
-                        <Form.Group as={Col} xl="3" lg="4" md="6" sm="6" controlId="category">
-                            <Form.Label>Product category</Form.Label>
+                        <Form.Group as={Col} xl="4" lg="4" md="6" sm="6" controlId="category">
+                            <Form.Label>Product Category</Form.Label>
                             {editId && loading ? (
                                 <ComponentLoading />
                             ) : (
@@ -297,11 +334,10 @@ const ItemSingleView = (params) => {
                                     as="select"
                                     className="dropdown"
                                     variant="outline-secondary"
-                                    defaultValue="Choose category"
+                                    defaultValue="Choose Category"
                                     onChange={(e) => setField('category', e.target.value)}
                                     isInvalid={!!errors.category && errors.category !== noneError}
                                     isValid={errors.category === noneError}
-                                    value={form.category}
                                 >
                                     {categories ? renderCategories() : null}
                                 </Form.Control>
@@ -310,8 +346,8 @@ const ItemSingleView = (params) => {
                                 {errors.category}
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Form.Group as={Col} xl="3" lg="4" md="6" sm="6" controlId="price">
-                            <Form.Label>Product price</Form.Label>
+                        <Form.Group as={Col} xl="4" lg="4" md="6" sm="6" controlId="price">
+                            <Form.Label>Product Price</Form.Label>
                             <InputGroup>
                                 {editId && loading ? (
                                     <ComponentLoading />
@@ -321,7 +357,7 @@ const ItemSingleView = (params) => {
                                             required
                                             name="price"
                                             type="number"
-                                            placeholder="Product price"
+                                            placeholder="Product Price"
                                             onChange={(e) => setField('price', e.target.value)}
                                             isInvalid={!!errors.price && errors.price !== noneError}
                                             isValid={errors.price === noneError}
@@ -337,8 +373,8 @@ const ItemSingleView = (params) => {
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
-                        <Form.Group as={Col} xl="3" lg="4" md="6" sm="3" controlId="stock">
-                            <Form.Label>Stock count</Form.Label>
+                        <Form.Group as={Col} xl="4" lg="4" md="6" sm="3" controlId="stock">
+                            <Form.Label>Stock Count</Form.Label>
                             {editId && loading ? (
                                 <ComponentLoading />
                             ) : (
@@ -346,7 +382,7 @@ const ItemSingleView = (params) => {
                                     required
                                     name="stock"
                                     type="number"
-                                    placeholder="Stock count"
+                                    placeholder="Stock Count"
                                     onChange={(e) => setField('stock', e.target.value)}
                                     isInvalid={!!errors.stock && errors.stock !== noneError}
                                     isValid={errors.stock === noneError}
@@ -357,20 +393,22 @@ const ItemSingleView = (params) => {
                                 {errors.stock}
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Form.Group as={Col} xl="3" lg="6" md="6" sm="6" controlId="campaign">
-                            <Form.Label>Product campaign</Form.Label>
+                    </Form.Row>
+                    <Form.Row>
+                        <Form.Group as={Col} xl="12" lg="6" md="6" sm="6" controlId="campaigns">
+                            <Form.Label>Product Campaign</Form.Label>
                             {editId && loading ? (
                                 <ComponentLoading />
                             ) : (
                                 <Form.Control
                                     as="select"
+                                    multiple
                                     className="dropdown"
                                     variant="outline-secondary"
-                                    defaultValue="Choose campaign"
-                                    onChange={(e) => setField('campaign', e.target.value)}
-                                    isInvalid={!!errors.campaign && errors.campaign !== noneError}
-                                    isValid={errors.campaign === noneError}
-                                    value={form.campaign}
+                                    defaultValue={['Choose Campaign']}
+                                    onChange={(e) => setCampaignsField(e.target.selectedOptions)}
+                                    isInvalid={!!errors.campaigns && errors.campaigns !== noneError}
+                                    isValid={errors.campaigns === noneError}
                                 >
                                     {renderCampaigns()}
                                 </Form.Control>
@@ -389,7 +427,7 @@ const ItemSingleView = (params) => {
                                     required
                                     name="description"
                                     type="text"
-                                    placeholder="Product description.."
+                                    placeholder="Product Description.."
                                     onChange={(e) => setField('description', e.target.value)}
                                     isInvalid={
                                         !!errors.description && errors.description !== noneError
@@ -413,7 +451,7 @@ const ItemSingleView = (params) => {
                                     required
                                     name="specs"
                                     type="text"
-                                    placeholder="Product specifications.."
+                                    placeholder="Product Specifications.."
                                     onChange={(e) => setField('specs', e.target.value)}
                                     isInvalid={!!errors.specs && errors.specs !== noneError}
                                     isValid={errors.specs === noneError}
