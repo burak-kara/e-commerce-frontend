@@ -157,10 +157,10 @@ const Basket = (props) => {
         <>
             <Container fluid className="basket-page">
                 <Row noGutters className="w-100">
-                    <Col xs={12} md={12} xl={10}>
+                    <Col xs={12} sm={8} md={8} lg={9} xl={10}>
                         <ListGroup variant="flush">{renderContent()}</ListGroup>
                     </Col>
-                    <Col xs={12} md={12} xl={2} className="total">
+                    <Col xs={12} sm={4} md={4} lg={3} xl={2} className="total">
                         <Row>
                             <Col xl={12} className="mb-1">
                                 <div className="title">
@@ -181,7 +181,6 @@ const Basket = (props) => {
                                 <Form.Control
                                     as="select"
                                     className="dropdown"
-                                    variant="outline-secondary"
                                     defaultValue="Choose address"
                                     onChange={(e) => setAddress(e.target.value)}
                                     value={address}

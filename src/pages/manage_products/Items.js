@@ -106,7 +106,7 @@ const Items = (params) => {
     ) : (
         <div className="home-page">
             <Container fluid="lg" className="pm-item-list">
-                <Row className="add-row">
+                <Row className="add-row mb-2">
                     <Col
                         className="add-col"
                         xs={{ span: 12, offset: 0 }}

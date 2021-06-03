@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Modal, Form, Col } from 'react-bootstrap';
 
 const AuthModal = (props) => {
     const { show, onHide, onChange, isInvalid } = props;
+    const ref = useRef(null);
+
+    useEffect(() => {
+        ref.current.focus();
+    }, []);
 
     return (
         <Modal
@@ -29,6 +34,7 @@ const AuthModal = (props) => {
                                 onChange={onChange}
                                 isInvalid={isInvalid}
                                 isValid={!isInvalid}
+                                ref={ref}
                             />
                             <Form.Control.Feedback type="invalid">
                                 Wrong Authentication Code

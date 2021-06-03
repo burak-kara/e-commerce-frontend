@@ -13,6 +13,9 @@ const Home = (params) => {
     const [items, setItems] = useState();
     const [recommendedProducts, setRecommendedProducts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [recLoading, setRecLoading] = useState(false);
+    const [leftAddLoad, setLeftAddLoad] = useState(false);
+    const [rightAddLoad, setRightAddLoad] = useState(false);
     const [chosenId, setId] = useState('');
     const [confirmModal, setConfirmModal] = useState(false);
     const [deleteId, setDeleteId] = useState('');
@@ -35,35 +38,39 @@ const Home = (params) => {
     };
 
     const fetchRecommendedItems = async (productCount) => {
-        setLoading(true);
+        setRecLoading(true);
         const productList = [];
         const response = await getRecommendedProducts(productCount);
-        response.data.recommended_product_ids.forEach((id) => {
-            getItemById(id)
-                .then(async (prodResponse) => {
-                    productList.push(prodResponse.data);
-                })
-                .catch(() => {
-                    params.openAlert({
-                        message: 'Error while fetching recommended products!',
-                        severity: 'error',
+        if (response.data.recommended_product_ids) {
+            response.data.recommended_product_ids.forEach((id) => {
+                getItemById(id)
+                    .then(async (prodResponse) => {
+                        productList.push(prodResponse.data);
+                    })
+                    .catch(() => {
+                        params.openAlert({
+                            message: 'Error while fetching recommended products!',
+                            severity: 'error',
+                        });
+                        setRecLoading(false);
                     });
-                    setLoading(false);
-                });
-        });
-        setRecommendedProducts(productList);
-        setLoading(false);
+            });
+            setRecommendedProducts(productList);
+        }
+        setRecLoading(false);
     };
 
     useEffect(async () => {
-        setLoading(true);
         if (
             user.username !== '' &&
             !user.is_product_manager &&
             !user.is_sales_manager &&
             !user.is_admin
-        )
+        ) {
+            setRecLoading(true);
             await fetchRecommendedItems(3);
+        }
+        setLoading(true);
         fetchItems();
     }, []);
 
@@ -75,14 +82,14 @@ const Home = (params) => {
                         <img alt="ad" className="image" src={response.data.img} />
                     </div>,
                 );
-                setLoading(false);
+                setLeftAddLoad(false);
             })
             .catch(() => {
                 params.openAlert({
                     message: 'Something went wrong while getting ad.',
                     severity: 'error',
                 });
-                setLoading(false);
+                setLeftAddLoad(false);
             });
     };
 
@@ -94,19 +101,20 @@ const Home = (params) => {
                         <img alt="ad" className="image" src={response.data.img} />
                     </div>,
                 );
-                setLoading(false);
+                setRightAddLoad(false);
             })
             .catch(() => {
                 params.openAlert({
                     message: 'Something went wrong while getting ad.',
                     severity: 'error',
                 });
-                setLoading(false);
+                setRightAddLoad(false);
             });
     };
 
     useEffect(() => {
-        setLoading(true);
+        setLeftAddLoad(true);
+        setRightAddLoad(true);
         fetchLeftAdd();
         fetchRightAdd();
     }, []);
@@ -186,7 +194,8 @@ const Home = (params) => {
             user.username !== '' &&
             !user.is_admin &&
             !user.is_product_manager &&
-            !user.is_sales_manager
+            !user.is_sales_manager &&
+            recommendedProducts.length !== 0
         ) {
             recommendedItemsCol.push(
                 <Col xl={12} className="title-row">
@@ -196,14 +205,7 @@ const Home = (params) => {
             if (recommendedProducts.length !== 0) {
                 recommendedProducts.forEach((item) => {
                     recommendedItemsCol.push(
-                        <Col
-                            xs={12}
-                            md={6}
-                            lg={6}
-                            xl={4}
-                            className="col card-col"
-                            key={item.id}
-                        >
+                        <Col xs={12} md={6} lg={6} xl={4} className="col card-col" key={item.id}>
                             <ProductCard
                                 handleUpper={handleUpper}
                                 handleBottom={handleBottom}
@@ -249,20 +251,26 @@ const Home = (params) => {
         return itemsCol;
     };
 
-    return loading ? (
-        <PageLoading />
-    ) : (
+    return (
         <>
             <Container fluid className="pm-item-list">
                 <Row>
-                    <Col xl={2}>{leftAdd || <ComponentLoading />}</Col>
+                    <Col xl={2}>{leftAddLoad ? <ComponentLoading /> : leftAdd}</Col>
                     <Col xl={8}>
-                        <Row className="row">
-                            {recommendedProducts ? <RecommendedItems /> : null}
-                        </Row>
-                        <Row className="row">{items ? <Items /> : null}</Row>
+                        {recLoading ? (
+                            <PageLoading />
+                        ) : (
+                            <Row className="row">
+                                {recommendedProducts ? <RecommendedItems /> : null}
+                            </Row>
+                        )}
+                        {loading ? (
+                            <PageLoading />
+                        ) : (
+                            <Row className="row">{items ? <Items /> : null}</Row>
+                        )}
                     </Col>
-                    <Col xl={2}>{rightAdd || <ComponentLoading />}</Col>
+                    <Col xl={2}>{rightAddLoad ? <ComponentLoading /> : rightAdd}</Col>
                 </Row>
             </Container>
             <DiscardModal
