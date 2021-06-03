@@ -27,6 +27,8 @@ const Products = (params) => {
     const { user } = useStore().getState();
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [leftAddLoad, setLeftAddLoad] = useState(false);
+    const [rightAddLoad, setRightAddLoad] = useState(false);
     const [chosenId, setId] = useState('');
     const [confirmModal, setConfirmModal] = useState(false);
     const [deleteId, setDeleteId] = useState('');
@@ -49,14 +51,14 @@ const Products = (params) => {
                         <img alt="ad" className="image" src={response.data.img} />
                     </div>,
                 );
-                setLoading(false);
+                setLeftAddLoad(false);
             })
             .catch(() => {
                 params.openAlert({
                     message: 'Something went wrong while getting ad.',
                     severity: 'error',
                 });
-                setLoading(false);
+                setLeftAddLoad(false);
             });
     };
 
@@ -68,19 +70,20 @@ const Products = (params) => {
                         <img alt="ad" className="image" src={response.data.img} />
                     </div>,
                 );
-                setLoading(false);
+                setRightAddLoad(false);
             })
             .catch(() => {
                 params.openAlert({
                     message: 'Something went wrong while getting ad.',
                     severity: 'error',
                 });
-                setLoading(false);
+                setRightAddLoad(false);
             });
     };
 
     useEffect(() => {
-        setLoading(true);
+        setLeftAddLoad(true);
+        setRightAddLoad(true);
         fetchLeftAdd();
         fetchRightAdd();
     }, []);
@@ -298,9 +301,7 @@ const Products = (params) => {
         <>
             <Container fluid className="pm-item-list">
                 <Row>
-                    <Col md={1} xl={2}>
-                        {leftAdd || <ComponentLoading />}
-                    </Col>
+                    <Col xl={2}>{leftAddLoad ? <ComponentLoading /> : leftAdd}</Col>
                     <Col xl={8}>
                         <Row className="filter-row row">
                             <Col xs={6} lg={3} xl={2} className="mb-2 mb-xl-0 filter-col">
@@ -412,7 +413,7 @@ const Products = (params) => {
                             <Items />
                         </Row>
                     </Col>
-                    <Col xl={2}>{rightAdd || <ComponentLoading />}</Col>
+                    <Col xl={2}>{rightAddLoad ? <ComponentLoading /> : rightAdd}</Col>
                 </Row>
             </Container>
             <DiscardModal
