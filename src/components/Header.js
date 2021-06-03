@@ -252,7 +252,7 @@ const Header = (props) => {
                 });
             }}
         >
-            Admin Console
+            Manage Users
         </NavDropdown.Item>
     );
 
