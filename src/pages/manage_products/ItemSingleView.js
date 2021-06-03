@@ -191,7 +191,7 @@ const ItemSingleView = (params) => {
     };
 
     const onConfirm = () => {
-        if (form.mean_rating === null) {
+        if (!form.mean_rating) {
             form.mean_rating = 0;
         }
         if (editId) {
