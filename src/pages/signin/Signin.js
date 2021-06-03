@@ -126,7 +126,7 @@ const Signin = (params) => {
                 .catch((error) => {
                     params.openAlert({
                         message:
-                            error && error.response
+                            error && error.response && error.response.data.non_field_errors
                                 ? error.response.data.non_field_errors[0]
                                 : 'Wrong credentials while logging in!',
                         severity: 'error',

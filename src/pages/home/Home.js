@@ -41,20 +41,22 @@ const Home = (params) => {
         setRecLoading(true);
         const productList = [];
         const response = await getRecommendedProducts(productCount);
-        response.data.recommended_product_ids.forEach((id) => {
-            getItemById(id)
-                .then(async (prodResponse) => {
-                    productList.push(prodResponse.data);
-                })
-                .catch(() => {
-                    params.openAlert({
-                        message: 'Error while fetching recommended products!',
-                        severity: 'error',
+        if (response.data.recommended_product_ids) {
+            response.data.recommended_product_ids.forEach((id) => {
+                getItemById(id)
+                    .then(async (prodResponse) => {
+                        productList.push(prodResponse.data);
+                    })
+                    .catch(() => {
+                        params.openAlert({
+                            message: 'Error while fetching recommended products!',
+                            severity: 'error',
+                        });
+                        setRecLoading(false);
                     });
-                    setRecLoading(false);
-                });
-        });
-        setRecommendedProducts(productList);
+            });
+            setRecommendedProducts(productList);
+        }
         setRecLoading(false);
     };
 
@@ -192,7 +194,8 @@ const Home = (params) => {
             user.username !== '' &&
             !user.is_admin &&
             !user.is_product_manager &&
-            !user.is_sales_manager
+            !user.is_sales_manager &&
+            recommendedProducts.length !== 0
         ) {
             recommendedItemsCol.push(
                 <Col xl={12} className="title-row">
