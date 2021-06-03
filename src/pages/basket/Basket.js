@@ -65,9 +65,9 @@ const Basket = (props) => {
 
     const onConfirm = () => {
         const body = { items: basket.items, delivery_address: address };
-        props.removeBasket();
         newOrder(body)
             .then(() => {
+                props.removeBasket();
                 props.openAlert({
                     message: 'Order is successfully created!',
                     severity: 'success',
