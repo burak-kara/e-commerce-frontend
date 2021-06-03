@@ -104,9 +104,13 @@ const ItemSingleView = (params) => {
     }, []);
 
     const setField = (field, value) => {
+        let categoryValue = value;
+        if (field === 'category' && value === 'Life Style') {
+            categoryValue = 'Lifestyle';
+        }
         setForm({
             ...form,
-            [field]: value,
+            [field]: categoryValue,
         });
     };
 
