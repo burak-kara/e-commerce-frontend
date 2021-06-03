@@ -242,7 +242,7 @@ const ItemSingleView = (params) => {
     const renderCampaigns = () => {
         const campaignOptions = [<option key="default">Choose Campaign</option>];
         campaigns.forEach((camp) => {
-            campaignOptions.push(<option key={camp.id}>{camp.name}</option>);
+            campaignOptions.push(<option key={camp.id}>{`${camp.name}-${camp.id}`}</option>);
         });
         return campaignOptions;
     };
@@ -250,7 +250,10 @@ const ItemSingleView = (params) => {
     const setCampaignsField = (options) => {
         const selectedCampaigns = [];
         Array.from(options).forEach((option) => {
-            selectedCampaigns.push(option.value);
+            const optionValue = option.value;
+            selectedCampaigns.push(
+                optionValue.substring(optionValue.indexOf('-') + 1, optionValue.length),
+            );
         });
         setField('campaigns', selectedCampaigns);
     };
