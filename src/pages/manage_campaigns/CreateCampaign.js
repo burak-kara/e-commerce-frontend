@@ -35,28 +35,46 @@ const CreateCampaign = (params) => {
 
     const createCampaign = () => {
         setLoading(true);
-        createNewCampaign(campaign)
-            .then((response) => {
-                setCampaign(response.data);
-                sendPushNotification(response.data);
-                params.openAlert({
-                    message: 'Successfully created campaign!',
-                    severity: 'success',
-                });
-                setTimeout(() => {
-                    history.push({
-                        pathname: SM_CAMPAIGNS,
-                    });
-                }, TIME_OUT);
-                setLoading(false);
-            })
-            .catch(() => {
-                params.openAlert({
-                    message: 'Something went wrong while creating campaign!',
-                    severity: 'error',
-                });
-                setLoading(false);
+        if (campaign.valid_until.length === 0) {
+            params.openAlert({
+                message: 'Choose a valid date!',
+                severity: 'error',
             });
+            setLoading(false);
+        } else if (
+            campaign.campaign_x === 0 ||
+            campaign.campaign_y === 0 ||
+            campaign.campaign_amount === 0
+        ) {
+            params.openAlert({
+                message: 'Choose a valid amounts!',
+                severity: 'error',
+            });
+            setLoading(false);
+        } else {
+            createNewCampaign(campaign)
+                .then((response) => {
+                    setCampaign(response.data);
+                    sendPushNotification(response.data);
+                    params.openAlert({
+                        message: 'Successfully created campaign!',
+                        severity: 'success',
+                    });
+                    setTimeout(() => {
+                        history.push({
+                            pathname: SM_CAMPAIGNS,
+                        });
+                    }, TIME_OUT);
+                    setLoading(false);
+                })
+                .catch(() => {
+                    params.openAlert({
+                        message: 'Something went wrong while creating campaign!',
+                        severity: 'error',
+                    });
+                    setLoading(false);
+                });
+        }
     };
 
     return loading ? (
