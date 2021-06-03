@@ -181,7 +181,6 @@ const ItemSingleView = (params) => {
         const tempErrors = findErrors();
         setErrors(tempErrors);
         if (!checkAnyError(tempErrors)) {
-            console.log('form:', form);
             setPreviewModal(true);
         }
     };
@@ -207,7 +206,6 @@ const ItemSingleView = (params) => {
                     });
                 });
         } else {
-            console.log('product form: ', form);
             postNewItem(form)
                 .then(() => {
                     params.openAlert({
@@ -220,8 +218,7 @@ const ItemSingleView = (params) => {
                         });
                     }, TIME_OUT);
                 })
-                .catch((error) => {
-                    console.log('error:', error, '\nerror response:', error.response);
+                .catch(() => {
                     params.openAlert({
                         message: 'Error while adding new product!',
                         severity: 'error',
@@ -241,23 +238,17 @@ const ItemSingleView = (params) => {
     const renderCampaigns = () => {
         const campaignOptions = [<option key="default">Choose Campaign</option>];
         campaigns.forEach((camp) => {
-            campaignOptions.push(<option key={camp.id}>{camp.id}</option>);
+            campaignOptions.push(<option key={camp.id}>{camp.name}</option>);
         });
         return campaignOptions;
     };
 
     const setCampaignsField = (options) => {
-        console.log(options);
-        Array.from(options).forEach((option) => {
-            console.log(option.value);
-        });
         const selectedCampaigns = [];
-        // if (options) {
-        //     options.value.forEach((selectedCampaign) => {
-        //         selectedCampaigns.push(selectedCampaign);
-        //     });
-        // }
-        setField('campaign', selectedCampaigns);
+        Array.from(options).forEach((option) => {
+            selectedCampaigns.push(option.value);
+        });
+        setField('campaigns', selectedCampaigns);
     };
 
     return (
@@ -411,7 +402,6 @@ const ItemSingleView = (params) => {
                                     onChange={(e) => setCampaignsField(e.target.selectedOptions)}
                                     isInvalid={!!errors.campaigns && errors.campaigns !== noneError}
                                     isValid={errors.campaigns === noneError}
-                                    rows={4}
                                 >
                                     {renderCampaigns()}
                                 </Form.Control>
