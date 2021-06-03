@@ -160,7 +160,7 @@ const Basket = (props) => {
                     <Col xs={12} sm={8} md={8} lg={9} xl={10}>
                         <ListGroup variant="flush">{renderContent()}</ListGroup>
                     </Col>
-                    <Col xs={12} sm={4} md={4} lg={3} xl={2} className="total bg-dark">
+                    <Col xs={12} sm={4} md={4} lg={3} xl={2} className="total">
                         <Row>
                             <Col xl={12} className="mb-1">
                                 <div className="title">

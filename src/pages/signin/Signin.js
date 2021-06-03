@@ -225,17 +225,19 @@ const Signin = (params) => {
                     <div className="form-row btn-container">{renderSubmitButton()}</div>
                 </Form>
             </div>
-            <AuthModal
-                onChange={onCode}
-                show={modal}
-                isInvalid={isInvalid}
-                onHide={() => {
-                    setModal(false);
-                    history.push({
-                        pathname: SIGN_OUT,
-                    });
-                }}
-            />
+            {modal ? (
+                <AuthModal
+                    onChange={onCode}
+                    show={modal}
+                    isInvalid={isInvalid}
+                    onHide={() => {
+                        setModal(false);
+                        history.push({
+                            pathname: SIGN_OUT,
+                        });
+                    }}
+                />
+            ) : null}
         </>
     );
 };
