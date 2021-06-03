@@ -59,7 +59,9 @@ const CampaignForm = (props) => {
                     parseFormats="yyyy-MM-ddTHH:MM:SSZ"
                     timeFormat="HH:mm:ss"
                     defaultValue={
-                        campaign.valid_until !== '' ? new Date(campaign.valid_until) : new Date()
+                        campaign.valid_until !== '' && campaign.valid_until !== null
+                            ? new Date(campaign.valid_until)
+                            : new Date()
                     }
                     onChange={(e) => setCampaignExpirationDate(e.target.value)}
                     className="form-control"
