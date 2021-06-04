@@ -1,8 +1,19 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
+import { ComponentLoading } from "./Loading";
 
 const DiscardModal = (props) => {
-    const { show, onHide, onDiscard, header, body, leftBtnText, buttonText, btnColor } = props;
+    const {
+        show,
+        onHide,
+        onDiscard,
+        header,
+        body,
+        leftBtnText,
+        buttonText,
+        btnColor,
+        paymentLoading,
+    } = props;
 
     return (
         <Modal
@@ -35,8 +46,9 @@ const DiscardModal = (props) => {
                     name="Discard"
                     type="button"
                     onClick={onDiscard}
+                    disabled={paymentLoading}
                 >
-                    {buttonText || 'Discard'}
+                    {paymentLoading ? <ComponentLoading /> : buttonText || 'Discard'}
                 </button>
             </Modal.Footer>
         </Modal>
