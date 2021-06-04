@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import { ComponentLoading } from "./Loading";
+import { ComponentLoading } from './Loading';
 
 const DiscardModal = (props) => {
     const {

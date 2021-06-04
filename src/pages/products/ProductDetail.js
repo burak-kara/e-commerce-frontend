@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Row, Col, Container, ListGroup, Form } from 'react-bootstrap';
-import { getAllReviewsByItem, getItemById } from '../../_requests';
+import { getAllReviewsByItem, getCampaignByID, getItemById } from '../../_requests';
 import { addToBasket, openAlert } from '../../_redux/actions';
 import { PageLoading } from '../../components';
 import { BasketIcon } from '../../_utilities/icons';
@@ -17,6 +17,7 @@ const ProductDetail = (params) => {
     const [item, setItem] = useState();
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [campaigns, setCampaigns] = useState([]);
 
     useEffect(() => {
         setLoading(true);
@@ -27,6 +28,21 @@ const ProductDetail = (params) => {
                 .then((response) => {
                     setItem(response.data);
                     setLoading(false);
+                    if (response.data.campaign.length !== 0) {
+                        response.data.campaign.forEach((cc) => {
+                            getCampaignByID(cc)
+                                .then((rr) => {
+                                    // eslint-disable-next-line no-shadow
+                                    setCampaigns((campaigns) => [...campaigns, rr.data.name]);
+                                })
+                                .catch(() => {
+                                    params.openAlert({
+                                        message: 'Something went wrong while getting ad.',
+                                        severity: 'error',
+                                    });
+                                });
+                        });
+                    }
                 })
                 .catch(() => {
                     params.openAlert({
@@ -61,6 +77,17 @@ const ProductDetail = (params) => {
         <img src={item.image || logo} alt="product" className={item.image ? 'image' : 'logo'} />
     );
 
+    // eslint-disable-next-line no-unused-vars
+    const Campaigns = () => {
+        const content = [];
+        if (campaigns.length !== 0) {
+            campaigns.forEach((cc) => {
+                content.push(<span className="span">{cc}</span>);
+            });
+        }
+        return content;
+    };
+
     const Item = () =>
         !item ? (
             <PageLoading />
@@ -87,6 +114,9 @@ const ProductDetail = (params) => {
                             </div>
                             <div className="ml-2 currency">
                                 <span>TL</span>
+                            </div>
+                            <div className="campaign-container">
+                                <Campaigns />
                             </div>
                         </Col>
                         <Col xs={12} xl={6} className="inner-col">
