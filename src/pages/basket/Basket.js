@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Container, ListGroup, Form } from 'react-bootstrap';
+import { Row, Col, Container, ListGroup, Form, NavDropdown } from 'react-bootstrap';
 import { connect, useStore } from 'react-redux';
-import { getItemById, newOrder } from '../../_requests';
+import { getItemById, getTotalPrice, newOrder } from '../../_requests';
 import { BasketIcon } from '../../_utilities/icons';
 import { BasketProductCard, DiscardModal, PageLoading } from '../../components';
 import {
@@ -17,9 +17,13 @@ const Basket = (props) => {
     const { basket, user } = useStore().getState();
     const [basketItems, setBasketItems] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [paymentLoading, setPaymentLoading] = useState(false);
     const [modal, setModal] = useState(false);
     const [address, setAddress] = useState('');
     const [addresses, setAddresses] = useState([]);
+    const [applied, setApplied] = useState(false);
+    const [total, setTotal] = useState();
+    const [appliedCampaigns, setAppliedCampaigns] = useState();
 
     const fetchItems = () => {
         if (basket && basket.items) {
@@ -63,8 +67,29 @@ const Basket = (props) => {
         }
     };
 
+    const applyCampaign = () => {
+        const body = { items: basket.items };
+        getTotalPrice(body)
+            .then((response) => {
+                setTotal(response.data.total_price);
+                setAppliedCampaigns(response.data.applied_campaigns);
+                setApplied(true);
+                props.openAlert({
+                    message: 'Campaigns are applied!',
+                    severity: 'success',
+                });
+            })
+            .catch(() => {
+                props.openAlert({
+                    message: 'Error while applying campaigns!',
+                    severity: 'error',
+                });
+            });
+    };
+
     const onConfirm = () => {
         const body = { items: basket.items, delivery_address: address };
+        setPaymentLoading(true);
         newOrder(body)
             .then(() => {
                 props.removeBasket();
@@ -73,19 +98,20 @@ const Basket = (props) => {
                     severity: 'success',
                 });
                 setModal(false);
+                setPaymentLoading(false);
             })
             .catch((error) => {
+                setPaymentLoading(false);
+                setModal(false);
                 if (
                     error.response.status === 400 &&
                     error.response.data.total_price > error.response.data.wallet_balance
                 ) {
-                    setModal(false);
                     props.openAlert({
                         message: 'Insufficient funds in your wallet! Unable to place the order!',
                         severity: 'error',
                     });
                 } else {
-                    setModal(false);
                     props.openAlert({
                         message: 'Error during checkout!',
                         severity: 'error',
@@ -114,7 +140,12 @@ const Basket = (props) => {
             basketItems.forEach((item) => {
                 list.push(
                     <ListGroup.Item className="list-item" key={item.id}>
-                        <BasketProductCard item={item} {...props} onDelete={onDelete} />
+                        <BasketProductCard
+                            item={item}
+                            {...props}
+                            onDelete={onDelete}
+                            setApplied={setApplied}
+                        />
                     </ListGroup.Item>,
                 );
             });
@@ -122,7 +153,7 @@ const Basket = (props) => {
         return list;
     };
 
-    const renderContent = () => {
+    const Content = () => {
         if (basket.itemCount === 0) {
             return (
                 <ListGroup.Item className="empty" key="empty-basket">
@@ -153,14 +184,45 @@ const Basket = (props) => {
         return basket.itemCount !== basketItems.length ? <PageLoading /> : <ListItems />;
     };
 
+    const Campaigns = () => {
+        if (!applied || basketItems.length === 0) {
+            return null;
+        }
+        const campaigns = [
+            <div className="applied">
+                <span>Campaigns on this basket</span>
+            </div>,
+        ];
+        Object.keys(appliedCampaigns).forEach((key) => {
+            const item = basketItems.filter((obj) => obj.id === parseInt(key, 10));
+            campaigns.push(
+                item.length !== 0 ? (
+                    <>
+                        <NavDropdown.Divider />
+                        <div className="name">
+                            <span>{item[0].name}</span>
+                        </div>
+                        <div className="campaign">
+                            <span>{appliedCampaigns[key].name}</span>
+                        </div>
+                    </>
+                ) : null,
+            );
+        });
+
+        return campaigns;
+    };
+
     return (
         <>
             <Container fluid className="basket-page">
                 <Row noGutters className="w-100">
-                    <Col xs={12} sm={8} md={8} lg={9} xl={10}>
-                        <ListGroup variant="flush">{renderContent()}</ListGroup>
+                    <Col xs={12} sm={8} md={8} lg={9} xl={9}>
+                        <ListGroup variant="flush">
+                            <Content />
+                        </ListGroup>
                     </Col>
-                    <Col xs={12} sm={4} md={4} lg={3} xl={2} className="total">
+                    <Col xs={12} sm={4} md={4} lg={3} xl={3} className="total">
                         <Row>
                             <Col xl={12} className="mb-1">
                                 <div className="title">
@@ -170,7 +232,7 @@ const Basket = (props) => {
                             <Col xl={12} className="mb-1">
                                 <div className="total-price">
                                     <span>
-                                        {basket.total || ''}
+                                        {applied ? total : basket.total || ''}
                                         <span className="currency ml-1">
                                             {basket.total ? 'TL' : ''}
                                         </span>
@@ -188,16 +250,21 @@ const Basket = (props) => {
                                     <Options />
                                 </Form.Control>
                             </Col>
-                            <Col xl={12}>
+                            <Col xl={12} className="mb-1">
                                 <button
                                     className="btn btn-block"
                                     name="Checkout"
                                     type="button"
-                                    onClick={onCheckout}
+                                    onClick={applied ? onCheckout : applyCampaign}
                                     disabled={!Object.keys(basket.items).length}
                                 >
-                                    <div className="ml-1">Check Out</div>
+                                    <div className="ml-1">
+                                        {applied ? 'Check Out' : 'Apply Campaigns'}
+                                    </div>
                                 </button>
+                            </Col>
+                            <Col xl={12}>
+                                <Campaigns />
                             </Col>
                         </Row>
                     </Col>
@@ -207,6 +274,7 @@ const Basket = (props) => {
                 show={modal}
                 onHide={() => setModal(false)}
                 onDiscard={onConfirm}
+                paymentLoading={paymentLoading}
                 header="Checkout"
                 leftBtnText="Continue Shopping"
                 buttonText="Confirm Checkout"

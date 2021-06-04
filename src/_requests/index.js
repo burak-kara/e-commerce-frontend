@@ -162,6 +162,12 @@ const newOrder = (data) =>
         data,
     });
 
+const getTotalPrice = (data) =>
+    postRequest({
+        path: `${API}getPrice/`,
+        data,
+    });
+
 const getAllOrders = () =>
     getRequest({
         path: `${API}orders/`,
@@ -326,4 +332,5 @@ export {
     getCurrentFunds,
     addFundsToUser,
     getRecommendedProducts,
+    getTotalPrice,
 };

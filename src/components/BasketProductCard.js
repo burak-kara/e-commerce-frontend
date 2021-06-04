@@ -6,7 +6,7 @@ import { Minus, Plus, Delete } from '../_utilities/icons';
 import { addToBasket, openAlert, deleteFromBasket, removeFromBasket } from '../_redux/actions';
 
 const BasketProductCard = (props) => {
-    const { item, items, onDelete } = props;
+    const { item, items, onDelete, setApplied } = props;
     const { image, name, brand, price, id } = item;
 
     return (
@@ -39,6 +39,7 @@ const BasketProductCard = (props) => {
                                 type="button"
                                 onClick={() => {
                                     props.addToBasket(id);
+                                    setApplied(false);
                                     props.openAlert({
                                         message: 'Product is added successfully!',
                                         severity: 'success',
@@ -59,6 +60,7 @@ const BasketProductCard = (props) => {
                                 onClick={() => {
                                     props.deleteFromBasket(id);
                                     onDelete(items[id]);
+                                    setApplied(false);
                                     props.openAlert({
                                         message: 'Product is deleted successfully!',
                                         severity: 'warning',
