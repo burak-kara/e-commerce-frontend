@@ -263,6 +263,11 @@ const getAllCampaigns = () =>
         path: `${API}campaign/`,
     });
 
+const getCampaignByID= (id) =>
+    getRequest({
+        path: `${API}campaign/${id}/`,
+    });
+
 const createNewCampaign = (data) =>
     postRequest({
         path: `${API}campaign/`,
@@ -327,6 +332,7 @@ export {
     getStats,
     getAd,
     getAllCampaigns,
+    getCampaignByID,
     createNewCampaign,
     deleteCampaignByID,
     getCurrentFunds,
