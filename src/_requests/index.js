@@ -263,7 +263,7 @@ const getAllCampaigns = () =>
         path: `${API}campaign/`,
     });
 
-const getCampaignByID= (id) =>
+const getCampaignByID = (id) =>
     getRequest({
         path: `${API}campaign/${id}/`,
     });
