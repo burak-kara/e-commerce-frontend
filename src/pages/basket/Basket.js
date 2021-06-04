@@ -196,7 +196,7 @@ const Basket = (props) => {
         Object.keys(appliedCampaigns).forEach((key) => {
             const item = basketItems.filter((obj) => obj.id === parseInt(key, 10));
             campaigns.push(
-                item.length !== 0 ? (
+                item.length !== 0 && appliedCampaigns[key] ? (
                     <>
                         <NavDropdown.Divider />
                         <div className="name">
