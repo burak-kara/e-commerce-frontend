@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Form, FormLabel, Container, Row, Col, ListGroup } from 'react-bootstrap';
+import { Form, Container, Row, Col, ListGroup } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 import { getAllCampaigns, deleteCampaignByID } from '../../_requests';
 import { ComponentLoading, PageLoading, CampaignForm } from '../../components';
@@ -73,9 +73,6 @@ const ManageCampaigns = (params) => {
                             className="campaign-card"
                             key={campaign.id}
                         >
-                            <FormLabel as={Col} lg={2} xs={6}>
-                                Campaign {campaignIndex + 1}
-                            </FormLabel>
                             <CampaignForm
                                 index={index}
                                 campaign={campaign}
@@ -102,11 +99,10 @@ const ManageCampaigns = (params) => {
         return list;
     };
 
-    const Campaigns = () => <ListAllCampaigns />;
-
-    const rerouteToCreateCampaignPage = () => {
+    const rerouteToCreateCampaignPage = (data) => {
         history.push({
             pathname: SM_CREATE_CAMPAIGN,
+            data,
         });
     };
 
@@ -119,7 +115,7 @@ const ManageCampaigns = (params) => {
                     <Col>
                         <h3 className="page-title">Campaign Management</h3>
                         <ListGroup variant="flush" className="campaign-list">
-                            <Campaigns />
+                            <ListAllCampaigns />
                         </ListGroup>
                         <Form.Row className="buttons">
                             <Form.Group as={Col} lg={6} xs={5} className="button-container">
@@ -127,7 +123,7 @@ const ManageCampaigns = (params) => {
                                     name="CreateNewCampaigns"
                                     type="button"
                                     className="btn create-campaign-button"
-                                    onClick={() => rerouteToCreateCampaignPage()}
+                                    onClick={() => rerouteToCreateCampaignPage(true)}
                                 >
                                     {loading ? <ComponentLoading /> : 'New Campaign'}
                                 </Button>

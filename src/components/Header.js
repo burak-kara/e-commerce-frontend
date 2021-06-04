@@ -19,8 +19,9 @@ import {
     SEARCH,
     ORDER_STATUS,
     SM_ANALYSIS,
-    ADMIN, FUNDING
-} from "../_constants";
+    ADMIN,
+    FUNDING,
+} from '../_constants';
 import { Account, BasketIcon, DropDown, Search } from '../_utilities/icons';
 import { openAlert } from '../_redux/actions';
 import { withFirebase } from '../_firebase';
@@ -83,34 +84,36 @@ const Header = (props) => {
                 (campaign_x >= 1 || campaign_y >= 1) &&
                 !notified_users.includes(user.pk)
             ) {
-                navigator.serviceWorker.ready.then((registration) => {
-                    registration.showNotification('OzU E-Commerce', {
-                        body:
-                            `Buy ${campaign_x} get ${campaign_y} campaign has begun!\n` +
-                            `With a hefty ${campaign_amount}% discount!\n` +
-                            `This campaign is valid until ${valid_until}`,
-                        image: logo,
-                        icon: favicon,
-                        tag: id,
-                        requireInteraction: true,
-                        vibrate: [200, 100, 200],
+                if (!user.is_product_manager && !user.is_sales_manager) {
+                    navigator.serviceWorker.ready.then((registration) => {
+                        registration.showNotification('OzU E-Commerce', {
+                            body:
+                                `Buy ${campaign_x} get ${campaign_y} campaign has begun!\n` +
+                                `With a hefty ${campaign_amount}% discount!\n` +
+                                `This campaign is valid until ${valid_until}`,
+                            image: logo,
+                            icon: favicon,
+                            tag: id,
+                            requireInteraction: true,
+                            vibrate: [200, 100, 200],
+                        });
                     });
-                });
-                const campaignUserDatabaseUpdateRef = firebase.campaign_db('new_campaign');
-                campaignUserDatabaseUpdateRef.set({
-                    id,
-                    valid_until,
-                    campaign_x,
-                    campaign_y,
-                    campaign_amount,
-                    notified_users: `${notified_users}-${user.pk}`,
-                });
+                    const campaignUserDatabaseUpdateRef = firebase.campaign_db('new_campaign');
+                    campaignUserDatabaseUpdateRef.set({
+                        id,
+                        valid_until,
+                        campaign_x,
+                        campaign_y,
+                        campaign_amount,
+                        notified_users: `${notified_users}-${user.pk}`,
+                    });
+                }
             } else if (Notification.permission !== 'granted') {
                 props.openAlert({
                     message: 'Please allow us to send you notifications!',
                     severity: 'error',
                 });
-            } else {
+            } else if (!notified_users.includes(user.pk)) {
                 props.openAlert({
                     message: 'Something went wrong with the push notifications!',
                     severity: 'error',
@@ -135,19 +138,19 @@ const Header = (props) => {
 
     const CommonMenu = () => (
         <>
-        <NavDropdown.Item
-            key="user-profile"
-            className="menu-btn"
-            onClick={() => {
-                history.push({
-                    pathname: PROFILE,
-                });
-            }}
-        >
-            Profile
-        </NavDropdown.Item>
             <NavDropdown.Item
                 key="user-profile"
+                className="menu-btn"
+                onClick={() => {
+                    history.push({
+                        pathname: PROFILE,
+                    });
+                }}
+            >
+                Profile
+            </NavDropdown.Item>
+            <NavDropdown.Item
+                key="user-profile-funding"
                 className="menu-btn"
                 onClick={() => {
                     history.push({
@@ -249,7 +252,7 @@ const Header = (props) => {
                 });
             }}
         >
-            Admin Console
+            Manage Users
         </NavDropdown.Item>
     );
 

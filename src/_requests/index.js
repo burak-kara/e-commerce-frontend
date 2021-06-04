@@ -117,13 +117,16 @@ const getItemsBySearch = (search) =>
     });
 
 const getItemsByCategoryBrandSortSearch = (data) => {
-    const { category, brand, ordering, search } = data;
+    const { category, brand, ordering, search, rating_gt, price_gt, price_lt } = data;
     const cat = category.replace(/-/g, '');
     let path = `${API}items/search?`;
     path += cat ? `category=${cat}&` : '';
     path += search ? `search=${search}&` : '';
     path += brand ? `brand=${brand}&` : '';
     path += ordering ? `ordering=${ordering}&` : '';
+    path += rating_gt ? `rating_gt=${rating_gt}&` : '';
+    path += price_gt ? `price_gt=${price_gt}&` : '';
+    path += price_lt ? `price_lt=${price_lt}&` : '';
     return getRequest({
         path,
     });
@@ -156,6 +159,12 @@ const getCategories = () =>
 const newOrder = (data) =>
     postRequest({
         path: `${API}orders/`,
+        data,
+    });
+
+const getTotalPrice = (data) =>
+    postRequest({
+        path: `${API}getPrice/`,
         data,
     });
 
@@ -254,6 +263,11 @@ const getAllCampaigns = () =>
         path: `${API}campaign/`,
     });
 
+const getCampaignByID = (id) =>
+    getRequest({
+        path: `${API}campaign/${id}/`,
+    });
+
 const createNewCampaign = (data) =>
     postRequest({
         path: `${API}campaign/`,
@@ -274,6 +288,11 @@ const addFundsToUser = (data) =>
     postRequest({
         path: `${API}funding/`,
         data,
+    });
+
+const getRecommendedProducts = (count) =>
+    postRequest({
+        path: `${API}get-recomended-products/${count}/`,
     });
 
 export {
@@ -313,8 +332,11 @@ export {
     getStats,
     getAd,
     getAllCampaigns,
+    getCampaignByID,
     createNewCampaign,
     deleteCampaignByID,
     getCurrentFunds,
     addFundsToUser,
+    getRecommendedProducts,
+    getTotalPrice,
 };

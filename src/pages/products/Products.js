@@ -27,6 +27,8 @@ const Products = (params) => {
     const { user } = useStore().getState();
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [leftAddLoad, setLeftAddLoad] = useState(false);
+    const [rightAddLoad, setRightAddLoad] = useState(false);
     const [chosenId, setId] = useState('');
     const [confirmModal, setConfirmModal] = useState(false);
     const [deleteId, setDeleteId] = useState('');
@@ -35,16 +37,11 @@ const Products = (params) => {
     const [brand, setBrand] = useState('');
     const [ordering, setOrdering] = useState('');
     const [search, setSearch] = useState('');
+    const [rating, setRating] = useState('');
+    const [priceStart, setPriceStart] = useState('');
+    const [priceEnd, setPriceEnd] = useState('');
     const [leftAdd, setLeftAdd] = useState();
     const [rightAdd, setRightAdd] = useState();
-    const [rating, setRating] = useState(0);
-    // TODO  init with data from BE
-    // TODO delete
-    // eslint-disable-next-line no-unused-vars
-    const [priceStart, setPriceStart] = useState(0);
-    // TODO delete
-    // eslint-disable-next-line no-unused-vars
-    const [priceEnd, setPriceEnd] = useState(100);
 
     const fetchLeftAdd = () => {
         getAd()
@@ -54,14 +51,14 @@ const Products = (params) => {
                         <img alt="ad" className="image" src={response.data.img} />
                     </div>,
                 );
-                setLoading(false);
+                setLeftAddLoad(false);
             })
             .catch(() => {
                 params.openAlert({
                     message: 'Something went wrong while getting ad.',
                     severity: 'error',
                 });
-                setLoading(false);
+                setLeftAddLoad(false);
             });
     };
 
@@ -73,19 +70,20 @@ const Products = (params) => {
                         <img alt="ad" className="image" src={response.data.img} />
                     </div>,
                 );
-                setLoading(false);
+                setRightAddLoad(false);
             })
             .catch(() => {
                 params.openAlert({
                     message: 'Something went wrong while getting ad.',
                     severity: 'error',
                 });
-                setLoading(false);
+                setRightAddLoad(false);
             });
     };
 
     useEffect(() => {
-        setLoading(true);
+        setLeftAddLoad(true);
+        setRightAddLoad(true);
         fetchLeftAdd();
         fetchRightAdd();
     }, []);
@@ -147,6 +145,9 @@ const Products = (params) => {
             setBrand('');
             setOrdering('');
             setSearch('');
+            setRating('');
+            setPriceEnd('');
+            setPriceStart('');
             fetchByCategory(cat);
         } else if (params && params.location) {
             setLoading(true);
@@ -155,11 +156,22 @@ const Products = (params) => {
             setCategory('');
             setBrand('');
             setOrdering('');
+            setRating('');
+            setPriceEnd('');
+            setPriceStart('');
         }
     }, [location]);
 
     const handleFilter = () => {
-        const data = { category, brand, ordering, search };
+        const data = {
+            category,
+            brand,
+            ordering,
+            search,
+            rating_gt: rating,
+            price_gt: priceStart,
+            price_lt: priceEnd,
+        };
         setLoading(true);
         getItemsByCategoryBrandSortSearch(data)
             .then((response) => {
@@ -251,7 +263,7 @@ const Products = (params) => {
         if (items.length !== 0) {
             items.forEach((item) => {
                 itemsCol.push(
-                    <Col xs={12} md={6} xl={4} className="col" key={item.id}>
+                    <Col xs={12} md={6} lg={6} xl={4} className="col card-col" key={item.id}>
                         <ProductCard
                             handleUpper={handleUpper}
                             handleBottom={handleBottom}
@@ -289,10 +301,10 @@ const Products = (params) => {
         <>
             <Container fluid className="pm-item-list">
                 <Row>
-                    <Col xl={2}>{leftAdd || <ComponentLoading />}</Col>
+                    <Col xl={2}>{leftAddLoad ? <ComponentLoading /> : leftAdd}</Col>
                     <Col xl={8}>
                         <Row className="filter-row row">
-                            <Col xs={6} xl={2} className="mb-2 mb-xl-0">
+                            <Col xs={6} lg={3} xl={2} className="mb-2 mb-xl-0 filter-col">
                                 <Form.Label>Sort Products</Form.Label>
                                 <Form.Control
                                     as="select"
@@ -319,7 +331,7 @@ const Products = (params) => {
                                     </option>
                                 </Form.Control>
                             </Col>
-                            <Col xs={6} xl={2} className="mb-3 mb-xl-0">
+                            <Col xs={6} lg={3} xl={2} className="mb-3 mb-xl-0 filter-col">
                                 <Form.Label>Brands</Form.Label>
                                 <Form.Control
                                     as="select"
@@ -332,8 +344,13 @@ const Products = (params) => {
                                     <BrandOptions />
                                 </Form.Control>
                             </Col>
-                            <Col xs={12} xl={3} className="price-col mb-3 mb-xl-0">
-                                <Form.Label>Price</Form.Label>
+                            <Col
+                                xs={12}
+                                lg={3}
+                                xl={3}
+                                className="price-col mb-3 mb-xl-0 filter-col"
+                            >
+                                <Form.Label>Price Range</Form.Label>
                                 <Row className="inner-price-row">
                                     <Col xs={6} className="min-col">
                                         <Form.Control
@@ -342,6 +359,7 @@ const Products = (params) => {
                                             name="minPrice"
                                             type="number"
                                             placeholder="Min"
+                                            value={priceStart}
                                             onChange={(e) => {
                                                 setPriceStart(e.target.value);
                                             }}
@@ -354,6 +372,7 @@ const Products = (params) => {
                                             name="maxPrice"
                                             type="number"
                                             placeholder="Max"
+                                            value={priceEnd}
                                             onChange={(e) => {
                                                 setPriceEnd(e.target.value);
                                             }}
@@ -361,20 +380,25 @@ const Products = (params) => {
                                     </Col>
                                 </Row>
                             </Col>
-                            <Col xs={6} xl={2} className="rating-col mb-3 mb-xl-0">
-                                <Form.Label>Rating</Form.Label>
+                            <Col
+                                xs={6}
+                                lg={3}
+                                xl={3}
+                                className="rating-col mb-3 mb-xl-0 filter-col"
+                            >
+                                <Form.Label>Minimum Rating</Form.Label>
                                 <Row>
                                     <Col>
                                         <Rating
                                             value={rating}
                                             onChange={(e) => {
-                                                setRating(e.target.value);
+                                                setRating(e.value);
                                             }}
                                         />
                                     </Col>
                                 </Row>
                             </Col>
-                            <Col xs={6} xl={3} className="btn-col mb-2 mb-xl-0">
+                            <Col xs={6} lg={12} xl={2} className="btn-col mb-2 mb-xl-0 filter-col">
                                 <button
                                     className="btn btn-block"
                                     name="Filter"
@@ -389,7 +413,7 @@ const Products = (params) => {
                             <Items />
                         </Row>
                     </Col>
-                    <Col xl={2}>{rightAdd || <ComponentLoading />}</Col>
+                    <Col xl={2}>{rightAddLoad ? <ComponentLoading /> : rightAdd}</Col>
                 </Row>
             </Container>
             <DiscardModal

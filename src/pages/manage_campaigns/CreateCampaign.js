@@ -10,7 +10,7 @@ import { withFirebase } from '../../_firebase';
 
 const CreateCampaign = (params) => {
     const history = useHistory();
-    const { firebase } = params;
+    const { firebase, createCalled } = params;
     const [loading, setLoading] = useState(false);
     const [campaign, setCampaign] = useState({
         valid_until: '',
@@ -35,28 +35,46 @@ const CreateCampaign = (params) => {
 
     const createCampaign = () => {
         setLoading(true);
-        createNewCampaign(campaign)
-            .then((response) => {
-                setCampaign(response.data);
-                sendPushNotification(response.data);
-                params.openAlert({
-                    message: 'Successfully created campaign!',
-                    severity: 'success',
-                });
-                setTimeout(() => {
-                    history.push({
-                        pathname: SM_CAMPAIGNS,
-                    });
-                }, TIME_OUT);
-                setLoading(false);
-            })
-            .catch(() => {
-                params.openAlert({
-                    message: 'Something went wrong while creating campaign!',
-                    severity: 'error',
-                });
-                setLoading(false);
+        if (campaign.valid_until.length === 0) {
+            params.openAlert({
+                message: 'Choose a valid date!',
+                severity: 'error',
             });
+            setLoading(false);
+        } else if (
+            campaign.campaign_x === 0 ||
+            campaign.campaign_y === 0 ||
+            campaign.campaign_amount === 0
+        ) {
+            params.openAlert({
+                message: 'Choose a valid amounts!',
+                severity: 'error',
+            });
+            setLoading(false);
+        } else {
+            createNewCampaign(campaign)
+                .then((response) => {
+                    setCampaign(response.data);
+                    sendPushNotification(response.data);
+                    params.openAlert({
+                        message: 'Successfully created campaign!',
+                        severity: 'success',
+                    });
+                    setTimeout(() => {
+                        history.push({
+                            pathname: SM_CAMPAIGNS,
+                        });
+                    }, TIME_OUT);
+                    setLoading(false);
+                })
+                .catch(() => {
+                    params.openAlert({
+                        message: 'Something went wrong while creating campaign!',
+                        severity: 'error',
+                    });
+                    setLoading(false);
+                });
+        }
     };
 
     return loading ? (
@@ -69,6 +87,7 @@ const CreateCampaign = (params) => {
                     <Form.Group as={Col} xl={6} xs={12} className="campaign-details-group">
                         <CampaignForm
                             index="New"
+                            createCalled
                             campaign={campaign}
                             componentIndex="new"
                             key="campaign-new"
@@ -77,8 +96,8 @@ const CreateCampaign = (params) => {
                     <Form.Group as={Col} xl={12} xs={12} className="create-campaign-button-group">
                         <button
                             type="button"
-                            className="create-campaign-button"
-                            onClick={createCampaign}
+                            className="btn create-campaign-button"
+                            onClick={() => createCampaign(createCalled)}
                         >
                             Create Campaign
                         </button>

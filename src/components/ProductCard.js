@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useStore } from 'react-redux';
 import { BasketIcon, Delete, Edit, Favorite } from '../_utilities/icons';
 import StarMaker from './StarMaker';
 import { logo } from '../_assets';
 import { openAlert } from '../_redux/actions';
+import { getCampaignByID } from '../_requests';
 
 const ProductCard = (props) => {
     const {
@@ -20,8 +21,27 @@ const ProductCard = (props) => {
         isPreview,
         mean_rating,
     } = props;
+    const [campaigns, setCampaigns] = useState([]);
     const { user } = useStore().getState();
     const isPM = user?.is_product_manager;
+
+    useEffect(() => {
+        if (campaign.length !== 0) {
+            campaign.forEach((item) => {
+                getCampaignByID(item)
+                    .then((response) => {
+                        // eslint-disable-next-line no-shadow
+                        setCampaigns((campaigns) => [...campaigns, response.data.name]);
+                    })
+                    .catch(() => {
+                        props.openAlert({
+                            message: 'Something went wrong while getting ad.',
+                            severity: 'error',
+                        });
+                    });
+            });
+        }
+    }, []);
 
     const getImageContainer = () => {
         const img = <img src={image || logo} alt="product" className={image ? 'image' : 'logo'} />;
@@ -52,6 +72,16 @@ const ProductCard = (props) => {
             return null;
         }
         return isPM ? <Edit size="2em" /> : <BasketIcon size="2em" />;
+    };
+
+    const Campaigns = () => {
+        const content = [];
+        if (campaigns.length !== 0) {
+            campaigns.forEach((item) => {
+                content.push(<span className="span">{item}</span>);
+            });
+        }
+        return content;
     };
 
     return (
@@ -88,7 +118,10 @@ const ProductCard = (props) => {
                         <BottomIcon />
                     </button>
                 </div>
-                <div className="campaign-container">{campaign}</div>
+
+                <div className="campaign-container">
+                    <Campaigns />
+                </div>
             </div>
         </div>
     );

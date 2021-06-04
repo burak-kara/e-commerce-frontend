@@ -345,6 +345,11 @@
         background-color: $btn-second;
         color: $common-btn;
         font-weight: 500;
+        min-width: 120px;
+
+        .loading {
+            height: 100% !important;
+        }
 
         &:focus {
             outline: none !important;

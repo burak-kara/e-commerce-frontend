@@ -176,6 +176,12 @@
             font-weight: 400;
             font-size: 13px;
             line-height: 14px;
+            vertical-align: middle;
+
+            .span {
+                display: inline-block;
+                vertical-align: middle;
+            }
         }
     }
 

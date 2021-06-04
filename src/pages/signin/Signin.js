@@ -126,7 +126,7 @@ const Signin = (params) => {
                 .catch((error) => {
                     params.openAlert({
                         message:
-                            error && error.response
+                            error && error.response && error.response.data.non_field_errors
                                 ? error.response.data.non_field_errors[0]
                                 : 'Wrong credentials while logging in!',
                         severity: 'error',
@@ -225,17 +225,19 @@ const Signin = (params) => {
                     <div className="form-row btn-container">{renderSubmitButton()}</div>
                 </Form>
             </div>
-            <AuthModal
-                onChange={onCode}
-                show={modal}
-                isInvalid={isInvalid}
-                onHide={() => {
-                    setModal(false);
-                    history.push({
-                        pathname: SIGN_OUT,
-                    });
-                }}
-            />
+            {modal ? (
+                <AuthModal
+                    onChange={onCode}
+                    show={modal}
+                    isInvalid={isInvalid}
+                    onHide={() => {
+                        setModal(false);
+                        history.push({
+                            pathname: SIGN_OUT,
+                        });
+                    }}
+                />
+            ) : null}
         </>
     );
 };

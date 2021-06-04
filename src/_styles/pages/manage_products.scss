@@ -3,9 +3,19 @@
 
     .row {
         .col {
-            padding-top: 10px;
+            padding-bottom: 10px;
             display: flex;
             justify-content: center;
+        }
+
+        .title-row {
+            min-width: 100%;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .recommended-title {
+            font-weight: bold;
         }
     }
 
@@ -100,7 +110,7 @@
 
     .add-container {
         .image {
-            max-width: 300px;
+            max-width: 100%;
             border-radius: 10px 10px 0 0 !important;
         }
     }
@@ -165,7 +175,7 @@
         background-color: $header-bg;
 
         .dropdown {
-            height: 38px;
+            height: auto;
         }
 
         .btn-col {
@@ -206,6 +216,60 @@
 
         .add-container {
             display: none;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .pm-item-list {
+        .row {
+            display: flex;
+            justify-content: center;
+
+            .card-col {
+                max-width: 100% !important;
+            }
+        }
+
+        .filter-row {
+            .filter-col {
+                //max-width: 100% !important;
+            }
+        }
+
+        .add-container {
+            display: none;
+        }
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .pm-item-list {
+        .add-container {
+            display: none;
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1700px) {
+    .pm-item-list {
+        .filter-row {
+            .filter-col {
+                min-width: 30%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1700px) {
+    .pm-item-list {
+        .row {
+            display: flex;
+            justify-content: center;
+
+            .card-col {
+                max-width: 50%;
+            }
         }
     }
 }
