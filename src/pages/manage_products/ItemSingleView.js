@@ -182,7 +182,6 @@ const ItemSingleView = (params) => {
     };
 
     const onPreview = (event) => {
-        console.log(form);
         event.preventDefault();
         const tempErrors = findErrors();
         setErrors(tempErrors);
